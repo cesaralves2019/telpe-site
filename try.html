@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Try it · Telpe Tenders</title>
+<meta name="description" content="Try the Telpe Tenders matcher on sample notices and see the alert, digest and reminder you would get.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/tenders.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Telpe Tenders"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg> Telpe <span class="sep">/</span> <span class="sub">Tenders</span></a>
+    <nav class="links" aria-label="Primary"><a href="how.html">How it works</a><a href="try.html" aria-current="page">Try it</a><a href="pricing.html">Pricing</a></nav>
+    <button class="pill" type="button" data-start>Start free</button>
+  </div>
+</header>
+<main id="top">
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Try it · preview</p>
+    <h1>Tell us what you sell.<span class="soft">See what you'd get.</span></h1>
+    <p class="lede">Eighteen sample notices, shaped like the real thing: real public bodies, invented contracts. Pick your trade and watch the fit scores move. Nothing is sent.</p>
+  </div>
+</section>
+
+<section class="matcher-wrap" id="try" style="padding-top:0">
+  <div class="wrap">
+    <div class="matcher">
+      <div class="matcher-bar"><h2>The matcher</h2><span class="note">Preview · sample notices · nothing is sent</span></div>
+      <div class="matcher-body">
+        <div class="controls">
+          <div class="sectors" id="sectors" role="group" aria-label="Sectors"></div>
+          <div class="field"><label for="region">Where you work</label><select id="region"><option value="all">All of Ireland</option><option value="dublin">Dublin</option><option value="leinster">Leinster</option><option value="munster">Munster</option><option value="connacht">Connacht</option><option value="ni">Northern Ireland</option><option value="uk">UK (England, Scotland, Wales)</option><option value="ie-uk">Ireland and UK</option></select></div>
+          <div class="field"><label for="value">Contract size</label><select id="value"><option value="any">Any size</option><option value="s">Under €100k</option><option value="m">€100k to €500k</option><option value="l">€500k to €2m</option><option value="xl">Over €2m</option></select></div>
+          <div class="field" style="grid-column:1/-1"><label for="kw">Keywords (optional)</label><input id="kw" placeholder="e.g. parks, cleaning, website, lease" autocomplete="off"></div>
+          <label class="toggle"><input type="checkbox" id="sub" checked> Include sub-threshold notices (small contracts that never reach TED)</label>
+          <div class="results" id="results"></div>
+        </div>
+        <div class="preview">
+          <span class="k">What lands on your phone</span>
+          <div class="modes" role="tablist"><button class="on" data-mode="alert">Daily alert</button><button data-mode="digest">Weekly digest</button><button data-mode="remind">Deadline reminder</button></div>
+          <div class="phone"><div class="screen"><div class="bar"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9l8-5 8 5v11M4 20h16"/></svg></div><div><b>Telpe Tenders</b><span>business account</span></div></div><div class="thread" id="preview-thread"></div></div></div>
+          <div class="cta"><input id="phone" placeholder="Your number, e.g. 085 123 4567" inputmode="tel" aria-label="Phone number"><button type="button" id="send">Send me alerts like this</button><div class="ok" id="send-ok"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band grey">
+  <div class="wrap">
+    <div class="statement">
+      <div><p class="eyebrow">How the score works</p><h2>Sector and place are a must. The rest is weighting.</h2></div>
+      <p>A notice outside your sectors or your region is never sent. Within them, contract size, your keywords and how close the deadline is move the score up or down. Below 70, we stay quiet. You can change the threshold by reply.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band center" id="start">
+  <div class="wrap">
+    <h2>Start with a free weekly digest.</h2>
+    <p>Three questions on your phone, and you'll see what you've been missing. Upgrade when the first alert pays for itself.</p>
+    <div class="actions" style="justify-content:center"><button class="btn btn-primary" type="button" data-start>Start free</button></div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Telpe AI · Ireland · Preview</span>
+    <nav aria-label="Footer"><a href="index.html">Home</a><a href="how.html">How it works</a><a href="try.html">Try it</a><a href="pricing.html">Pricing</a></nav>
+  </div>
+</footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="sheet">
+    <button class="x" id="modal-x" aria-label="Close">×</button>
+    <h3 id="modal-title">Start on your phone</h3>
+    <p>Pick the app you already use. The bot asks three questions and sends your first match. Free weekly digest, nothing to install.</p>
+    <div class="channels">
+      <a class="channel" href="#" data-channel="telegram"><span class="ic tg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H9l-5 4z"/></svg></span><div><b>Telegram</b><span>Instant, free, on desktop too</span></div></a>
+      <a class="channel" href="#" data-channel="whatsapp"><span class="ic wa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg></span><div><b>WhatsApp</b><span>Write JOIN and you're in</span></div></a>
+    </div>
+    <p class="fine" id="modal-fine">Preview: the bots aren't live yet. Nothing is sent or stored.</p>
+  </div>
+</div>
+<script src="assets/tenders.js"></script>
+</body>
+</html>
