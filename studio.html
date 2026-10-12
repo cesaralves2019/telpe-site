@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Telpe Studio</title>
+<meta name="description" content="Telpe Studio: upload a photo of a room and change it by talking. New sofa, new layout, new colours, with the Telpe designer agent suggesting what works. Preview.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Apple product-page rhythm. A hero that states the idea, then the product itself as a large
+   card you can use, then short bands for designers and shops, then the waitlist. One accent, lots of air. */
+:root{
+  --bg:#fbfbfd;--bg-2:#f5f5f7;--card:#ffffff;--fg:#1d1d1f;--fg-2:#6e6e73;--line:rgba(29,29,31,.10);
+  --accent:#3d5afe;--accent-ink:#fff;--ok:#2e9e5b;--warn:#d9822b;--bad:#d64545;
+  --inv-bg:#000;--inv-fg:#f5f5f7;--inv-fg-2:#86868b;
+  --font:"Geist",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --radius:28px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#000;--bg-2:#0c0c0e;--card:#161618;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.12);--accent:#5b78ff;--inv-bg:#1d1d1f;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#000;--bg-2:#0c0c0e;--card:#161618;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.12);--accent:#5b78ff;--inv-bg:#1d1d1f;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.03em;line-height:1.05;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:17px}
+.brand svg{width:20px;height:20px}
+.brand .sep{color:var(--fg-2);font-weight:400}
+.links{display:flex;gap:28px;font-size:14px;color:var(--fg-2)}
+.links a:hover{color:var(--fg)}
+.nav .right{display:flex;gap:10px;align-items:center}
+.pill{font-size:13px;padding:7px 14px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:500;white-space:nowrap;border:0;cursor:pointer}
+.ghost{font-size:13px;padding:7px 14px;border-radius:999px;background:none;border:1px solid var(--line);color:var(--fg);cursor:pointer;white-space:nowrap}
+.ghost:hover{border-color:var(--fg-2)}
+@media (max-width:860px){.links{display:none}}
+@media (max-width:600px){.nav .ghost{display:none}.brand .sep,.brand .sub{display:none}.nav .pill{padding:7px 12px}}
+
+/* Hero */
+.hero{text-align:center;padding-block:clamp(72px,11vw,128px) clamp(40px,6vw,64px)}
+.hero h1{font-size:clamp(44px,8.5vw,104px);margin-top:18px;letter-spacing:-.04em;line-height:.98}
+.hero h1 .soft{display:block;color:var(--fg-2);font-weight:300}
+.hero .lede{max-width:40ch;margin:28px auto 0;font-size:clamp(18px,2.1vw,22px);line-height:1.45;color:var(--fg-2)}
+.actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:500;font-size:16px;border:0;cursor:pointer;background:none}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-ghost{color:var(--accent)}
+.btn-ghost:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* Studio card */
+.studio-wrap{padding-block:0 clamp(72px,10vw,140px)}
+.studio{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 40px 100px -40px rgba(0,0,0,.35);overflow:hidden}
+.studio-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.studio-bar .left,.studio-bar .rightb{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tabs{display:inline-flex;background:var(--bg-2);border-radius:999px;padding:3px}
+.tabs button{border:0;background:none;padding:6px 14px;border-radius:999px;font-size:13px;color:var(--fg-2);cursor:pointer}
+.tabs button.on{background:var(--card);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.tool{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font-size:13px;color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.tool:hover{border-color:var(--fg-2)}
+.tool.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tool:disabled{opacity:.4;cursor:default}
+.note{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2)}
+.studio-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.85fr)}
+@media (max-width:900px){.studio-body{grid-template-columns:1fr}}
+
+/* Viewer */
+.viewer{position:relative;background:var(--bg-2);border-right:1px solid var(--line);min-width:0}
+@media (max-width:900px){.viewer{border-right:0;border-bottom:1px solid var(--line)}}
+.stage{position:relative;aspect-ratio:1200/760;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage .after{clip-path:inset(0 0 0 0)}
+.stage .before{display:none}
+.stage.compare .before{display:block}
+.stage .handle{position:absolute;top:0;bottom:0;width:2px;background:#fff;left:50%;display:none;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.stage.compare .handle{display:block}
+.stage .handle::after{content:"◀ ▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;color:#1d1d1f;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:600;letter-spacing:.1em;box-shadow:0 4px 14px rgba(0,0,0,.2);white-space:nowrap}
+.stage .tag{position:absolute;top:12px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.85);color:#1d1d1f;font-size:11px;font-weight:600;letter-spacing:.08em;display:none}
+.stage.compare .tag{display:block}
+.stage .tag.b{left:12px}.stage .tag.a{right:12px}
+.stage img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage .photo-note{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.92);color:#1d1d1f;border-radius:14px;padding:10px 14px;font-size:13px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.stage .photo-note button{border:0;background:#1d1d1f;color:#fff;border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
+.stage svg g.item{transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .5s}
+.stage svg .c,.stage svg .c2,.stage svg .c3{transition:fill .6s}
+.stage svg rect.wall,.stage svg .floorc{transition:fill .6s}
+.stage.flash::before{content:"";position:absolute;inset:0;background:#fff;opacity:.0;animation:flash .7s ease-out;z-index:5;pointer-events:none}
+@keyframes flash{0%{opacity:.55}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.stage svg g.item,.stage svg .c,.stage svg .c2,.stage svg .c3{transition:none}}
+
+/* Plan */
+.plan{position:absolute;inset:0;display:none;background:var(--bg-2)}
+.stage.planmode .plan{display:block}
+.stage.planmode .after,.stage.planmode .before,.stage.planmode .handle,.stage.planmode .tag{display:none}
+.plan svg{position:absolute;inset:0;width:100%;height:100%}
+.plan .fp{cursor:grab}
+.plan .fp:active{cursor:grabbing}
+.plan text{font-family:var(--font);pointer-events:none}
+
+/* Catalogue drawer */
+.catalog{border-top:1px solid var(--line);padding:12px 16px 14px;background:var(--card)}
+.catalog .cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.catalog .cats button{border:1px solid var(--line);background:none;border-radius:999px;padding:5px 11px;font-size:12px;color:var(--fg-2);cursor:pointer}
+.catalog .cats button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.catalog .items{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;align-items:flex-start}
+.citem{flex:0 0 136px;border:1px solid var(--line);border-radius:14px;padding:8px;background:var(--bg-2);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px}
+.citem:hover{border-color:var(--fg-2)}
+.citem.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.citem svg{width:100%;height:64px;display:block}
+.citem b{font-size:12px;font-weight:600;letter-spacing:-.01em;display:block}
+.citem span{font-family:var(--mono);font-size:10.5px;color:var(--fg-2)}
+.swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.swatches button{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer}
+.swatches button.on{box-shadow:0 0 0 2px var(--accent)}
+
+/* Chat */
+.chat{display:flex;flex-direction:column;min-height:540px;max-height:720px;background:var(--card)}
+@media (max-width:900px){.chat{max-height:none;min-height:420px}}
+.chat-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.avatar svg{width:16px;height:16px}
+.chat-head b{font-size:14px;font-weight:600}
+.chat-head span{font-size:12px;color:var(--fg-2);display:block}
+.msgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.msg{max-width:92%;padding:10px 14px;border-radius:18px;font-size:14.5px;line-height:1.45;white-space:pre-wrap}
+.msg.ai{align-self:flex-start;background:var(--bg-2);border-bottom-left-radius:6px}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:6px}
+.msg .typing{display:inline-flex;gap:4px;align-items:center;height:14px}
+.msg .typing i{width:6px;height:6px;border-radius:50%;background:var(--fg-2);animation:blink 1.2s infinite}
+.msg .typing i:nth-child(2){animation-delay:.2s}.msg .typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.options{display:flex;flex-direction:column;gap:8px;align-self:stretch}
+.opt{border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;background:var(--card)}
+.opt b{font-size:13.5px;display:block;letter-spacing:-.01em}
+.opt p{font-size:13px;color:var(--fg-2)}
+.opt button{margin-left:auto;flex:none;border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
+.opt button.done{background:var(--bg-2);color:var(--fg-2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 18px 10px}
+.chips button{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 11px;font-size:12.5px;color:var(--fg);cursor:pointer}
+.chips button:hover{border-color:var(--fg-2)}
+.composer{display:flex;gap:8px;padding:12px 14px 14px;border-top:1px solid var(--line)}
+.composer input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:10px 16px;background:var(--bg-2);font-size:14.5px}
+.composer button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;width:42px;height:42px;display:grid;place-items:center;cursor:pointer}
+.composer button svg{width:16px;height:16px;stroke:var(--accent-ink)}
+
+/* Bands */
+.band{padding-block:clamp(72px,10vw,140px)}
+.band.grey{background:var(--bg-2)}
+.band.inv{background:var(--inv-bg);color:var(--inv-fg)}
+.band.inv .eyebrow{color:var(--inv-fg-2)}
+.statement{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,96px);align-items:end}
+.statement h2{font-size:clamp(34px,5.4vw,66px)}
+.statement p{font-size:clamp(17px,1.6vw,20px);color:var(--fg-2);max-width:40ch}
+.band.inv .statement p{color:var(--inv-fg-2)}
+.statement .eyebrow{margin-bottom:22px}
+@media (max-width:760px){.statement{grid-template-columns:1fr}}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(40px,6vw,64px)}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,3vw,36px);min-width:0}
+.step .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:16px}
+.step h3{font-size:clamp(21px,2.2vw,27px);letter-spacing:-.025em;margin-bottom:10px}
+.step p{color:var(--fg-2);font-size:16px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.center{text-align:center}
+.center h2{font-size:clamp(36px,6vw,76px);letter-spacing:-.04em}
+.center p{color:var(--fg-2);margin:22px auto 0;max-width:44ch;font-size:19px}
+.waitlist{display:flex;gap:8px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.waitlist input{width:min(360px,100%);border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:var(--card);font-size:15px}
+.waitlist .ok{color:var(--ok);font-size:14px;margin-top:14px;min-height:20px}
+footer{border-top:1px solid var(--line);padding-block:28px calc(44px + env(safe-area-inset-bottom,0px));color:var(--fg-2);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px 28px;flex-wrap:wrap}
+footer nav{display:flex;gap:22px;flex-wrap:wrap}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;place-items:center;z-index:50;padding:20px}
+.modal.open{display:grid}
+.sheet{background:var(--card);border-radius:24px;padding:28px;width:min(400px,100%);box-shadow:0 40px 100px -30px rgba(0,0,0,.5)}
+.sheet h3{font-size:24px;margin-bottom:8px}
+.sheet p{color:var(--fg-2);font-size:14.5px}
+.sheet form{display:flex;gap:8px;margin-top:18px}
+.sheet input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:10px 16px;background:var(--bg-2)}
+.sheet .x{float:right;border:0;background:none;color:var(--fg-2);font-size:20px;cursor:pointer;line-height:1}
+.sheet .fine{font-size:12px;margin-top:14px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Telpe home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg>
+      Telpe <span class="sep">/</span> <span class="sub">Studio</span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#try">Try it</a>
+      <a href="#how">How it works</a>
+      <a href="#designers">For designers</a>
+      <a href="#shops">For shops</a>
+    </nav>
+    <div class="right">
+      <button class="ghost" id="signin" type="button">Sign in</button>
+      <a class="pill" href="#waitlist">Join the waitlist</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Telpe Studio · Preview</p>
+      <h1>Your room.<span class="soft">Say what changes.</span></h1>
+      <p class="lede">Upload a photo of a room and change it by talking. A new sofa, a new layout, new colours. Telpe suggests what works, explains why, and shows it in your own room.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#try">Try the preview</a>
+        <a class="btn btn-ghost" href="#how">How it works →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="studio-wrap" id="try">
+    <div class="wrap">
+      <div class="studio">
+        <div class="studio-bar">
+          <div class="left">
+            <div class="tabs" role="tablist">
+              <button class="on" id="tab-room" role="tab" aria-selected="true">Room</button>
+              <button id="tab-plan" role="tab" aria-selected="false">Plan</button>
+            </div>
+            <button class="tool" id="compare" type="button" aria-pressed="false">Compare</button>
+            <button class="tool" id="undo" type="button" disabled>Undo</button>
+            <button class="tool" id="reset" type="button">Reset</button>
+          </div>
+          <div class="rightb">
+            <label class="tool" for="upload">Upload a photo</label>
+            <input type="file" id="upload" accept="image/*" hidden>
+            <span class="note">Preview · sample room · nothing is saved</span>
+          </div>
+        </div>
+        <div class="studio-body">
+          <div class="viewer">
+            <div class="stage" id="stage">
+              <svg class="before" id="svg-before" viewBox="0 0 1200 760" aria-hidden="true"></svg>
+              <svg class="after" id="svg-after" viewBox="0 0 1200 760" role="img" aria-label="Living room preview"></svg>
+              <div class="handle" id="handle"></div>
+              <span class="tag b">BEFORE</span><span class="tag a">AFTER</span>
+              <div class="plan" id="plan"><svg id="svg-plan" viewBox="0 0 1200 760" role="img" aria-label="Floor plan"></svg></div>
+            </div>
+            <div class="catalog" id="catalog">
+              <div class="cats" id="cats"></div>
+              <div class="items" id="items"></div>
+            </div>
+          </div>
+          <aside class="chat" aria-label="Telpe designer agent">
+            <div class="chat-head">
+              <div class="avatar"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 20h16" stroke="#fff" stroke-width="1.8"/></svg></div>
+              <div><b>Telpe</b><span>Designer agent · preview</span></div>
+            </div>
+            <div class="msgs" id="msgs"></div>
+            <div class="chips" id="chips"></div>
+            <form class="composer" id="composer">
+              <input id="input" placeholder="Tell Telpe what to change…" autocomplete="off" aria-label="Message Telpe">
+              <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+            </form>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band grey" id="how">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:22px">How it works</p>
+      <h2 style="font-size:clamp(32px,4.6vw,56px);max-width:22ch">Three steps. The third one is the only one that takes time, and it's yours.</h2>
+      <div class="steps">
+        <div class="step"><span class="k">01 · UPLOAD</span><h3>One photo from your phone.</h3><p>Telpe reads the room: what's in it, where the light comes from, the palette, the rough dimensions.</p></div>
+        <div class="step"><span class="k">02 · TALK</span><h3>Say it like you'd say it to a designer.</h3><p>"A greener sofa." "Open up the window side." "What would make it feel bigger?" Telpe answers with the change, in your room, and the reason.</p></div>
+        <div class="step"><span class="k">03 · DECIDE</span><h3>Compare, keep, send.</h3><p>Every version is kept. Slide between before and after, pick the one that works, export it for the client or the showroom.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="designers">
+    <div class="wrap statement">
+      <div><p class="eyebrow">For designers and architects</p><h2>The first three options for a client, before lunch.</h2></div>
+      <p>The early stage of a project is where most hours go and least gets paid. Studio turns a site photo into options in minutes, keeps the measurements honest, and leaves the real design to you.</p>
+    </div>
+  </section>
+
+  <section class="band inv" id="shops">
+    <div class="wrap statement">
+      <div><p class="eyebrow">For furniture shops</p><h2>"Here is your living room with our sofa."</h2></div>
+      <p>Your catalogue, their photo. A customer sees the piece in their own room, at the right size, in the right light, and the question changes from "will it fit" to "which colour".</p>
+    </div>
+  </section>
+
+  <section class="band grey center" id="waitlist">
+    <div class="wrap">
+      <p class="eyebrow">Early access</p>
+      <h2>Be there when it's ready.</h2>
+      <p>Studio is a preview today. Leave your email and you'll be among the first designers and shops we invite.</p>
+      <form class="waitlist" id="wl"><input type="email" placeholder="you@studio.com" required aria-label="Email"><button class="btn btn-primary" type="submit">Join</button></form>
+      <div class="ok" id="wl-ok"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Telpe AI</span>
+    <nav aria-label="Footer"><a href="index.html">Telpe</a><a href="#try">Try it</a><a href="#how">How it works</a><a href="game.html">Groundwork</a></nav>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="sheet">
+    <button class="x" id="modal-x" aria-label="Close">×</button>
+    <h3 id="modal-title">Sign in to Studio</h3>
+    <p>We'll send a link to your email. No password.</p>
+    <form id="modal-form"><input type="email" placeholder="you@studio.com" required aria-label="Email"><button class="pill" type="submit">Send link</button></form>
+    <p class="fine" id="modal-fine">Preview: no account is created and nothing is sent.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+document.getElementById('year').textContent=new Date().getFullYear();
+
+/* ---------- Colour helpers ---------- */
+const hex2=h=>{h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
+const rgb2=([r,g,b])=>'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');
+const shade=(h,k)=>rgb2(hex2(h).map(v=>v*k));
+const mix=(a,b,t)=>{const A=hex2(a),B=hex2(b);return rgb2(A.map((v,i)=>v+(B[i]-v)*t));};
+const tint=(h,t)=>mix(h,'#ffffff',t);
+
+/* ---------- Catalogue ---------- */
+const COLORS={'moss green':'#6b7f52','forest green':'#3f5c48',green:'#5f7f5a',sage:'#aab5a0',olive:'#7d7a45',teal:'#3f7c7a',blue:'#5b6f8f',navy:'#2f3a55','light blue':'#9fb4c7',grey:'#8a8f98',gray:'#8a8f98',charcoal:'#3a3d44',black:'#232428',white:'#f2f1ec',cream:'#efe8d8',beige:'#c9b89a',sand:'#d8c7a8',camel:'#b98a5a',brown:'#6b4a33',terracotta:'#c2694a',rust:'#a8532f',mustard:'#d3a33a',yellow:'#e2b94a',pink:'#d9a3a3',blush:'#e5b9b0',red:'#a8403a',burgundy:'#6e2f3a',purple:'#6f5a8a',lilac:'#b7a5c9',orange:'#d9823c'};
+const SWATCH=['#8a8f98','#3a3d44','#6b7f52','#3f5c48','#5b6f8f','#2f3a55','#c9b89a','#d8c7a8','#efe8d8','#c2694a','#d3a33a','#3f7c7a','#d9a3a3','#6e2f3a'];
+const WALLS=[['Chalk','#f1efe9'],['Warm white','#efe9df'],['Sand','#e6d9c3'],['Sage','#cfd6c6'],['Mist','#d8dde3'],['Blush','#ead3cb'],['Terracotta','#d4a085'],['Olive','#aeb08a'],['Night','#4a4f5c']];
+const FLOORS={oak:{name:'Oak planks',c:'#d9b78a'},walnut:{name:'Walnut planks',c:'#8b5a3c'},grey:{name:'Grey oak',c:'#b9b6b0'},terrazzo:{name:'Terrazzo',c:'#d9d4cc'}};
+const CAT={
+  sofa:[{id:'modern',name:'Oslo three-seater',dims:'218 × 92 cm',w:218},{id:'loveseat',name:'Nook two-seater',dims:'170 × 88 cm',w:170},{id:'classic',name:'Hampton sofa',dims:'230 × 95 cm',w:230},{id:'sectional',name:'Lund corner sofa',dims:'280 × 160 cm',w:280}],
+  armchair:[{id:'lounge',name:'Ask lounge chair',dims:'80 × 85 cm',w:80},{id:'wingback',name:'Harbour wingback',dims:'85 × 90 cm',w:85},{id:'rattan',name:'Bali rattan chair',dims:'78 × 80 cm',w:78}],
+  table:[{id:'round',name:'Disc coffee table',dims:'⌀ 90 cm',w:90},{id:'rect',name:'Slab coffee table',dims:'120 × 60 cm',w:120},{id:'oval',name:'Pebble table',dims:'110 × 60 cm',w:110}],
+  rug:[{id:'berber',name:'Atlas berber rug',dims:'300 × 200 cm',w:300},{id:'stripes',name:'Tide striped rug',dims:'300 × 200 cm',w:300},{id:'plain',name:'Field wool rug',dims:'240 × 170 cm',w:240},{id:'kilim',name:'Anatolia kilim',dims:'280 × 190 cm',w:280}],
+  lamp:[{id:'arc',name:'Reach arc lamp',dims:'h 210 cm',w:40},{id:'tripod',name:'Studio tripod lamp',dims:'h 150 cm',w:50},{id:'column',name:'Column lamp',dims:'h 160 cm',w:30}],
+  plant:[{id:'monstera',name:'Monstera',dims:'h 140 cm',w:70},{id:'fiddle',name:'Fiddle-leaf fig',dims:'h 180 cm',w:60},{id:'olive',name:'Olive tree',dims:'h 160 cm',w:60}],
+  art:[{id:'arch',name:'Arch print',dims:'70 × 90 cm',w:70},{id:'abstract',name:'Composition No. 3',dims:'80 × 80 cm',w:80},{id:'lines',name:'Linework',dims:'60 × 90 cm',w:60}]
+};
+const CATNAME={sofa:'Sofas',armchair:'Armchairs',table:'Tables',rug:'Rugs',lamp:'Lighting',plant:'Plants',art:'Wall art',wall:'Walls',floor:'Floors'};
+const ITEM_LABEL={sofa:'sofa',armchair:'armchair',table:'coffee table',rug:'rug',lamp:'lamp',plant:'plant',art:'wall art'};
+const info=(cat,id)=>CAT[cat].find(i=>i.id===id)||CAT[cat][0];
+
+/* ---------- State ---------- */
+const ROOM_W=520; // cm
+const DEFAULT={wall:'#efe9df',floor:'oak',curtains:false,
+  rug:{style:'berber',color:'#d8c7a8',x:0.42,on:true},
+  sofa:{style:'modern',color:'#8a8f98',x:0.42,on:true},
+  armchair:{style:'lounge',color:'#c9b89a',x:0.80,on:true},
+  table:{style:'round',color:'#6b4a33',x:0.42,on:true},
+  lamp:{style:'arc',color:'#232428',x:0.63,on:true},
+  plant:{style:'monstera',color:'#5f7f5a',x:0.09,on:true},
+  art:{style:'arch',color:'#c2694a',x:0.42,on:true}};
+const clone=o=>JSON.parse(JSON.stringify(o));
+let S=clone(DEFAULT), ORIGINAL=clone(DEFAULT), history=[];
+const X=x=>80+x*1040;              // 0..1 → scene px
+const cmToX=cm=>cm/ROOM_W;          // room cm → 0..1
+
+/* ---------- Scene drawing ---------- */
+function sofa(st,c){
+  const d=shade(c,.82),l=tint(c,.14),leg='#3a2a1f';
+  if(st==='sectional')return `<rect class="c2" x="-190" y="-110" width="26" height="96" rx="8" fill="${d}"/><rect class="c" x="-176" y="-78" width="352" height="64" rx="10" fill="${c}"/><rect class="c3" x="-166" y="-124" width="118" height="52" rx="10" fill="${l}"/><rect class="c3" x="-42" y="-124" width="118" height="52" rx="10" fill="${l}"/><rect class="c3" x="82" y="-124" width="94" height="52" rx="10" fill="${l}"/><rect class="c" x="82" y="-154" width="108" height="140" rx="12" fill="${c}"/><rect class="c3" x="92" y="-146" width="88" height="56" rx="10" fill="${l}"/><rect x="-170" y="-14" width="14" height="14" fill="${leg}"/><rect x="156" y="-14" width="14" height="14" fill="${leg}"/><rect x="-6" y="-14" width="12" height="14" fill="${leg}"/>`;
+  if(st==='classic')return `<rect class="c" x="-160" y="-80" width="320" height="66" rx="6" fill="${c}"/><rect class="c2" x="-160" y="-30" width="320" height="16" fill="${d}"/><circle class="c2" cx="-150" cy="-104" r="22" fill="${d}"/><circle class="c2" cx="150" cy="-104" r="22" fill="${d}"/><rect class="c" x="-130" y="-136" width="260" height="66" rx="8" fill="${c}"/>${[-90,-45,0,45,90].map(x=>`<circle cx="${x}" cy="-110" r="3" fill="${d}"/>`).join('')}<rect class="c3" x="-126" y="-84" width="124" height="18" rx="6" fill="${l}"/><rect class="c3" x="2" y="-84" width="124" height="18" rx="6" fill="${l}"/><rect x="-150" y="-14" width="12" height="14" fill="${leg}"/><rect x="138" y="-14" width="12" height="14" fill="${leg}"/>`;
+  const W=st==='loveseat'?118:150,cw=st==='loveseat'?108:140;
+  return `<rect class="c2" x="${-W}" y="-114" width="22" height="100" rx="8" fill="${d}"/><rect class="c2" x="${W-22}" y="-114" width="22" height="100" rx="8" fill="${d}"/><rect class="c" x="${-W+14}" y="-70" width="${2*W-28}" height="56" rx="8" fill="${c}"/><rect class="c3" x="${-W+16}" y="-124" width="${cw}" height="52" rx="10" fill="${l}"/><rect class="c3" x="${W-16-cw}" y="-124" width="${cw}" height="52" rx="10" fill="${l}"/><rect class="c3" x="${-W+18}" y="-82" width="${cw-4}" height="16" rx="6" fill="${l}" opacity=".7"/><rect class="c3" x="${W-14-cw}" y="-82" width="${cw-4}" height="16" rx="6" fill="${l}" opacity=".7"/><rect x="${-W+24}" y="-14" width="10" height="14" rx="2" fill="${leg}"/><rect x="${W-34}" y="-14" width="10" height="14" rx="2" fill="${leg}"/>`;
+}
+function armchair(st,c){
+  const d=shade(c,.82),l=tint(c,.14),wood='#8b5a3c';
+  if(st==='wingback')return `<path class="c" d="M-44 -150 q44 -16 88 0 v108 h-88z" fill="${c}"/><path class="c2" d="M-44 -150 l-14 24 v84 h14z" fill="${d}"/><path class="c2" d="M44 -150 l14 24 v84 h-14z" fill="${d}"/><rect class="c2" x="-58" y="-70" width="116" height="56" rx="8" fill="${d}"/><rect class="c3" x="-40" y="-62" width="80" height="16" rx="6" fill="${l}"/><rect x="-44" y="-14" width="8" height="14" fill="${wood}"/><rect x="36" y="-14" width="8" height="14" fill="${wood}"/>`;
+  if(st==='rattan')return `<path d="M-52 -130 q52 -30 104 0 v70 h-104z" fill="none" stroke="#b98a5a" stroke-width="6"/>${[-36,-18,0,18,36].map(x=>`<line x1="${x}" y1="-122" x2="${x}" y2="-62" stroke="#c9a06b" stroke-width="3"/>`).join('')}<rect class="c" x="-50" y="-66" width="100" height="40" rx="10" fill="${c}"/><path d="M-46 -26 l-6 26 M46 -26 l6 26 M-26 -26 l-4 26 M26 -26 l4 26" stroke="#b98a5a" stroke-width="5" stroke-linecap="round" fill="none"/>`;
+  return `<rect class="c" x="-50" y="-126" width="100" height="62" rx="12" fill="${c}"/><rect class="c2" x="-62" y="-92" width="18" height="70" rx="7" fill="${d}"/><rect class="c2" x="44" y="-92" width="18" height="70" rx="7" fill="${d}"/><rect class="c" x="-46" y="-66" width="92" height="42" rx="8" fill="${c}"/><rect class="c3" x="-40" y="-72" width="80" height="14" rx="6" fill="${l}"/><path d="M-40 -24 l-8 24 M40 -24 l8 24" stroke="${wood}" stroke-width="6" stroke-linecap="round" fill="none"/>`;
+}
+function table(st,c){
+  const d=shade(c,.75),top=tint(c,.08);
+  if(st==='rect')return `<rect class="c" x="-110" y="-50" width="220" height="12" rx="3" fill="${top}"/><rect x="-100" y="-38" width="8" height="38" fill="${d}"/><rect x="92" y="-38" width="8" height="38" fill="${d}"/><rect x="-96" y="-24" width="192" height="6" fill="${d}" opacity=".6"/>`;
+  if(st==='oval')return `<ellipse class="c" cx="0" cy="-48" rx="105" ry="20" fill="${top}"/><path d="M-70 -34 l-14 34 M70 -34 l14 34 M0 -30 v30" stroke="${d}" stroke-width="7" stroke-linecap="round" fill="none"/>`;
+  return `<ellipse class="c" cx="0" cy="-46" rx="82" ry="22" fill="${top}"/><ellipse class="c2" cx="0" cy="-40" rx="82" ry="22" fill="${d}"/><ellipse class="c" cx="0" cy="-44" rx="80" ry="20" fill="${top}"/><path d="M-46 -28 l-14 28 M46 -28 l14 28 M0 -22 v22" stroke="${d}" stroke-width="7" stroke-linecap="round" fill="none"/>`;
+}
+function rug(st,c,wcm){
+  const w=wcm*2.0,h=118,d=shade(c,.86),l=tint(c,.18);
+  let pat='';
+  if(st==='berber')pat=`<rect x="${-w/2+18}" y="-${h-18}" width="${w-36}" height="${h-36}" rx="10" fill="none" stroke="${d}" stroke-width="3"/>${Array.from({length:Math.floor(w/70)},(_,i)=>`<path d="M${-w/2+60+i*70} -${h/2+10} l16 16 l-16 16 l-16 -16z" fill="none" stroke="${d}" stroke-width="2.5"/>`).join('')}`;
+  else if(st==='stripes')pat=Array.from({length:Math.floor(h/18)},(_,i)=>`<rect x="${-w/2+8}" y="-${h-10-i*18}" width="${w-16}" height="8" fill="${i%2?d:l}"/>`).join('');
+  else if(st==='kilim')pat=`<path d="${Array.from({length:Math.floor(w/40)},(_,i)=>`M${-w/2+10+i*40} -${h/2} l20 -22 l20 22`).join(' ')}" fill="none" stroke="${d}" stroke-width="4"/><path d="${Array.from({length:Math.floor(w/40)},(_,i)=>`M${-w/2+10+i*40} -${h/2-40} l20 -22 l20 22`).join(' ')}" fill="none" stroke="${l}" stroke-width="4"/>`;
+  return `<rect class="c" x="${-w/2}" y="-${h}" width="${w}" height="${h}" rx="14" fill="${c}"/>${pat}`;
+}
+function lamp(st,c){
+  const d=shade(c,.8),shadeC='#f3efe6';
+  if(st==='tripod')return `<path d="M0 -120 l-40 120 M0 -120 l40 120 M0 -120 v120" stroke="${c}" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M-44 -210 h88 l12 90 h-112z" fill="${shadeC}" stroke="${d}" stroke-width="2"/>`;
+  if(st==='column')return `<rect x="-6" y="-232" width="12" height="232" fill="${c}"/><ellipse cx="0" cy="-2" rx="30" ry="6" fill="${d}"/><rect x="-34" y="-300" width="68" height="78" rx="6" fill="${shadeC}" stroke="${d}" stroke-width="2"/>`;
+  return `<path d="M-60 -4 q-20 -210 120 -300" stroke="${c}" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="-60" cy="-2" rx="36" ry="7" fill="${d}"/><path d="M26 -306 h68 l10 60 h-88z" fill="${shadeC}" stroke="${d}" stroke-width="2"/>`;
+}
+function plant(st,c){
+  const d=shade(c,.78),pot='#c9b8a8',potD='#a8968a';
+  let leaves='';
+  if(st==='monstera')leaves=[[-40,-150,36,24,-30],[40,-170,38,26,20],[-20,-200,34,24,-10],[30,-120,30,20,40],[-55,-110,28,18,-50]].map(([x,y,rx,ry,r])=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${c}" transform="rotate(${r} ${x} ${y})"/><path d="M${x-rx+8} ${y} h${rx*2-16}" stroke="${d}" stroke-width="2"/>`).join('')+`<path d="M0 -40 v-150" stroke="${d}" stroke-width="4"/>`;
+  else if(st==='fiddle')leaves=`<path d="M0 -40 v-250" stroke="#5a4635" stroke-width="5"/>`+[[-26,-120],[26,-150],[-24,-190],[26,-230],[-18,-260],[20,-280]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="22" ry="32" fill="${c}"/><path d="M${x} ${y-24} v48" stroke="${d}" stroke-width="2"/>`).join('');
+  else leaves=`<path d="M0 -40 v-150" stroke="#8a7560" stroke-width="5"/>`+Array.from({length:60},(_,i)=>{const a=i*2.4,r=18+((i*37)%50);const x=Math.cos(a)*r*1.1,y=-190+Math.sin(a)*r*0.9;return `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="9" ry="3.5" fill="${i%3?c:tint(c,.3)}" transform="rotate(${(a*57)%180} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;}).join('');
+  return `${leaves}<path d="M-30 -40 h60 l-6 40 h-48z" fill="${pot}"/><rect x="-32" y="-46" width="64" height="10" rx="3" fill="${potD}"/>`;
+}
+function art(st,c){
+  const f='#f7f4ee',frame='#3a3d44';
+  let inner='';
+  if(st==='arch')inner=`<path d="M-60 60 v-70 a60 60 0 0 1 120 0 v70z" fill="${c}"/><circle cx="24" cy="-30" r="14" fill="${tint(c,.5)}"/>`;
+  else if(st==='abstract')inner=`<circle cx="-24" cy="-14" r="38" fill="${c}"/><circle cx="26" cy="22" r="30" fill="${shade(c,.6)}"/><rect x="-66" y="40" width="132" height="14" fill="#1d1d1f" opacity=".7"/>`;
+  else inner=[-40,-20,0,20,40].map((y,i)=>`<path d="M-60 ${y} q30 ${i%2?-14:14} 60 0 t60 0" fill="none" stroke="${i===2?c:'#1d1d1f'}" stroke-width="3"/>`).join('');
+  return `<rect x="-88" y="-104" width="176" height="208" rx="4" fill="${frame}"/><rect x="-80" y="-96" width="160" height="192" fill="${f}"/>${inner}`;
+}
+const DRAW={sofa,armchair,table,rug:(st,c,s)=>rug(st,c,info('rug',st).w),lamp,plant,art};
+const BASE={rug:640,sofa:600,armchair:596,table:664,lamp:594,plant:596,art:240};
+const ORDER=['art','rug','sofa','armchair','lamp','plant','table'];
+
+function roomMarkup(st,uid){
+  const wall=st.wall,wallD=shade(wall,.93),fl=FLOORS[st.floor].c,flD=shade(fl,.86),flL=tint(fl,.08);
+  let floor=`<rect class="floorc" x="0" y="540" width="1200" height="220" fill="${fl}"/>`;
+  if(st.floor==='terrazzo')floor+=Array.from({length:120},(_,i)=>`<circle cx="${(i*97)%1200}" cy="${560+(i*53)%190}" r="${2+(i%3)}" fill="${i%2?'#b9b0a4':'#8a8f98'}" opacity=".7"/>`).join('');
+  else floor+=Array.from({length:11},(_,i)=>`<line x1="0" y1="${560+i*20}" x2="1200" y2="${560+i*20}" stroke="${flD}" stroke-width="1.5"/>`).join('')+Array.from({length:26},(_,i)=>`<line x1="${(i*94+(i%2?47:0))%1200}" y1="${560+((i*3)%11)*20}" x2="${(i*94+(i%2?47:0))%1200}" y2="${580+((i*3)%11)*20}" stroke="${flD}" stroke-width="1.5"/>`).join('');
+  const curtains=st.curtains?`<rect x="806" y="52" width="60" height="440" rx="6" fill="#e8e1d4"/><rect x="1096" y="52" width="60" height="440" rx="6" fill="#e8e1d4"/><path d="M816 60 v420 M836 60 v420 M856 60 v420 M1106 60 v420 M1126 60 v420 M1146 60 v420" stroke="#d6cdbd" stroke-width="2"/><rect x="796" y="44" width="370" height="10" rx="4" fill="#8b5a3c"/>`:'';
+  return `<defs><linearGradient id="sky-${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe3f5"/><stop offset="1" stop-color="#eef5fb"/></linearGradient><linearGradient id="pool-${uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+  <rect class="wall" x="0" y="0" width="1200" height="540" fill="${wall}"/>
+  <rect x="0" y="0" width="1200" height="540" fill="url(#pool-${uid})" opacity=".5"/>
+  <rect x="0" y="524" width="1200" height="16" fill="${wallD}"/>
+  ${floor}
+  <polygon points="820,540 1130,540 1200,700 760,700" fill="#fff" opacity=".18"/>
+  <g class="window"><rect x="836" y="70" width="290" height="400" rx="6" fill="#ffffff"/><rect x="848" y="82" width="266" height="376" fill="url(#sky-${uid})"/><rect x="978" y="82" width="6" height="376" fill="#fff"/><rect x="848" y="268" width="266" height="6" fill="#fff"/><rect x="826" y="470" width="310" height="14" rx="3" fill="${wallD}"/><path d="M860 420 q60 -40 120 -10 t120 -20" stroke="#9fb4c7" stroke-width="3" fill="none" opacity=".6"/>${curtains}</g>`;
+}
+function renderScene(svg,st,animate){
+  if(!svg.dataset.built){
+    svg.innerHTML=`<g class="room"></g>${ORDER.map(k=>`<g class="item" data-item="${k}"></g>`).join('')}`;
+    svg.dataset.built='1';
+  }
+  svg.querySelector('.room').innerHTML=roomMarkup(st,svg.id);
+  for(const k of ORDER){
+    const g=svg.querySelector(`g[data-item="${k}"]`),it=st[k];
+    const style=it.style+'|'+it.color;
+    if(g.dataset.sig!==style){g.innerHTML=DRAW[k](it.style,it.color);g.dataset.sig=style;}
+    g.style.transform=`translate(${X(it.x)}px,${BASE[k]}px)`;
+    g.style.opacity=it.on?1:0;
+    g.style.pointerEvents=it.on?'auto':'none';
+  }
+}
+const svgA=document.getElementById('svg-after'),svgB=document.getElementById('svg-before'),stage=document.getElementById('stage');
+function draw(){renderScene(svgA,S);renderScene(svgB,ORIGINAL);drawPlan();updateCatalogSelection();document.getElementById('undo').disabled=!history.length;}
+
+/* ---------- Plan view ---------- */
+const FOOT={rug:{d:200,y:230},sofa:{d:92,y:120},armchair:{d:85,y:200},table:{d:90,y:235},lamp:{d:40,y:50},plant:{d:70,y:90}};
+const plan=document.getElementById('svg-plan');
+const PX=1.5,PX0=(1200-ROOM_W*PX)/2,PY0=80;
+function itemW(k){return info(k,S[k].style).w;}
+function gaps(){
+  const items=['sofa','armchair','table','lamp','plant'].filter(k=>S[k].on).map(k=>({k,l:S[k].x*ROOM_W-itemW(k)/2,r:S[k].x*ROOM_W+itemW(k)/2,y:FOOT[k].y,d:FOOT[k].d}));
+  const out=[];
+  for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){const a=items[i],b=items[j];
+    const overlapY=Math.min(a.y+a.d/2,b.y+b.d/2)-Math.max(a.y-a.d/2,b.y-b.d/2);
+    if(overlapY<=0)continue;
+    const gap=a.l<b.l?b.l-a.r:a.l-b.r;
+    if(gap<120&&gap>-1000)out.push({a:a.k,b:b.k,gap:Math.round(gap),x:a.l<b.l?(a.r+b.l)/2:(b.r+a.l)/2,y:(Math.max(a.y-a.d/2,b.y-b.d/2)+Math.min(a.y+a.d/2,b.y+b.d/2))/2});}
+  return out;
+}
+function resolveOverlaps(moved){
+  const out=[];const A=S[moved];if(!A||!A.on)return out;const aw=itemW(moved),al=A.x*ROOM_W-aw/2,ar=A.x*ROOM_W+aw/2;
+  for(const k of ['armchair','plant','lamp','table']){
+    if(k===moved||!S[k].on)continue;if(moved==='sofa'&&k==='table')continue;
+    const a0=FOOT[moved].y-FOOT[moved].d/2,a1=FOOT[moved].y+FOOT[moved].d/2,b0=FOOT[k].y-FOOT[k].d/2,b1=FOOT[k].y+FOOT[k].d/2;
+    if(Math.min(a1,b1)-Math.max(a0,b0)<=0)continue;
+    const hw=itemW(k)/2,bl=S[k].x*ROOM_W-hw,br=S[k].x*ROOM_W+hw;
+    const gap=bl>=al?bl-ar:al-br;if(gap>=80)continue;
+    const right=S[k].x>=A.x;let cx=right?ar+80+hw:al-80-hw;
+    if(cx+hw>ROOM_W-5)cx=ROOM_W-5-hw;if(cx-hw<5)cx=5+hw;
+    const newGap=right?(cx-hw)-ar:al-(cx+hw);
+    if(newGap<=gap)continue;
+    S[k].x=cx/ROOM_W;out.push(k);
+  }
+  return out;
+}
+function windowBlock(){const s=S.sofa;if(!s.on)return 0;const r=s.x*ROOM_W+itemW('sofa')/2;return Math.max(0,Math.round(r-392));}
+function drawPlan(){
+  const w=ROOM_W*PX,h=400*PX;
+  let m=`<rect x="${PX0}" y="${PY0}" width="${w}" height="${h}" fill="#fbfbfd" stroke="#1d1d1f" stroke-width="6"/>`;
+  m+=`<rect x="${PX0+392*PX}" y="${PY0-4}" width="${120*PX}" height="8" fill="#9fb4c7"/><text x="${PX0+452*PX}" y="${PY0-16}" font-size="18" text-anchor="middle" fill="#6e6e73">window · 120 cm</text>`;
+  m+=`<text x="${PX0+w/2}" y="${PY0+h+42}" font-size="20" text-anchor="middle" fill="#6e6e73">${(ROOM_W/100).toFixed(1)} m</text><text x="${PX0-28}" y="${PY0+h/2}" font-size="20" text-anchor="middle" fill="#6e6e73" transform="rotate(-90 ${PX0-28} ${PY0+h/2})">4.0 m</text>`;
+  for(const k of ['rug','sofa','armchair','table','lamp','plant']){
+    const it=S[k];if(!it.on)continue;const W=itemW(k),D=FOOT[k].d,cx=PX0+it.x*ROOM_W*PX,cy=PY0+FOOT[k].y*PX;
+    const fill=k==='rug'?tint(it.color,.3):tint(it.color,.45),stroke=shade(it.color,.7);
+    const shape=(k==='table'&&S.table.style==='round')||k==='lamp'||k==='plant'?`<circle cx="${cx}" cy="${cy}" r="${W/2*PX}" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>`:`<rect x="${cx-W/2*PX}" y="${cy-D/2*PX}" width="${W*PX}" height="${D*PX}" rx="${k==='rug'?6:10}" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>`;
+    m+=`<g class="fp" data-k="${k}">${shape}<text x="${cx}" y="${cy+6}" font-size="${k==='rug'?20:17}" text-anchor="middle" fill="#1d1d1f" font-weight="600">${ITEM_LABEL[k]}</text><text x="${cx}" y="${cy+26}" font-size="14" text-anchor="middle" fill="#6e6e73">${W} cm</text></g>`;
+  }
+  for(const g of gaps()){const bad=g.gap<80,c=bad?'#d64545':'#2e9e5b';const x=PX0+g.x*PX,y=PY0+g.y*PX;
+    m+=`<line x1="${x-g.gap/2*PX}" y1="${y}" x2="${x+g.gap/2*PX}" y2="${y}" stroke="${c}" stroke-width="3"/><rect x="${x-54}" y="${y-34}" width="108" height="24" rx="12" fill="${c}"/><text x="${x}" y="${y-17}" font-size="14" text-anchor="middle" fill="#fff" font-weight="600">${g.gap<0?'overlap':'walkway '+g.gap+' cm'}</text>`;}
+  const wb=windowBlock();if(wb>0)m+=`<rect x="${PX0+392*PX}" y="${PY0+40}" width="${120*PX}" height="26" rx="13" fill="#d9822b"/><text x="${PX0+452*PX}" y="${PY0+58}" font-size="14" text-anchor="middle" fill="#fff" font-weight="600">sofa in the window light</text>`;
+  m+=`<text x="${PX0}" y="${PY0-22}" font-size="18" fill="#1d1d1f" font-weight="600">Plan · drag a piece to move it</text>`;
+  plan.innerHTML=m;
+}
+// drag in plan
+let drag=null;
+plan.addEventListener('pointerdown',e=>{const g=e.target.closest('.fp');if(!g)return;e.preventDefault();plan.setPointerCapture(e.pointerId);const k=g.dataset.k;const pt=planPoint(e);drag={k,dx:pt.x-S[k].x,start:S[k].x,snap:clone(S)};});
+plan.addEventListener('pointermove',e=>{if(!drag)return;const pt=planPoint(e);const k=drag.k,hw=itemW(k)/2/ROOM_W;S[k].x=Math.max(hw,Math.min(1-hw,pt.x-drag.dx));if(k==='sofa'&&S.table.on){S.table.x=S[k].x;}if(k==='sofa'&&S.rug.on){S.rug.x=S[k].x;}renderScene(svgA,S);drawPlan();});
+function endDrag(){if(!drag)return;if(Math.abs(S[drag.k].x-drag.start)>0.005){history.push(drag.snap);document.getElementById('undo').disabled=false;const moved=Math.round((S[drag.k].x-drag.start)*ROOM_W);say(`Moved the ${ITEM_LABEL[drag.k]} ${Math.abs(moved)} cm to the ${moved>0?'right':'left'}. ${walkwayNote()}`);}drag=null;}
+plan.addEventListener('pointerup',endDrag);plan.addEventListener('pointercancel',endDrag);
+function planPoint(e){const b=plan.getBoundingClientRect();const px=(e.clientX-b.left)/b.width*1200;return {x:(px-PX0)/PX/ROOM_W};}
+
+/* ---------- Compare slider ---------- */
+const handle=document.getElementById('handle');let cmp=false,cmpX=0.5,cmpDrag=false;
+function setCmp(x){cmpX=Math.max(0.02,Math.min(0.98,x));handle.style.left=(cmpX*100)+'%';svgA.style.clipPath=`inset(0 0 0 ${cmpX*100}%)`;}
+document.getElementById('compare').addEventListener('click',function(){cmp=!cmp;this.classList.toggle('on',cmp);this.setAttribute('aria-pressed',cmp);stage.classList.toggle('compare',cmp);if(cmp){setCmp(0.5);}else{svgA.style.clipPath='none';}});
+stage.addEventListener('pointerdown',e=>{if(!cmp||stage.classList.contains('planmode'))return;cmpDrag=true;stage.setPointerCapture(e.pointerId);const b=stage.getBoundingClientRect();setCmp((e.clientX-b.left)/b.width);});
+stage.addEventListener('pointermove',e=>{if(!cmpDrag)return;const b=stage.getBoundingClientRect();setCmp((e.clientX-b.left)/b.width);});
+stage.addEventListener('pointerup',()=>cmpDrag=false);stage.addEventListener('pointercancel',()=>cmpDrag=false);
+
+/* ---------- Tabs, undo, reset ---------- */
+const tabRoom=document.getElementById('tab-room'),tabPlan=document.getElementById('tab-plan');
+function setTab(p){stage.classList.toggle('planmode',p);tabRoom.classList.toggle('on',!p);tabPlan.classList.toggle('on',p);tabRoom.setAttribute('aria-selected',!p);tabPlan.setAttribute('aria-selected',p);document.getElementById('compare').disabled=p;}
+tabRoom.addEventListener('click',()=>setTab(false));tabPlan.addEventListener('click',()=>setTab(true));
+document.getElementById('undo').addEventListener('click',()=>{if(!history.length)return;S=history.pop();draw();say('Undone. Back to the previous version.');});
+document.getElementById('reset').addEventListener('click',()=>{if(JSON.stringify(S)===JSON.stringify(DEFAULT))return;history.push(clone(S));S=clone(DEFAULT);ORIGINAL=clone(DEFAULT);draw();say('Back to the sample room as it was.');});
+function commit(mut){history.push(clone(S));if(history.length>40)history.shift();mut(S);draw();stage.classList.remove('flash');void stage.offsetWidth;stage.classList.add('flash');}
+
+/* ---------- Catalogue UI ---------- */
+let curCat='sofa';
+const cats=document.getElementById('cats'),items=document.getElementById('items');
+function buildCats(){cats.innerHTML=Object.keys(CATNAME).map(k=>`<button type="button" data-cat="${k}" class="${k===curCat?'on':''}">${CATNAME[k]}</button>`).join('');}
+cats.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;curCat=b.dataset.cat;buildCats();buildItems();});
+function thumb(k,id,color){const vb={sofa:'-200 -170 400 190',armchair:'-80 -170 160 190',table:'-120 -70 240 90',rug:'-310 -130 620 140',lamp:'-80 -320 180 340',plant:'-80 -300 160 320',art:'-100 -120 200 240'}[k];return `<svg viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${DRAW[k](id,color)}</svg>`;}
+function buildItems(){
+  if(curCat==='wall'){items.innerHTML=WALLS.map(([n,c])=>`<button type="button" class="citem ${S.wall===c?'on':''}" data-wall="${c}"><svg viewBox="0 0 100 50" aria-hidden="true"><rect width="100" height="50" rx="8" fill="${c}"/></svg><b>${n}</b><span>wall paint</span></button>`).join('');return;}
+  if(curCat==='floor'){items.innerHTML=Object.entries(FLOORS).map(([id,f])=>`<button type="button" class="citem ${S.floor===id?'on':''}" data-floor="${id}"><svg viewBox="0 0 100 50" aria-hidden="true"><rect width="100" height="50" rx="8" fill="${f.c}"/><path d="M0 17h100M0 34h100M30 0v17M70 17v17M20 34v16" stroke="${shade(f.c,.85)}" stroke-width="2"/></svg><b>${f.name}</b><span>floor</span></button>`).join('');return;}
+  const it=S[curCat];
+  items.innerHTML=CAT[curCat].map(c=>`<button type="button" class="citem ${it.style===c.id&&it.on?'on':''}" data-style="${c.id}">${thumb(curCat,c.id,it.color)}<b>${c.name}</b><span>${c.dims}</span></button>`).join('')+
+    (['plant','art'].includes(curCat)?'':`<div class="citem" style="cursor:default"><b>Colour</b><div class="swatches">${SWATCH.map(c=>`<button type="button" data-color="${c}" class="${it.color===c?'on':''}" style="background:${c}" aria-label="Colour ${c}"></button>`).join('')}</div></div>`)+
+    `<button type="button" class="citem" data-toggle="1" style="justify-content:center;align-items:center;color:var(--fg-2)"><b>${it.on?'Remove':'Add back'}</b><span>${ITEM_LABEL[curCat]}</span></button>`;
+}
+items.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.wall){const name=WALLS.find(w=>w[1]===b.dataset.wall)[0];commit(s=>{s.wall=b.dataset.wall;});say(`Walls in ${name}. ${paletteNote()}`);return;}
+  if(b.dataset.floor){commit(s=>{s.floor=b.dataset.floor;});say(`${FLOORS[b.dataset.floor].name} on the floor. ${b.dataset.floor==='walnut'?'Darker floors ground a room; keep the walls light so it does not close in.':'Lighter floors bounce the window light deeper into the room.'}`);return;}
+  if(b.dataset.style){const c=info(curCat,b.dataset.style);commit(s=>{s[curCat].style=b.dataset.style;s[curCat].on=true;});say(`${c.name}, ${c.dims}. ${fitNote(curCat)}`);return;}
+  if(b.dataset.color){commit(s=>{s[curCat].color=b.dataset.color;});say(`${cap(ITEM_LABEL[curCat])} recoloured. ${paletteNote()}`);return;}
+  if(b.dataset.toggle){const on=!S[curCat].on;commit(s=>{s[curCat].on=on;});say(on?`${cap(ITEM_LABEL[curCat])} is back.`:`${cap(ITEM_LABEL[curCat])} removed. ${walkwayNote()}`);}
+});
+function updateCatalogSelection(){buildItems();}
+
+/* ---------- Chat ---------- */
+const msgs=document.getElementById('msgs'),chips=document.getElementById('chips'),input=document.getElementById('input');
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+function add(kind,html){const d=document.createElement('div');d.className='msg '+kind;d.innerHTML=html;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
+let busy=false;
+function say(text,opts){
+  const t=add('ai','<span class="typing"><i></i><i></i><i></i></span>');busy=true;
+  setTimeout(()=>{t.textContent=text;if(opts&&opts.options)renderOptions(opts.options);busy=false;msgs.scrollTop=msgs.scrollHeight;},420+Math.min(900,text.length*6));
+}
+function renderOptions(list){
+  const box=document.createElement('div');box.className='options';
+  box.innerHTML=list.map((o,i)=>`<div class="opt"><div><b>${o.title}</b><p>${o.why}</p></div><button type="button" data-i="${i}">Apply</button></div>`).join('');
+  box.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.classList.contains('done'))return;const o=list[+b.dataset.i];commit(o.apply);b.textContent='Applied';b.classList.add('done');say(o.after);});
+  msgs.appendChild(box);msgs.scrollTop=msgs.scrollHeight;
+}
+function setChips(list){chips.innerHTML=list.map(c=>`<button type="button">${c}</button>`).join('');}
+chips.addEventListener('click',e=>{const b=e.target.closest('button');if(b)submit(b.textContent);});
+document.getElementById('composer').addEventListener('submit',e=>{e.preventDefault();const v=input.value.trim();if(v)submit(v);input.value='';});
+function submit(text){if(busy)return;add('me',escapeHtml(text));setTimeout(()=>respond(text),120);}
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+/* notes the agent uses */
+function walkwayNote(){const g=gaps().filter(x=>x.gap<80);if(!g.length)return 'All walkways stay above 80 cm.';const w=g[0];return w.gap<0?`The ${ITEM_LABEL[w.a]} and the ${ITEM_LABEL[w.b]} now overlap in plan; I'd move one of them.`:`Walkway between the ${ITEM_LABEL[w.a]} and the ${ITEM_LABEL[w.b]} is ${w.gap} cm, under the 80 cm I'd keep.`;}
+function fitNote(k){const W=itemW(k);const notes={sofa:`At ${W} cm it ${W>240?'takes most of the wall; the armchair will feel tight':'leaves room for a side table'}. ${walkwayNote()}`,armchair:`${W} cm wide, it sits comfortably beside the sofa. ${walkwayNote()}`,table:`Keep about 40 cm between the table edge and the sofa seat; this one does.`,rug:`The rug should catch the front legs of the sofa and the armchair. ${W>=280?'This size does.':'This smaller size floats the furniture a little; fine for a lighter look.'}`,lamp:`Shade at about eye level when seated, which is what this one gives.`,plant:`It brings the outside in and softens the corner.`,art:`Hang it with the centre at 150 cm from the floor; above a sofa, about 20 cm over the backrest.`};return notes[k]||'';}
+function paletteNote(){const warm=['#c2694a','#d3a33a','#c9b89a','#d8c7a8','#efe8d8','#a8532f','#d9a3a3','#e5b9b0','#6e2f3a'];const cool=['#5b6f8f','#2f3a55','#3f7c7a','#8a8f98','#3a3d44'];const wallWarm=hex2(S.wall)[0]>hex2(S.wall)[2]+12;const sofaWarm=warm.includes(S.sofa.color),sofaCool=cool.includes(S.sofa.color);if(wallWarm&&sofaCool)return 'Warm walls with a cool sofa is a classic pairing: the sofa reads as the calm element.';if(!wallWarm&&sofaWarm)return 'A warm piece against cool walls becomes the focal point of the room.';return 'The palette stays in one temperature, which keeps the room calm.';}
+
+/* parsing */
+const ITEMS={sofa:['sofa','couch','settee','three-seater','two-seater'],armchair:['armchair','chair','lounge chair','wingback'],table:['coffee table','table'],rug:['rug','carpet'],lamp:['lamp','light','lighting'],plant:['plant','monstera','fig','olive','tree','greenery'],art:['art','painting','picture','print','frame','poster'],wall:['wall','walls','paint'],floor:['floor','flooring','planks','parquet']};
+const STYLES={sofa:{modern:['modern','low','oslo'],loveseat:['two-seater','loveseat','smaller sofa','small sofa','nook'],classic:['classic','traditional','hampton','rolled'],sectional:['sectional','corner','l-shaped','l shaped','lund','chaise']},armchair:{lounge:['lounge'],wingback:['wingback','wing'],rattan:['rattan','wicker','bali']},table:{round:['round','disc','circular'],rect:['rectangular','rectangle','square','slab'],oval:['oval','pebble']},rug:{berber:['berber','atlas'],stripes:['striped','stripes','tide'],plain:['plain','simple','wool'],kilim:['kilim','pattern','patterned','anatolia']},lamp:{arc:['arc'],tripod:['tripod'],column:['column','straight','paper']},plant:{monstera:['monstera'],fiddle:['fiddle','fig'],olive:['olive']},art:{arch:['arch'],abstract:['abstract','composition'],lines:['lines','linework','line drawing']}};
+const PRESETS={
+  scandinavian:{words:['scandinavian','scandi','nordic'],why:'light walls, pale oak, a low grey sofa and one plant: the Nordic recipe.',apply:s=>{s.wall='#f1efe9';s.floor='oak';s.sofa={style:'modern',color:'#8a8f98',x:s.sofa.x,on:true};s.rug={style:'berber',color:'#efe8d8',x:s.sofa.x,on:true};s.lamp.style='tripod';s.lamp.color='#232428';s.plant={style:'monstera',color:'#5f7f5a',x:0.09,on:true};s.art.style='lines';s.art.color='#1d1d1f';s.armchair.color='#c9b89a';s.table.style='round';s.table.color='#d9b78a';}},
+  japandi:{words:['japandi','japanese','zen','wabi'],why:'warm beige, walnut, a low charcoal sofa and almost nothing else.',apply:s=>{s.wall='#e6d9c3';s.floor='walnut';s.sofa={style:'modern',color:'#3a3d44',x:s.sofa.x,on:true};s.rug={style:'plain',color:'#d8c7a8',x:s.sofa.x,on:true};s.lamp.style='column';s.lamp.color='#8b5a3c';s.plant={style:'olive',color:'#7d7a45',x:0.09,on:true};s.art.style='arch';s.art.color='#c9b89a';s.armchair.style='lounge';s.armchair.color='#c9b89a';s.table.style='rect';s.table.color='#3a2a1f';}},
+  midcentury:{words:['mid-century','mid century','midcentury','60s','retro'],why:'sage walls, walnut floor, a mustard sofa and a teal chair: colour with discipline.',apply:s=>{s.wall='#cfd6c6';s.floor='walnut';s.sofa={style:'modern',color:'#d3a33a',x:s.sofa.x,on:true};s.armchair={style:'lounge',color:'#3f7c7a',x:s.armchair.x,on:true};s.rug={style:'stripes',color:'#efe8d8',x:s.sofa.x,on:true};s.lamp.style='arc';s.lamp.color='#232428';s.art.style='abstract';s.art.color='#c2694a';s.table.style='oval';s.table.color='#6b4a33';}},
+  minimal:{words:['minimal','minimalist','clean','simple'],why:'chalk walls, grey oak, a white sofa, no art: the room is the furniture.',apply:s=>{s.wall='#f1efe9';s.floor='grey';s.sofa={style:'modern',color:'#f2f1ec',x:s.sofa.x,on:true};s.rug.on=false;s.art.on=false;s.lamp.style='column';s.lamp.color='#232428';s.plant={style:'fiddle',color:'#5f7f5a',x:0.09,on:true};s.armchair.on=false;s.table.style='round';s.table.color='#232428';}},
+  boho:{words:['boho','bohemian','eclectic'],why:'terracotta walls, a kilim, rattan and two kinds of green.',apply:s=>{s.wall='#d4a085';s.floor='oak';s.rug={style:'kilim',color:'#c2694a',x:s.sofa.x,on:true};s.armchair={style:'rattan',color:'#efe8d8',x:s.armchair.x,on:true};s.plant={style:'monstera',color:'#5f7f5a',x:0.09,on:true};s.sofa.color='#efe8d8';s.art.style='arch';s.art.color='#a8532f';s.lamp.style='tripod';s.lamp.color='#8b5a3c';}}
+};
+function findColor(t){let best=null;for(const k of Object.keys(COLORS)){if(t.includes(k)&&(!best||k.length>best.length))best=k;}return best;}
+function findItem(t){let best=null;for(const k of Object.keys(ITEMS)){for(const w of ITEMS[k]){if(t.includes(w)&&(!best||w.length>best.w.length))best={k,w};}}return best?best.k:null;}
+function findStyle(k,t){if(!STYLES[k])return null;for(const id of Object.keys(STYLES[k]))for(const w of STYLES[k][id])if(t.includes(w))return id;return null;}
+function moveTarget(t){
+  if(/window|light|balcony/.test(t))return 'window';if(/corner/.test(t))return 'corner';if(/centre|center|middle/.test(t))return 'center';if(/left/.test(t))return 'left';if(/right/.test(t))return 'right';if(/away|back|wall/.test(t))return 'left';return null;}
+
+function respond(raw){
+  const t=raw.toLowerCase().replace(/[’']/g,"'");
+  if(/^(hi|hello|hey|olá|ola|oi)\b/.test(t)){say("Hi. I'm Telpe. Tell me what to change in this room, or ask me what I would change.");return;}
+  if(/undo|go back|revert/.test(t)){if(history.length){S=history.pop();draw();say('Undone.');}else say('Nothing to undo yet.');return;}
+  if(/reset|start over|original/.test(t)){history.push(clone(S));S=clone(DEFAULT);draw();say('Back to the original room.');return;}
+  if(/thank/.test(t)){say("Any time. Try Compare to slide between before and after.");return;}
+  for(const p of Object.values(PRESETS)){if(p.words.some(w=>t.includes(w))){commit(p.apply);say(`Done: ${p.why} ${walkwayNote()}`);return;}}
+  if(/suggest|idea|what would you|recommend|advice|improve|better|tips?\b/.test(t)){suggest();return;}
+  if(/bigger|larger|spacious|more space|open(er| up)?\b|feel big/.test(t)){
+    commit(s=>{s.wall='#f1efe9';s.floor='oak';s.sofa.style='modern';if(s.sofa.x>0.5)s.sofa.x=0.42;s.rug.x=s.sofa.x;s.table.x=s.sofa.x;s.table.style='round';s.art.style='lines';s.art.color='#1d1d1f';s.curtains=false;});
+    say('Three moves that make a room read bigger: lighter walls and floor so the light travels, a low sofa so the eye sees more wall, and the furniture pulled off the window side so the brightest wall stays open. Done all three. '+walkwayNote());return;}
+  if(/warm|cos(y|ier)|coz(y|ier)|inviting/.test(t)){commit(s=>{s.wall='#e6d9c3';s.floor='walnut';s.rug.color='#c2694a';s.rug.style='berber';s.lamp.style='tripod';});say('Warmed it up: sand walls, walnut floor, a terracotta rug and a lower, softer lamp. The sofa stays as the cool note so it does not turn orange. Want the sofa warmer too?');setChips(['Sofa in camel','Keep the sofa grey','Add curtains','Suggest more']);return;}
+  if(/cool(er)?\b|calm|serene|quiet/.test(t)){commit(s=>{s.wall='#d8dde3';s.floor='grey';s.rug.color='#efe8d8';s.rug.style='plain';s.sofa.color='#5b6f8f';});say('Cooler and calmer: mist walls, grey oak, a plain rug and a blue sofa. One temperature across the room.');return;}
+  if(/dark(er)?|moody|dramatic|night/.test(t)){commit(s=>{s.wall='#4a4f5c';s.sofa.color='#c9b89a';s.art.color='#d3a33a';s.lamp.style='arc';});say('Dark walls, light sofa: the furniture becomes the picture. I kept the floor light so it does not swallow the window light.');return;}
+  if(/bright(er)?|more light|lighter/.test(t)){commit(s=>{s.wall='#f1efe9';s.curtains=false;s.floor='oak';});say('Lighter walls, curtains off, pale floor. The window light now bounces across the whole room.');return;}
+  if(/curtain|drape/.test(t)){const on=!S.curtains;commit(s=>{s.curtains=on;});say(on?'Curtains added, floor to ceiling, hung close to the ceiling line so the window reads taller.':'Curtains removed. More light, less softness.');return;}
+  const item=findItem(t),color=findColor(t);
+  if(item){
+    const label=ITEM_LABEL[item]||item;
+    if(/remove|take (out|away)|delete|get rid|without|no more/.test(t)){
+      if(item==='wall'||item==='floor'){say("The walls and the floor stay; I can change their colour or material though.");return;}
+      commit(s=>{s[item].on=false;});say(`${cap(label)} removed. ${walkwayNote()}`);return;}
+    if(/add|put|bring|place|want a|need a|give me a/.test(t)&&!S[item]?.on&&S[item]){
+      const style=findStyle(item,t);commit(s=>{s[item].on=true;if(style)s[item].style=style;if(color)s[item].color=COLORS[color];});say(`${cap(label)} added${style?` (${info(item,style).name})`:''}. ${fitNote(item)}`);return;}
+    const target=/move|shift|push|pull|closer|further|nearer|slide/.test(t)?moveTarget(t):null;
+    if(target&&S[item]){
+      const hw=itemW(item)/2/ROOM_W;let nx=S[item].x;
+      if(target==='window')nx=cmToX(392)-hw-cmToX(10);else if(target==='corner')nx=item==='armchair'||item==='plant'||item==='lamp'?1-hw-0.01:hw+0.01;else if(target==='center')nx=0.5;else if(target==='left')nx=Math.max(hw,S[item].x-0.15);else if(target==='right')nx=Math.min(1-hw,S[item].x+0.15);
+      const before=S[item].x;let nudged=[];
+      commit(s=>{s[item].x=nx;if(item==='sofa'){s.table.x=nx;s.rug.x=nx;}nudged=resolveOverlaps(item);});
+      const cm=Math.round(Math.abs(nx-before)*ROOM_W);
+      const nudge=nudged.length?` I moved the ${nudged.map(k=>ITEM_LABEL[k]).join(' and the ')} to keep an 80 cm walkway.`:'';
+      say(`Moved the ${label} ${cm} cm ${nx>before?'right':'left'}${target==='window'?', up to the edge of the window light':''}${item==='sofa'?', with the rug and table following':''}.${nudge} ${windowBlock()>0?'Note: the sofa now sits partly in the window light; in a photo it will look great, in daily life it may fade the fabric.':walkwayNote()}`);return;}
+    if(item==='wall'){if(color){const c=COLORS[color];const w=mix(c,'#f5f3ee',/dark|deep|night/.test(t)?0:0.45);commit(s=>{s.wall=w;});say(`Walls in ${color}. ${paletteNote()}`);}else say('Which colour for the walls? Try sage, sand, terracotta, blush, mist or night.');return;}
+    if(item==='floor'){let f=null;if(/walnut|dark|brown/.test(t))f='walnut';else if(/grey|gray|ash/.test(t))f='grey';else if(/terrazzo|stone|tile/.test(t))f='terrazzo';else if(/oak|light|pale|wood/.test(t))f='oak';if(f){commit(s=>{s.floor=f;});say(`${FLOORS[f].name}. ${f==='walnut'?'Darker floors ground the room; keep the walls light.':'A lighter floor carries the window light deeper into the room.'}`);}else say('Oak, walnut, grey oak or terrazzo?');return;}
+    const style=findStyle(item,t);
+    if(style||color){
+      commit(s=>{s[item].on=true;if(style)s[item].style=style;if(color)s[item].color=COLORS[color];});
+      const c=info(item,S[item].style);
+      say(`${style?`${c.name}, ${c.dims}`:cap(label)+(color?` in ${color}`:'')}${style&&color?`, in ${color}`:''}. ${style?fitNote(item):paletteNote()}`);
+      if(item==='sofa')setChips(['Match the rug','Move the sofa to the window','Suggest an armchair','Compare']);return;}
+    if(/change|swap|replace|different|another|new/.test(t)){
+      const list=CAT[item].filter(c=>c.id!==S[item].style);
+      say(`Which ${label}? I'd pick one of these for this room.`,{options:list.slice(0,3).map(c=>({title:c.name,why:c.dims,apply:s=>{s[item].style=c.id;s[item].on=true;},after:`${c.name} it is. ${fitNote(item)}`}))});return;}
+    say(`What about the ${label}? I can change its style or colour, move it, or remove it.`);return;}
+  if(color){say(`${cap(color)} on what: the sofa, the walls, the rug or the armchair?`);setChips([`Sofa in ${color}`,`Walls in ${color}`,`Rug in ${color}`,`Armchair in ${color}`]);return;}
+  if(/match/.test(t)){commit(s=>{s.rug.color=tint(s.sofa.color,.5);});say('Rug pulled toward the sofa colour, a few shades lighter so it does not merge with it.');return;}
+  if(/compare|before/.test(t)){if(!cmp)document.getElementById('compare').click();say('Compare is on. Drag the line across the room.');return;}
+  if(/plan|layout|measure|dimension|cm|size/.test(t)){setTab(true);say('Here is the plan. Drag any piece; I check the walkways as you go. The room is 5.2 by 4.0 m, the window is 120 cm wide.');return;}
+  say("In this preview I can change the sofa, armchair, coffee table, rug, lamp, plant, wall art, wall colour and floor; move or remove them; apply a style; or suggest what I'd do. Try: \"make the walls sage\" or \"what would you change?\"");
+}
+function suggest(){
+  const opts=[];
+  if(windowBlock()>0||S.sofa.x>0.55)opts.push({title:'Open up the window side',why:`Move the sofa off the brightest wall; the walkway to the window goes up and the room reads larger.`,apply:s=>{s.sofa.x=0.40;s.rug.x=0.40;s.table.x=0.40;s.armchair.x=0.84;resolveOverlaps('sofa');},after:'Sofa pulled left, armchair into the corner. '+walkwayNote()});
+  else opts.push({title:'Anchor the seating on the rug',why:'Front legs of the sofa and the armchair on the rug make one group out of two pieces.',apply:s=>{s.rug.style='berber';s.rug.x=(s.sofa.x+s.armchair.x)/2;},after:'Rug recentred under the seating group.'});
+  const wallWarm=hex2(S.wall)[0]>hex2(S.wall)[2]+12;
+  opts.push(wallWarm?{title:'Cool the palette by one step',why:'Sand walls with a terracotta rug can tip into orange; a mist wall keeps the warm pieces as accents.',apply:s=>{s.wall='#d8dde3';},after:'Walls in mist. The warm pieces now read as accents.'}:{title:'Warm the palette',why:'The room is all cool tones; a sand wall and a terracotta rug would give it a pulse.',apply:s=>{s.wall='#e6d9c3';s.rug.color='#c2694a';},after:'Sand walls, terracotta rug. '+paletteNote()});
+  opts.push(S.lamp.style==='arc'?{title:'Layer the lighting',why:'One arc lamp lights the sofa only; a tripod by the armchair makes a second pool of light for the evening.',apply:s=>{s.lamp.style='tripod';s.lamp.x=Math.min(0.95,s.armchair.x+0.1);},after:'Tripod lamp beside the armchair.'}:{title:'Give the room one tall line',why:'Everything sits low; a fiddle-leaf fig in the corner draws the eye up.',apply:s=>{s.plant={style:'fiddle',color:'#5f7f5a',x:0.09,on:true};},after:'Fiddle-leaf fig in the left corner.'});
+  say("Three things I'd try, in this order:",{options:opts});
+}
+
+/* ---------- Upload (preview only) ---------- */
+document.getElementById('upload').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;const url=URL.createObjectURL(f);
+  setTab(false);const img=document.createElement('img');img.className='photo';img.src=url;img.alt='Your photo';
+  const note=document.createElement('div');note.className='photo-note';note.innerHTML='<span>Your photo stays on this device. In the preview, edits work on the sample room.</span><button type="button">Back to the sample room</button>';
+  note.querySelector('button').addEventListener('click',()=>{img.remove();note.remove();URL.revokeObjectURL(url);});
+  stage.appendChild(img);stage.appendChild(note);
+  say("Nice room. In this preview I can only edit the sample room, so I've shown your photo without changes. When Studio is live, this is where I'd read the room and ask what you'd like to change first.");
+  e.target.value='';
+});
+
+/* ---------- Sign-in and waitlist (preview only) ---------- */
+const modal=document.getElementById('modal');
+document.getElementById('signin').addEventListener('click',()=>{modal.classList.add('open');modal.querySelector('input').focus();});
+document.getElementById('modal-x').addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open');});
+document.getElementById('modal-form').addEventListener('submit',e=>{e.preventDefault();document.getElementById('modal-fine').textContent='In the real Studio you would now get a sign-in link. This is a preview, so nothing was sent.';});
+document.getElementById('wl').addEventListener('submit',e=>{e.preventDefault();document.getElementById('wl-ok').textContent='Noted. The list is not live yet in this preview, so nothing was sent.';e.target.reset();});
+
+/* ---------- Boot ---------- */
+buildCats();draw();
+add('ai',"This is a living room, 5.2 by 4.0 m, with the window on the right. Tell me what to change, or ask what I would do first.");
+setChips(['Change the sofa to moss green','Move the sofa to the window','Make it feel bigger','Make it Japandi','What would you change?']);
+})();
+</script>
+</body>
+</html>
