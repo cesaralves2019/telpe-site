@@ -3,186 +3,466 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Telpe AI</title>
-<meta name="description" content="Telpe is an AI company that shapes the built world.">
+<title>Telpe Tenders</title>
+<meta name="description" content="Public tenders from eTenders, Contracts Finder and TED, matched to what you sell and delivered to WhatsApp. One message a day, only what fits. Preview.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one screen. Headline on top, and beneath it a living massing model — thin isometric
-   lines on drafting-paper grid, blocks rising from the ground, holding, dissolving, rising again.
-   Hidden edges dashed, the way a draughtsman would draw them. Brand top-left, one-line footer. */
+/* Layout: one product, one promise. A hero that shows the alert itself on a phone, then a matcher the
+   visitor can actually use, then the plain facts: sources, what's in an alert, pricing, questions. */
 :root{
-  --bg:#fbfbfd;
-  --fg:#1d1d1f;
-  --fg-2:#86868b;
-  --line:rgba(29,29,31,.08);
-  --accent:#3d5afe;
-  --ink:29,29,31;
-  --accent-rgb:61,90,254;
-  --font:"Geist",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --bg:#fbfbfd;--bg-2:#f5f5f7;--card:#fff;--fg:#1d1d1f;--fg-2:#6e6e73;--line:rgba(29,29,31,.10);
+  --accent:#3d5afe;--accent-ink:#fff;--ok:#2e9e5b;--warn:#d9822b;--bad:#d64545;
+  --chat:#e9f5ec;--chat-ink:#1d1d1f;--chat-bg:#efeae2;
+  --inv-bg:#000;--inv-fg:#f5f5f7;--inv-fg-2:#86868b;
+  --font:"Geist",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--radius:28px;
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#000;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.10);--accent:#5b78ff;--ink:245,245,247;--accent-rgb:91,120,255;color-scheme:dark}
+  :root:not([data-theme="light"]){--bg:#000;--bg-2:#0c0c0e;--card:#161618;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.12);--accent:#5b78ff;--chat:#173a25;--chat-ink:#f5f5f7;--chat-bg:#0f0e0c;--inv-bg:#1d1d1f;color-scheme:dark}
 }
-:root[data-theme="dark"]{--bg:#000;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.10);--accent:#5b78ff;--ink:245,245,247;--accent-rgb:91,120,255;color-scheme:dark}
+:root[data-theme="dark"]{--bg:#000;--bg-2:#0c0c0e;--card:#161618;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.12);--accent:#5b78ff;--chat:#173a25;--chat-ink:#f5f5f7;--chat-bg:#0f0e0c;--inv-bg:#1d1d1f;color-scheme:dark}
 
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{
-  background:var(--bg);color:var(--fg);font-family:var(--font);
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
-}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.03em;line-height:1.05;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.num{font-variant-numeric:tabular-nums}
 
-.page{min-height:100%;display:flex;flex-direction:column;padding-inline:clamp(20px,4vw,48px)}
-
-header{display:flex;align-items:center;justify-content:space-between;height:64px;padding-top:env(safe-area-inset-top,0px);flex:none}
-.hlinks{display:flex;gap:26px}
-.play{font-size:14px;color:var(--fg-2);display:inline-flex;align-items:center;gap:6px}
-.play:hover{color:var(--fg)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:16px}
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:17px}
 .brand svg{width:20px;height:20px}
+.brand .sep{color:var(--fg-2);font-weight:400}
+.links{display:flex;gap:28px;font-size:14px;color:var(--fg-2)}
+.links a:hover{color:var(--fg)}
+.pill{font-size:13px;padding:7px 14px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:500;white-space:nowrap;border:0;cursor:pointer}
+@media (max-width:860px){.links{display:none}}
+@media (max-width:600px){.brand .sep,.brand .sub{display:none}}
 
-main{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(36px,7vh,96px)}
-h1{
-  margin:0;font-weight:600;letter-spacing:-.045em;line-height:.96;text-wrap:balance;
-  font-size:clamp(46px,9.5vw,124px);
-  opacity:0;transform:translateY(14px);animation:in 1.3s cubic-bezier(.2,.7,.2,1) .2s forwards;
-}
-h1 .soft{display:block;color:var(--fg-2);font-weight:300}
-.line{
-  margin:28px auto 0;max-width:34ch;color:var(--fg-2);font-size:clamp(17px,1.7vw,21px);line-height:1.45;text-wrap:balance;
-  opacity:0;animation:in 1.3s cubic-bezier(.2,.7,.2,1) .8s forwards;
-}
-@keyframes in{to{opacity:1;transform:none}}
+/* Hero */
+.hero{padding-block:clamp(64px,9vw,112px) clamp(40px,6vw,72px)}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,80px);align-items:center}
+@media (max-width:860px){.hero .grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(42px,7vw,86px);margin-top:18px;letter-spacing:-.04em;line-height:.98}
+.hero h1 .soft{display:block;color:var(--fg-2);font-weight:300}
+.hero .lede{max-width:40ch;margin:26px 0 0;font-size:clamp(18px,2vw,21px);line-height:1.45;color:var(--fg-2)}
+.actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:500;font-size:16px;border:0;cursor:pointer;background:none}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-ghost{color:var(--accent)}
+.btn-ghost:hover{text-decoration:underline;text-underline-offset:4px}
+.proof{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;font-size:13px;color:var(--fg-2)}
+.proof b{display:block;font-size:22px;color:var(--fg);letter-spacing:-.02em;font-weight:600}
 
-.model{flex:1;width:min(1100px,100%);min-height:clamp(240px,38vh,460px);position:relative;margin-top:clamp(16px,3vh,40px)}
-.model canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* Phone */
+.phone{width:min(360px,100%);margin-inline:auto;background:#111;border-radius:44px;padding:12px;box-shadow:0 40px 100px -40px rgba(0,0,0,.5)}
+.screen{background:var(--chat-bg);border-radius:34px;overflow:hidden;min-height:560px;display:flex;flex-direction:column;color:var(--chat-ink)}
+.screen .bar{background:#1f6b45;color:#fff;padding:18px 16px 12px;display:flex;align-items:center;gap:10px}
+.screen .bar .av{width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#1f6b45}
+.screen .bar .av svg{width:18px;height:18px}
+.screen .bar b{font-size:15px;display:block}
+.screen .bar span{font-size:11.5px;opacity:.85}
+.thread{padding:14px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
+.bub{max-width:92%;background:#fff;color:#1d1d1f;border-radius:14px;border-top-left-radius:4px;padding:9px 12px;font-size:13.5px;line-height:1.42;white-space:pre-wrap;box-shadow:0 1px 0 rgba(0,0,0,.06);animation:up .5s cubic-bezier(.2,.7,.2,1) both}
+.bub.me{align-self:flex-end;background:#d9fdd3;border-top-left-radius:14px;border-top-right-radius:4px}
+.bub b{font-weight:600}
+.bub .t{display:block;text-align:right;font-size:10.5px;color:#777;margin-top:4px}
+.bub .link{color:#1f6b45;text-decoration:underline;text-underline-offset:2px}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.screen .date{align-self:center;font-size:11px;background:rgba(0,0,0,.08);border-radius:8px;padding:3px 8px;color:#444}
+@media (prefers-reduced-motion:reduce){.bub{animation:none}}
 
-footer{flex:none;display:flex;justify-content:center;padding-block:22px calc(26px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:12px;color:var(--fg-2);letter-spacing:.02em}
+/* Matcher */
+.matcher-wrap{padding-block:clamp(40px,6vw,72px) clamp(72px,10vw,140px)}
+.matcher{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 40px 100px -40px rgba(0,0,0,.35);overflow:hidden}
+.matcher-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.matcher-bar h2{font-size:20px;letter-spacing:-.02em}
+.note{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2)}
+.matcher-body{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.9fr)}
+@media (max-width:900px){.matcher-body{grid-template-columns:1fr}}
+.controls{padding:20px;border-right:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start;min-width:0}
+@media (max-width:900px){.controls{border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:560px){.controls{grid-template-columns:1fr}}
+.field label{display:block;font-size:12.5px;color:var(--fg-2);margin-bottom:6px}
+.field select,.field input{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:var(--bg-2);font-size:15px}
+.sectors{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+.sectors button{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font-size:13px;color:var(--fg-2);cursor:pointer}
+.sectors button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.toggle{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--fg-2)}
+.toggle input{width:auto}
+.results{grid-column:1/-1;display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.results .count{font-size:14px;color:var(--fg-2);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tender{border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:6px 14px;background:var(--card)}
+.tender .buyer{font-size:12.5px;color:var(--fg-2);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tender .src{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.tender .src.sub{color:var(--warn);border-color:var(--warn)}
+.tender h3{font-size:16.5px;letter-spacing:-.015em;line-height:1.25;font-weight:600;margin-top:2px}
+.tender .meta{font-size:13px;color:var(--fg-2);margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
+.tender .meta b{color:var(--fg);font-weight:500}
+.tender .fit{text-align:right}
+.tender .fit b{display:block;font-size:22px;letter-spacing:-.02em;font-weight:600;color:var(--accent)}
+.tender .fit span{font-size:11px;color:var(--fg-2);letter-spacing:.08em;text-transform:uppercase}
+.tender .deadline.soon{color:var(--warn)}
+.tender .deadline.urgent{color:var(--bad)}
+.tender.pick{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.empty{border:1px dashed var(--line);border-radius:16px;padding:22px;text-align:center;color:var(--fg-2);font-size:14px}
+.preview{padding:20px;background:var(--bg-2);display:flex;flex-direction:column;gap:12px;min-width:0}
+.preview .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.preview .phone{width:100%;max-width:340px}
+.preview .screen{min-height:420px}
+.preview .modes{display:inline-flex;background:var(--card);border-radius:999px;padding:3px;border:1px solid var(--line)}
+.preview .modes button{border:0;background:none;padding:6px 12px;border-radius:999px;font-size:13px;color:var(--fg-2);cursor:pointer}
+.preview .modes button.on{background:var(--fg);color:var(--bg)}
+.preview .cta{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.preview .cta input{border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--card);font-size:15px;width:100%}
+.preview .cta button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:11px 16px;font-size:14.5px;cursor:pointer;font-weight:500}
+.preview .ok{font-size:12.5px;color:var(--fg-2);min-height:18px}
 
-@media (prefers-reduced-motion:reduce){h1,.line{animation:none;opacity:1;transform:none}}
+/* Bands */
+.band{padding-block:clamp(72px,10vw,140px)}
+.band.grey{background:var(--bg-2)}
+.band.inv{background:var(--inv-bg);color:var(--inv-fg)}
+.band.inv .eyebrow{color:var(--inv-fg-2)}
+.statement{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,96px);align-items:end}
+.statement h2{font-size:clamp(34px,5.4vw,66px)}
+.statement p{font-size:clamp(17px,1.6vw,20px);color:var(--fg-2);max-width:40ch}
+.band.inv .statement p{color:var(--inv-fg-2)}
+.statement .eyebrow{margin-bottom:22px}
+@media (max-width:760px){.statement{grid-template-columns:1fr}}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(40px,6vw,64px)}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,3vw,36px);min-width:0}
+.step .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:16px}
+.step h3{font-size:clamp(21px,2.2vw,27px);letter-spacing:-.025em;margin-bottom:10px}
+.step p{color:var(--fg-2);font-size:16px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.h2{font-size:clamp(32px,4.6vw,56px);max-width:22ch}
+.sources{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(36px,5vw,56px)}
+@media (max-width:760px){.sources{grid-template-columns:1fr}}
+.source{border:1px solid var(--line);border-radius:18px;padding:18px 20px;background:var(--card)}
+.source b{display:block;font-size:17px;letter-spacing:-.02em;font-weight:600}
+.source span{font-size:13.5px;color:var(--fg-2);display:block;margin-top:4px}
+.band.inv .source{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.band.inv .source span{color:var(--inv-fg-2)}
+@media (max-width:420px){.preview .modes button{padding:6px 8px;font-size:12px}}
+.anatomy{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center;margin-top:clamp(36px,5vw,56px)}
+@media (max-width:860px){.anatomy{grid-template-columns:1fr}}
+.anatomy ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.anatomy li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.anatomy li i{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:600;font-family:var(--mono)}
+.anatomy li b{display:block;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.anatomy li span{font-size:14.5px;color:var(--fg-2)}
+
+/* Pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(36px,5vw,56px)}
+@media (max-width:860px){.plans{grid-template-columns:1fr}}
+.plan{border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,3vw,32px);background:var(--card);display:flex;flex-direction:column;gap:14px;min-width:0}
+.plan.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.plan .name{font-size:14px;color:var(--fg-2);font-weight:500}
+.plan .price{font-size:40px;letter-spacing:-.03em;font-weight:600;line-height:1}
+.plan .price small{font-size:14px;color:var(--fg-2);font-weight:400;letter-spacing:0}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--fg-2)}
+.plan li::before{content:"·";margin-right:8px;color:var(--accent)}
+.plan button{margin-top:auto;border:1px solid var(--line);background:none;border-radius:999px;padding:11px 16px;font-size:14.5px;cursor:pointer;color:var(--fg)}
+.plan.hi button{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* FAQ */
+.faq{max-width:760px;margin-top:clamp(28px,4vw,44px)}
+.faq details{border-top:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;font-size:18px;font-weight:500;letter-spacing:-.01em;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::after{content:"+";color:var(--fg-2);font-weight:300}
+.faq details[open] summary::after{content:"–"}
+.faq p{color:var(--fg-2);margin-top:10px;font-size:15.5px;max-width:62ch}
+
+.center{text-align:center}
+.center h2{font-size:clamp(36px,6vw,76px);letter-spacing:-.04em}
+.center p{color:var(--fg-2);margin:22px auto 0;max-width:44ch;font-size:19px}
+footer{border-top:1px solid var(--line);padding-block:28px calc(44px + env(safe-area-inset-bottom,0px));color:var(--fg-2);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px 28px;flex-wrap:wrap}
+footer nav{display:flex;gap:22px;flex-wrap:wrap}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;place-items:center;z-index:50;padding:20px}
+.modal.open{display:grid}
+.sheet{background:var(--card);border-radius:24px;padding:28px;width:min(420px,100%);box-shadow:0 40px 100px -30px rgba(0,0,0,.5)}
+.sheet h3{font-size:24px;margin-bottom:8px}
+.sheet p{color:var(--fg-2);font-size:14.5px}
+.sheet form{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.sheet input{border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--bg-2);font-size:15px}
+.sheet .x{float:right;border:0;background:none;color:var(--fg-2);font-size:20px;cursor:pointer;line-height:1}
+.sheet .fine{font-size:12px;margin-top:14px}
 </style>
 </head>
 <body>
-<div class="page">
-  <header>
-    <a class="brand" href="#" aria-label="Telpe AI">
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Telpe Tenders">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg>
-      Telpe
+      Telpe <span class="sep">/</span> <span class="sub">Tenders</span>
     </a>
-    <nav class="hlinks" aria-label="Pages">
-      <a class="play" href="studio.html">Studio</a>
-      <a class="play" href="game.html">Play</a>
+    <nav class="links" aria-label="Primary">
+      <a href="#try">Try it</a>
+      <a href="#how">How it works</a>
+      <a href="#sources">Sources</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Questions</a>
     </nav>
-  </header>
+    <button class="pill" type="button" data-start>Start free</button>
+  </div>
+</header>
 
-  <main>
-    <h1>Plan it.<span class="soft">Telpe builds it.</span></h1>
-    <p class="line">Telpe is an AI company that shapes the built world.</p>
-    <div class="model"><canvas id="iso" aria-hidden="true"></canvas></div>
-  </main>
+<main id="top">
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <p class="eyebrow">Telpe Tenders · Preview</p>
+        <h1>Never miss a tender again.<span class="soft">Only the ones that fit.</span></h1>
+        <p class="lede">Public tenders from eTenders, Contracts Finder and TED, matched to what you sell and sent to your WhatsApp. One message a day. No portal logins, no 40-page PDFs before you know it's worth it.</p>
+        <div class="actions">
+          <button class="btn btn-primary" type="button" data-start>Start free</button>
+          <a class="btn btn-ghost" href="#try">Try the matcher →</a>
+        </div>
+        <div class="proof">
+          <div><b class="num">3</b>portals watched</div>
+          <div><b class="num">~500</b>open Irish tenders at any time</div>
+          <div><b class="num">1</b>message a day, or a weekly digest</div>
+        </div>
+      </div>
+      <div class="phone" aria-label="Example alert on a phone">
+        <div class="screen">
+          <div class="bar"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9l8-5 8 5v11M4 20h16"/></svg></div><div><b>Telpe Tenders</b><span>business account</span></div></div>
+          <div class="thread" id="hero-thread"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <footer>© <span id="year">2026</span> Telpe AI</footer>
+  <section class="matcher-wrap" id="try">
+    <div class="wrap">
+      <div class="matcher">
+        <div class="matcher-bar"><h2>Tell us what you sell. See what you'd get.</h2><span class="note">Preview · sample notices · nothing is sent</span></div>
+        <div class="matcher-body">
+          <div class="controls">
+            <div class="sectors" id="sectors" role="group" aria-label="Sectors"></div>
+            <div class="field"><label for="region">Where you work</label><select id="region"><option value="all">All of Ireland</option><option value="dublin">Dublin</option><option value="leinster">Leinster</option><option value="munster">Munster</option><option value="connacht">Connacht</option><option value="ni">Northern Ireland</option><option value="uk">UK (England, Scotland, Wales)</option><option value="ie-uk">Ireland and UK</option></select></div>
+            <div class="field"><label for="value">Contract size</label><select id="value"><option value="any">Any size</option><option value="s">Under €100k</option><option value="m">€100k to €500k</option><option value="l">€500k to €2m</option><option value="xl">Over €2m</option></select></div>
+            <div class="field" style="grid-column:1/-1"><label for="kw">Keywords (optional)</label><input id="kw" placeholder="e.g. parks, cleaning, website, lease" autocomplete="off"></div>
+            <label class="toggle"><input type="checkbox" id="sub" checked> Include sub-threshold notices (small contracts that never reach TED)</label>
+            <div class="results" id="results"></div>
+          </div>
+          <div class="preview">
+            <span class="k">What lands on your phone</span>
+            <div class="modes" role="tablist"><button class="on" data-mode="alert">Daily alert</button><button data-mode="digest">Weekly digest</button><button data-mode="remind">Deadline reminder</button></div>
+            <div class="phone"><div class="screen"><div class="bar"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9l8-5 8 5v11M4 20h16"/></svg></div><div><b>Telpe Tenders</b><span>business account</span></div></div><div class="thread" id="preview-thread"></div></div></div>
+            <div class="cta"><input id="phone" placeholder="Your WhatsApp number, e.g. 085 123 4567" inputmode="tel" aria-label="WhatsApp number"><button type="button" id="send">Send me alerts like this</button><div class="ok" id="send-ok"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band grey" id="how">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:22px">How it works</p>
+      <h2 class="h2">Three steps. You do the first one once.</h2>
+      <div class="steps">
+        <div class="step"><span class="k">01 · TELL US</span><h3>What you sell, where, and how big.</h3><p>Pick your sectors, your counties and the contract sizes you'd bid for. Add the words that matter in your trade. Two minutes.</p></div>
+        <div class="step"><span class="k">02 · WE WATCH</span><h3>Every notice, every day, at the source.</h3><p>We read eTenders, Contracts Finder, Find a Tender and TED as they publish, including the small notices that never leave the Irish portal.</p></div>
+        <div class="step"><span class="k">03 · YOU DECIDE</span><h3>One WhatsApp message with what fits.</h3><p>Buyer, value, deadline, a three-line summary of what they actually want, a fit score, and the link. Reply SAVE and we'll remind you before it closes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="anatomy">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:22px">What's in an alert</p>
+      <h2 class="h2">Everything you need to say yes or no in thirty seconds.</h2>
+      <div class="anatomy">
+        <ul>
+          <li><i>1</i><div><b>Who's buying, and what</b><span>The authority and the plain-English title, not the CPV code.</span></div></li>
+          <li><i>2</i><div><b>Value and deadline</b><span>Estimated value where published, closing date, and the days left.</span></div></li>
+          <li><i>3</i><div><b>A three-line summary</b><span>What they want, for how long, and the one requirement that rules people out. Read from the documents, not the title.</span></div></li>
+          <li><i>4</i><div><b>Fit score</b><span>How closely it matches your sectors, places, size and keywords. Below your threshold, we don't send it.</span></div></li>
+          <li><i>5</i><div><b>The link, and a reply</b><span>Straight to the notice. Reply SAVE to track it, MORE for the next one, STOP to pause.</span></div></li>
+        </ul>
+        <div class="phone"><div class="screen"><div class="bar"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V9l8-5 8 5v11M4 20h16"/></svg></div><div><b>Telpe Tenders</b><span>business account</span></div></div><div class="thread" id="anatomy-thread"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band inv" id="sources">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:22px">Sources</p>
+      <h2 class="h2">Read at the source, the day it's published.</h2>
+      <div class="sources">
+        <div class="source"><b>eTenders (Ireland)</b><span>The national portal. Every Irish public notice appears here first, including sub-threshold contracts that never reach TED.</span></div>
+        <div class="source"><b>Contracts Finder &amp; Find a Tender (UK)</b><span>England, Scotland and Wales, from the smallest council contract to above-threshold procurements.</span></div>
+        <div class="source"><b>TED (EU)</b><span>Tenders Electronic Daily, for above-threshold notices across the EU and cross-checking.</span></div>
+        <div class="source"><b>eSourcing NI &amp; Public Contracts Scotland</b><span>The regional portals, for suppliers who work across the border or the water.</span></div>
+        <div class="source"><b>Open data</b><span>The Office of Government Procurement's open dataset of every eTenders notice since 2013, for history and who-won-what.</span></div>
+        <div class="source"><b>Council sites</b><span>Quotations and low-value notices some councils publish only on their own pages.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:22px">Pricing · preview</p>
+      <h2 class="h2">Less than the hour you'd spend on the portal.</h2>
+      <div class="plans">
+        <div class="plan"><span class="name">Free</span><div class="price">€0<small> / month</small></div><ul><li>Weekly digest on WhatsApp</li><li>One sector, one region</li><li>Above-threshold notices only</li></ul><button type="button" data-start>Start free</button></div>
+        <div class="plan hi"><span class="name">Pro</span><div class="price">€19<small> / month</small></div><ul><li>Daily alerts, same day as published</li><li>Up to five sectors, any regions</li><li>Sub-threshold notices and council sites</li><li>Three-line summaries and fit score</li><li>Deadline reminders for saved tenders</li></ul><button type="button" data-start>Start free, upgrade later</button></div>
+        <div class="plan"><span class="name">Team</span><div class="price">€49<small> / month</small></div><ul><li>Everything in Pro</li><li>Three numbers, one shared list</li><li>Who-won-what history for your sector</li><li>CSV export</li></ul><button type="button" data-start>Talk to us</button></div>
+      </div>
+      <p style="color:var(--fg-2);font-size:13.5px;margin-top:18px">Preview pricing, in euro. UK pricing to follow. Cancel any time by replying STOP.</p>
+    </div>
+  </section>
+
+  <section class="band grey" id="faq">
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:22px">Questions</p>
+      <h2 class="h2">The honest answers.</h2>
+      <div class="faq">
+        <details><summary>Is this the official eTenders?</summary><p>No. Telpe Tenders is an independent service that reads the public portals and tells you what fits. You still register and bid on the portal itself; we link you straight to the notice.</p></details>
+        <details><summary>How fast are the alerts?</summary><p>Daily alerts go out the same day a notice is published, usually within hours. Irish notices appear on eTenders one to three days before they reach TED, so we read eTenders directly.</p></details>
+        <details><summary>Why WhatsApp and not email?</summary><p>Because tradespeople and small businesses read WhatsApp and leave email for later. You can still get a weekly email digest if you prefer; the matching is the same.</p></details>
+        <details><summary>Do you write the bid for me?</summary><p>No. We help you find the right ones and never miss a deadline. Writing the tender is your work, or your consultant's.</p></details>
+        <details><summary>What do you do with my number?</summary><p>Send you the alerts you asked for, nothing else. You can pause with STOP and delete your data with DELETE, both by reply.</p></details>
+        <details><summary>Can I cancel?</summary><p>Any time, by reply. No contract, no notice period.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band center" id="start">
+    <div class="wrap">
+      <h2>Start with a free weekly digest.</h2>
+      <p>Pick your sector, add your number, and see what you've been missing. Upgrade when the first alert pays for itself.</p>
+      <div class="actions" style="justify-content:center"><button class="btn btn-primary" type="button" data-start>Start free</button></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Telpe AI · Ireland</span>
+    <nav aria-label="Footer"><a href="#try">Try it</a><a href="#sources">Sources</a><a href="#pricing">Pricing</a><a href="#faq">Questions</a></nav>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="sheet">
+    <button class="x" id="modal-x" aria-label="Close">×</button>
+    <h3 id="modal-title">Start your free digest</h3>
+    <p>Your WhatsApp number and the sector you work in. We'd send one message asking you to confirm, then your first digest on Monday.</p>
+    <form id="modal-form"><input type="tel" placeholder="WhatsApp number" required aria-label="WhatsApp number"><input placeholder="Your trade or sector, e.g. landscaping" required aria-label="Sector"><button class="pill" type="submit" style="padding:12px 16px;font-size:15px">Send the confirmation</button></form>
+    <p class="fine" id="modal-fine">Preview: nothing is sent and nothing is stored.</p>
+  </div>
 </div>
 
 <script>
 (function(){
-  document.getElementById('year').textContent=new Date().getFullYear();
+'use strict';
+document.getElementById('year').textContent=new Date().getFullYear();
+const NOW=new Date();
+const DAY=864e5;
+const iso=d=>new Date(NOW.getTime()+d*DAY).toISOString().slice(0,10); /* sample deadlines are relative to today so the preview never goes stale */
+const SECTORS={construction:'Construction & civil works',cleaning:'Cleaning & facilities',it:'IT & software',consultancy:'Consultancy & engineering',catering:'Catering & food',landscaping:'Landscaping & grounds',transport:'Transport & fleet',security:'Security',training:'Training & education',printing:'Printing & marketing'};
+const REGION_GROUP={dublin:['dublin'],leinster:['dublin','leinster'],munster:['munster'],connacht:['connacht'],ni:['ni'],uk:['uk'],all:['dublin','leinster','munster','connacht','ireland'],'ie-uk':['dublin','leinster','munster','connacht','ireland','ni','uk']};
+const SRC={et:'eTenders',ted:'TED',cf:'Contracts Finder',fat:'Find a Tender',pcs:'Public Contracts Scotland',ni:'eSourcing NI'};
+/* Sample notices for the preview: shaped like real ones, but illustrative. Buyers are real public bodies; the notices are not. */
+const T=[
+  {buyer:'Dublin City Council',title:'Grounds maintenance of parks and open spaces, North Central Area',sector:'landscaping',region:'dublin',value:420000,cur:'€',close:iso(19),src:'et',sub:false,kw:'parks mowing hedging litter grounds',sum:'Three years plus two optional extensions. Mowing, hedging and litter across 42 sites. Needs €6.5m public liability and two references of similar scale.'},
+  {buyer:'HSE',title:'Contract cleaning services, community healthcare facilities, Dublin South',sector:'cleaning',region:'dublin',value:1200000,cur:'€',close:iso(25),src:'et',sub:false,kw:'cleaning healthcare clinics',sum:'Eleven primary-care centres, daily cleaning and periodic deep cleans. HSE infection-control standards; staff Garda vetting required.'},
+  {buyer:'Fingal County Council',title:'Supply and installation of playground equipment, Swords and Balbriggan',sector:'construction',region:'dublin',value:310000,cur:'€',close:iso(12),src:'et',sub:false,kw:'playground equipment installation parks',sum:'Two playgrounds, design-and-install. EN 1176 certified equipment, 12-month defects period. Site visits the week before closing.'},
+  {buyer:'TU Dublin',title:'Managed print services, all campuses',sector:'it',region:'dublin',value:850000,cur:'€',close:iso(32),src:'et',sub:false,kw:'print printers managed services',sum:'Five-year managed print across Grangegorman, Tallaght and Blanchardstown. Device fleet, follow-me printing, quarterly reporting.'},
+  {buyer:'Cork County Council',title:'Road markings and lining, county-wide, 2027 to 2029',sector:'construction',region:'munster',value:2400000,cur:'€',close:iso(39),src:'ted',sub:false,kw:'road markings lining thermoplastic',sum:'Three-year framework, three lots by division. Thermoplastic and paint, night working. NRA-approved materials only.'},
+  {buyer:'Galway City Council',title:'Catering services for City Hall and civic events',sector:'catering',region:'connacht',value:180000,cur:'€',close:iso(16),src:'et',sub:true,kw:'catering events canteen',sum:'Two-year contract for council meetings and about 30 civic events a year. HACCP required; Irish-sourced produce scored.'},
+  {buyer:'Office of Public Works',title:'Conservation stonework, Kilkenny Castle west wing',sector:'construction',region:'leinster',value:640000,cur:'€',close:iso(23),src:'et',sub:false,kw:'stonework conservation heritage masonry',sum:'Repointing and stone replacement on a protected structure. Conservation-accredited contractor; lime mortar only; 40-week programme.'},
+  {buyer:'Department of Education',title:'Framework for digital-skills training for school leaders',sector:'training',region:'ireland',value:500000,cur:'€',close:iso(46),src:'et',sub:false,kw:'training digital skills schools workshops',sum:'National framework, four lots by region. Blended delivery, evaluation reports per cohort. Trainers need QQI level 8 or equivalent.'},
+  {buyer:'Limerick City and County Council',title:'Security services for civic buildings and car parks',sector:'security',region:'munster',value:720000,cur:'€',close:iso(29),src:'et',sub:false,kw:'security guarding car parks patrol',sum:'Static guarding and mobile patrols, 24/7 at three sites. PSA licence mandatory; TUPE applies to current staff.'},
+  {buyer:'Iarnród Éireann',title:'Vegetation management along the rail network, Western region',sector:'landscaping',region:'connacht',value:1500000,cur:'€',close:iso(37),src:'ted',sub:false,kw:'vegetation trees cutting rail grounds',sum:'Lineside vegetation control, Athlone to Galway and Westport. Rail safety-critical training for all operatives; night possessions.'},
+  {buyer:'Dún Laoghaire-Rathdown County Council',title:'Website redesign and content management system',sector:'it',region:'dublin',value:140000,cur:'€',close:iso(18),src:'et',sub:true,kw:'website cms design accessibility',sum:'Redesign of the council site on an open-source CMS. WCAG 2.2 AA, Irish-language parity, two years of support.'},
+  {buyer:'Belfast City Council',title:'Cleaning of leisure centres',sector:'cleaning',region:'ni',value:950000,cur:'£',close:iso(31),src:'ni',sub:false,kw:'cleaning leisure centres',sum:'Seven leisure centres, four years. Living Wage required; social-value weighting of 10%.'},
+  {buyer:'Manchester City Council',title:'Supply of catering equipment for schools',sector:'catering',region:'uk',value:220000,cur:'£',close:iso(24),src:'cf',sub:false,kw:'catering equipment kitchens schools',sum:'Commercial kitchen equipment for 18 primary schools, supply and install over the Christmas break.'},
+  {buyer:'Scottish Water',title:'Engineering consultancy, small projects framework',sector:'consultancy',region:'uk',value:3000000,cur:'£',close:iso(44),src:'pcs',sub:false,kw:'engineering consultancy civil water',sum:'Four-year framework for civil and MEICA design under £500k per project. Chartered engineers; ISO 9001.'},
+  {buyer:'Mayo County Council',title:'Printing of council publications and signage',sector:'printing',region:'connacht',value:90000,cur:'€',close:iso(15),src:'et',sub:true,kw:'printing signage publications',sum:'Two-year contract, call-off basis. Annual report, newsletters, outdoor signage. Irish-language proofs required.'},
+  {buyer:'Tusla',title:'Lease of fleet vehicles, 40 units',sector:'transport',region:'ireland',value:1100000,cur:'€',close:iso(40),src:'et',sub:false,kw:'fleet vehicles lease cars vans',sum:'Four-year operating lease, 40 cars and vans, nationwide delivery. Full maintenance, electric preferred.'},
+  {buyer:'Waterford City and County Council',title:'Energy consultancy for public-buildings retrofit',sector:'consultancy',region:'munster',value:260000,cur:'€',close:iso(22),src:'et',sub:false,kw:'energy retrofit consultancy BER',sum:'Energy audits and retrofit design for 14 buildings. SEAI-registered assessors; deliverables to 2030 targets.'},
+  {buyer:'Wexford County Council',title:'Leisure-centre cleaning and caretaking',sector:'cleaning',region:'leinster',value:380000,cur:'€',close:iso(33),src:'et',sub:false,kw:'cleaning caretaking leisure',sum:'Two leisure centres, three years. Early and late shifts; pool-hall cleaning standards.'}
+];
+const fmtMoney=(v,c)=>c+(v>=1e6?(v/1e6).toFixed(1).replace(/\.0$/,'')+'m':Math.round(v/1000)+'k');
+const fmtClose=iso=>{const d=new Date(iso+'T17:00:00');return d.toLocaleDateString('en-IE',{weekday:'short',day:'numeric',month:'short'});};
+const daysLeft=iso=>Math.max(0,Math.ceil((new Date(iso+'T17:00:00')-NOW)/DAY));
+const valueBand=v=>v<100000?'s':v<500000?'m':v<2e6?'l':'xl';
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const portalLink=t=>({et:'https://www.etenders.gov.ie',ted:'https://ted.europa.eu',cf:'https://www.contractsfinder.service.gov.uk',fat:'https://www.find-tender.service.gov.uk',pcs:'https://www.publiccontractsscotland.gov.uk',ni:'https://etendersni.gov.uk'}[t.src]);
 
-  var c=document.getElementById('iso'),host=c.parentElement,ctx=c.getContext('2d');
-  var dpr=Math.min(devicePixelRatio||1,2),W=0,H=0,s=10,ox=0,oy=0;
-  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var N=10,HMAX=6,K=0.866;              // grid cells, max block height (cells), cos 30°
-  var ink,acc;
-  function readColors(){
-    var cs=getComputedStyle(document.documentElement);
-    ink=cs.getPropertyValue('--ink').trim()||'29,29,31';
-    acc=cs.getPropertyValue('--accent-rgb').trim()||'61,90,254';
-  }
-  readColors();
-  var mq=matchMedia('(prefers-color-scheme: dark)');
-  if(mq.addEventListener)mq.addEventListener('change',readColors);
+/* ---------- Matcher ---------- */
+let sel=new Set(['landscaping','cleaning']),mode='alert';
+const $=id=>document.getElementById(id);
+function buildSectors(){$('sectors').innerHTML=Object.entries(SECTORS).map(([k,v])=>`<button type="button" data-s="${k}" class="${sel.has(k)?'on':''}">${v}</button>`).join('');}
+$('sectors').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;const k=b.dataset.s;sel.has(k)?sel.delete(k):sel.add(k);buildSectors();render();});
+['region','value','kw','sub'].forEach(id=>$(id).addEventListener('input',render));
+function match(){
+  const region=$('region').value,band=$('value').value,sub=$('sub').checked,kws=$('kw').value.toLowerCase().split(/[,\s]+/).filter(w=>w.length>2);
+  const regions=REGION_GROUP[region];
+  return T.map(t=>{
+    let fit=0;const reasons=[];
+    if(sel.size===0||sel.has(t.sector))fit+=60;else return null;
+    if(regions.includes(t.region)||(t.region==='ireland'&&region!=='uk'&&region!=='ni'))fit+=20;else return null;
+    if(band==='any'||valueBand(t.value)===band)fit+=10;else fit-=25;
+    const hits=kws.filter(w=>(t.title+' '+t.kw+' '+t.sum).toLowerCase().includes(w));fit+=Math.min(15,hits.length*8);if(kws.length&&!hits.length)fit-=15;
+    if(t.sub&&!sub)return null;
+    const dl=daysLeft(t.close);if(dl<=3)fit-=10;
+    fit=Math.max(35,Math.min(98,fit+((t.buyer.length*7)%6)));
+    return {...t,fit,dl};
+  }).filter(Boolean).sort((a,b)=>b.fit-a.fit||a.dl-b.dl);
+}
+let top=null;
+function render(){
+  const list=match();top=list[0]||null;
+  const r=$('results');
+  if(!list.length){r.innerHTML='<div class="empty">Nothing fits those filters in the sample set. Loosen the size or add a sector.</div>';renderPreview();return;}
+  r.innerHTML=`<div class="count"><span><b class="num">${list.length}</b> of ${T.length} sample notices fit · sorted by fit</span><span>Sub-threshold notices marked in orange</span></div>`+list.map((t,i)=>`<div class="tender ${i===0?'pick':''}"><div><div class="buyer"><span>${esc(t.buyer)}</span><span class="src ${t.sub?'sub':''}">${t.sub?'sub-threshold · ':''}${SRC[t.src]}</span></div><h3>${esc(t.title)}</h3><div class="meta"><span>Est. <b class="num">${fmtMoney(t.value,t.cur)}</b></span><span class="deadline ${t.dl<=5?'urgent':t.dl<=10?'soon':''}">Closes <b class="num">${fmtClose(t.close)}</b> · ${t.dl} days</span></div></div><div class="fit"><b class="num">${t.fit}%</b><span>fit</span></div></div>`).join('');
+  renderPreview();
+}
+function bubble(html,me,time){return `<div class="bub ${me?'me':''}">${html}<span class="t">${time||''}</span></div>`;}
+function alertText(t){return `<b>New tender · ${esc(t.buyer)}</b>\n${esc(t.title)}\n\nEst. ${fmtMoney(t.value,t.cur)} · closes ${fmtClose(t.close)} (${t.dl} days)\nFit ${t.fit}% for ${SECTORS[t.sector].toLowerCase()}${t.sub?' · sub-threshold, eTenders only':''}\n\n${esc(t.sum)}\n\n<span class="link">${portalLink(t).replace('https://','')}</span>\n\nReply SAVE to track · MORE for the next`;}
+function renderPreview(){
+  const th=$('preview-thread');const hhmm=`${String(NOW.getHours()).padStart(2,'0')}:${String(NOW.getMinutes()).padStart(2,'0')}`;
+  if(!top){th.innerHTML='<div class="date">Today</div>'+bubble('No new tenders fit your profile today. Nothing to read, nothing missed.',false,hhmm);return;}
+  const list=match().slice(0,4);
+  if(mode==='alert'){th.innerHTML='<div class="date">Today</div>'+bubble(alertText(top),false,'08:05')+bubble('SAVE',true,'08:12')+bubble(`Saved. I'll remind you 7 days and 2 days before ${fmtClose(top.close)}.`,false,'08:12');}
+  else if(mode==='digest'){th.innerHTML='<div class="date">Monday</div>'+bubble(`<b>Your week in tenders · ${list.length} that fit</b>\n\n`+list.map((t,i)=>`${i+1}. ${esc(t.buyer)} · ${esc(t.title)}\n   ${fmtMoney(t.value,t.cur)} · closes ${fmtClose(t.close)} · fit ${t.fit}%`).join('\n\n')+`\n\nReply a number for the summary and link.`,false,'08:00')+bubble('1',true,'08:03')+bubble(alertText(list[0]),false,'08:03');}
+  else{const t=top;th.innerHTML='<div class="date">'+fmtClose(new Date(new Date(t.close+'T17:00:00')-7*DAY).toISOString().slice(0,10))+'</div>'+bubble(`<b>7 days left · ${esc(t.buyer)}</b>\n${esc(t.title)}\n\nCloses ${fmtClose(t.close)} at 17:00. Clarification questions usually close a week before; check the notice.\n\n<span class="link">${portalLink(t).replace('https://','')}</span>`,false,'09:00')+bubble(`<b>2 days left · ${esc(t.buyer)}</b>\n${esc(t.title)}\n\nSubmission is on the portal, not by email. Upload early; eTenders gets slow on deadline afternoons.`,false,'09:00');}
+}
+document.querySelector('.modes').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;document.querySelectorAll('.modes button').forEach(x=>x.classList.toggle('on',x===b));renderPreview();});
+$('send').addEventListener('click',()=>{const v=$('phone').value.trim();$('send-ok').textContent=v?`Noted. In the real product you'd get a WhatsApp message now asking you to confirm. This is a preview: nothing was sent to ${v}.`:'Add your number first.';});
 
-  function size(){
-    var b=host.getBoundingClientRect();W=b.width;H=b.height;
-    c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-    s=Math.min((W*0.92)/(2*K*N),(H*0.92)/(N+HMAX));
-    ox=W/2;oy=(H-(N+HMAX)*s)/2+HMAX*s;
-  }
-  function P(x,y,z){return [ox+(x-y)*s*K, oy+(x+y)*s*0.5-z*s];}
+/* ---------- Hero & anatomy phones ---------- */
+function heroThread(){
+  const a=T[0],b=T[2];const da=daysLeft(a.close),db=daysLeft(b.close);
+  $('hero-thread').innerHTML='<div class="date">Today</div>'+bubble(`<b>New tender · ${esc(a.buyer)}</b>\n${esc(a.title)}\n\nEst. ${fmtMoney(a.value,a.cur)} · closes ${fmtClose(a.close)} (${da} days)\nFit 92% for landscaping\n\n${esc(a.sum)}\n\n<span class="link">etenders.gov.ie</span>`,false,'08:05')+bubble('SAVE',true,'08:12')+bubble(`Saved. I'll remind you 7 days and 2 days before ${fmtClose(a.close)}.`,false,'08:12')+bubble(`<b>Also today · ${esc(b.buyer)}</b>\n${esc(b.title)} · ${fmtMoney(b.value,b.cur)} · closes ${fmtClose(b.close)} (${db} days) · fit 71%\nReply MORE for the summary.`,false,'08:05');
+}
+function anatomyThread(){const t=T[6];$('anatomy-thread').innerHTML='<div class="date">Today</div>'+bubble(`<b>New tender · ${esc(t.buyer)}</b>  <i style="font-style:normal;color:#1f6b45">①</i>\n${esc(t.title)}\n\nEst. ${fmtMoney(t.value,t.cur)} · closes ${fmtClose(t.close)} (${daysLeft(t.close)} days)  <i style="font-style:normal;color:#1f6b45">②</i>\n\n${esc(t.sum)}  <i style="font-style:normal;color:#1f6b45">③</i>\n\nFit 88% for construction · heritage  <i style="font-style:normal;color:#1f6b45">④</i>\n\n<span class="link">etenders.gov.ie</span>\nReply SAVE · MORE · STOP  <i style="font-style:normal;color:#1f6b45">⑤</i>`,false,'08:05');}
 
-  // A random, non-overlapping arrangement of blocks on the grid: a massing study.
-  var blocks=[];
-  function layout(){
-    blocks=[];var tries=0,count=7+Math.floor(Math.random()*4);
-    while(blocks.length<count&&tries++<400){
-      var w=1+Math.floor(Math.random()*3),d=1+Math.floor(Math.random()*3);
-      var x=Math.floor(Math.random()*(N-w+1)),y=Math.floor(Math.random()*(N-d+1));
-      var ok=true;
-      for(var i=0;i<blocks.length;i++){var b=blocks[i];
-        if(x<b.x+b.w+1&&x+w+1>b.x&&y<b.y+b.d+1&&y+d+1>b.y){ok=false;break;}}
-      if(!ok)continue;
-      var h=1+Math.random()*(HMAX-1.2);if(Math.random()<.25)h=Math.min(HMAX,h+1.5);
-      blocks.push({x:x,y:y,w:w,d:d,h:h,delay:(x+y)*0.09+Math.random()*0.5});
-    }
-    var tallest=0;for(var j=0;j<blocks.length;j++)if(blocks[j].h>blocks[tallest].h)tallest=j;
-    if(blocks.length)blocks[tallest].key=true;
-  }
+/* ---------- Start (preview) ---------- */
+const modal=$('modal');
+document.querySelectorAll('[data-start]').forEach(b=>b.addEventListener('click',()=>{modal.classList.add('open');modal.querySelector('input').focus();}));
+$('modal-x').addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open');});
+$('modal-form').addEventListener('submit',e=>{e.preventDefault();$('modal-fine').textContent='In the real product a WhatsApp confirmation would arrive now. This is a preview, so nothing was sent or stored.';});
 
-  function ease(t){t=Math.max(0,Math.min(1,t));return 1-Math.pow(1-t,3);}
-  function seg(a,b){ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
-
-  function drawGrid(alpha){
-    ctx.lineWidth=1;ctx.strokeStyle='rgba('+ink+','+(0.07*alpha).toFixed(3)+')';ctx.setLineDash([]);
-    ctx.beginPath();
-    for(var i=0;i<=N;i++){seg(P(i,0,0),P(i,N,0));seg(P(0,i,0),P(N,i,0));}
-    ctx.stroke();
-  }
-
-  function drawBlock(b,p,alpha){
-    var h=b.h*p; if(h<=0.001)return;
-    var x0=b.x,y0=b.y,x1=b.x+b.w,y1=b.y+b.d;
-    var A0=P(x0,y0,0),B0=P(x1,y0,0),C0=P(x1,y1,0),D0=P(x0,y1,0);
-    var A1=P(x0,y0,h),B1=P(x1,y0,h),C1=P(x1,y1,h),D1=P(x0,y1,h);
-    // hidden edges, dashed and faint: the back vertical and the two base edges meeting it
-    ctx.setLineDash([3,4]);ctx.lineWidth=1;
-    ctx.strokeStyle='rgba('+ink+','+(0.13*alpha).toFixed(3)+')';
-    ctx.beginPath();seg(A0,B0);seg(A0,D0);seg(A0,A1);ctx.stroke();
-    // visible edges
-    ctx.setLineDash([]);
-    var col=b.key?acc:ink,a=b.key?0.75:0.42;
-    ctx.strokeStyle='rgba('+col+','+(a*alpha).toFixed(3)+')';
-    ctx.beginPath();
-    seg(B0,C0);seg(C0,D0);                 // front base
-    seg(B0,B1);seg(C0,C1);seg(D0,D1);      // front verticals
-    seg(A1,B1);seg(B1,C1);seg(C1,D1);seg(D1,A1); // top face
-    ctx.stroke();
-    // top corners
-    ctx.fillStyle='rgba('+col+','+(0.9*alpha).toFixed(3)+')';
-    [A1,B1,C1,D1].forEach(function(q){ctx.beginPath();ctx.arc(q[0],q[1],1.4,0,6.283);ctx.fill();});
-  }
-
-  // Cycle: rise (staggered) → hold → dissolve → new arrangement
-  var GROW=1.8,HOLD=6.5,FADE=1.6,start=null,phaseEnd=0;
-  function maxDelay(){var m=0;for(var i=0;i<blocks.length;i++)m=Math.max(m,blocks[i].delay);return m;}
-  function frame(ts){
-    if(start===null){start=ts;phaseEnd=maxDelay()+GROW+HOLD;}
-    var t=(ts-start)/1000;
-    var alpha=1;
-    if(t>phaseEnd){alpha=1-ease((t-phaseEnd)/FADE);if(t>phaseEnd+FADE){layout();start=ts;t=0;alpha=1;phaseEnd=maxDelay()+GROW+HOLD;}}
-    ctx.clearRect(0,0,W,H);
-    drawGrid(1);
-    for(var i=0;i<blocks.length;i++){var b=blocks[i];drawBlock(b,ease((t-b.delay)/GROW),alpha);}
-    requestAnimationFrame(frame);
-  }
-
-  size();layout();
-  if(window.ResizeObserver){new ResizeObserver(function(){size();}).observe(host);}else{addEventListener('resize',size);}
-  if(reduce){ctx.clearRect(0,0,W,H);drawGrid(1);for(var i=0;i<blocks.length;i++)drawBlock(blocks[i],1,1);}
-  else requestAnimationFrame(frame);
+buildSectors();render();heroThread();anatomyThread();
 })();
 </script>
 </body>
