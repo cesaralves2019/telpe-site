@@ -116,6 +116,26 @@ p{margin:0}
 .proj .note{font-size:12.5px;color:var(--fg-2);margin-top:12px;max-width:none}
 @media (max-width:600px){.proj .row{grid-template-columns:1fr 1fr}.proj .row .lead{grid-column:1/-1;order:3;padding:8px 0 0}}
 
+ /* First round beside the second */
+.strip{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;align-items:center;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--line);font-size:13px;color:var(--fg-2)}
+.strip .eyebrow{margin:0}
+.strip b{color:var(--fg);font-variant-numeric:tabular-nums}
+.ref{font-size:12.5px;color:var(--fg-2);margin-top:4px;font-variant-numeric:tabular-nums}
+.ref b{color:var(--fg);font-weight:500}
+.others{font-size:12.5px;color:var(--fg-2);margin-top:10px}
+.seg{display:inline-flex;background:var(--bg-2);border-radius:999px;padding:3px;border:1px solid var(--line)}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:999px;font-size:13px;color:var(--fg-2);cursor:pointer}
+.seg button.on{background:var(--fg);color:var(--bg)}
+.seg[hidden]{display:none}
+.maphd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.uf .s2{font-size:11.5px;color:var(--fg-2);margin-top:3px;font-variant-numeric:tabular-nums}
+.poll{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:end;margin-top:14px}
+.poll .who{font-size:13px;color:var(--fg-2);margin-top:4px}
+.poll .who.r{text-align:right}
+.poll .lead{text-align:center;font-size:14px;color:var(--fg-2);padding-bottom:6px}
+.poll .lead b{display:block;font-size:17px;color:var(--fg);letter-spacing:-.02em}
+@media (max-width:600px){.poll{grid-template-columns:1fr 1fr}.poll .lead{grid-column:1/-1;order:3;padding:8px 0 0}}
+
 /* Waiting state */
 .wait{text-align:center;padding:clamp(28px,4vw,44px) 0 8px}
 .wait .big{font-size:clamp(34px,5vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
@@ -285,7 +305,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <div class="race" id="race" style="margin-top:clamp(32px,5vw,56px)">
         <div class="wait" id="wait">
           <p class="eyebrow">Urnas fecham às 17h · horário de Brasília</p>
-          <div class="big num" id="countdown">—</div>
+          <div class="big num countdown">—</div>
           <p>A totalização começa às 17h e aparece aqui automaticamente. Os votos do exterior entram na mesma hora que os do Brasil — o TSE não divulga nenhuma parcial antes do fim da votação.</p>
           <div class="recap" id="recap" hidden></div>
         </div>
@@ -374,6 +394,9 @@ const qs=new URLSearchParams(location.search);
 const BASE=(qs.get('src')||'https://resultados.tse.jus.br/oficial').replace(/\/$/,'');   // ?src= for a local mirror
 const CYCLE='ele2026';
 let ELE_PRES='6258', ELE_GOV='6260';           // 2026 second round; confirmed against ele-c.json at runtime
+const ELE_R1='6257', ELE_GOV_R1='6259';         // 2026 first round (4 October): loaded once, shown beside the second
+/* Last poll before the runoff, shown in the projection card until the first sections arrive. Keyed by ballot number. */
+const POLL={inst:'Datafolha',when:'23 e 24 de outubro',valid:{'13':49,'22':51},total:{'13':47,'22':48},bn:3,und:2,n:4050,err:2,reg:'BR-09540/2026'};
 const CLOSE_UTC=Date.UTC(2026,9,25,20,0,0);     // 17:00 Brasília (UTC−3)
 const EVERY=Number(qs.get('every'))||60000, CITIES_EVERY=Number(qs.get('every'))*3||180000;
 const SPOTS=[{uf:'pr',city:'CURITIBA',label:'Curitiba',code:'75353'},{uf:'sc',city:'CAIBI',label:'Caibi',code:null}];   // code: TSE municipality code, found in the TSE list when null
@@ -415,7 +438,11 @@ function parse(j){
 const leader=r=>r.cands.length<2?null:(r.cands[0].votes===r.cands[1].votes?null:(r.cands[0].votes>r.cands[1].votes?0:1));
 
 /* ---------- state ---------- */
-const state={br:null,ufs:{},cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,configOk:false,configTries:0,geo:null,geoMode:null,prev:null,prior:null,priorTries:0,proj:null,spots:SPOTS.map(()=>({city:null,uf:null}))};
+const state={br:null,ufs:{},cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,configOk:false,configTries:0,geo:null,geoMode:null,prev:null,prior:null,priorTries:0,proj:null,spots:SPOTS.map(()=>({city:null,uf:null})),r1:{br:null,ufs:{},spots:[],cities:[],citiesDone:false,govs:{},done:false,tries:0,logged:false},mapRound:'auto'};
+const live=()=>!!(state.br&&state.br.started);
+function finalistNums(){if(state.br&&state.br.cands.length>=2)return [state.br.cands[0].n,state.br.cands[1].n];const b=state.r1.br;if(b&&b.cands.length>=2){const top=[...b.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n));return [top[0].n,top[1].n];}return null;}
+/* A first-round result restricted to the two finalists (percentages stay over all valid votes of that round). */
+function fin(r){const nn=finalistNums();if(!r||!nn)return null;const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);if(!a||!b)return null;return {...r,cands:[a,b],started:r.votes.valid>0,round:1};}
 
 /* ---------- status / toast ---------- */
 function setStatus(kind,text){const el=$('status');el.classList.remove('live','err');if(kind)el.classList.add(kind);$('status-text').textContent=text;}
@@ -423,29 +450,31 @@ let toastT;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.
 
 /* ---------- countdown & waiting ---------- */
 function tickCountdown(){
-  const ms=CLOSE_UTC-Date.now();const el=$('countdown');if(!el)return;
-  if(ms<=0){el.textContent='Urnas fechadas';return;}
+  const ms=CLOSE_UTC-Date.now();const els=document.querySelectorAll('.countdown');if(!els.length)return;
   const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
-  el.textContent=(h?`${h}h `:'')+`${String(m).padStart(2,'0')}min ${String(s).padStart(2,'0')}s`;
+  const txt=ms<=0?'Urnas fechadas':(h?`${h}h `:'')+`${String(m).padStart(2,'0')}min ${String(s).padStart(2,'0')}s`;
+  els.forEach(el=>el.textContent=txt);
 }
 setInterval(tickCountdown,1000);tickCountdown();
 
 /* ---------- rendering: the race module ---------- */
 function picHTML(c){const ini=esc((c.nm||'?').trim().charAt(0));return `<div class="pic"><span>${ini}</span><img alt="" src="${photo(ELE_PRES,c.sq)}" onerror="this.onerror=null;this.src='${photo('6257',c.sq)}';this.onerror=function(){this.remove()}"></div>`;}
-function raceHTML(r){
-  const [a,b]=r.cands;const ld=leader(r);
-  const flag=(c,i)=>c.elected?`<span class="flag win">${esc(c.status||'Eleito')}</span>`:(ld===i?`<span class="flag">Lidera</span>`:`<span class="flag" style="visibility:hidden">·</span>`);
+function raceHTML(r,opts={}){
+  const [a,b]=r.cands;const ld=leader(r);const ref=opts.ref;
+  const flag=(c,i)=>c.elected?`<span class="flag win">${esc(c.status||'Eleito')}</span>`:(ld===i?`<span class="flag">${opts.round1?'Mais votado no 1º turno':'Lidera'}</span>`:`<span class="flag" style="visibility:hidden">·</span>`);
+  const refLine=i=>ref&&ref.cands[i]?`<div class="ref">1º turno · <b>${fmtPct(ref.cands[i].pct,1)}</b> · ${fmtInt(ref.cands[i].votes)} votos</div>`:'';
+  const others=opts.round1?`<p class="others">Outros candidatos no 1º turno: ${fmtPct(Math.max(0,100-a.pct-b.pct),1)} dos votos válidos. Percentuais sobre o total de votos válidos daquele turno.</p>`:'';
   return `<div class="top">
       <div class="cand a">${picHTML(a)}<div class="who"><div class="n">${esc(a.n)} · ${esc(a.party)}</div><div class="nm">${esc(title(a.nm))}</div></div></div>
       <div class="vs">VS</div>
       <div class="cand b">${picHTML(b)}<div class="who"><div class="n">${esc(b.n)} · ${esc(b.party)}</div><div class="nm">${esc(title(b.nm))}</div></div></div>
     </div>
     <div class="pcts">
-      <div class="side a"><div class="pct a num">${fmtPct(a.pct).replace('%','')}<small>%</small></div><div class="votes">${fmtInt(a.votes)} votos</div></div>
-      <div class="side b"><div class="pct b num">${fmtPct(b.pct).replace('%','')}<small>%</small></div><div class="votes">${fmtInt(b.votes)} votos</div></div>
+      <div class="side a"><div class="pct a num">${fmtPct(a.pct).replace('%','')}<small>%</small></div><div class="votes">${fmtInt(a.votes)} votos</div>${refLine(0)}</div>
+      <div class="side b"><div class="pct b num">${fmtPct(b.pct).replace('%','')}<small>%</small></div><div class="votes">${fmtInt(b.votes)} votos</div>${refLine(1)}</div>
     </div>
     <div class="bar" aria-hidden="true"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div>
-    <div class="flags">${flag(a,0)}${flag(b,1)}</div>
+    <div class="flags">${flag(a,0)}${flag(b,1)}</div>${others}
     <div class="stats">
       <div><b class="num">${fmtPct(r.sections.pct)}</b><span>das seções totalizadas · ${fmtInt(r.sections.done)} de ${fmtInt(r.sections.total)}</span></div>
       <div><b class="num">${fmtInt(r.votes.valid)}</b><span>votos válidos · ${fmtPct(r.votes.validPct)} do total</span></div>
@@ -455,13 +484,24 @@ function raceHTML(r){
     </div>`;
 }
 function renderRace(){
-  const r=state.br;
-  if(!r||!r.started){$('wait').hidden=false;$('race-body').hidden=true;return;}
-  $('wait').hidden=true;$('race-body').hidden=false;$('race-body').innerHTML=raceHTML(r);
-  const [a,b]=r.cands;const w=r.cands.find(c=>c.elected);
-  $('subline').textContent=w?`${title(w.nm)}: ${(w.status||'eleito').toLowerCase()}.`:(r.sections.pct>=100?'Totalização concluída.':'Apuração oficial, ao vivo.');
-  $('lede').textContent=`${fmtPct(r.sections.pct)} das seções totalizadas · atualizado às ${r.hg.slice(0,5)} (Brasília). Dados do TSE; este site não é oficial.`;
-  $('legend').innerHTML=`<span><i style="background:var(--c1)"></i>${esc(a.n)} ${esc(title(a.nm))}</span><span><i style="background:var(--c2)"></i>${esc(b.n)} ${esc(title(b.nm))}</span><span>Percentuais sobre votos válidos</span>`;
+  const r=state.br,r1=fin(state.r1.br);
+  const legend=(a,b)=>{$('legend').innerHTML=`<span><i style="background:var(--c1)"></i>${esc(a.n)} ${esc(title(a.nm))}</span><span><i style="background:var(--c2)"></i>${esc(b.n)} ${esc(title(b.nm))}</span><span>Percentuais sobre votos válidos</span>`;};
+  if(live()){
+    $('wait').hidden=true;$('race-body').hidden=false;$('race-body').innerHTML=raceHTML(r,{ref:r1});
+    const [a,b]=r.cands;const w=r.cands.find(c=>c.elected);
+    $('subline').textContent=w?`${title(w.nm)}: ${(w.status||'eleito').toLowerCase()}.`:(r.sections.pct>=100?'Totalização concluída.':'Apuração oficial, ao vivo.');
+    $('lede').textContent=`${fmtPct(r.sections.pct)} das seções totalizadas · atualizado às ${r.hg.slice(0,5)} (Brasília) · 1º turno ao lado, para comparar. Dados do TSE; este site não é oficial.`;
+    legend(a,b);return;
+  }
+  if(r1){
+    $('wait').hidden=true;$('race-body').hidden=false;
+    $('race-body').innerHTML=`<div class="strip"><span class="eyebrow">1º turno · 4 de outubro · resultado final</span><span>Urnas do 2º turno fecham às 17h (Brasília) · faltam <b class="countdown">—</b></span></div>`+raceHTML(r1,{round1:true});
+    tickCountdown();
+    $('subline').textContent='Hoje, o 2º turno. Por enquanto, o 1º.';
+    $('lede').textContent='Enquanto as urnas não fecham, os números são os do 1º turno, lidos do TSE. A partir das 17h (Brasília) a apuração de hoje entra ao vivo, lado a lado com o 1º turno.';
+    legend(r1.cands[0],r1.cands[1]);return;
+  }
+  $('wait').hidden=false;$('race-body').hidden=true;
 }
 function recapHTML(r){
   const top=[...r.cands].sort((x,y)=>y.votes-x.votes).slice(0,2);
@@ -469,51 +509,62 @@ function recapHTML(r){
 }
 
 /* ---------- rendering: compact cards ---------- */
-function miniHTML(r,name,note){
+function miniHTML(r,name,note,ref){
   if(!r||r.cands.length<2)return `<div class="ttl"><h3>${esc(name)}</h3></div><p class="muted" style="margin-top:14px;font-size:15px">${esc(note||'Sem dados ainda.')}</p>`;
   const [a,b]=r.cands;const ld=leader(r);
-  return `<div class="ttl"><h3>${esc(name)}</h3><span class="meta">${r.started?fmtPct(r.sections.pct)+' das seções':'aguardando'}</span></div>
+  const refLine=ref&&ref.cands.length>=2?`<div class="foot2 ref">1º turno: ${esc(ref.cands[0].n)} <b>${fmtPct(ref.cands[0].pct,1)}</b> · ${esc(ref.cands[1].n)} <b>${fmtPct(ref.cands[1].pct,1)}</b> · ${fmtInt(ref.votes.valid)} válidos</div>`:'';
+  return `<div class="ttl"><h3>${esc(name)}</h3><span class="meta">${r.round===1?'1º turno · 4 de outubro':r.started?fmtPct(r.sections.pct)+' das seções':'aguardando'}</span></div>
     <div class="mini"><div class="row"><b class="a num" style="${ld===1?'opacity:.55':''}">${fmtPct(a.pct)}</b><b class="b num" style="${ld===0?'opacity:.55':''}">${fmtPct(b.pct)}</b></div>
     <div class="names"><span>${esc(a.n)} · ${esc(title(a.nm))}${a.elected?' · '+esc((a.status||'eleito').toLowerCase()):''}</span><span class="r">${esc(b.n)} · ${esc(title(b.nm))}${b.elected?' · '+esc((b.status||'eleito').toLowerCase()):''}</span></div>
     <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div>
-    <div class="foot"><span>${fmtInt(a.votes)} votos</span><span>${fmtInt(b.votes)} votos</span></div><div class="foot2">${fmtInt(r.votes.valid)} votos válidos · ${fmtPct(r.voters.abstPct)} de abstenção</div></div>`;
+    <div class="foot"><span>${fmtInt(a.votes)} votos</span><span>${fmtInt(b.votes)} votos</span></div><div class="foot2">${fmtInt(r.votes.valid)} votos válidos · ${fmtPct(r.voters.abstPct)} de abstenção${r.round===1?' · percentuais sobre todos os válidos do 1º turno':''}</div>${refLine}</div>`;
 }
+/* Which result a card shows: the live second round (with the first beside it), or the first round alone. */
+function pick(r2,r1v){return live()&&r2&&r2.started?{r:r2,ref:r1v}:r1v?{r:r1v,ref:null}:{r:null,ref:null};}
 function renderSpot(){
   SPOTS.forEach((sp,i)=>{const st=state.spots[i];
-    $('spot-city-'+i).innerHTML=miniHTML(st.city,sp.label,st.city===null?(sp.code?`Aguardando a apuração em ${sp.label}.`:`Procurando ${sp.label} na lista de municípios do TSE…`):undefined);
-    $('spot-uf-'+i).innerHTML=miniHTML(st.uf,UF_NAMES[sp.uf],st.uf===null?`Aguardando a apuração em ${UF_NAMES[sp.uf]}.`:undefined);});
+    const c=pick(st.city,fin(state.r1.spots[i])),u=pick(st.uf,fin(state.r1.ufs[sp.uf]));
+    $('spot-city-'+i).innerHTML=miniHTML(c.r,sp.label,sp.code?`Lendo ${sp.label} no TSE…`:`Procurando ${sp.label} na lista de municípios do TSE…`,c.ref);
+    $('spot-uf-'+i).innerHTML=miniHTML(u.r,UF_NAMES[sp.uf],`Lendo ${UF_NAMES[sp.uf]} no TSE…`,u.ref);});
 }
-function ufHTML(uf,r){
-  const name=UF_NAMES[uf]||uf.toUpperCase();
+function ufHTML(uf){
+  const name=UF_NAMES[uf]||uf.toUpperCase();const {r,ref}=pick(state.ufs[uf],fin(state.r1.ufs[uf]));
   if(!r||!r.started)return `<div class="uf ${uf==='zz'?'ext':''}"><div class="k"><b>${esc(name)}</b><span>${uf.toUpperCase()}</span></div><div class="s">aguardando</div></div>`;
   const [a,b]=r.cands;const ld=leader(r);
   return `<div class="uf ${uf==='zz'?'ext':''}"><div class="k"><b>${esc(name)}</b><span>${uf.toUpperCase()}</span></div>
     <div class="p ${ld===0?'lead-a':ld===1?'lead-b':''}"><b class="a num">${fmtPct(a.pct,1)}</b><b class="b num">${fmtPct(b.pct,1)}</b></div>
     <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i></div>
-    <div class="s">${fmtPct(r.sections.pct,1)} das seções · ${fmtInt(r.votes.valid)} válidos</div></div>`;
+    <div class="s">${r.round===1?'1º turno · ':fmtPct(r.sections.pct,1)+' das seções · '}${fmtInt(r.votes.valid)} válidos</div>${ref?`<div class="s2">1º turno: ${fmtPct(ref.cands[0].pct,1)} · ${fmtPct(ref.cands[1].pct,1)}</div>`:''}</div>`;
 }
 function renderUFs(){
-  $('ufs').innerHTML=REGIONS.map(([reg,list])=>`<div class="uf region">${reg}</div>`+list.map(uf=>ufHTML(uf,state.ufs[uf])).join('')).join('');
+  $('ufs').innerHTML=REGIONS.map(([reg,list])=>`<div class="uf region">${reg}</div>`+list.map(uf=>ufHTML(uf)).join('')).join('');
 }
 function renderCities(){
   const box=$('cities');const q=($('city-filter').value||'').trim().toLowerCase();
-  const rows=state.cities.filter(c=>!q||c.name.toLowerCase().includes(q));
-  if(!state.cities.length){box.innerHTML=`<p class="tbl-note" id="cities-note">${state.cityList.length?'Aguardando a totalização do exterior.':'Aguardando a lista de cidades do exterior.'}</p>`;return;}
-  const [a,b]=(state.br||state.cities[0].r).cands;
-  box.innerHTML=`<table class="tbl"><thead><tr><th>Cidade</th><th class="r">${esc(a.n)} ${esc(title(a.nm))}</th><th class="r">${esc(b.n)} ${esc(title(b.nm))}</th><th class="hide"></th><th class="r hide">Válidos</th><th class="r">Seções</th></tr></thead><tbody>`+
-    rows.map(c=>{const r=c.r;const [x,y]=r.cands;return `<tr class="${c.star?'hi':''}"><td class="city">${esc(c.name)}</td><td class="r num">${fmtPct(x.pct,1)}</td><td class="r num">${fmtPct(y.pct,1)}</td><td class="hide"><span class="b"><i style="width:${x.pct}%"></i><i class="two" style="width:${y.pct}%"></i></span></td><td class="r num hide">${fmtInt(r.votes.valid)}</td><td class="r num">${fmtPct(r.sections.pct,0)}</td></tr>`;}).join('')+
-    `</tbody></table><p class="tbl-note">${rows.length} de ${state.cities.length} cidades com seções totalizadas · percentuais sobre votos válidos${state.cityList.length>state.cities.length?` · ${state.cityList.length-state.cities.length} ainda sem totalização`:''}</p>`;
+  const isLive=live()&&state.cities.length>0;
+  const r1map={};state.r1.cities.forEach(c=>{r1map[c.code]=c;});
+  const all=isLive?state.cities:state.r1.cities.map(c=>({...c,r:fin(c.r)})).filter(c=>c.r);
+  const rows=all.filter(c=>!q||c.name.toLowerCase().includes(q));
+  if(!all.length){box.innerHTML=`<p class="tbl-note" id="cities-note">${state.cityList.length?'Lendo as cidades do exterior no TSE…':'Aguardando a lista de cidades do exterior.'}</p>`;return;}
+  const [a,b]=all[0].r.cands;
+  box.innerHTML=`<table class="tbl"><thead><tr><th>Cidade</th><th class="r">${esc(a.n)} ${esc(title(a.nm))}</th><th class="r">${esc(b.n)} ${esc(title(b.nm))}</th><th class="hide"></th><th class="r hide">Válidos</th>${isLive?'<th class="r hide">1º turno</th>':''}<th class="r">${isLive?'Seções':'Turno'}</th></tr></thead><tbody>`+
+    rows.map(c=>{const r=c.r;const [x,y]=r.cands;const p=isLive&&r1map[c.code]?fin(r1map[c.code].r):null;return `<tr class="${c.star?'hi':''}"><td class="city">${esc(c.name)}</td><td class="r num">${fmtPct(x.pct,1)}</td><td class="r num">${fmtPct(y.pct,1)}</td><td class="hide"><span class="b"><i style="width:${x.pct}%"></i><i class="two" style="width:${y.pct}%"></i></span></td><td class="r num hide">${fmtInt(r.votes.valid)}</td>${isLive?`<td class="r num hide">${p?fmtPct(p.cands[0].pct,1)+' · '+fmtPct(p.cands[1].pct,1):'—'}</td>`:''}<td class="r num">${isLive?fmtPct(r.sections.pct,0):'1º'}</td></tr>`;}).join('')+
+    `</tbody></table><p class="tbl-note">${isLive?`${rows.length} de ${state.cities.length} cidades com seções totalizadas no 2º turno${state.cityList.length>state.cities.length?` · ${state.cityList.length-state.cities.length} ainda sem totalização`:''}`:`${rows.length} cidades · resultado final do 1º turno (4 de outubro)`} · percentuais sobre votos válidos</p>`;
 }
 function renderGovs(){
   const box=$('govs');
   if(!state.govs.length){box.innerHTML=`<div class="card empty">${state.configOk?'Nenhuma disputa de governador em segundo turno na configuração do TSE.':'Lendo a lista de disputas do TSE…'}</div>`;return;}
-  box.innerHTML=state.govs.map(g=>{const r=g.r;const name=UF_NAMES[g.uf]||g.uf.toUpperCase();
-    if(!r||!r.started)return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">aguardando</span></div>${r&&r.cands.length>=2?`<p class="muted" style="margin-top:12px;font-size:14.5px">${esc(title(r.cands[0].nm))} (${esc(r.cands[0].party)}) × ${esc(title(r.cands[1].nm))} (${esc(r.cands[1].party)})</p>`:''}</div></div>`;
+  box.innerHTML=state.govs.map(g=>{const name=UF_NAMES[g.uf]||g.uf.toUpperCase();
+    // first round restricted to this state's two finalists (known from the second-round file, else the first-round top two)
+    const g1=state.r1.govs[g.uf];let ref=null;
+    if(g1&&g1.cands.length>=2){const nn=g.r&&g.r.cands.length>=2?[g.r.cands[0].n,g.r.cands[1].n]:[...g1.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n)).map(c=>c.n);const a1=g1.cands.find(c=>c.n===nn[0]),b1=g1.cands.find(c=>c.n===nn[1]);if(a1&&b1)ref={...g1,cands:[a1,b1],started:true,round:1};}
+    const {r,ref:rr}=pick(g.r,ref);
+    if(!r||!r.started)return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">aguardando</span></div>${g.r&&g.r.cands.length>=2?`<p class="muted" style="margin-top:12px;font-size:14.5px">${esc(title(g.r.cands[0].nm))} (${esc(g.r.cands[0].party)}) × ${esc(title(g.r.cands[1].nm))} (${esc(g.r.cands[1].party)})</p>`:''}</div></div>`;
     const [a,b]=r.cands;const ld=leader(r);
-    return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">${fmtPct(r.sections.pct,1)} das seções</span></div>
+    return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">${r.round===1?'1º turno · 4 de outubro':fmtPct(r.sections.pct,1)+' das seções'}</span></div>
       <div class="mini"><div class="row"><b class="a num" style="${ld===1?'opacity:.55':''}">${fmtPct(a.pct,1)}</b><b class="b num" style="${ld===0?'opacity:.55':''}">${fmtPct(b.pct,1)}</b></div>
       <div class="names"><span><span class="nm">${esc(title(a.nm))}</span><br><span class="pt">${esc(a.n)} · ${esc(a.party)}${a.elected?' · '+esc((a.status||'eleito').toLowerCase()):''}</span></span><span class="r"><span class="nm">${esc(title(b.nm))}</span><br><span class="pt">${esc(b.n)} · ${esc(b.party)}${b.elected?' · '+esc((b.status||'eleito').toLowerCase()):''}</span></span></div>
-      <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div></div></div></div>`;}).join('');
+      <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div>${rr?`<div class="foot2 ref">1º turno: <b>${fmtPct(rr.cands[0].pct,1)}</b> · <b>${fmtPct(rr.cands[1].pct,1)}</b> (sobre todos os válidos)</div>`:r.round===1?`<div class="foot2">Percentuais sobre todos os válidos do 1º turno; outros candidatos ${fmtPct(Math.max(0,100-a.pct-b.pct),1)}.</div>`:''}</div></div></div>`;}).join('');
 }
 
 /* ---------- map (state outlines embedded in assets/br-uf.js, no external API) ---------- */
@@ -538,15 +589,17 @@ function renderMapShell(){
       <g class="mark"><circle cx="${cwb[0].toFixed(1)}" cy="${cwb[1].toFixed(1)}" r="4.5"/><text x="${(cwb[0]+9).toFixed(1)}" y="${(cwb[1]+4).toFixed(1)}">Curitiba</text></g>
       <g class="inset" data-uf="zz" style="cursor:pointer"><rect id="map-zz" x="${W-100}" y="${H-66}" width="86" height="46" rx="10"/><text x="${W-57}" y="${H-38}">EXTERIOR</text></g>
     </svg><div class="legend" id="map-legend"></div><p class="src">Contornos: @svg-maps/brazil (CC BY 4.0) · resultados: TSE · toque em um estado para ver os números</p><div class="tip" id="tip"></div>`;
+    box.insertAdjacentHTML('afterbegin','<div class="maphd"><span class="eyebrow" id="map-round-label"></span><div class="seg" id="map-seg" hidden><button type="button" data-round="r2">2º turno</button><button type="button" data-round="r1">1º turno</button></div></div>');
+    $('map-seg').addEventListener('click',e=>{const b=e.target.closest('[data-round]');if(!b)return;state.mapRound=b.dataset.round;renderMap();});
   }else{
     const grid=[['','','rr','ap','','',],['am','','pa','ma','ce','rn'],['ac','ro','to','pi','pb',''],['','mt','df','ba','pe','al'],['','ms','go','mg','se',''],['','','sp','rj','es',''],['','','pr','','',''],['','','sc','','zz',''],['','','rs','','','']];
     box.innerHTML=`<div class="tiles" id="tiles">${grid.flat().map(uf=>uf?`<div class="tile" data-uf="${uf}">${uf.toUpperCase()}</div>`:'<div></div>').join('')}</div><div class="legend" id="map-legend"></div><p class="src">Mapa esquemático · resultados: TSE · toque em um estado</p><div class="tip" id="tip"></div>`;
   }
   const tip=$('tip');
-  const show=(uf,x,y)=>{const r=state.ufs[uf];const name=UF_NAMES[uf]||uf.toUpperCase();
+  const show=(uf,x,y)=>{const r=mapSource(uf);const name=UF_NAMES[uf]||uf.toUpperCase();
     if(!r||!r.started){tip.innerHTML=`<b class="t">${esc(name)}</b><div class="s">Sem seções totalizadas ainda.</div>`;}
     else{const pal=palette();const [a,b]=r.cands;const row=(c,col)=>`<div class="r"><i style="background:${col}"></i><span>${esc(title(c.nm))}</span><span class="v">${fmtInt(c.votes)}</span><span class="p">${fmtPct(c.pct,1)}</span></div><div class="bb"><i style="width:${c.pct}%;background:${col}"></i></div>`;
-      tip.innerHTML=`<b class="t">${esc(name)}</b>${row(a,'rgb('+pal.c1.join(',')+')')}${row(b,'rgb('+pal.c2.join(',')+')')}<div class="s">${fmtPct(r.sections.pct,1)} das seções · ${fmtInt(r.votes.valid)} votos válidos</div>`;}
+      tip.innerHTML=`<b class="t">${esc(name)}${r.round===1?' <span class="muted" style="font-weight:400;font-size:12px">· 1º turno</span>':''}</b>${row(a,'rgb('+pal.c1.join(',')+')')}${row(b,'rgb('+pal.c2.join(',')+')')}<div class="s">${r.round===1?'4 de outubro · resultado final':fmtPct(r.sections.pct,1)+' das seções'} · ${fmtInt(r.votes.valid)} votos válidos</div>`;}
     const bw=box.clientWidth,bh=box.clientHeight;tip.style.display='block';
     tip.style.left=Math.max(8,Math.min(bw-258,x+14))+'px';tip.style.top=Math.max(8,Math.min(bh-tip.offsetHeight-8,y-10))+'px';};
   let pinned=null;
@@ -554,13 +607,19 @@ function renderMapShell(){
   box.addEventListener('mouseleave',()=>{if(!pinned)tip.style.display='none';});
   box.addEventListener('click',e=>{const t=e.target.closest('[data-uf]');if(!t){pinned=null;tip.style.display='none';return;}const rc=box.getBoundingClientRect();pinned=pinned===t.dataset.uf?null:t.dataset.uf;if(pinned)show(pinned,e.clientX-rc.left,e.clientY-rc.top);else tip.style.display='none';});
 }
+function mapRound(){return (state.mapRound==='r1'||(state.mapRound==='auto'&&!live()))?'r1':'r2';}
+function mapSource(uf){return mapRound()==='r1'?fin(state.r1.ufs[uf]):state.ufs[uf];}
 function renderMap(){
   if(!state.geoMode)return;
-  const pal=palette();
-  document.querySelectorAll('#map [data-uf]').forEach(el=>{const uf=el.dataset.uf;const f=fillFor(state.ufs[uf],pal);if(el.tagName==='path'||el.tagName==='g'){const t=el.tagName==='g'?el.querySelector('rect'):el;t.style.fill=f;}else el.style.background=f;});
-  document.querySelectorAll('#map-labels text').forEach(t=>{const r=state.ufs[t.textContent.toLowerCase()];const on=r&&r.started&&r.sections.pct>=1;t.style.fill=on?'#fff':'';t.style.opacity=on?'.9':'';});
+  const pal=palette(),round=mapRound();
+  document.querySelectorAll('#map [data-uf]').forEach(el=>{const uf=el.dataset.uf;const f=fillFor(mapSource(uf),pal);if(el.tagName==='path'||el.tagName==='g'){const t=el.tagName==='g'?el.querySelector('rect'):el;t.style.fill=f;}else el.style.background=f;});
+  document.querySelectorAll('#map-labels text').forEach(t=>{const r=mapSource(t.textContent.toLowerCase());const on=r&&r.started&&r.sections.pct>=1;t.style.fill=on?'#fff':'';t.style.opacity=on?'.9':'';});
+  const seg=$('map-seg'),lab=$('map-round-label');
+  if(seg){seg.hidden=!live();seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.round===round));}
+  if(lab)lab.textContent=round==='r1'?'1º turno · 4 de outubro · resultado final':'2º turno · hoje · ao vivo';
   const lg=$('map-legend');if(!lg)return;
-  const [a,b]=state.br&&state.br.cands.length>=2?state.br.cands:[{n:'13',nm:''},{n:'22',nm:''}];
+  const src=round==='r1'?fin(state.r1.br):state.br;
+  const [a,b]=src&&src.cands.length>=2?src.cands:[{n:'13',nm:''},{n:'22',nm:''}];
   const g=c=>`linear-gradient(90deg,${mix(c,pal.bg,.28)},${mix(c,pal.bg,1)})`;
   lg.innerHTML=`<span><i class="g" style="background:${g(pal.c1)}"></i>${esc(a.n)} ${esc(title(a.nm))} · vantagem crescente</span><span><i class="g" style="background:${g(pal.c2)}"></i>${esc(b.n)} ${esc(title(b.nm))}</span><span><i class="e"></i>sem seções totalizadas</span>`;
 }
@@ -623,17 +682,25 @@ function logChanges(){
    With counted data, a UF's projected split = w·observed + (1−w)·(first-round split + national swing), w = share of
    its sections counted. The swing is the vote-weighted gap between what the counted UFs show now and what they showed
    in October, so states that have not reported yet move with the country. An estimate, never a result. */
-async function loadPrior(){
-  if(state.prior)return;
-  state.priorTries++;
-  try{
-    const br=parse(await getJSON(uFile('6257','br',1)));
-    const top=[...br.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n));
-    if(top.length<2)return;
-    const prior={_cands:[top[0].n,top[1].n],_valid:br.votes.valid};
-    await Promise.all(UFS.map(async uf=>{try{const r=parse(await getJSON(uFile('6257',uf,1)));const a=r.cands.find(c=>c.n===top[0].n),b=r.cands.find(c=>c.n===top[1].n);if(a&&b&&r.votes.valid>0)prior[uf]={a:a.votes,b:b.votes,valid:r.votes.valid};}catch(_){}}));
-    if(Object.keys(prior).length>=20)state.prior=prior;
-  }catch(_){}
+async function loadFirstRound(){
+  const R=state.r1;if(R.done||R.tries>=40)return;R.tries++;
+  const jobs=[];
+  if(!R.br)jobs.push(getJSON(uFile(ELE_R1,'br',1)).then(j=>{R.br=parse(j);}).catch(()=>{}));
+  UFS.forEach(uf=>{if(!R.ufs[uf])jobs.push(getJSON(uFile(ELE_R1,uf,1)).then(j=>{R.ufs[uf]=parse(j);}).catch(()=>{}));});
+  SPOTS.forEach((sp,i)=>{if(sp.code&&!R.spots[i])jobs.push(getJSON(uFile(ELE_R1,sp.uf,1,sp.code)).then(j=>{R.spots[i]=parse(j);}).catch(()=>{}));});
+  state.govs.forEach(g=>{if(!R.govs[g.uf])jobs.push(getJSON(uFile(ELE_GOV_R1,g.uf,3)).then(j=>{R.govs[g.uf]=parse(j);}).catch(()=>{}));});
+  await Promise.allSettled(jobs);
+  const n=Object.keys(R.ufs).length;
+  if(R.br&&n>=20&&!R.logged){R.logged=true;addLog('info',`1º turno carregado do TSE: ${n} unidades${state.govs.length?`, ${state.govs.length} disputas de governador`:''}`,`4 de outubro · ${fmtInt(R.br.votes.valid)} votos válidos · é o que o site mostra até as urnas fecharem`);}
+  R.done=!!R.br&&n>=UFS.length&&SPOTS.every((sp,i)=>!sp.code||R.spots[i])&&state.govs.every(g=>R.govs[g.uf]);
+  if(R.br&&n>=20&&!state.prior){const nn=finalistNums();if(nn){const prior={_cands:nn,_valid:R.br.votes.valid};UFS.forEach(uf=>{const r=R.ufs[uf];if(!r)return;const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);if(a&&b&&r.votes.valid>0)prior[uf]={a:a.votes,b:b.votes,valid:r.votes.valid};});if(Object.keys(prior).length>=20)state.prior=prior;}}
+}
+async function loadCitiesFirstRound(){
+  const R=state.r1;if(R.citiesDone||!state.cityList.length)return;
+  const out=[];const list=state.cityList;
+  for(let i=0;i<list.length;i+=12){await Promise.all(list.slice(i,i+12).map(async m=>{try{const r=parse(await getJSON(uFile(ELE_R1,'zz',1,m.cd)));if(r.votes.valid>0&&r.cands.length>=2)out.push({name:title(m.name),code:m.cd,star:m.star,r});}catch(_){}}));}
+  out.sort((x,y)=>(y.star-x.star)||(y.r.votes.valid-x.r.votes.valid));
+  R.cities=out;R.citiesDone=out.length>=Math.min(5,list.length);renderCities();
 }
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 function projection(){
@@ -657,8 +724,23 @@ function projection(){
   else{tier='tie';label='Empate técnico';}
   return {pctA,pctB,margin,leader,tier,label,c,remaining,swing,withData,sumV,counted};
 }
+function pollHTML(A,B){
+  const pa=POLL.valid[A.n],pb=POLL.valid[B.n];if(pa==null||pb==null)return '';
+  const tie=Math.abs(pa-pb)<=2*POLL.err;const lead=pa===pb?null:(pa>pb?A:B);
+  return `<div class="hd"><p class="eyebrow">Projeção Telpe · antes da apuração, a última pesquisa</p><span class="tier">${tie?'Empate técnico na margem de erro':'Vantagem fora da margem'}</span></div>
+    <div class="poll">
+      <div><div class="p a num" style="font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--c1)">${pa}<small style="font-size:.5em;font-weight:400;color:var(--fg-2)">%</small></div><div class="who">${esc(A.n)} · ${esc(title(A.nm))} · votos válidos</div></div>
+      <div class="lead">${POLL.inst}<b>${POLL.when}</b></div>
+      <div><div class="p b num" style="font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--c2);text-align:right">${pb}<small style="font-size:.5em;font-weight:400;color:var(--fg-2)">%</small></div><div class="who r">${esc(B.n)} · ${esc(title(B.nm))} · votos válidos</div></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i class="fa" style="width:${pa}%"></i><i class="fb" style="width:${pb}%"></i><span class="mid"></span></div>
+    <p class="note">Votos totais: ${esc(title(A.nm))} ${POLL.total[A.n]}%, ${esc(title(B.nm))} ${POLL.total[B.n]}%, brancos e nulos ${POLL.bn}%, indecisos ${POLL.und}%. ${fmtInt(POLL.n)} entrevistas em ${POLL.when}, margem de erro de ${POLL.err} pontos (95%), registro TSE ${POLL.reg}.
+    Assim que as primeiras seções forem totalizadas, este card passa a mostrar a projeção estatística feita a partir das urnas abertas e da distribuição do 1º turno por estado.</p>`;
+}
 function renderProjection(){
-  const box=$('proj');const pj=projection();state.proj=pj;
+  const box=$('proj');
+  if(!live()){const nn=finalistNums();const src=state.br&&state.br.cands.length>=2?state.br:fin(state.r1.br);if(!nn||!src){box.hidden=true;return;}const html=pollHTML(src.cands[0],src.cands[1]);box.hidden=!html;box.innerHTML=html;state.proj=null;return;}
+  const pj=projection();state.proj=pj;
   if(!pj||state.br.cands.some(c=>c.elected)||state.br.sections.pct>=99.9){box.hidden=true;state.proj=null;return;}
   const r=state.br,[A,B]=r.cands;box.hidden=false;
   const leadTxt=pj.tier==='early'?'<b>Aguardando mais seções</b>':pj.tier==='tie'?'<b>Empate técnico</b>':`<b>${esc(title(pj.leader.nm))}</b>`;
@@ -670,7 +752,7 @@ function renderProjection(){
     </div>
     <div class="bar" aria-hidden="true"><i class="fa" style="width:${pj.pctA}%"></i><i class="fb" style="width:${pj.pctB}%"></i><span class="mid"></span></div>
     <p class="note">Com ${fmtPct(100*pj.c,1)} dos votos válidos esperados já contados em ${pj.withData} unidades · faltam cerca de ${fmtInt(pj.remaining)} votos válidos · margem projetada ${fmtPct(pj.margin,1).replace('%',' pp')}.
-    Modelo: a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}) e substituída pelo resultado real à medida que as seções do estado entram.</p>`;
+    Modelo: a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}) e substituída pelo resultado real à medida que as seções do estado entram.${POLL.valid[A.n]!=null?` Última pesquisa (${POLL.inst}, véspera): ${esc(title(A.nm))} ${POLL.valid[A.n]}% × ${esc(title(B.nm))} ${POLL.valid[B.n]}% dos válidos.`:''}</p>`;
 }
 
 /* ---------- loading ---------- */
@@ -726,23 +808,19 @@ async function loadCities(){
   if(!state.cityList.length)return;
   const out=[];const list=state.cityList;
   for(let i=0;i<list.length;i+=12){ // small batches: be gentle with the TSE
-    await Promise.all(list.slice(i,i+12).map(async m=>{try{const r=parse(await getJSON(uFile(ELE_PRES,'zz',1,m.cd)));if(r.started&&r.cands.length>=2)out.push({name:title(m.name),star:m.star,r});}catch(_){}}));
+    await Promise.all(list.slice(i,i+12).map(async m=>{try{const r=parse(await getJSON(uFile(ELE_PRES,'zz',1,m.cd)));if(r.started&&r.cands.length>=2)out.push({name:title(m.name),code:m.cd,star:m.star,r});}catch(_){}}));
   }
   out.sort((x,y)=>(y.star-x.star)||(y.r.votes.valid-x.r.votes.valid));
   state.cities=out;renderCities();
   const prevN=(state.prev||{}).cities||0;
   if(out.length&&out.length!==prevN){const d=out.find(c=>c.star);addLog('info',`Exterior: ${out.length} de ${list.length} cidades com seções totalizadas`,d?`Dublin: ${title(d.r.cands[0].nm)} ${fmtPct(d.r.cands[0].pct,1)} × ${title(d.r.cands[1].nm)} ${fmtPct(d.r.cands[1].pct,1)}`:'');state.prev={...(state.prev||{}),cities:out.length};savePrev();}
 }
-async function loadRecap(){
-  try{const r=parse(await getJSON(uFile('6257','br',1)));if(r.cands.length>=2&&r.votes.valid>0){$('recap').innerHTML=recapHTML(r);$('recap').hidden=false;}}catch(_){}
-}
-
 /* ---------- loop ---------- */
 async function cycle(){
   try{
     if(!state.configOk)await loadConfig();
     if(!state.munList.length)await loadMunicipalities();
-    if(!state.prior&&state.priorTries<30)await loadPrior();
+    await loadFirstRound();
     await loadMain();
   }
   catch(e){
@@ -754,7 +832,7 @@ async function cycle(){
   }
   setTimeout(cycle,state.errors?30000:EVERY);
 }
-async function citiesCycle(){try{await loadCities();}catch(_){}setTimeout(citiesCycle,CITIES_EVERY);}
+async function citiesCycle(){try{await loadCitiesFirstRound();await loadCities();}catch(_){}setTimeout(citiesCycle,CITIES_EVERY);}
 
 $('city-filter').addEventListener('input',renderCities);
 $('find').addEventListener('submit',async e=>{
@@ -763,14 +841,13 @@ $('find').addEventListener('submit',async e=>{
   const hit=state.munList.find(x=>x.name.toUpperCase()===name&&(!uf||x.uf===uf))||state.munList.find(x=>x.name.toUpperCase().startsWith(name)&&(!uf||x.uf===uf));
   if(!hit){$('found').innerHTML='<div class="card"><p class="muted">Cidade não encontrada na lista do TSE. Escolha uma sugestão da lista.</p></div>';return;}
   $('found').innerHTML='<div class="card"><p class="muted">Lendo…</p></div>';
-  try{const r=parse(await getJSON(uFile(ELE_PRES,hit.uf,1,hit.cd)));$('found').innerHTML=`<div class="card">${miniHTML(r,`${title(hit.name)} (${hit.uf.toUpperCase()})`,r.started?undefined:'Aguardando a apuração nesta cidade.')}</div>`;}
+  try{const [r2,r1]=await Promise.all([getJSON(uFile(ELE_PRES,hit.uf,1,hit.cd)).then(parse).catch(()=>null),getJSON(uFile(ELE_R1,hit.uf,1,hit.cd)).then(parse).catch(()=>null)]);const {r,ref}=pick(r2,fin(r1));$('found').innerHTML=`<div class="card">${miniHTML(r,`${title(hit.name)} (${hit.uf.toUpperCase()})`,'O TSE ainda não publicou dados desta cidade.',ref)}</div>`;}
   catch(err){$('found').innerHTML=`<div class="card"><p class="muted">O TSE ainda não publicou o arquivo desta cidade.</p></div>`;}
 });
 
 (async function start(){
   renderUFs();renderSpot();renderGovs();renderLog();
   initMap();
-  loadRecap();
   cycle();
   setTimeout(citiesCycle,4000);
 })();
