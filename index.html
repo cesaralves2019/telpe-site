@@ -323,7 +323,8 @@ p{margin:0}
 .msg.user{align-self:flex-end;background:var(--fg);color:var(--bg);border-bottom-right-radius:6px}
 .msg.bot{align-self:stretch;max-width:100%;background:var(--bg-2);border-bottom-left-radius:6px}
 .msg .mt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);margin-bottom:6px}
-.msg .mx{margin:0 0 8px}.msg .mx:last-child{margin-bottom:0}.msg .mf{margin:10px 0 0;font-size:12.5px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.msg .mx{margin:0 0 8px}.msg .mx:last-child{margin-bottom:0}.msg .mx b{font-weight:600}.msg .mn{margin:8px 0 0;font-size:12.5px;color:var(--fg-2)}.msg .mf{margin:10px 0 0;font-size:12.5px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.typing{display:inline-flex;gap:4px;padding:6px 2px}.typing i{width:6px;height:6px;border-radius:50%;background:var(--fg-2);animation:blink 1.2s infinite}.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
 .ct-wrap{overflow:auto;-webkit-overflow-scrolling:touch;margin-top:4px}
 .ct{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
 .ct th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);font-weight:500;padding:8px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -477,7 +478,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
     <div class="wrap">
       <p class="eyebrow">Chatbot</p>
       <h2 class="h2">Pergunte aos dados.</h2>
-      <p class="sub muted">Responde com tabelas a partir dos arquivos oficiais do TSE que esta página já carregou: estados, cidades, exterior, 1º × 2º turno, participação, evolução e projeção. Sem servidor — tudo acontece no seu navegador.</p>
+      <p class="sub muted">Uma conversa sobre a apuração, com os dados oficiais do TSE que esta página já carregou: quem lidera e por quanto, como o apurado se compara com o Datafolha, com o Monte Carlo e com o 1º turno, estados, cidades, exterior, quanto falta. Leitura curta primeiro, tabela por trás. Sem servidor — tudo acontece no seu navegador.</p>
       <div class="chat card">
         <div class="chat-log" id="chat-log" aria-live="polite"></div>
         <div class="chips" id="chat-chips"></div>
@@ -1266,7 +1267,9 @@ function botIntent(P){
   if(/^(limpar|limpa|apagar|apaga|reset|zerar)\b/.test(q))return 'clear';
   if(/\blog\b|ultim[oa]s? (dados|atualiza\w*|lotes?)|novos dados|primeiro lote|quando (chegou|chegaram|veio|comecou|foi o primeiro)|que horas (chegou|comecou)/.test(q))return 'log';
   if(/governad\w*|governo (do|de|no) estado|\bgoverna\b/.test(q))return 'governor';
-  if(/proje[ct]\w*|previs\w*|quem (vai|deve|tende a|pode) (ganhar|vencer|levar)|chance|probabil\w*|monte carlo|datafolha|pesquisa|tendencia|forecast|vai dar|quem ganha|quem leva|simulac\w*/.test(q))return 'projection';
+  if(/datafolha|\bpesquisa\b|\binstituto\b|\bquaest\b|\bipec\b|\batlas\b/.test(q)&&!/monte carlo/.test(q))return 'poll';
+  if(/monte carlo|simula\w*|probabil\w*|\bchances?\b|\bodds\b/.test(q))return 'mc';
+  if(/proje[ct]\w*|previs\w*|quem (vai|deve|tende a|pode) (ganhar|vencer|levar)|tendencia|forecast|vai dar|quem ganha|quem leva|cenario|expectativa/.test(q))return 'projection';
   if(/como estava|estava as|evolucao|marcha|historico|ao longo|hora a hora|meia em meia|minuto a minuto|linha do tempo|curva|as \d{1,2}(h|:)|\d{1,2}(h| horas)( |$)/.test(q)&&!/\bpesquisa\b/.test(q))return 'timeline';
   if(/compar\w*|em relacao ao (1|1o|primeiro)|cresceu|caiu|subiu|desceu|ganhou (votos|terreno)|perdeu (votos|terreno)|turno a turno|\b1[oº]? ?x ?2[oº]?\b|versus|\bvs\b|diferenca (entre|para|do|dos) (os )?(turnos|1|primeiro)|melhorou|piorou|avancou|recuou|evoluiu/.test(q))return 'compare';
   if(/diferenca de votos|votos de (vantagem|diferenca|frente)|quantos votos|vantagem em votos|margem( de votos)?\b|faltam quantos|\bvirar\b|reverter|alcancar|ultrapassar|faltam? (para|pra)/.test(q))return 'margin';
@@ -1319,58 +1322,148 @@ async function botUfCities(uf,round,onProgress){ // every municipality of a stat
   BOT.cache[key]={t:now,list:out};return out;
 }
 
-/* ---------- answers ---------- */
+/* ---------- answers: a short reading first, then the table that backs it ---------- */
 const two=(r,nn)=>{const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);const t=(a?a.votes:0)+(b?b.votes:0);return {a,b,pa:t?100*(a?a.votes:0)/t:null,pb:t?100*(b?b.votes:0)/t:null,t};};
 const ct=(cols,rows,cls='')=>`<div class="ct-wrap"><table class="ct ${cls}"><thead><tr>${cols.map(c=>`<th class="${c.cls||''}">${c.h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr${r.cls?` class="${r.cls}"`:''}>${r.cells.map((v,i)=>`<td class="${(cols[i]&&cols[i].cls)||''}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const dot=n=>`<i class="cd ${n===finalistNums()[0]?'a':'b'}"></i>`;
 const cname=c=>`${dot(c.n)}${esc(title(c.nm))} <span class="mu">${esc(c.n)}</span>`;
 const pp=(v,d=1)=>v==null?'—':(v>0?'+':'')+v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+' pp';
+const ppAbs=(v,d=1)=>Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+' pp';
+const P1=(v,d=1)=>fmtPct(v,d);
+const short=n=>candName(n).split(' ')[0];
+const em=s=>`<b>${s}</b>`;
+const UF_PREP={ac:'no',al:'em',ap:'no',am:'no',ba:'na',ce:'no',df:'no',es:'no',go:'em',ma:'no',mt:'em',ms:'em',mg:'em',pa:'no',pb:'na',pr:'no',pe:'em',pi:'no',rj:'no',rn:'no',rs:'no',ro:'em',rr:'em',sc:'em',sp:'em',se:'em',to:'no'};
+const COUNTRY_PREP={'Irlanda':'na','França':'na','Alemanha':'na','Itália':'na','Espanha':'na','Argentina':'na','Austrália':'na','Suíça':'na','Bélgica':'na','Áustria':'na','Suécia':'na','Noruega':'na','Dinamarca':'na','Finlândia':'na','Polônia':'na','Grécia':'na','Turquia':'na','Rússia':'na','Índia':'na','China':'na','Bolívia':'na','Colômbia':'na','Venezuela':'na','Nova Zelândia':'na','Coreia do Sul':'na','África do Sul':'na','Inglaterra':'na','Hungria':'na','Romênia':'na','Croácia':'na','Sérvia':'na','Ucrânia':'na','Jamaica':'na','Guatemala':'na','Nicarágua':'na','Costa Rica':'na','República Dominicana':'na','Tailândia':'na','Indonésia':'na','Malásia':'na','Arábia Saudita':'na','Jordânia':'na','Síria':'na','Tunísia':'na','Argélia':'na','Líbia':'na','Nigéria':'na','Etiópia':'na','Tanzânia':'na','Zâmbia':'na','Namíbia':'na','Guiana':'na','Guiana Francesa':'na','Islândia':'na','Estônia':'na','Letônia':'na','Lituânia':'na','Moldávia':'na','Geórgia':'na','Armênia':'na','Mongólia':'na','Eslováquia':'na','Eslovênia':'na','Bulgária':'na','Tchéquia':'na','Bósnia e Herzegovina':'na','Albânia':'na','Macedônia do Norte':'na','Mauritânia':'na','Costa do Marfim':'na','Guiné':'na','Guiné-Bissau':'na','Guiné Equatorial':'na','Santa Lúcia':'em','Reino Unido':'no','Japão':'no','Canadá':'no','México':'no','Peru':'no','Chile':'no','Uruguai':'no','Paraguai':'no','Panamá':'no','Equador':'no','Egito':'no','Líbano':'no','Catar':'no','Kuwait':'no','Vietnã':'no','Nepal':'no','Haiti':'no','Suriname':'no','Belize':'no','Togo':'no','Benin':'no','Mali':'no','Gabão':'no','Congo':'no','Timor-Leste':'no','Sudão':'no','Sudão do Sul':'no','Marrocos':'no','Senegal':'no','Irã':'no','Iraque':'no','Cazaquistão':'no','Uzbequistão':'no','Azerbaijão':'no','Paquistão':'no','Sri Lanka':'no','Luxemburgo':'em','Chipre':'no','Quênia':'no','Zimbábue':'no','Malaui':'no','Camboja':'no','Mianmar':'em','Bahrein':'no','Omã':'em','Estados Unidos':'nos','Países Baixos':'nos','Emirados Árabes Unidos':'nos','Filipinas':'nas','Bahamas':'nas','Camarões':'nos'};
+const inPlace=place=>!place||place.kind==='br'?'no Brasil':place.kind==='region'?`na região ${place.name}`:place.kind==='country'?`${COUNTRY_PREP[place.name]||'em'} ${place.name}`:place.kind==='uf'?(place.uf==='zz'?'no exterior':`${UF_PREP[place.uf]||'em'} ${UF_NAMES[place.uf]}`):`${/^(Rio de Janeiro|Recife|Rio Branco|Porto Velho|Natal)$/.test(place.name)&&place.name==='Rio de Janeiro'?'no':'em'} ${place.name}`;
 function footStats(r){return `Seções apuradas ${fmtPct(r.sections.pct,1)} (${fmtInt(r.sections.done)} de ${fmtInt(r.sections.total)}) · comparecimento ${fmtPct(r.voters.turnoutPct,1)} · abstenção ${fmtPct(r.voters.abstPct,1)} · brancos ${fmtPct(r.votes.blankPct,1)} · nulos ${fmtPct(r.votes.nulPct,1)}${r.hg?` · atualizado ${esc(String(r.hg).slice(0,5))} (Brasília)`:''}`;}
-const roundNote=(round,asked)=>round===1&&asked!==1?'Ainda não há totais do 2º turno para este lugar; abaixo, o resultado final do 1º turno (4 de outubro).':'';
 function pickRound(place,asked,r2,r1){if(asked===1)return {r:r1,round:1};if(r2&&r2.started)return {r:r2,round:2};return {r:r1,round:r1?1:2};}
+const para=(...ps)=>ps.filter(Boolean).map(p=>`<p class="mx">${p}</p>`).join('');
+
+/* How the national count reads right now, against the poll, the projection and the simulations. */
+function readNational(){
+  const r=state.br,nn=finalistNums();if(!nn)return '';
+  if(!live()||!r)return [`A apuração nacional ainda não começou — os arquivos do 2º turno ficam zerados até as 17h de Brasília. Até lá, a referência é o 1º turno e a última pesquisa.`];
+  const A=r.cands.find(c=>c.n===nn[0]),B=r.cands.find(c=>c.n===nn[1]);const L=A.pct>=B.pct?A:B,O=L===A?B:A;
+  const out=[];
+  out.push(`${em(title(L.nm))} lidera a apuração nacional com ${em(P1(L.pct))} contra ${P1(O.pct)} — ${ppAbs(L.pct-O.pct)} de vantagem (${fmtInt(L.votes-O.votes)} votos), com ${P1(r.sections.pct)} das seções apuradas${r.hg?` às ${esc(r.hg.slice(0,5))}`:''}.`);
+  if(POLL.valid[A.n]!=null){const d=A.pct-POLL.valid[A.n];const who=short(A.n);
+    out.push(`Comparando com a última ${POLL.inst} (${POLL.valid[A.n]} × ${POLL.valid[B.n]} nos válidos), ${who} está ${em(ppAbs(d)+(d>=0?' acima':' abaixo'))} do que a pesquisa indicava${Math.abs(d)<=POLL.err?' — dentro da margem de erro de ±'+POLL.err+' pp':' — fora da margem de erro de ±'+POLL.err+' pp'}.${r.sections.pct<60?' Cuidado com a leitura cedo demais: o percentual nacional muda conforme as regiões entram (Sul e Centro-Oeste tendem a chegar antes, Nordeste e Norte depois).':''}`);}
+  const pr=projection();
+  if(pr)out.push(`Corrigindo pelo que cada estado ainda tem para apurar, com a distribuição do 1º turno, a projeção aponta ${em(P1(pr.pctA)+' × '+P1(pr.pctB))} (${short(nn[0])} × ${short(nn[1])}) — ${pr.label.toLowerCase()}.`);
+  const mc=state.mc;
+  if(mc&&mc.basis==='urnas')out.push(`O Monte Carlo (${fmtInt(mc.N)} simulações) termina em ${em(P1(100*mc.med))} para ${short(nn[0])}, com 90% das simulações entre ${P1(100*mc.lo)} e ${P1(100*mc.hi)}; ${short(nn[0])} vence em ${em(P1(100*mc.winA,0))} delas, ${short(nn[1])} em ${P1(100*(1-mc.winA),0)}.`);
+  return out;
+}
+/* One place against its own first round and against the country. */
+function readPlace(place,r2,r1){
+  const nn=finalistNums();if(!nn)return [];const out=[];const where=inPlace(place);
+  if(!r2||!r2.started){
+    if(!r1)return [`Ainda não encontrei arquivo do TSE para ${place.label}.`];
+    const t1=two(r1,nn);const L1=t1.pa>=t1.pb?t1.a:t1.b,O1=L1===t1.a?t1.b:t1.a;const pl=L1===t1.a?t1.pa:t1.pb;
+    out.push(`Ainda não há votos do 2º turno totalizados ${where}. No 1º turno, ${em(title(L1.nm))} ficou na frente aqui com ${em(P1(L1.pct))} dos válidos contra ${P1(O1.pct)} de ${title(O1.nm)} — só entre os dois, ${P1(pl)} × ${P1(100-pl)}.`);
+    if(POLL.valid[nn[0]]!=null&&(!place||place.kind==='br'))out.push(`A ${POLL.inst} de ${POLL.when} fechou em ${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]} nos válidos (${short(nn[0])} × ${short(nn[1])}), com margem de ±${POLL.err} pp.`);
+    return out;
+  }
+  const A=r2.cands.find(c=>c.n===nn[0]),B=r2.cands.find(c=>c.n===nn[1]);const L=A.pct>=B.pct?A:B,O=L===A?B:A;
+  out.push(`${place.kind==='br'?'No Brasil':where[0].toUpperCase()+where.slice(1)}, ${em(title(L.nm))} lidera com ${em(P1(L.pct))} contra ${P1(O.pct)} — ${ppAbs(L.pct-O.pct)} (${fmtInt(L.votes-O.votes)} votos), com ${P1(r2.sections.pct)} das seções apuradas${r2.hg?` às ${esc(String(r2.hg).slice(0,5))}`:''}.`);
+  if(r1){const t1=two(r1,nn),t2=two(r2,nn);const p1=L===A?t1.pa:t1.pb,p2=L===A?t2.pa:t2.pb;const c1=r1.cands.find(c=>c.n===L.n);const others=r1.cands.filter(c=>!nn.includes(c.n)).reduce((s,c)=>s+c.pct,0);
+    if(p1!=null)out.push(`No 1º turno ${title(L.nm)} teve ${P1(c1?c1.pct:0)} dos válidos aqui (${P1(p1)} contando só os dois finalistas; os outros candidatos somaram ${P1(others)}). Em relação a isso, ${short(L.n)} ${em((p2-p1>=0?'ganhou ':'perdeu ')+ppAbs(p2-p1))}.`);}
+  if(place&&place.kind!=='br'&&state.br&&state.br.started){const nA=state.br.cands.find(c=>c.n===nn[0]);const here=A.pct;const d=here-nA.pct;
+    out.push(`No país, ${short(nn[0])} está com ${P1(nA.pct)}; ${place.kind==='mun'?place.name:place.kind==='uf'?UF_NAMES[place.uf]:place.label} está ${em(ppAbs(d)+(d>=0?' acima':' abaixo'))} da média nacional de ${short(nn[0])}.`);}
+  return out;
+}
 
 async function ansResult(P){
   const place=P.place||(P.follow?BOT.ctx.place:null)||{kind:'br',label:'Brasil'};const nn=finalistNums();
   const [r2,r1]=await both(place);
   const {r,round}=pickRound(place,P.round,r2,r1);
-  if(!r||!r.cands.length)return {title:`Resultado · ${place.label}`,text:'Ainda não há arquivo do TSE para este lugar.',chips:botChips(P,place)};
-  let rows,cols,note=roundNote(round,P.round);
+  if(!r||!r.cands.length)return {title:`Resultado · ${place.label}`,lead:para(`Ainda não há arquivo do TSE para ${place.label}.`),chips:botChips(P,place)};
+  let rows,cols,lead;
   if(round===2){
     cols=[{h:'Candidato'},{h:'Votos',cls:'r'},{h:'% válidos',cls:'r'}].concat(r1?[{h:'1º turno',cls:'r mu'}]:[]);
     rows=[...r.cands].sort((a,b)=>b.votes-a.votes).map(c=>{const c1=r1&&r1.cands.find(x=>x.n===c.n);return {cls:c.elected?'el':'',cells:[cname(c)+(c.elected?' <span class="pill">Eleito</span>':''),fmtInt(c.votes),`<b>${fmtPct(c.pct,2)}</b>`].concat(r1?[c1?fmtPct(c1.pct,2):'—']:[])};});
-    const ld=leader(r);if(ld!=null){const L=r.cands[ld],O=r.cands[1-ld];note=`${title(L.nm)} lidera em ${place.label} por ${pp(L.pct-O.pct,1).replace('+','')} (${fmtInt(L.votes-O.votes)} votos) com ${fmtPct(r.sections.pct,1)} das seções apuradas.`;}
+    lead=para(...(place.kind==='br'?readNational():readPlace(place,r2,r1)));
   }else{
     const all=[...r.cands].sort((a,b)=>b.votes-a.votes);const top=all.slice(0,6),rest=all.slice(6);
     cols=[{h:'Candidato (1º turno)'},{h:'Votos',cls:'r'},{h:'% válidos',cls:'r'}];
     rows=top.map(c=>({cells:[nn&&nn.includes(c.n)?cname(c):`${esc(title(c.nm))} <span class="mu">${esc(c.n)}</span>`,fmtInt(c.votes),`<b>${fmtPct(c.pct,2)}</b>`]}));
     if(rest.length)rows.push({cells:[`Outros (${rest.length})`,fmtInt(rest.reduce((s,c)=>s+c.votes,0)),fmtPct(rest.reduce((s,c)=>s+c.pct,0),2)]});
-    if(!note)note='Resultado final do 1º turno (4 de outubro).';
+    lead=P.round===1?para(`Resultado final do 1º turno (4 de outubro) ${inPlace(place)}: ${em(title(all[0].nm))} ${P1(all[0].pct)}, ${title(all[1].nm)} ${P1(all[1].pct)}${all[2]?`, ${title(all[2].nm)} ${P1(all[2].pct)}`:''}.`):para(...readPlace(place,r2,r1));
   }
   BOT.ctx.place=place;
-  return {title:`${round===2?'2º turno':'1º turno'} · ${place.label}`,html:ct(cols,rows),text:note,foot:footStats(r),chips:botChips(P,place,round)};
+  return {title:`${round===2?'2º turno':'1º turno'} · ${place.label}`,lead,html:ct(cols,rows),foot:footStats(r),chips:botChips(P,place,round)};
+}
+function ansPoll(P){
+  const nn=finalistNums();if(!nn||POLL.valid[nn[0]]==null)return {lead:para('Não tenho pesquisa cadastrada para estes finalistas.')};
+  const A=short(nn[0]),B=short(nn[1]),pa=POLL.valid[nn[0]],pb=POLL.valid[nn[1]];const out=[];
+  out.push(`A última ${POLL.inst}, de ${POLL.when}, deu ${em(`${A} ${pa} × ${B} ${pb}`)} nos votos válidos (${POLL.total[nn[0]]} × ${POLL.total[nn[1]]} nos totais, ${POLL.bn}% brancos/nulos e ${POLL.und}% indecisos), com ${fmtInt(POLL.n)} entrevistas e margem de ±${POLL.err} pp — ou seja, ${Math.abs(pa-pb)<=2*POLL.err?'empate técnico':'vantagem fora da margem'}.`);
+  const r1=state.r1.br;if(r1){const t1=two(r1,nn);out.push(`No 1º turno, só entre os dois, deu ${P1(t1.pa)} × ${P1(t1.pb)}; a pesquisa, portanto, supõe que ${pa>t1.pa?A:B} ${em('ganha '+ppAbs(pa-t1.pa))} com a migração dos votos dos outros candidatos e dos que mudaram de ideia.`);}
+  const rows=[{cells:[`${POLL.inst} · ${POLL.when}`,fmtPct(pa,0),fmtPct(pb,0),`±${POLL.err} pp`]}];
+  if(state.r1.br){const t1=two(state.r1.br,nn);rows.push({cells:['1º turno · só os dois',fmtPct(t1.pa,1),fmtPct(t1.pb,1),'4 de outubro']});}
+  if(live()&&state.br){const r=state.br;const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);const d=a.pct-pa;
+    out.push(`Na apuração de agora, ${A} tem ${em(P1(a.pct))} — ${em(ppAbs(d)+(d>=0?' acima':' abaixo'))} da pesquisa${Math.abs(d)<=POLL.err?', dentro da margem':', fora da margem'}, com ${P1(r.sections.pct)} das seções. ${r.sections.pct<60?'Como as regiões entram em ritmos diferentes, a comparação justa é com a projeção, que corrige isso: ':'A projeção, que corrige o que falta apurar por estado, aponta '}${(()=>{const pr=projection();return pr?`${P1(pr.pctA)} × ${P1(pr.pctB)} — ${pr.pctA-pa>=0?A:B} ${ppAbs(pr.pctA-pa)} ${pr.pctA-pa>=0?'melhor':'pior'} que a ${POLL.inst}.`:'ainda não há projeção.';})()}`);
+    rows.push({cells:['Apurado agora',`<b>${fmtPct(a.pct,1)}</b>`,`<b>${fmtPct(b.pct,1)}</b>`,`${fmtPct(r.sections.pct,1)} das seções`]});const pr=projection();if(pr)rows.push({cells:['Projeção (urnas + 1º turno por estado)',fmtPct(pr.pctA,1),fmtPct(pr.pctB,1),pr.label]});
+    if(state.mc&&state.mc.basis==='urnas')rows.push({cells:['Monte Carlo · mediana',fmtPct(100*state.mc.med,1),fmtPct(100*(1-state.mc.med),1),`${A} vence em ${fmtPct(100*state.mc.winA,0)}`]});}
+  else out.push(`Quando a apuração começar, eu comparo o apurado e a projeção com esses números — e mostro se a diferença está dentro ou fora da margem de erro.`);
+  return {title:`${POLL.inst} × apuração`,lead:para(...out),html:ct([{h:'Fonte'},{h:A,cls:'r a'},{h:B,cls:'r b'},{h:'Nota'}],rows),chips:['O que diz o Monte Carlo?','Projeção','Quem está ganhando?','Como foi o 1º turno?','Quanto falta apurar?']};
+}
+function ansMC(P){
+  const nn=finalistNums(),mc=state.mc;if(!nn||!mc)return {lead:para('O Monte Carlo ainda não rodou — ele precisa dos arquivos do 1º turno por estado.')};
+  const A=short(nn[0]),B=short(nn[1]);const out=[];const fav=mc.winA>=0.5?A:B,favP=mc.winA>=0.5?mc.winA:1-mc.winA;
+  out.push(`${em(`${fav} vence em ${P1(100*favP,0)}`)} das ${fmtInt(mc.N)} simulações. A mediana é ${em(P1(100*mc.med))} para ${A} (${P1(100*(1-mc.med))} para ${B}), e 90% das simulações ficam entre ${P1(100*mc.lo)} e ${P1(100*mc.hi)} para ${A}.`);
+  if(mc.basis==='pesquisa')out.push(`Antes dos primeiros lotes, as simulações só têm a ${POLL.inst} para partir: cada uma sorteia o resultado final em torno de ${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]} com desvio de ${POLL.err} pp (a margem de erro). Assim que houver seções apuradas, o modelo passa a usar as urnas.`);
+  else{const pr=projection();out.push(`Como funciona: cada simulação pega o que já foi apurado (${P1(100*mc.c)} dos votos esperados) e completa o que falta estado por estado com a divisão do 1º turno, sorteando uma oscilação nacional e um ruído por estado que encolhem conforme a apuração avança.${pr?` A projeção determinística (sem sorteio) está em ${P1(pr.pctA)} × ${P1(pr.pctB)}.`:''}`);
+    if(POLL.valid[nn[0]]!=null){const d=100*mc.med-POLL.valid[nn[0]];out.push(`Contra a ${POLL.inst} (${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]}), a mediana do Monte Carlo está ${em(ppAbs(d)+(d>=0?' acima':' abaixo'))} para ${A}${Math.abs(d)<=POLL.err?' — dentro da margem da pesquisa.':' — fora da margem da pesquisa.'}`);}
+    if(mc.hi-mc.lo<0.01)out.push(`A faixa de 90% já é estreita (${ppAbs(100*(mc.hi-mc.lo))}): pouca coisa deve mudar.`);else if(mc.hi>0.5&&mc.lo<0.5)out.push(`A faixa de 90% ainda cruza os 50% — o resultado não está decidido pelas simulações.`);}
+  const rows=[{cells:['Mediana',`<b>${fmtPct(100*mc.med,1)}</b>`,`<b>${fmtPct(100*(1-mc.med),1)}</b>`]},{cells:['Faixa de 90%',`${fmtPct(100*mc.lo,1)} – ${fmtPct(100*mc.hi,1)}`,`${fmtPct(100*(1-mc.hi),1)} – ${fmtPct(100*(1-mc.lo),1)}`]},{cells:['Vitórias nas simulações',`<b>${fmtPct(100*mc.winA,0)}</b>`,`<b>${fmtPct(100*(1-mc.winA),0)}</b>`]},{cells:['Base',mc.basis==='pesquisa'?`${POLL.inst} ±${POLL.err} pp`:`urnas (${fmtPct(100*mc.c,1)} dos votos esperados) + 1º turno por estado`,'']}];
+  return {title:`Monte Carlo · ${fmtInt(mc.N)} simulações`,lead:para(...out),html:ct([{h:''},{h:A,cls:'r a'},{h:B,cls:'r b'}],rows),chips:['Compara com o Datafolha','Projeção','Quanto falta apurar?','Onde '+A+' lidera?','Como estava às 18h?']};
+}
+function ansProjection(P){
+  const nn=finalistNums();if(!nn)return {lead:para('Ainda não sei quem são os finalistas.')};
+  const A=short(nn[0]),B=short(nn[1]);const pr=projection(),mc=state.mc;
+  const cols=[{h:'Fonte'},{h:A,cls:'r a'},{h:B,cls:'r b'},{h:'Leitura'}];const rows=[];
+  if(live()&&state.br)rows.push({cells:['Apurado agora',`<b>${fmtPct(state.br.cands[0].pct,1)}</b>`,`<b>${fmtPct(state.br.cands[1].pct,1)}</b>`,`${fmtPct(state.br.sections.pct,1)} das seções`]});
+  if(pr)rows.push({cells:['Projeção Telpe (urnas + 1º turno por estado)',`<b>${fmtPct(pr.pctA,1)}</b>`,`<b>${fmtPct(pr.pctB,1)}</b>`,`${pr.label} · ${fmtPct(100*pr.c,1)} dos votos esperados apurados`]});
+  if(mc)rows.push({cells:[`Monte Carlo (${fmtInt(mc.N)} simulações)`,`${fmtPct(100*mc.med,1)} <span class="mu">(${fmtPct(100*mc.lo,1)}–${fmtPct(100*mc.hi,1)})</span>`,fmtPct(100*(1-mc.med),1),`${A} vence em ${fmtPct(100*mc.winA,0)}, ${B} em ${fmtPct(100*(1-mc.winA),0)}`]});
+  if(POLL.valid[nn[0]]!=null)rows.push({cells:[`${POLL.inst} · ${POLL.when}`,fmtPct(POLL.valid[nn[0]],0),fmtPct(POLL.valid[nn[1]],0),`válidos · ±${POLL.err} pp · ${fmtInt(POLL.n)} entrevistas`]});
+  let out;
+  if(pr){const lead=pr.pctA>=pr.pctB?A:B;out=[`Pelo que já foi apurado e pelo que falta em cada estado, a projeção aponta ${em(`${lead} ${P1(Math.max(pr.pctA,pr.pctB))}`)} × ${P1(Math.min(pr.pctA,pr.pctB))} — ${em(pr.label.toLowerCase())}, com ${P1(100*pr.c)} dos votos esperados já apurados e cerca de ${fmtInt(pr.remaining)} votos válidos por vir.`,
+    mc?`O Monte Carlo concorda em ${P1(100*mc.med)} para ${A} na mediana e dá ${em(`${P1(100*(mc.winA>=0.5?mc.winA:1-mc.winA),0)} de chance`)} para ${mc.winA>=0.5?A:B}.`:'',
+    POLL.valid[nn[0]]!=null?`Contra a ${POLL.inst} (${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]}), a projeção está ${em(ppAbs(pr.pctA-POLL.valid[nn[0]])+(pr.pctA-POLL.valid[nn[0]]>=0?' melhor':' pior'))} para ${A}.`:'',
+    pr.tier==='early'?'Ainda é cedo: com menos de 3% dos votos esperados, a projeção reflete mais o 1º turno do que a apuração de hoje.':pr.tier==='tie'?'Está dentro de 1 ponto — qualquer leitura de vencedor agora é prematura.':''];}
+  else out=[`Antes dos primeiros lotes, a única base é a última pesquisa: a ${POLL.inst} de ${POLL.when} dá ${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]} nos válidos${mc?`, e o Monte Carlo sobre ela dá ${P1(100*(mc.winA>=0.5?mc.winA:1-mc.winA),0)} de chance para ${mc.winA>=0.5?A:B}`:''}. A projeção por urnas aparece assim que houver seções apuradas.`];
+  return {title:'Projeção',lead:para(...out),html:ct(cols,rows),chips:['O que diz o Monte Carlo?','Compara com o Datafolha','Quanto falta apurar?','Onde '+A+' lidera?','Quem está ganhando?']};
 }
 async function ansCompare(P){
-  const nn=finalistNums();if(!nn)return {text:'Ainda não sei quem são os finalistas.'};
+  const nn=finalistNums();if(!nn)return {lead:para('Ainda não sei quem são os finalistas.')};
   const scope=/\b(estados|ufs)\b|por estado|estado a estado|por uf\b/.test(P.q)&&!(P.follow&&P.place&&['uf','mun','country'].includes(P.place.kind))?'ufs':'place';
   if(scope==='ufs'){
     const list=(P.place&&P.place.kind==='region'?regionUFs(P.place.name):UF_CODES).map(u=>({u,r2:state.ufs[u],r1:state.r1.ufs[u]})).filter(x=>x.r1&&x.r2&&x.r2.started);
-    if(!list.length)return {title:'1º × 2º turno por estado',text:'Ainda não há estados com votos do 2º turno totalizados para comparar.',chips:botChips(P)};
+    if(!list.length)return {title:'1º × 2º turno por estado',lead:para('Ainda não há estados com votos do 2º turno totalizados para comparar.'),chips:botChips(P)};
     const cand=P.cand||nn[0];const rows=list.map(x=>{const t1=two(x.r1,nn),t2=two(x.r2,nn);const v1=cand===nn[0]?t1.pa:t1.pb,v2=cand===nn[0]?t2.pa:t2.pb;return {u:x.u,v1,v2,d:v2-v1,pst:x.r2.sections.pct};}).sort((a,b)=>b.d-a.d);
+    const up=rows.filter(x=>x.d>0),dn=rows.filter(x=>x.d<0);const pr=projection();
+    const lead=[`${short(cand)} ${em('cresceu em '+up.length)} e caiu em ${dn.length} dos ${rows.length} estados com dados, sempre comparando com o 1º turno recontado só entre os dois finalistas.`,
+      up.length?`Maior avanço: ${em(UF_NAMES[up[0].u])} (${pp(up[0].d)}, de ${P1(up[0].v1)} para ${P1(up[0].v2)}).`:'',dn.length?`Maior recuo: ${em(UF_NAMES[dn[dn.length-1].u])} (${pp(dn[dn.length-1].d)}).`:'',
+      pr?`A oscilação nacional ponderada é de ${pp(100*pr.swing*(cand===nn[0]?1:-1))} para ${short(cand)} — é esse número que a projeção aplica aos estados que ainda faltam.`:''];
     const cols=[{h:'Estado'},{h:'1º turno (só os dois)',cls:'r'},{h:'2º turno',cls:'r'},{h:'Variação',cls:'r'},{h:'Apurado',cls:'r mu ph-hide'}];
-    return {title:`${candName(cand)} · 1º × 2º turno por estado`,html:ct(cols,rows.map(x=>({cells:[UF_NAMES[x.u],fmtPct(x.v1,1),`<b>${fmtPct(x.v2,1)}</b>`,`<span class="${x.d>=0?'up':'dn'}">${pp(x.d)}</span>`,fmtPct(x.pst,0)]}))),text:`Percentual de ${candName(cand)} entre os dois finalistas: no 1º turno (recontando só os votos dos dois) e agora, nos estados com totais do 2º turno. Ordenado pela variação.`,chips:botChips(P)};
+    return {title:`${candName(cand)} · 1º × 2º turno por estado`,lead:para(...lead),html:ct(cols,rows.map(x=>({cells:[UF_NAMES[x.u],fmtPct(x.v1,1),`<b>${fmtPct(x.v2,1)}</b>`,`<span class="${x.d>=0?'up':'dn'}">${pp(x.d)}</span>`,fmtPct(x.pst,0)]}))),chips:botChips(P)};
   }
   const place=P.place||BOT.ctx.place||{kind:'br',label:'Brasil'};
   const [r2,r1]=await both(place);
-  if(!r1)return {title:`1º × 2º turno · ${place.label}`,text:'Não encontrei o 1º turno deste lugar.',chips:botChips(P,place)};
-  if(!r2||!r2.started){BOT.ctx.place=place;return {title:`1º × 2º turno · ${place.label}`,text:'Ainda não há votos do 2º turno totalizados aqui — a comparação aparece assim que o TSE publicar os primeiros lotes.',html:ct([{h:'Candidato'},{h:'1º turno · % válidos',cls:'r'},{h:'1º turno · só os dois',cls:'r'}],(()=>{const t=two(r1,nn);return [t.a,t.b].filter(Boolean).map(c=>({cells:[cname(c),fmtPct(c.pct,2),fmtPct(c.n===nn[0]?t.pa:t.pb,2)]}));})()),chips:botChips(P,place)};}
-  const t1=two(r1,nn),t2=two(r2,nn);
+  if(!r1)return {title:`1º × 2º turno · ${place.label}`,lead:para(`Não encontrei o 1º turno de ${place.label}.`),chips:botChips(P,place)};
+  const t1=two(r1,nn);const others=r1.cands.filter(c=>!nn.includes(c.n)).reduce((s,c)=>s+c.pct,0);
+  if(!r2||!r2.started){BOT.ctx.place=place;return {title:`1º × 2º turno · ${place.label}`,lead:para(`No 1º turno ${inPlace(place)}, ${em(title((t1.pa>=t1.pb?t1.a:t1.b).nm))} ficou na frente: ${P1(t1.a.pct)} × ${P1(t1.b.pct)} dos válidos (${short(nn[0])} × ${short(nn[1])}), ou ${P1(t1.pa)} × ${P1(t1.pb)} só entre os dois; os outros candidatos somaram ${P1(others)}. A comparação com hoje aparece assim que o TSE publicar os primeiros lotes daqui.`),html:ct([{h:'Candidato'},{h:'1º turno · % válidos',cls:'r'},{h:'1º turno · só os dois',cls:'r'}],[t1.a,t1.b].filter(Boolean).map(c=>({cells:[cname(c),fmtPct(c.pct,2),fmtPct(c.n===nn[0]?t1.pa:t1.pb,2)]}))),chips:botChips(P,place)};}
+  const t2=two(r2,nn);
   const rows=[t2.a,t2.b].filter(Boolean).map(c=>{const isA=c.n===nn[0];const c1=r1.cands.find(x=>x.n===c.n);const p1=isA?t1.pa:t1.pb,p2=isA?t2.pa:t2.pb;return {cells:[cname(c),c1?fmtPct(c1.pct,2):'—',fmtPct(p1,2),`<b>${fmtPct(p2,2)}</b>`,`<span class="${p2-p1>=0?'up':'dn'}">${pp(p2-p1)}</span>`]};});
-  const others=r1.cands.filter(c=>!nn.includes(c.n)).reduce((s,c)=>s+c.pct,0);
+  const dA=t2.pa-t1.pa;const pr=projection();
+  const lead=[`${inPlace(place)[0].toUpperCase()+inPlace(place).slice(1)}, ${short(nn[0])} foi de ${P1(t1.pa)} no 1º turno (só entre os dois) para ${em(P1(t2.pa))} agora — ${em((dA>=0?'ganhou ':'perdeu ')+ppAbs(dA))}; ${short(nn[1])}, o espelho: de ${P1(t1.pb)} para ${P1(t2.pb)}.`,
+    `Nos válidos do 1º turno era ${P1(t1.a.pct)} × ${P1(t1.b.pct)}, com ${P1(others)} para os outros candidatos — é por isso que "só os dois" é a base justa para comparar com hoje.`,
+    pr&&place.kind!=='br'?`No país a oscilação ponderada é de ${pp(100*pr.swing)} para ${short(nn[0])}; aqui foi ${pp(dA)} — ${Math.abs(dA-100*pr.swing)<1?'em linha com a média nacional':dA>100*pr.swing?'melhor que a média nacional para '+short(nn[0]):'pior que a média nacional para '+short(nn[0])}.`:''];
   BOT.ctx.place=place;
-  return {title:`1º × 2º turno · ${place.label}`,html:ct([{h:'Candidato'},{h:'1º turno · % válidos',cls:'r mu'},{h:'1º turno · só os dois',cls:'r'},{h:'2º turno',cls:'r'},{h:'Variação',cls:'r'}],rows),text:`No 1º turno, os outros candidatos somaram ${fmtPct(others,1)} dos válidos em ${place.label}; "só os dois" recalcula o 1º turno apenas com os votos dos finalistas, que é a base comparável com hoje.`,foot:footStats(r2),chips:botChips(P,place)};
+  return {title:`1º × 2º turno · ${place.label}`,lead:para(...lead),html:ct([{h:'Candidato'},{h:'1º turno · % válidos',cls:'r mu ph-hide'},{h:'1º turno · só os dois',cls:'r'},{h:'2º turno',cls:'r'},{h:'Variação',cls:'r'}],rows),foot:footStats(r2),chips:botChips(P,place)};
 }
 async function ansRanking(P,progress){
-  const nn=finalistNums();if(!nn)return {text:'Ainda não sei quem são os finalistas.'};
+  const nn=finalistNums();if(!nn)return {lead:para('Ainda não sei quem são os finalistas.')};
   const asc=/\b(menor|menores|menos|pior|piores|ultim[oa]s)\b/.test(P.q);
   const bySections=/apurad|secoes|totaliz/.test(P.q)&&!P.metric;
   const cand=P.cand;const leaderOnly=/\b(lidera|liderando|ganha|ganhando|vence|vencendo|frente|venceu|ganhou)\b/.test(P.q)&&cand;
@@ -1381,122 +1474,144 @@ async function ansRanking(P,progress){
   else if(P.wantsCity&&place&&place.kind==='uf'&&place.uf!=='zz')scope='ufcities';
   else if(P.wantsCity&&place&&place.kind==='country')scope='countrycities';
   else if(P.wantsCity&&(!place||place.kind==='br'||(place.kind==='uf'&&place.uf==='zz')||/exterior/.test(P.q)))scope='extcities';
-  else if(P.wantsCity&&place&&place.kind==='region')return {text:'Para cidades, diga o estado — por exemplo "cidades do Paraná" ou "top 10 cidades de SC para Lula".',chips:['Cidades do Paraná','Top 10 cidades de SC','Cidades do exterior']};
+  else if(P.wantsCity&&place&&place.kind==='region')return {lead:para('Para cidades, me diga o estado — por exemplo "cidades do Paraná" ou "top 10 cidades de SC para Lula".'),chips:['Cidades do Paraná','Top 10 cidades de SC','Cidades do exterior']};
   else scope='ufs';
   const r1list=()=>state.r1.cities.map(c=>({...c,r:c.r})).filter(c=>c.r&&c.r.cands.length);
   if(scope==='ufs'){const ufs=place&&place.kind==='region'?regionUFs(place.name):UFS;items=ufs.map(u=>({name:UF_NAMES[u],r:round===2?state.ufs[u]:state.r1.ufs[u],key:u})).filter(x=>x.r&&x.r.cands.length>=2&&(round===1||x.r.started));label=place&&place.kind==='region'?`Estados da região ${place.name}`:'Estados (e exterior)';
-    if(!items.length&&round===2){round=1;items=ufs.map(u=>({name:UF_NAMES[u],r:state.r1.ufs[u],key:u})).filter(x=>x.r);noteRound='Sem totais do 2º turno ainda: ranking pelo 1º turno.';}}
-  else if(scope==='countries'){const list=round===2?state.cities:r1list();const g={};list.forEach(c=>{const co=countryOf(c.name);(g[co]||(g[co]=[])).push(c.r);});items=Object.entries(g).map(([co,rs])=>({name:co,r:sumR(rs),key:co,cities:rs.length}));label='Países (seções no exterior)';if(!items.length&&round===2){round=1;const g1={};r1list().forEach(c=>{const co=countryOf(c.name);(g1[co]||(g1[co]=[])).push(c.r);});items=Object.entries(g1).map(([co,rs])=>({name:co,r:sumR(rs),key:co,cities:rs.length}));noteRound='O exterior ainda não totalizou no 2º turno: ranking pelo 1º turno.';}}
-  else if(scope==='extcities'||scope==='countrycities'){let list=round===2?state.cities:r1list();if(scope==='countrycities')list=list.filter(c=>countryOf(c.name)===place.name);items=list.map(c=>({name:c.name+(c.star?' ★':''),sub:countryOf(c.name),r:c.r,key:c.code}));label=scope==='countrycities'?`Cidades · ${place.name}`:'Cidades do exterior';if(!items.length&&round===2){round=1;let l1=r1list();if(scope==='countrycities')l1=l1.filter(c=>countryOf(c.name)===place.name);items=l1.map(c=>({name:c.name,sub:countryOf(c.name),r:c.r,key:c.code}));noteRound='O exterior ainda não totalizou no 2º turno: ranking pelo 1º turno.';}}
+    if(!items.length&&round===2){round=1;items=ufs.map(u=>({name:UF_NAMES[u],r:state.r1.ufs[u],key:u})).filter(x=>x.r);noteRound='Sem totais do 2º turno ainda, o ranking é pelo 1º turno.';}}
+  else if(scope==='countries'){const list=round===2?state.cities:r1list();const g={};list.forEach(c=>{const co=countryOf(c.name);(g[co]||(g[co]=[])).push(c.r);});items=Object.entries(g).map(([co,rs])=>({name:co,r:sumR(rs),key:co,cities:rs.length}));label='Países (seções no exterior)';if(!items.length&&round===2){round=1;const g1={};r1list().forEach(c=>{const co=countryOf(c.name);(g1[co]||(g1[co]=[])).push(c.r);});items=Object.entries(g1).map(([co,rs])=>({name:co,r:sumR(rs),key:co,cities:rs.length}));noteRound='O exterior ainda não totalizou no 2º turno, então o ranking é pelo 1º turno.';}}
+  else if(scope==='extcities'||scope==='countrycities'){let list=round===2?state.cities:r1list();if(scope==='countrycities')list=list.filter(c=>countryOf(c.name)===place.name);items=list.map(c=>({name:c.name+(c.star?' ★':''),sub:countryOf(c.name),r:c.r,key:c.code}));label=scope==='countrycities'?`Cidades · ${place.name}`:'Cidades do exterior';if(!items.length&&round===2){round=1;let l1=r1list();if(scope==='countrycities')l1=l1.filter(c=>countryOf(c.name)===place.name);items=l1.map(c=>({name:c.name,sub:countryOf(c.name),r:c.r,key:c.code}));noteRound='O exterior ainda não totalizou no 2º turno, então o ranking é pelo 1º turno.';}}
   else if(scope==='capitals'){const caps=Object.entries(CAPITALS).map(([uf,nm])=>{const hits=(botMunIndex()||{map:new Map()}).map.get(nrm(nm))||[];const m=hits.find(x=>x.uf===uf);return m?{kind:'mun',uf,cd:m.cd,name:title(m.name)}:null;}).filter(Boolean);
-    const ds=await Promise.all(caps.map(c=>botMun(c)));items=caps.map((c,i)=>({name:`${c.name} <span class="mu">${c.uf.toUpperCase()}</span>`,r:round===2?ds[i].r2:ds[i].r1,key:c.cd})).filter(x=>x.r&&x.r.cands.length>=2&&(round===1||x.r.started));label='Capitais';
-    if(!items.length&&round===2){round=1;items=caps.map((c,i)=>({name:`${c.name} <span class="mu">${c.uf.toUpperCase()}</span>`,r:ds[i].r1,key:c.cd})).filter(x=>x.r);noteRound='Sem totais do 2º turno nas capitais ainda: ranking pelo 1º turno.';}}
-  else if(scope==='ufcities'){const list=await botUfCities(place.uf,round,progress);items=list.map(c=>({name:c.name,r:c.r,key:c.cd})).filter(x=>x.r&&x.r.cands.length>=2&&(round===1||x.r.started));label=`Cidades · ${UF_NAMES[place.uf]}`;if(!items.length&&round===2){round=1;const l1=await botUfCities(place.uf,1,progress);items=l1.map(c=>({name:c.name,r:c.r,key:c.cd})).filter(x=>x.r);noteRound='Sem totais do 2º turno nas cidades ainda: ranking pelo 1º turno.';}}
-  if(!items.length)return {title:label,text:'Ainda não há dados para montar esse ranking.',chips:botChips(P)};
+    const ds=await Promise.all(caps.map(c=>botMun(c)));items=caps.map((c,i)=>({name:`${c.name} <span class="mu">${c.uf.toUpperCase()}</span>`,plain:c.name,r:round===2?ds[i].r2:ds[i].r1,key:c.cd})).filter(x=>x.r&&x.r.cands.length>=2&&(round===1||x.r.started));label='Capitais';
+    if(!items.length&&round===2){round=1;items=caps.map((c,i)=>({name:`${c.name} <span class="mu">${c.uf.toUpperCase()}</span>`,plain:c.name,r:ds[i].r1,key:c.cd})).filter(x=>x.r);noteRound='Sem totais do 2º turno nas capitais ainda, o ranking é pelo 1º turno.';}}
+  else if(scope==='ufcities'){const list=await botUfCities(place.uf,round,progress);items=list.map(c=>({name:c.name,r:c.r,key:c.cd})).filter(x=>x.r&&x.r.cands.length>=2&&(round===1||x.r.started));label=`Cidades · ${UF_NAMES[place.uf]}`;if(!items.length&&round===2){round=1;const l1=await botUfCities(place.uf,1,progress);items=l1.map(c=>({name:c.name,r:c.r,key:c.cd})).filter(x=>x.r);noteRound='Sem totais do 2º turno nas cidades ainda, o ranking é pelo 1º turno.';}}
+  if(!items.length)return {title:label,lead:para('Ainda não há dados para montar esse ranking.'),chips:botChips(P)};
   items.forEach(x=>{const t=two(x.r,nn);x.pa=t.pa;x.pb=t.pb;x.margin=t.pa!=null?Math.abs(t.pa-t.pb):0;x.lead=t.pa==null?null:(t.pa>t.pb?nn[0]:t.pa<t.pb?nn[1]:null);x.pst=x.r.sections.pct;x.m=P.metric==='abst'?x.r.voters.abstPct:P.metric==='turnout'?x.r.voters.turnoutPct:P.metric==='blank'?x.r.votes.blankPct:P.metric==='nul'?x.r.votes.nulPct:P.metric==='valid'?x.r.votes.validPct:null;});
   let sortKey,desc=!asc,how;
   if(P.metric){sortKey=x=>x.m;how={abst:'abstenção',turnout:'comparecimento',blank:'brancos',nul:'nulos',valid:'válidos'}[P.metric];}
   else if(bySections){sortKey=x=>x.pst;how='percentual de seções apuradas';}
-  else if(cand){sortKey=x=>cand===nn[0]?x.pa:x.pb;how=`percentual de ${candName(cand)}`;if(leaderOnly)items=items.filter(x=>x.lead===cand);}
+  else if(cand){sortKey=x=>cand===nn[0]?x.pa:x.pb;how=`percentual de ${candName(cand)}`;}
   else{sortKey=x=>x.pa;how=`percentual de ${candName(nn[0])}`;}
-  items=items.filter(x=>sortKey(x)!=null).sort((a,b)=>desc?sortKey(b)-sortKey(a):sortKey(a)-sortKey(b));
+  const all=items.slice();if(leaderOnly)items=items.filter(x=>x.lead===cand);items=items.filter(x=>sortKey(x)!=null).sort((a,b)=>desc?sortKey(b)-sortKey(a):sortKey(a)-sortKey(b));
   const n=P.n||(scope==='ufs'?40:25);const shown=items.slice(0,n);
+  const unit=scope==='ufs'?'estados':scope==='countries'?'países':scope==='capitals'?'capitais':'cidades';const nm=x=>x.plain||x.name.replace(/ ★$/,'');
+  // the reading
+  const lead=[];const nA=all.filter(x=>x.lead===nn[0]).length,nB=all.filter(x=>x.lead===nn[1]).length;
+  if(P.metric){const top=items[0],bot=items[items.length-1];const br=round===2?state.br:state.r1.br;const nat=br?(P.metric==='abst'?br.voters.abstPct:P.metric==='turnout'?br.voters.turnoutPct:P.metric==='blank'?br.votes.blankPct:P.metric==='nul'?br.votes.nulPct:br.votes.validPct):null;
+    lead.push(`${how[0].toUpperCase()+how.slice(1)} ${desc?'mais alta':'mais baixa'}: ${em(nm(top))} com ${P1(top.m)}; na outra ponta, ${nm(bot)} com ${P1(bot.m)}.${nat!=null?` A média nacional está em ${P1(nat)}.`:''}`);}
+  else if(bySections){const top=items[0],bot=items[items.length-1];lead.push(`${em(nm(desc?top:bot))} é ${desc?'o mais adiantado':'o mais atrasado'}, com ${P1((desc?top:bot).pst)} das seções; ${nm(desc?bot:top)} ${desc?'é o mais atrasado':'é o mais adiantado'}, com ${P1((desc?bot:top).pst)}. ${all.filter(x=>x.pst>=100).length} ${unit} já fecharam 100%.`);}
+  else{const topA=all.filter(x=>x.lead===nn[0]).sort((a,b)=>b.margin-a.margin)[0],topB=all.filter(x=>x.lead===nn[1]).sort((a,b)=>b.margin-a.margin)[0];const close=all.filter(x=>x.margin<3).sort((a,b)=>a.margin-b.margin).slice(0,3);
+    lead.push(`${em(short(nn[0])+' lidera em '+nA)} e ${short(nn[1])} em ${nB} ${scope==='ufs'?'das '+all.length+' unidades':'de '+all.length+' '+unit}${round===1?' (1º turno, só entre os dois)':''}.${topA?` A vantagem mais larga de ${short(nn[0])} é em ${em(nm(topA))} (${ppAbs(topA.margin)});`:''}${topB?` a de ${short(nn[1])}, em ${em(nm(topB))} (${ppAbs(topB.margin)}).`:''}`);
+    if(close.length)lead.push(`${close.length>1?'Os mais apertados':'O mais apertado'}: ${close.map(x=>`${nm(x)} (${ppAbs(x.margin)})`).join(', ')}.`);
+    if(leaderOnly)lead.push(`Abaixo, só onde ${candName(cand)} está na frente, do maior para o menor percentual.`);}
+  if(noteRound)lead.push(noteRound);
+  if(shown.length<items.length)lead.push(`Mostrando ${shown.length} de ${items.length} — peça "top ${Math.min(items.length,100)}" para ver mais.`);
   const cols=[{h:'#',cls:'mu ph-hide'},{h:scope==='ufs'?'Estado':scope==='countries'?'País':'Cidade'}].concat(P.metric?[{h:how[0].toUpperCase()+how.slice(1),cls:'r'},{h:'Eleitores aptos',cls:'r mu'}]:[{h:candName(nn[0]).split(' ')[0],cls:'r a'},{h:candName(nn[1]).split(' ')[0],cls:'r b'},{h:'<span class="sm-hide">Diferença</span><span class="sm-only">Dif.</span>',cls:'r'}]).concat([{h:'Apurado',cls:'r mu ph-hide'}]);
   const rows=shown.map((x,i)=>({cells:[String(i+1),(scope==='capitals'?x.name:esc(x.name))+(x.sub?` <span class="mu">${esc(x.sub)}</span>`:'')+(x.cities?` <span class="mu">${x.cities} cid.</span>`:'')].concat(P.metric?[`<b>${fmtPct(x.m,1)}</b>`,fmtInt(x.r.voters.total)]:[x.lead===nn[0]?`<b>${fmtPct(x.pa,1)}</b>`:fmtPct(x.pa,1),x.lead===nn[1]?`<b>${fmtPct(x.pb,1)}</b>`:fmtPct(x.pb,1),x.lead?`${dot(x.lead)}${fmtPct(x.margin,1).replace('%','')} pp`:'empate']).concat([fmtPct(x.pst,0)])}));
   if(scope==='ufs'||scope==='countries')BOT.ctx.scope=scope;
-  const text=`${leaderOnly?`Lugares onde ${candName(cand)} lidera, `:''}ordenado por ${how} (${desc?'maior':'menor'} primeiro)${P.metric||bySections?'':' · percentuais só entre os dois finalistas'} · ${round===2?'2º turno, parciais':'1º turno, resultado final'}. ${shown.length<items.length?`Mostrando ${shown.length} de ${items.length} — peça "top ${Math.min(items.length,100)}" para ver mais.`:`${items.length} ${scope==='ufs'?'estados':scope==='countries'?'países':'cidades'}.`} ${noteRound}`;
-  return {title:label,html:ct(cols,rows),text,chips:botChips(P)};
+  return {title:label,lead:para(...lead),html:ct(cols,rows),text:`Ordenado por ${how} (${desc?'maior':'menor'} primeiro)${P.metric||bySections?'':' · percentuais só entre os dois finalistas'} · ${round===2?'2º turno, parciais':'1º turno, resultado final'}.`,chips:botChips(P)};
 }
 async function ansMetrics(P){
   const place=P.place||BOT.ctx.place||{kind:'br',label:'Brasil'};
   const [r2,r1]=await both(place);const {r,round}=pickRound(place,P.round,r2,r1);
-  if(!r)return {title:place.label,text:'Ainda não há arquivo do TSE para este lugar.',chips:botChips(P,place)};
+  if(!r)return {title:place.label,lead:para(`Ainda não há arquivo do TSE para ${place.label}.`),chips:botChips(P,place)};
   const rows=[['Eleitores aptos (seções apuradas)',fmtInt(r.voters.done),'—'],['Comparecimento',fmtInt(r.voters.turnout),fmtPct(r.voters.turnoutPct,2)],['Abstenção',fmtInt(r.voters.abst),fmtPct(r.voters.abstPct,2)],['Votos válidos',fmtInt(r.votes.valid),fmtPct(r.votes.validPct,2)],['Brancos',fmtInt(r.votes.blank),fmtPct(r.votes.blankPct,2)],['Nulos',fmtInt(r.votes.nul),fmtPct(r.votes.nulPct,2)],['Seções apuradas',`${fmtInt(r.sections.done)} de ${fmtInt(r.sections.total)}`,fmtPct(r.sections.pct,2)]];
   const hi={abst:'Abstenção',turnout:'Comparecimento',blank:'Brancos',nul:'Nulos',valid:'Votos válidos'}[P.metric];
+  const where=inPlace(place);const ref=round===2?r1:null;const br=round===2?state.br:state.r1.br;
+  const lead=[`${round===1&&P.round!==1?'Ainda sem o 2º turno aqui, então vale o 1º turno: a':'A'} abstenção ${where} está em ${em(P1(r.voters.abstPct))}${ref?` (no 1º turno foi ${P1(ref.voters.abstPct)}, ${Math.abs(r.voters.abstPct-ref.voters.abstPct)<0.5?'praticamente igual':r.voters.abstPct>ref.voters.abstPct?'ou seja, '+ppAbs(r.voters.abstPct-ref.voters.abstPct)+' a mais':'ou seja, '+ppAbs(r.voters.abstPct-ref.voters.abstPct)+' a menos'})`:''}; o comparecimento, em ${P1(r.voters.turnoutPct)}.`,
+    `Brancos são ${P1(r.votes.blankPct)} e nulos ${P1(r.votes.nulPct)} dos votos — juntos, ${em(P1(r.votes.blankPct+r.votes.nulPct))}${ref?` (1º turno: ${P1(ref.votes.blankPct+ref.votes.nulPct)})`:''}; os válidos ficam em ${P1(r.votes.validPct)}.`,
+    br&&place.kind!=='br'?`No país, a abstenção está em ${P1(br.voters.abstPct)} e brancos + nulos em ${P1(br.votes.blankPct+br.votes.nulPct)}.`:''];
   BOT.ctx.place=place;
-  return {title:`${round===2?'2º turno':'1º turno'} · ${place.label} · participação`,html:ct([{h:'Indicador'},{h:'Quantidade',cls:'r'},{h:'%',cls:'r'}],rows.map(x=>({cls:x[0]===hi?'el':'',cells:[x[0],x[1],`<b>${x[2]}</b>`]}))),text:`${roundNote(round,P.round)} Percentuais do TSE: comparecimento e abstenção sobre os eleitores aptos das seções já apuradas; brancos e nulos sobre o total de votos. Em cidades e exterior pode ser pedido do mesmo jeito.`.trim(),chips:botChips(P,place)};
+  return {title:`${round===2?'2º turno':'1º turno'} · ${place.label} · participação`,lead:para(...lead),html:ct([{h:'Indicador'},{h:'Quantidade',cls:'r'},{h:'%',cls:'r'}],rows.map(x=>({cls:x[0]===hi?'el':'',cells:[x[0],x[1],`<b>${x[2]}</b>`]}))),text:'Comparecimento e abstenção são sobre os eleitores aptos das seções já apuradas; brancos e nulos, sobre o total de votos.',chips:botChips(P,place)};
 }
 async function ansMargin(P){
   const nn=finalistNums();const place=P.place||(P.follow?BOT.ctx.place:null)||{kind:'br',label:'Brasil'};
   const [r2,r1]=await both(place);
-  if(!r2||!r2.started){return {title:`Diferença · ${place.label}`,text:'Ainda não há votos do 2º turno aqui. Assim que houver, mostro a diferença em votos e o que falta apurar.',chips:botChips(P,place)};}
+  if(!r2||!r2.started){return {title:`Diferença · ${place.label}`,lead:para(`Ainda não há votos do 2º turno ${inPlace(place)}. Assim que houver, eu mostro a diferença em votos, quanto falta apurar e o que o segundo colocado precisaria para virar.`),chips:botChips(P,place)};}
   const t=two(r2,nn);const L=t.pa>=t.pb?t.a:t.b,O=L===t.a?t.b:t.a;const diff=L.votes-O.votes;
   const expected=r1?r1.votes.valid:null;const remaining=expected?Math.max(0,expected-r2.votes.valid):null;
   const need=remaining&&remaining>0?50+50*diff/remaining:null;
-  const rows=[[`${cname(L)} (à frente)`,fmtInt(L.votes),fmtPct(L.pct,2)],[cname(O),fmtInt(O.votes),fmtPct(O.pct,2)],['Diferença',`<b>${fmtInt(diff)}</b> votos`,pp(L.pct-O.pct,2).replace('+','')],['Votos válidos apurados',fmtInt(r2.votes.valid),fmtPct(r2.sections.pct,1)+' das seções'],['Votos válidos esperados (base: 1º turno)',expected?fmtInt(expected):'—','—'],['Ainda por apurar (estimativa)',remaining!=null?fmtInt(remaining):'—','—'],[`${title(O.nm)} precisaria, do que falta`,need==null?'—':need>100?'mais de 100% — matematicamente fora de alcance':fmtPct(need,1),'—']];
+  const rows=[[`${cname(L)} (à frente)`,fmtInt(L.votes),fmtPct(L.pct,2)],[cname(O),fmtInt(O.votes),fmtPct(O.pct,2)],['Diferença',`<b>${fmtInt(diff)}</b> votos`,pp(L.pct-O.pct,2).replace('+','')],['Votos válidos apurados',fmtInt(r2.votes.valid),fmtPct(r2.sections.pct,1)+' das seções'],['Votos válidos esperados (base: 1º turno)',expected?fmtInt(expected):'—','—'],['Ainda por apurar (estimativa)',remaining!=null?fmtInt(remaining):'—','—'],[`${title(O.nm)} precisaria, do que falta`,need==null?'—':need>100?'mais de 100% — fora de alcance':fmtPct(need,1),'—']];
+  const verdict=need==null?'':need>100?`${em('Matematicamente, '+title(O.nm)+' não alcança mais')} — mesmo levando todos os votos que faltam.`:need>65?`Para virar, ${title(O.nm)} precisaria de ${em(P1(need))} dos votos que faltam, contra ${P1(O.pct)} que vem tendo — ${em('muito improvável')}.`:need>55?`Para virar, ${title(O.nm)} precisaria de ${em(P1(need))} dos votos que faltam; hoje tem ${P1(O.pct)} — difícil, mas depende de onde estão as seções restantes.`:`Para virar, ${title(O.nm)} precisaria de ${em(P1(need))} dos votos que faltam, perto dos ${P1(O.pct)} que vem tendo — ${em('ainda em aberto')}.`;
+  const lead=[`${inPlace(place)[0].toUpperCase()+inPlace(place).slice(1)}, ${em(title(L.nm))} está ${em(fmtInt(diff)+' votos')} à frente (${ppAbs(L.pct-O.pct)}), com ${P1(r2.sections.pct)} das seções apuradas.`,
+    remaining!=null?`Pela base do 1º turno, faltam cerca de ${em(fmtInt(remaining)+' votos válidos')} para apurar (o comparecimento de hoje pode ser outro, então é uma estimativa).`:'',verdict];
   BOT.ctx.place=place;
-  return {title:`Diferença de votos · ${place.label}`,html:ct([{h:''},{h:'Valor',cls:'r'},{h:'%',cls:'r'}],rows.map(x=>({cells:x}))),text:'O que falta apurar é uma estimativa: votos válidos do 1º turno neste lugar menos os já apurados hoje. O comparecimento de hoje pode ser diferente.',foot:footStats(r2),chips:botChips(P,place)};
+  return {title:`Diferença de votos · ${place.label}`,lead:para(...lead),html:ct([{h:''},{h:'Valor',cls:'r'},{h:'%',cls:'r'}],rows.map(x=>({cells:x}))),foot:footStats(r2),chips:botChips(P,place)};
 }
 function ansStatus(P){
   const nn=finalistNums();const place=P.place;
   const row=(name,r)=>({cells:[name,`${fmtInt(r.sections.done)} de ${fmtInt(r.sections.total)}`,`<b>${fmtPct(r.sections.pct,1)}</b>`,fmtInt(r.votes.valid),r.hg?esc(String(r.hg).slice(0,5)):'—']});
   const cols=[{h:'Lugar'},{h:'Seções apuradas',cls:'r'},{h:'%',cls:'r'},{h:'Votos válidos',cls:'r ph-hide'},{h:'Último lote',cls:'r mu'}];
-  if(!live())return {title:'Andamento da apuração',text:`Ainda não começou: os arquivos do 2º turno ficam publicados com totais zerados até as 17h de Brasília (${new Date(CLOSE_UTC).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} no seu horário). A página consulta o TSE a cada minuto.`,chips:botChips(P)};
-  let rows=[];
+  if(!live())return {title:'Andamento da apuração',lead:para(`Ainda não começou: os arquivos do 2º turno ficam publicados com totais zerados até as 17h de Brasília (${new Date(CLOSE_UTC).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} no seu horário). A página consulta o TSE a cada minuto, e eu passo a responder com os lotes assim que entrarem.${state.r1m?` No 1º turno, 99,9% das seções estavam totalizadas às ${hhmmOf((17*60+state.r1m.endMin)*60)}.`:''}`),chips:botChips(P)};
+  let rows=[];const regs=[];
   if(place&&place.kind==='uf'){const r=state.ufs[place.uf];if(r)rows.push(row(UF_NAMES[place.uf],r));}
   else if(place&&place.kind==='region'){regionUFs(place.name).forEach(u=>{const r=state.ufs[u];if(r)rows.push(row(UF_NAMES[u],r));});}
-  else{rows.push(row('Brasil',state.br));REGIONS.forEach(([name,list])=>{const rs=list.map(u=>state.ufs[u]).filter(Boolean);if(rs.length)rows.push(row(name==='Exterior'?'Exterior':'Região '+name,sumR(rs)));});}
-  const done=UF_CODES.filter(u=>state.ufs[u]&&state.ufs[u].sections.pct>=100).length;
-  return {title:'Andamento da apuração',html:ct(cols,rows),text:`${done} de 27 unidades já totalizaram 100% das seções. ${state.br.cands.some(c=>c.elected)?'O TSE já marcou o eleito.':'O TSE ainda não declarou o resultado matematicamente definido.'}`,chips:botChips(P)};
+  else{rows.push(row('Brasil',state.br));REGIONS.forEach(([name,list])=>{const rs=list.map(u=>state.ufs[u]).filter(Boolean);if(rs.length){const s=sumR(rs);regs.push({name,pct:s.sections.pct});rows.push(row(name==='Exterior'?'Exterior':'Região '+name,s));}});}
+  const done=UF_CODES.filter(u=>state.ufs[u]&&state.ufs[u].sections.pct>=100).length;const br=state.br;
+  const lead=[`${em(P1(br.sections.pct)+' das seções')} já foram apuradas (${fmtInt(br.sections.done)} de ${fmtInt(br.sections.total)}), ${fmtInt(br.votes.valid)} votos válidos; ${done} de 27 unidades fecharam 100%.`];
+  if(regs.length){const s=regs.slice().sort((a,b)=>b.pct-a.pct);lead.push(`Região mais adiantada: ${em(s[0].name)} (${P1(s[0].pct)}); mais atrasada: ${em(s[s.length-1].name)} (${P1(s[s.length-1].pct)}).`);}
+  if(state.r1m&&state.r1m.br&&br.hg){const tm=secs(br.hg)/60-17*60;let p=null;state.r1m.br.forEach(x=>{if(x.tm<=tm)p=x;});if(p)lead.push(`No mesmo horário do 1º turno, ${P1(p.pst)} das seções já estavam totalizadas — hoje está ${em(br.sections.pct>p.pst+1?'mais rápido':br.sections.pct<p.pst-1?'mais lento':'no mesmo ritmo')}. Naquele dia, 99,9% entraram às ${hhmmOf((17*60+state.r1m.endMin)*60)}.`);}
+  lead.push(br.cands.some(c=>c.elected)?'O TSE já marcou o eleito.':'O TSE ainda não declarou o resultado matematicamente definido.');
+  return {title:'Andamento da apuração',lead:para(...lead),html:ct(cols,rows),chips:botChips(P)};
 }
 function ansTimeline(P){
   const nn=finalistNums();const pts=series;
-  if(!pts.length)return {title:'Evolução',text:live()?'Ainda não registrei lotes nesta sessão.':'A apuração ainda não começou; a evolução passa a existir a partir das 17h de Brasília. Até lá, o gráfico lá em cima mostra como foi o 1º turno hora a hora.',chips:botChips(P)};
-  const fmtT=p=>p.hg.slice(0,5);const cell=p=>[fmtT(p),fmtPct(p.c[nn[0]]?p.c[nn[0]].p:0,2),fmtPct(p.c[nn[1]]?p.c[nn[1]].p:0,2),fmtPct(p.pst,1)];
+  if(!pts.length)return {title:'Evolução',lead:para(live()?'Ainda não registrei lotes nesta sessão.':'A apuração ainda não começou; a evolução passa a existir a partir das 17h de Brasília. Até lá, o gráfico lá em cima mostra como foi o 1º turno hora a hora.'),chips:botChips(P)};
+  const fmtT=p=>p.hg.slice(0,5);const vA=p=>p.c[nn[0]]?p.c[nn[0]].p:0,vB=p=>p.c[nn[1]]?p.c[nn[1]].p:0;const cell=p=>[fmtT(p),fmtPct(vA(p),2),fmtPct(vB(p),2),fmtPct(p.pst,1)];
   const cols=[{h:'Hora (Brasília)'},{h:candName(nn[0]).split(' ')[0],cls:'r a'},{h:candName(nn[1]).split(' ')[0],cls:'r b'},{h:'Seções',cls:'r mu'}];
+  // leader changes
+  const flips=[];let prevL=null;pts.forEach(p=>{const L=vA(p)>vB(p)?nn[0]:vA(p)<vB(p)?nn[1]:null;if(L&&prevL&&L!==prevL)flips.push({t:fmtT(p),L});if(L)prevL=L;});
+  const first=pts[0],last=pts[pts.length-1];
   if(P.time!=null){const tsec=(17*60+P.time)*60;let best=null;pts.forEach(p=>{if(p.t<=tsec+60&&(!best||p.t>best.t))best=p;});
-    if(!best)return {title:`Como estava às ${hhmmOf(tsec)}`,text:`O primeiro lote só chegou às ${fmtT(pts[0])}.`,html:ct(cols,[{cells:cell(pts[0])}]),chips:botChips(P)};
-    const i=pts.indexOf(best);const around=pts.slice(Math.max(0,i-2),i+3);
-    return {title:`Como estava às ${hhmmOf(tsec)} (Brasília)`,html:ct(cols,around.map(p=>({cls:p===best?'el':'',cells:cell(p)}))),text:`Lote mais próximo: ${fmtT(best)}, com ${fmtPct(best.pst,1)} das seções. Os lotes vizinhos aparecem em volta.`,chips:botChips(P)};}
+    if(!best)return {title:`Como estava às ${hhmmOf(tsec)}`,lead:para(`Nessa hora ainda não tinha chegado nada — o primeiro lote só entrou às ${fmtT(first)}, com ${short(nn[0])} ${P1(vA(first))} × ${short(nn[1])} ${P1(vB(first))}.`),html:ct(cols,[{cells:cell(first)}]),chips:botChips(P)};
+    const i=pts.indexOf(best);const around=pts.slice(Math.max(0,i-2),i+3);const L=vA(best)>=vB(best)?nn[0]:nn[1];const d=Math.abs(vA(best)-vB(best));const dNow=Math.abs(vA(last)-vB(last));
+    return {title:`Como estava às ${hhmmOf(tsec)} (Brasília)`,lead:para(`Às ${fmtT(best)} (lote mais próximo), ${em(short(L))} liderava com ${em(P1(L===nn[0]?vA(best):vB(best)))} × ${P1(L===nn[0]?vB(best):vA(best))} — ${ppAbs(d)} — com ${P1(best.pst)} das seções.`,`Agora (${fmtT(last)}) a diferença é de ${ppAbs(dNow)}, ou seja, ${em(dNow>d+0.2?'abriu':dNow<d-0.2?'fechou':'ficou parecida')} desde então.`),html:ct(cols,around.map(p=>({cls:p===best?'el':'',cells:cell(p)}))),chips:botChips(P)};}
   const step=/minuto a minuto|todos os lotes|cada lote/.test(P.q)?0:/meia em meia|30/.test(P.q)?1800:/hora a hora|cada hora/.test(P.q)?3600:(pts.length>40?1800:pts.length>14?900:0);
   let sel=pts;if(step){sel=[];let next=Math.floor(pts[0].t/step)*step;pts.forEach((p,i)=>{if(p.t>=next||i===0||i===pts.length-1){sel.push(p);next=Math.floor(p.t/step)*step+step;}});}
-  return {title:'Evolução da apuração nacional',html:ct(cols,sel.map(p=>({cells:cell(p)}))),text:`${pts.length} lotes recebidos desde ${fmtT(pts[0])}${step?` · amostrados a cada ${step/60} min (peça "minuto a minuto" para todos)`:''}.`,chips:botChips(P)};
-}
-function ansProjection(P){
-  const nn=finalistNums();if(!nn)return {text:'Ainda não sei quem são os finalistas.'};
-  const A=candName(nn[0]),B=candName(nn[1]);const pr=projection(),mc=state.mc;
-  const cols=[{h:'Fonte'},{h:A.split(' ')[0],cls:'r a'},{h:B.split(' ')[0],cls:'r b'},{h:'Leitura'}];
-  const rows=[];
-  if(live()&&state.br){rows.push({cells:['Apurado agora',`<b>${fmtPct(state.br.cands[0].pct,1)}</b>`,`<b>${fmtPct(state.br.cands[1].pct,1)}</b>`,`${fmtPct(state.br.sections.pct,1)} das seções`]});}
-  if(pr)rows.push({cells:['Projeção Telpe (urnas + 1º turno por estado)',`<b>${fmtPct(pr.pctA,1)}</b>`,`<b>${fmtPct(pr.pctB,1)}</b>`,`${pr.label} · ${fmtPct(100*pr.c,1)} dos votos esperados apurados`]});
-  if(mc)rows.push({cells:[`Monte Carlo (${fmtInt(mc.N)} simulações)`,`${fmtPct(100*mc.med,1)} <span class="mu">(${fmtPct(100*mc.lo,1)}–${fmtPct(100*mc.hi,1)})</span>`,`${fmtPct(100*(1-mc.med),1)}`,`${A} vence em ${fmtPct(100*mc.winA,0)} das simulações, ${B} em ${fmtPct(100*(1-mc.winA),0)} · base: ${mc.basis==='pesquisa'?'pesquisa':'urnas apuradas'}`]});
-  if(POLL.valid[nn[0]]!=null)rows.push({cells:[`${POLL.inst} · ${POLL.when}`,fmtPct(POLL.valid[nn[0]],0),fmtPct(POLL.valid[nn[1]],0),`votos válidos · ±${POLL.err} pp · ${fmtInt(POLL.n)} entrevistas · ${POLL.reg}`]});
-  return {title:'Projeção',html:ct(cols,rows),text:pr?`A projeção pega o que já foi apurado em cada estado e completa o que falta com a divisão do 1º turno daquele estado, ajustada pela oscilação nacional observada até agora. Faixa do Monte Carlo = 90% das simulações.`:`Antes dos primeiros lotes, a única base é a última pesquisa; a projeção por urnas aparece assim que houver seções apuradas.`,chips:botChips(P)};
+  const L0=vA(first)>=vB(first)?nn[0]:nn[1],Ln=vA(last)>=vB(last)?nn[0]:nn[1];
+  const lead=[`O primeiro lote entrou às ${em(fmtT(first))} com ${short(L0)} na frente (${P1(L0===nn[0]?vA(first):vB(first))} × ${P1(L0===nn[0]?vB(first):vA(first))}, ${P1(first.pst)} das seções).`,
+    flips.length?`A liderança ${flips.length===1?'mudou uma vez':'mudou '+flips.length+' vezes'}: ${flips.map(f=>`${short(f.L)} passou à frente às ${f.t}`).join('; ')}.`:`${short(L0)} não perdeu a liderança desde então.`,
+    `Agora (${fmtT(last)}, ${P1(last.pst)} das seções) é ${em(short(Ln)+' '+P1(Ln===nn[0]?vA(last):vB(last)))} × ${P1(Ln===nn[0]?vB(last):vA(last))}; a diferença ${(()=>{const d0=Math.abs(vA(first)-vB(first)),dn=Math.abs(vA(last)-vB(last));return dn>d0+0.2?'abriu de '+ppAbs(d0)+' para '+ppAbs(dn):dn<d0-0.2?'fechou de '+ppAbs(d0)+' para '+ppAbs(dn):'ficou em torno de '+ppAbs(dn);})()}.`];
+  return {title:'Evolução da apuração nacional',lead:para(...lead),html:ct(cols,sel.map(p=>({cells:cell(p)}))),text:`${pts.length} lotes recebidos${step?` · amostrados a cada ${step/60} min (peça "minuto a minuto" para todos)`:''}.`,chips:botChips(P)};
 }
 function ansGovernor(P){
   const place=P.place;let list=state.govs;
   if(place&&place.kind==='uf')list=list.filter(g=>g.uf===place.uf);
   if(place&&place.kind==='region'){const set=new Set(regionUFs(place.name));list=list.filter(g=>set.has(g.uf));}
-  if(!list.length)return {title:'Governadores',text:place&&place.kind==='uf'?`${UF_NAMES[place.uf]} não tem 2º turno para governador (decidido no 1º turno).`:'Nenhum 2º turno para governador encontrado nos arquivos do TSE.',chips:botChips(P)};
-  const rows=[];list.forEach(g=>{const r=g.r;const started=r&&r.started;const g1=state.r1.govs[g.uf];[...(r?r.cands:[])].sort((a,b)=>b.votes-a.votes).forEach((c,i)=>{const c1=g1&&g1.cands.find(x=>x.n===c.n);rows.push({cls:c.elected?'el':'',cells:[i===0?UF_NAMES[g.uf]:'',`${esc(title(c.nm))} <span class="mu">${esc(c.party)} ${esc(c.n)}</span>${c.elected?' <span class="pill">Eleito</span>':''}`,started?fmtInt(c.votes):'—',started?`<b>${fmtPct(c.pct,2)}</b>`:'—',c1?fmtPct(c1.pct,1):'—',i===0?(started?fmtPct(r.sections.pct,1):'aguardando'):'']});});});
-  return {title:'Governadores · 2º turno',html:ct([{h:'Estado'},{h:'Candidato'},{h:'Votos',cls:'r ph-hide'},{h:'% válidos',cls:'r'},{h:'1º turno',cls:'r mu ph-hide'},{h:'Apurado',cls:'r mu'}],rows),text:`${list.length} estado${list.length>1?'s':''} com 2º turno para governador.`,chips:botChips(P)};
+  if(!list.length)return {title:'Governadores',lead:para(place&&place.kind==='uf'?`${UF_NAMES[place.uf]} não tem 2º turno para governador — foi decidido no 1º turno.`:'Nenhum 2º turno para governador encontrado nos arquivos do TSE.'),chips:botChips(P)};
+  const rows=[];const sent=[];list.forEach(g=>{const r=g.r;const started=r&&r.started;const g1=state.r1.govs[g.uf];const cs=[...(r?r.cands:[])].sort((a,b)=>b.votes-a.votes);
+    if(started&&cs.length>=2)sent.push(`${em(UF_NAMES[g.uf])}: ${title(cs[0].nm)} (${cs[0].party}) ${em(P1(cs[0].pct))} × ${title(cs[1].nm)} (${cs[1].party}) ${P1(cs[1].pct)}, ${P1(r.sections.pct)} apurado${cs[0].elected?' — eleito':''}`);else if(cs.length>=2)sent.push(`${em(UF_NAMES[g.uf])}: ${title(cs[0].nm)} × ${title(cs[1].nm)}, ainda sem lotes`);
+    cs.forEach((c,i)=>{const c1=g1&&g1.cands.find(x=>x.n===c.n);rows.push({cls:c.elected?'el':'',cells:[i===0?UF_NAMES[g.uf]:'',`${esc(title(c.nm))} <span class="mu">${esc(c.party)} ${esc(c.n)}</span>${c.elected?' <span class="pill">Eleito</span>':''}`,started?fmtInt(c.votes):'—',started?`<b>${fmtPct(c.pct,2)}</b>`:'—',c1?fmtPct(c1.pct,1):'—',i===0?(started?fmtPct(r.sections.pct,1):'aguardando'):'']});});});
+  return {title:'Governadores · 2º turno',lead:para(`${list.length===1?'Há 2º turno para governador em 1 estado':'Há 2º turno para governador em '+list.length+' estados'}. ${sent.join('. ')}.`),html:ct([{h:'Estado'},{h:'Candidato'},{h:'Votos',cls:'r ph-hide'},{h:'% válidos',cls:'r'},{h:'1º turno',cls:'r mu ph-hide'},{h:'Apurado',cls:'r mu'}],rows),chips:botChips(P)};
 }
 function ansLog(P){
-  const data=logs.filter(l=>l.kind==='data'||l.kind==='big');
-  if(/primeiro lote|quando (chegou|comecou|veio)/.test(P.q)){const first=series[0];if(!first)return {title:'Primeiro lote',text:'Ainda não chegou nenhum lote do 2º turno.',chips:botChips(P)};return {title:'Primeiro lote',text:`O primeiro lote do 2º turno chegou às ${first.hg.slice(0,5)} (Brasília), com ${fmtPct(first.pst,2)} das seções.`,html:ct([{h:'Hora'},{h:candName(finalistNums()[0]).split(' ')[0],cls:'r a'},{h:candName(finalistNums()[1]).split(' ')[0],cls:'r b'},{h:'Seções',cls:'r mu'}],[{cells:[first.hg.slice(0,5),fmtPct((first.c[finalistNums()[0]]||{p:0}).p,2),fmtPct((first.c[finalistNums()[1]]||{p:0}).p,2),fmtPct(first.pst,2)]}]),chips:botChips(P)};}
-  if(!logs.length)return {title:'Log',text:'Nada registrado ainda.',chips:botChips(P)};
+  const data=logs.filter(l=>l.kind==='data'||l.kind==='big');const nn=finalistNums();
+  if(/primeiro lote|quando (chegou|comecou|veio)/.test(P.q)){const first=series[0];if(!first)return {title:'Primeiro lote',lead:para('Ainda não chegou nenhum lote do 2º turno.'),chips:botChips(P)};return {title:'Primeiro lote',lead:para(`O primeiro lote do 2º turno chegou às ${em(first.hg.slice(0,5))} (Brasília), com ${P1(first.pst,2)} das seções: ${short(nn[0])} ${P1((first.c[nn[0]]||{p:0}).p)} × ${short(nn[1])} ${P1((first.c[nn[1]]||{p:0}).p)}.`),chips:botChips(P)};}
+  if(!logs.length)return {title:'Log',lead:para('Nada registrado ainda.'),chips:botChips(P)};
   const rows=(data.length?data:logs).slice(0,15).map(l=>({cells:[esc(l.t),esc(l.text)+(l.detail?` <span class="mu">${esc(l.detail)}</span>`:'')]}));
-  return {title:'Últimos dados recebidos',html:ct([{h:'Hora local'},{h:'Evento'}],rows),text:`${data.length} lotes com dados novos nesta sessão. O log completo está na seção Mapa.`,chips:botChips(P)};
+  return {title:'Últimos dados recebidos',lead:para(`${data.length} lotes com dados novos nesta sessão${data.length?`; o último às ${esc(data[0].t)} (hora local)`:''}. O log completo está na seção Mapa.`),html:ct([{h:'Hora local'},{h:'Evento'}],rows),chips:botChips(P)};
 }
 function ansHelp(){
-  return {title:'O que dá para perguntar',html:ct([{h:'Tipo'},{h:'Exemplos'}],[
-    {cells:['Resultado de um lugar','"resultado no Paraná", "Dublin", "cidade de São Paulo", "Irlanda", "região Nordeste", "Caibi"']},
-    {cells:['Rankings','"onde Lula lidera", "top 10 estados para Flávio", "estados mais apurados", "países", "cidades do exterior", "cidades do Paraná", "maior abstenção por estado"']},
+  return {title:'O que dá para perguntar',lead:para('Pergunte como quiser, em português. Eu respondo com uma leitura curta e a tabela que sustenta — e dá para continuar o assunto ("e no Rio?", "e o Flávio?", "e no 1º turno?").'),html:ct([{h:'Tipo'},{h:'Exemplos'}],[
+    {cells:['Resultado de um lugar','"quem está ganhando?", "resultado no Paraná", "Dublin", "cidade de São Paulo", "Irlanda", "região Nordeste", "Caibi"']},
+    {cells:['Pesquisa e modelos','"compara com o Datafolha", "o que diz o Monte Carlo?", "projeção", "chance do Flávio"']},
+    {cells:['Rankings','"onde Lula lidera", "top 10 estados para Flávio", "estados mais apurados", "países", "cidades do exterior", "cidades do Paraná", "capitais", "maior abstenção por estado"']},
     {cells:['1º × 2º turno','"comparar Curitiba com o 1º turno", "onde Lula cresceu por estado"']},
     {cells:['Participação','"abstenção em Minas", "brancos e nulos no Rio"']},
-    {cells:['Andamento e tempo','"quantas seções foram apuradas", "como estava às 18h", "evolução hora a hora", "quando chegou o primeiro lote"']},
-    {cells:['Projeção e votos','"projeção", "chance do Flávio", "diferença de votos", "quantos votos faltam"']},
+    {cells:['Andamento e tempo','"quanto falta apurar?", "como estava às 18h", "evolução hora a hora", "quando chegou o primeiro lote"']},
+    {cells:['Votos','"diferença de votos", "quantos votos faltam para o Flávio virar"']},
     {cells:['Governadores','"governador de SP", "governadores do Nordeste"']}]),
-    text:'Tudo vem dos arquivos oficiais do TSE já carregados nesta página, sem servidor nem modelo de linguagem — é um leitor de perguntas por regras, então frases curtas e diretas funcionam melhor. Depois de uma resposta, "e no Rio?" ou "e o Flávio?" continuam o assunto.',chips:botChips({q:''})};
+    text:'Tudo vem dos arquivos oficiais do TSE já carregados nesta página, sem servidor nem modelo de linguagem — é um leitor de perguntas por regras, então frases curtas e diretas funcionam melhor.',chips:botChips({q:''})};
 }
 function botChips(P,place,round){
-  const nn=finalistNums();const A=nn?candName(nn[0]).split(' ')[0]:'Lula',B=nn?candName(nn[1]).split(' ')[0]:'Flávio';
-  const base=[];
-  if(place&&place.kind==='uf'&&place.uf!=='zz'){base.push(`Comparar ${UF_NAMES[place.uf]} com o 1º turno`,`Cidades de ${UF_NAMES[place.uf]}`,`Abstenção em ${UF_NAMES[place.uf]}`);if(state.govs.some(g=>g.uf===place.uf))base.push(`Governador de ${UF_NAMES[place.uf]}`);}
-  else if(place&&place.kind==='mun')base.push(`Comparar ${place.name} com o 1º turno`,`Abstenção em ${place.label}`,`Resultado em ${UF_NAMES[place.uf]}`);
-  else if(place&&place.kind==='country')base.push(`Cidades de ${place.name}`,`Países`,`Exterior`);
-  else if(place&&place.kind==='region')base.push(`Estados da região ${place.name}`,`Onde ${A} lidera`);
-  const pool=[`Onde ${A} lidera`,`Onde ${B} lidera`,'Estados mais apurados','Resultado no Paraná','Dublin','Países','Como estava às 18h','Projeção','Diferença de votos','Governadores','Quantas seções foram apuradas','Maior abstenção por estado'];
+  const nn=finalistNums();const A=nn?short(nn[0]):'Lula',B=nn?short(nn[1]):'Flávio';
+  const base=[];const isLive=live();
+  if(place&&place.kind==='uf'&&place.uf!=='zz'){base.push(`Como foi o 1º turno em ${UF_NAMES[place.uf]}?`,`Abstenção em ${UF_NAMES[place.uf]}`,isLive?`Quanto falta apurar em ${UF_NAMES[place.uf]}?`:`Cidades de ${UF_NAMES[place.uf]}`);if(state.govs.some(g=>g.uf===place.uf))base.push(`Governador de ${UF_NAMES[place.uf]}`);base.push('E no Brasil?');}
+  else if(place&&place.kind==='mun')base.push(`Como foi o 1º turno em ${place.name}?`,`Abstenção em ${place.label}`,`Resultado em ${UF_NAMES[place.uf]}`,'E no Brasil?');
+  else if(place&&place.kind==='country')base.push(`Cidades de ${place.name}`,'Países','Exterior','E no Brasil?');
+  else if(place&&place.kind==='region')base.push(`Estados da região ${place.name}`,`Onde ${A} lidera?`,'E no Brasil?');
+  else base.push('Compara com o Datafolha','O que diz o Monte Carlo?',isLive?'Quanto falta apurar?':'Projeção');
+  const pool=[`Onde ${A} lidera?`,`Onde ${B} lidera?`,'Estados mais apurados','Resultado no Paraná','Dublin','Países','Como estava às 18h?','Projeção','Diferença de votos','Governadores','Maior abstenção por estado','Quem está ganhando?'];
   pool.forEach(c=>{if(base.length<6&&!base.includes(c))base.push(c);});
   return base.slice(0,6);
 }
@@ -1505,15 +1620,17 @@ function botChips(P,place,round){
 function botEl(){return $('chat-log');}
 function botScroll(){const el=botEl();if(el)el.scrollTop=el.scrollHeight;}
 function botBubble(role,inner){const d=document.createElement('div');d.className='msg '+role;d.innerHTML=inner;botEl().appendChild(d);botScroll();return d;}
+const typing='<span class="typing" aria-label="digitando"><i></i><i></i><i></i></span>';
 function botRenderAnswer(el,ans){
-  el.innerHTML=`${ans.title?`<div class="mt">${esc(ans.title)}</div>`:''}${ans.text?`<p class="mx">${ans.text}</p>`:''}${ans.html||''}${ans.foot?`<p class="mf">${ans.foot}</p>`:''}`;
+  el.innerHTML=`${ans.title?`<div class="mt">${esc(ans.title)}</div>`:''}${ans.lead||''}${ans.html||''}${ans.text?`<p class="mn">${ans.text}</p>`:''}${ans.foot?`<p class="mf">${ans.foot}</p>`:''}`;
   botChipsRender(ans.chips||botChips({q:''}));const log=botEl();const prev=el.previousElementSibling;log.scrollTop=Math.max(0,(prev?prev.offsetTop:el.offsetTop)-12);
 }
 function botChipsRender(list){const box=$('chat-chips');box.innerHTML=(list||[]).map(c=>`<button type="button" class="chip">${esc(c)}</button>`).join('');}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function botAsk(text){
   const raw=String(text||'').trim();if(!raw||BOT.busy)return;
   BOT.busy=true;botBubble('user',esc(raw));
-  const el=botBubble('bot','<p class="mx mu">Lendo…</p>');
+  const el=botBubble('bot',typing);const t0=Date.now();
   try{
     let P=botParse(raw);let intent=botIntent(P);
     // follow-ups: "e no Rio?", "e o Flávio?", "e no 1º turno?" repeat the previous question with the new piece
@@ -1530,6 +1647,8 @@ async function botAsk(text){
       case 'help':ans=ansHelp();break;
       case 'log':ans=ansLog(P);break;
       case 'governor':ans=ansGovernor(P);break;
+      case 'poll':ans=ansPoll(P);break;
+      case 'mc':ans=ansMC(P);break;
       case 'projection':ans=ansProjection(P);break;
       case 'timeline':ans=ansTimeline(P);break;
       case 'compare':ans=await ansCompare(P);break;
@@ -1538,10 +1657,11 @@ async function botAsk(text){
       case 'metrics':ans=await ansMetrics(P);break;
       case 'status':ans=ansStatus(P);break;
       case 'result':ans=await ansResult(P);break;
-      default:ans={title:'Não entendi',text:'Tente com um lugar (estado, cidade, país, região), um candidato ou um tema (abstenção, projeção, evolução). Exemplos abaixo.',chips:botChips(P)};
+      default:ans={title:'Não entendi',lead:para('Não peguei essa. Tente com um lugar (estado, cidade, país, região), um candidato ou um tema (Datafolha, Monte Carlo, abstenção, projeção, evolução) — ou toque num exemplo abaixo.'),chips:botChips(P)};
     }
     if(P.place&&P.place.alts&&P.place.alts.length&&ans){ans.text=(ans.text||'')+` Há outras cidades com esse nome: ${P.place.alts.slice(0,5).map(a=>`${a.name} (${a.uf.toUpperCase()})`).join(', ')} — peça com a sigla do estado.`;}
     BOT.ctx.intent=intent;BOT.ctx.P=P;if(P.place)BOT.ctx.place=P.place;if(P.cand)BOT.ctx.cand=P.cand;if(P.metric)BOT.ctx.metric=P.metric;if(P.round)BOT.ctx.round=P.round;
+    const left=450-(Date.now()-t0);if(left>0)await wait(left);   // a beat before answering, like a person typing
     botRenderAnswer(el,ans);
   }catch(err){el.innerHTML=`<p class="mx">Não consegui responder: ${esc(err.message||err)}.</p>`;}
   BOT.busy=false;
@@ -1550,7 +1670,8 @@ function initBot(){
   const form=$('chat-form');if(!form)return;
   form.addEventListener('submit',e=>{e.preventDefault();const q=$('chat-q').value;$('chat-q').value='';botAsk(q);});
   $('chat-chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)botAsk(b.textContent);});
-  botBubble('bot','<p class="mx">Oi. Eu respondo com tabelas a partir dos dados do TSE que esta página já carregou: estados, cidades, exterior, 1º × 2º turno, participação, evolução e projeção. Pergunte em português, do seu jeito — ou toque num exemplo.</p>');
+  const nn=finalistNums();
+  botBubble('bot',`<p class="mx">Oi. Pergunte sobre a apuração do jeito que quiser — quem está ganhando, como está em um estado ou cidade, como o apurado se compara com o Datafolha e com o Monte Carlo, quanto falta, como estava às 18h. Eu respondo com uma leitura curta e a tabela por trás dela.</p>`);
   botChipsRender(botChips({q:''}));
 }
 
