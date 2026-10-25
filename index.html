@@ -1063,7 +1063,7 @@ function mcCurve(){ // from the last real batch to the end, converging on the Mo
 function marchChartHTML(){
   const nn=finalistNums();if(!nn)return '';
   const pts=series,isLive=live()&&pts.length>0;
-  const narrow=($('march').clientWidth||800)<520;const W=narrow?420:800,H=narrow?270:320,L=narrow?34:44,R=narrow?40:50,T=14,B=30;
+  const narrow=($('march').clientWidth||800)<520;const W=narrow?420:800,H=narrow?270:320,L=narrow?34:44,R=narrow?50:62,T=14,B=30;
   const Tend=END_MIN();const x=tm=>L+tm/Tend*(W-L-R);state.marchDims={W,L,R,Tend};
   const now=pts.map(p=>({tm:p.t/60-17*60,a:p.c[nn[0]]?p.c[nn[0]].p:null,b:p.c[nn[1]]?p.c[nn[1]].p:null,pst:p.pst}));
   const r1=marchOpts.r1?r1Curve():[],poll=marchOpts.poll?pollCurve():[],mcp=marchOpts.mc?mcCurve():[];
@@ -1103,7 +1103,7 @@ function marchChartHTML(){
   const opt=(k,l)=>`<button type="button" data-opt="${k}" class="${marchOpts[k]?'on':''}">${l}</button>`;
   const nowDots=last&&now.length?`<circle class="halo a" r="9" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}"/><circle class="halo b" r="9" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}" fill="var(--c2)"/>`:'';
   const first=now.length&&now[0].a!=null?now[0]:null;const firstMark=first?`<line class="first" x1="${x(first.tm).toFixed(1)}" x2="${x(first.tm).toFixed(1)}" y1="${T}" y2="${H-B}"/><text class="ax first" x="${(x(first.tm)+4).toFixed(1)}" y="${T+9}">1º lote ${hhmmOf((17*60+first.tm)*60)}</text>`:'';
-  const endLab=(arr,key,cls)=>{if(!arr.length)return '';const p=arr[arr.length-1];const v=p[key];if(v==null)return '';return `<text class="ax end ${cls}" x="${(x(p.tm)+5).toFixed(1)}" y="${(y(v)+3.5).toFixed(1)}">${fmtPct(v,1)}</text>`;};
+  const endLab=(arr,key,cls)=>{if(!arr.length)return '';const p=arr[arr.length-1];const v=p[key];if(v==null)return '';return `<text class="ax end ${cls}" x="${(x(p.tm)+6).toFixed(1)}" y="${(y(v)+3.5).toFixed(1)}">${fmtPct(v,2)}</text>`;};
   return `<div class="hd"><p class="eyebrow">Marcha da apuração</p><span class="meta">${meta}</span></div>
     <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução dos percentuais ao longo da noite" id="march-svg">
       ${yt.map(v=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="ax" x="${L-7}" y="${(y(v)+3.5).toFixed(1)}" text-anchor="end">${v}%</text>`).join('')}
@@ -1139,7 +1139,7 @@ function bindMarchHover(){
   const at=(arr,tm,key)=>{if(!arr.length)return null;let best=null;arr.forEach(p=>{if(p.tm<=tm+2.5&&(best==null||p.tm>best.tm))best=p;});return best&&best[key]!=null?best[key]:null;};
   const show=e=>{const rc=svg.getBoundingClientRect();const fx=(e.clientX-rc.left)/rc.width*W;let tm=clamp((fx-L)/(W-L-R)*Tend,0,Tend);tm=Math.round(tm/5)*5;
     const px=L+tm/Tend*(W-L-R);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.style.opacity='.5';
-    const row=(label,a,b,extra)=>a==null&&b==null?'':`<div class="r3"><span>${label}</span><span class="a">${a==null?'—':fmtPct(a,1)}</span><span class="b">${b==null?'—':fmtPct(b,1)}</span></div>${extra||''}`;
+    const row=(label,a,b,extra)=>a==null&&b==null?'':`<div class="r3"><span>${label}</span><span class="a">${a==null?'—':fmtPct(a,2)}</span><span class="b">${b==null?'—':fmtPct(b,2)}</span></div>${extra||''}`;
     const upto=S.now.length&&tm<=S.now[S.now.length-1].tm+5;const nowA=upto?at(S.now,tm,'a'):null,nowB=upto?at(S.now,tm,'b'):null,nowP=upto?at(S.now,tm,'pst'):null;
     tip.innerHTML=`<b class="t">${hhmmOf((17*60+tm)*60)} · Brasília</b><div class="r3 hd3"><span></span><span class="a">${esc(candName(nn[0]))}</span><span class="b">${esc(candName(nn[1]))}</span></div>`+
       row('Hoje',nowA,nowB,nowP!=null?`<div class="s">${fmtPct(nowP,1)} das seções totalizadas</div>`:'')+row(POLL.inst,at(S.poll,tm,'a'),S.poll.length?100-at(S.poll,tm,'a'):null)+row('Monte Carlo',at(S.mc,tm,'a'),S.mc.length&&at(S.mc,tm,'a')!=null?100-at(S.mc,tm,'a'):null)+row('1º turno',at(S.r1,tm,'a'),at(S.r1,tm,'b'));
