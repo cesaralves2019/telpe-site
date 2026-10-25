@@ -815,7 +815,7 @@ function addPoint(hg,pst,c){const t=secs(hg);if(t==null||series.some(p=>p.t===t)
 function recordPoint(r){if(!r||!r.started||!r.hg)return;const c={};r.cands.forEach(x=>{c[x.n]={p:x.pct,v:x.votes};});if(addPoint(r.hg,r.sections.pct,c))saveSeries();}
 async function loadR1March(){
   if(state.r1m!==null)return;
-  try{const r=await fetch('data/r1-march.json?t='+Math.floor(Date.now()/3e5),{cache:'no-store'});if(!r.ok){state.r1m=false;return;}const j=await r.json();state.r1m=(j&&j.br&&j.br.length)?j:false;if(state.r1m)addLog('info',`Marcha real do 1º turno carregada: ${fmtInt(state.r1m.sections)} seções, ${fmtPct(100*(state.r1m.endShare||0.999),1)} delas até ${hhmmOf((17*60+state.r1m.endMin)*60)} (eixo do gráfico), a última só ${state.r1m.lastMin>=7*60?'no dia '+(4+Math.floor((17*60+state.r1m.lastMin)/1440))+'/10 às ':'às '}${hhmmOf((17*60+state.r1m.lastMin)*60)}`);}catch(_){state.r1m=false;}
+  try{const r=await fetch('data/r1-march.json?t='+Math.floor(Date.now()/3e5),{cache:'no-store'});const j=r.ok?await r.json():(window.R1M||null);state.r1m=(j&&j.br&&j.br.length)?j:false;if(state.r1m)addLog('info',`Marcha real do 1º turno carregada: ${fmtInt(state.r1m.sections)} seções, ${fmtPct(100*(state.r1m.endShare||0.999),1)} delas até ${hhmmOf((17*60+state.r1m.endMin)*60)} (eixo do gráfico), a última só ${state.r1m.lastMin>=7*60?'no dia '+(4+Math.floor((17*60+state.r1m.lastMin)/1440))+'/10 às ':'às '}${hhmmOf((17*60+state.r1m.lastMin)*60)}`);}catch(_){state.r1m=(window.R1M&&window.R1M.br&&window.R1M.br.length)?window.R1M:false;}
 }
 async function loadServerSeries(){
   try{const r=await fetch('data/series.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const arr=await r.json();let added=0;
