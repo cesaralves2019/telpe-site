@@ -24,14 +24,20 @@ jobs:
         with:
           fetch-depth: 1
       - name: Build data/r1-march.json
+        id: build
+        continue-on-error: true
         env:
           ONLY: ${{ github.event.inputs.only }}
-        run: python3 -u tools/build_r1_march.py
-      - name: Commit
+        run: |
+          set -o pipefail
+          python3 -u tools/build_r1_march.py 2>&1 | tee /tmp/r1-march.log
+      - name: Commit (the log always, the data when the build succeeded)
         run: |
           git config user.name "apuracao-bot"
           git config user.email "apuracao-bot@users.noreply.github.com"
-          git add data/r1-march.json
+          { echo "outcome: ${{ steps.build.outcome }} · $(date -u +%FT%TZ)"; tail -c 60000 /tmp/r1-march.log; } > data/r1-march.log
+          git add data/r1-march.log
+          [ -f data/r1-march.json ] && git add data/r1-march.json
           git diff --cached --quiet && echo "nothing new" && exit 0
-          git commit -m "First-round march rebuilt from the TSE bulletins"
+          git commit -m "First-round march build: ${{ steps.build.outcome }}"
           for i in 1 2 3 4 5; do git pull --rebase -X theirs && git push && break || sleep 10; done
