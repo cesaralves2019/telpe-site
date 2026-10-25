@@ -944,8 +944,9 @@ async function loadR1March(){
   try{const r=await fetch('data/r1-march.json?t='+Math.floor(Date.now()/3e5),{cache:'no-store'});const j=r.ok?await r.json():(window.R1M||null);state.r1m=(j&&j.br&&j.br.length)?j:false;if(state.r1m)addLog('info',`Marcha real do 1º turno carregada: ${fmtInt(state.r1m.sections)} seções, ${fmtPct(100*(state.r1m.endShare||0.999),1)} delas até ${hhmmOf((17*60+state.r1m.endMin)*60)} (eixo do gráfico), a última só ${state.r1m.lastMin>=7*60?'no dia '+(4+Math.floor((17*60+state.r1m.lastMin)/1440))+'/10 às ':'às '}${hhmmOf((17*60+state.r1m.lastMin)*60)}`);}catch(_){state.r1m=(window.R1M&&window.R1M.br&&window.R1M.br.length)?window.R1M:false;}
 }
 async function loadServerSeries(){
-  try{const r=await fetch('data/series.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const arr=await r.json();let added=0;
-    (Array.isArray(arr)?arr:[]).forEach(p=>{if(p&&p.hg&&p.c&&addPoint(p.hg,p.pst,p.c))added++;});if(added)saveSeries();}catch(_){}
+  let arr=null;try{const r=await fetch('data/series.json?t='+Date.now(),{cache:'no-store'});if(r.ok)arr=await r.json();}catch(_){}
+  if(!Array.isArray(arr)&&Array.isArray(window.SERIES0))arr=window.SERIES0;   // embedded copy, for views that cannot read data/
+  let added=0;(Array.isArray(arr)?arr:[]).forEach(p=>{if(p&&p.hg&&p.c&&addPoint(p.hg,p.pst,p.c))added++;});if(added)saveSeries();
 }
 /* ---------- Monte Carlo: where the count ends, with uncertainty ----------
    Before any section is counted the national share is drawn around the last poll (σ = 2 pp).
