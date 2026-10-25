@@ -114,6 +114,16 @@ p{margin:0}
 .march .legend{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:12.5px;color:var(--fg-2);margin-top:10px}
 .march .legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
 .march .legend i.a{background:var(--c1)}.march .legend i.b{background:var(--c2)}.march .legend i.s{background:none;border-top:2px dashed var(--fg-2);height:0}
+.march .pline{stroke-width:1.5;stroke-dasharray:2 4}.march .pline.a{stroke:var(--c1)}.march .pline.b{stroke:var(--c2)}
+.march .pband{opacity:.07}.march .pband.a{fill:var(--c1)}.march .pband.b{fill:var(--c2)}
+.march .r1line{stroke-width:1.5;stroke-dasharray:6 4;opacity:.7}.march .r1line.a{stroke:var(--c1)}.march .r1line.b{stroke:var(--c2)}
+.march .mcband{opacity:.14}.march .mcband.a{fill:var(--c1)}.march .mcband.b{fill:var(--c2)}
+.march .mcline{stroke-width:1.5;stroke-dasharray:1 3;opacity:.9}.march .mcline.a{stroke:var(--c1)}.march .mcline.b{stroke:var(--c2)}
+.march .lab{font-size:10px;opacity:.85}.march .lab.a{fill:var(--c1)}.march .lab.b{fill:var(--c2)}
+.march .legend .opts{display:inline-flex;gap:6px;align-items:center;margin-left:auto}
+.march .legend .opts button{border:1px solid var(--line);background:none;border-radius:999px;padding:3px 10px;font-size:12px;color:var(--fg-2);cursor:pointer}
+.march .legend .opts button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.march .mcnote{font-size:12.5px;color:var(--fg-2);margin-top:10px;line-height:1.45}
 .march .tip{width:210px}
 .march .tip .r{grid-template-columns:10px 1fr auto}
 .bars{display:grid;gap:12px;margin-top:4px}
@@ -724,7 +734,7 @@ function renderMap(){
 }
 function initMap(){state.geoMode=(GEO&&GEO.paths&&GEO.bbox)?'svg':'tiles';renderMapShell();renderMap();}
 const mql=matchMedia('(prefers-color-scheme: dark)');if(mql.addEventListener)mql.addEventListener('change',renderMap);
-let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(live()&&series.length)renderMarch();},200);});
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(finalistNums())renderMarch();},200);});
 
 /* ---------- log: one line per batch of data, minute by minute ---------- */
 const DAYKEY=new Date().toISOString().slice(0,10);
@@ -758,55 +768,106 @@ async function loadServerSeries(){
   try{const r=await fetch('data/series.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const arr=await r.json();let added=0;
     (Array.isArray(arr)?arr:[]).forEach(p=>{if(p&&p.hg&&p.c&&addPoint(p.hg,p.pst,p.c))added++;});if(added)saveSeries();}catch(_){}
 }
-function marchBarsHTML(r1){
-  const nn=finalistNums();if(!nn)return '';const a=r1.cands.find(c=>c.n===nn[0]),b=r1.cands.find(c=>c.n===nn[1]);if(!a||!b)return '';
-  const oth=Math.max(0,100-a.pct-b.pct),othV=Math.max(0,r1.votes.valid-a.votes-b.votes);
-  const rows=[[`${esc(a.n)} · ${esc(title(a.nm))}`,a.pct,a.votes,'var(--c1)'],[`${esc(b.n)} · ${esc(title(b.nm))}`,b.pct,b.votes,'var(--c2)'],['Outros candidatos',oth,othV,'var(--fg-2)']];
-  return `<div class="hd"><p class="eyebrow">Marcha da apuração</p><span class="meta">1º turno · 4 de outubro · distribuição final dos votos válidos</span></div>
-    <div class="bars">${rows.map(([l,p,v,col])=>`<div class="row"><div class="lab">${l}</div><div class="track"><i style="width:${p}%;background:${col}"></i></div><div class="val">${fmtPct(p)}<small>${fmtInt(v)} votos</small></div></div>`).join('')}</div>
-    <p class="note" style="font-size:12.5px;color:var(--fg-2);margin-top:14px">O TSE publica só os totais finais de 4 de outubro, não a evolução minuto a minuto. A curva de hoje começa a ser desenhada aqui a partir das 17h (Brasília), um ponto a cada lote de dados.</p>`;
+/* ---------- Monte Carlo: where the count ends, with uncertainty ----------
+   Before any section is counted the national share is drawn around the last poll (σ = 2 pp).
+   Once the count is on, each simulation draws a national swing around the one observed so far
+   (σ shrinking as more is counted) plus a per-state deviation for the still-uncounted votes,
+   applies them to each state's first-round split and expected turnout, and adds the votes
+   already counted. 3.000 runs → median, 90% interval and how often each candidate ends ahead. */
+function gauss(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function monteCarlo(N=3000){
+  const nn=finalistNums();if(!nn)return null;
+  const P=state.prior,r=state.br;const isLive=live()&&!!P&&P._cands[0]===nn[0]&&P._cands[1]===nn[1];
+  const out=new Float64Array(N);let c=0;
+  if(!isLive){
+    const pa=POLL.valid[nn[0]];if(pa==null)return null;const mu=pa/100,sd=POLL.err/100;
+    for(let i=0;i<N;i++)out[i]=clamp(mu+sd*gauss(),0,1);
+  }else{
+    const ufs=[];let counted=0,sumV=0,num=0,den=0;
+    UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid,pri=p.a/(p.a+p.b);let ca=0,cb=0,w=0;
+      if(x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){w=clamp(x.sections.pct/100,0,1);ca=x.cands[0].votes;cb=x.cands[1].votes;num+=(ca/t-pri)*t;den+=t;counted+=t;}}
+      ufs.push({V,pri,ca,cb,w});sumV+=V;});
+    if(!sumV)return null;
+    const swing=den?num/den:0;c=counted/sumV;
+    const sdS=0.03*Math.sqrt(Math.max(0,1-c))+0.004,sdU=0.03;
+    for(let i=0;i<N;i++){const sw=swing+sdS*gauss();let A=0,B=0;
+      for(const u of ufs){const rem=Math.max(0,u.V-(u.ca+u.cb));const share=clamp(u.pri+sw+sdU*Math.sqrt(1-u.w)*gauss(),0.02,0.98);A+=u.ca+rem*share;B+=u.cb+rem*(1-share);}
+      out[i]=A/(A+B);}
+  }
+  out.sort();const q=p=>out[Math.min(N-1,Math.floor(p*N))];let wins=0;for(let i=0;i<N;i++)if(out[i]>0.5)wins++;
+  return {med:q(.5),lo:q(.05),hi:q(.95),winA:wins/N,N,basis:isLive?'urnas':'pesquisa',c};
 }
+function mcText(){
+  const mc=state.mc,nn=finalistNums();if(!mc||!nn)return '';
+  const A=candName(nn[0]),B=candName(nn[1]);
+  const base=mc.basis==='pesquisa'?`sobre a pesquisa ${POLL.inst} (±${POLL.err} pp)`:`sobre as urnas apuradas (${fmtPct(100*mc.c,1)} dos votos esperados) e a distribuição do 1º turno por estado`;
+  const pa=100*mc.winA,pb=100-pa;
+  return `Monte Carlo · ${fmtInt(mc.N)} simulações ${base}: ${esc(A)} termina com ${fmtPct(100*mc.med,1)} (90% das simulações entre ${fmtPct(100*mc.lo,1)} e ${fmtPct(100*mc.hi,1)}) · ${esc(A)} à frente em ${fmtPct(pa,0)} delas, ${esc(B)} em ${fmtPct(pb,0)}.`;
+}
+function candName(n){const src=state.br&&state.br.cands.length>=2?state.br.cands:(state.r1.br||{cands:[]}).cands;const c=src.find(x=>x.n===n);return c?title(c.nm):n;}
+
+/* ---------- the chart ---------- */
+let marchOpts={poll:true,r1:true,mc:true};try{marchOpts={...marchOpts,...JSON.parse(localStorage.getItem('apuracao-march-opts')||'{}')};}catch(_){}
 function marchChartHTML(){
-  const nn=finalistNums();if(!nn||!series.length)return '';
-  const pts=series;const narrow=($('march').clientWidth||800)<520;const W=narrow?420:800,H=narrow?250:300,L=narrow?36:46,R=narrow?36:46,T=16,B=30;state.marchDims={W,L,R};
-  const t0=Math.min(pts[0].t,17*3600),t1=Math.max(pts[pts.length-1].t,t0+1800);
+  const nn=finalistNums();if(!nn)return '';
+  const pts=series,isLive=live()&&pts.length>0;
+  const narrow=($('march').clientWidth||800)<520;const W=narrow?420:800,H=narrow?260:310,L=narrow?36:46,R=narrow?36:46,T=16,B=30;state.marchDims={W,L,R};
+  const tStart=17*3600,tLast=pts.length?pts[pts.length-1].t:tStart;
+  const t0=Math.min(pts.length?pts[0].t:tStart,tStart),t1=Math.max(tLast+1800,tStart+3*3600);
   const x=t=>L+(t-t0)/(t1-t0)*(W-L-R);
-  let lo=100,hi=0;pts.forEach(p=>nn.forEach(n=>{const v=p.c[n]&&p.c[n].p;if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}}));
-  lo=Math.max(0,Math.floor((lo-2)/5)*5);hi=Math.min(100,Math.ceil((hi+2)/5)*5);if(hi-lo<10)hi=Math.min(100,lo+10);
+  const pollA=POLL.valid[nn[0]],pollB=POLL.valid[nn[1]];const r1v=fin(state.r1.br);const mc=state.mc;
+  const vals=[];pts.forEach(p=>nn.forEach(n=>{if(p.c[n])vals.push(p.c[n].p);}));
+  if(marchOpts.poll&&pollA!=null)vals.push(pollA-POLL.err,pollB+POLL.err,pollB-POLL.err,pollA+POLL.err);
+  if(marchOpts.r1&&r1v)vals.push(r1v.cands[0].pct,r1v.cands[1].pct);
+  if(marchOpts.mc&&mc)vals.push(100*mc.lo,100*mc.hi,100-100*mc.lo,100-100*mc.hi);
+  if(!vals.length)vals.push(45,55);
+  let lo=Math.max(0,Math.floor((Math.min(...vals)-2)/5)*5),hi=Math.min(100,Math.ceil((Math.max(...vals)+2)/5)*5);if(hi-lo<10)hi=Math.min(100,lo+10);
   const y=v=>T+(hi-v)/(hi-lo)*(H-T-B),ys=v=>T+(100-v)/100*(H-T-B);
   const line=n=>pts.filter(p=>p.c[n]).map((p,i)=>(i?'L':'M')+x(p.t).toFixed(1)+' '+y(p.c[n].p).toFixed(1)).join('');
-  const area='M'+pts.map(p=>x(p.t).toFixed(1)+' '+ys(p.pst).toFixed(1)).join('L')+`L${x(pts[pts.length-1].t).toFixed(1)} ${ys(0).toFixed(1)}L${x(pts[0].t).toFixed(1)} ${ys(0).toFixed(1)}Z`;
+  const area=pts.length?'M'+pts.map(p=>x(p.t).toFixed(1)+' '+ys(p.pst).toFixed(1)).join('L')+`L${x(tLast).toFixed(1)} ${ys(0).toFixed(1)}L${x(pts[0].t).toFixed(1)} ${ys(0).toFixed(1)}Z`:'';
   const yt=[];for(let v=lo;v<=hi;v+=5)yt.push(v);
   const step=(t1-t0)>4*3600||(narrow&&(t1-t0)>5400)?3600:1800;const xt=[];for(let t=Math.ceil(t0/step)*step;t<=t1;t+=step)xt.push(t);
-  const last=pts[pts.length-1];
-  return `<div class="hd"><p class="eyebrow">Marcha da apuração</p><span class="meta">${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções</span></div>
+  const xa=x(t0).toFixed(1),xb=x(t1).toFixed(1),xl=x(tLast).toFixed(1);
+  const flat=(v,cls,from)=>`<line class="${cls}" x1="${from||xa}" x2="${xb}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/>`;
+  const band=(v1,v2,cls,from)=>`<rect class="${cls}" x="${from||xa}" width="${(x(t1)-parseFloat(from||xa)).toFixed(1)}" y="${y(Math.max(v1,v2)).toFixed(1)}" height="${Math.max(0,y(Math.min(v1,v2))-y(Math.max(v1,v2))).toFixed(1)}"/>`;
+  let refs='';
+  if(marchOpts.poll&&pollA!=null)refs+=band(pollA-POLL.err,pollA+POLL.err,'pband a')+band(pollB-POLL.err,pollB+POLL.err,'pband b')+flat(pollA,'pline a')+flat(pollB,'pline b')+`<text class="ax lab a" x="${xb}" y="${(y(pollA)-4).toFixed(1)}" text-anchor="end">${POLL.inst} ${pollA}%</text><text class="ax lab b" x="${xb}" y="${(y(pollB)-4).toFixed(1)}" text-anchor="end">${POLL.inst} ${pollB}%</text>`;
+  if(marchOpts.r1&&r1v)refs+=flat(r1v.cands[0].pct,'r1line a')+flat(r1v.cands[1].pct,'r1line b')+`<text class="ax lab a" x="${xa}" y="${(y(r1v.cands[0].pct)-4).toFixed(1)}">1º turno ${fmtPct(r1v.cands[0].pct,1)}</text><text class="ax lab b" x="${xa}" y="${(y(r1v.cands[1].pct)-4).toFixed(1)}">1º turno ${fmtPct(r1v.cands[1].pct,1)}</text>`;
+  let mcg='';
+  if(marchOpts.mc&&mc){const from=isLive?xl:xa;mcg=band(100*mc.lo,100*mc.hi,'mcband a',from)+band(100-100*mc.hi,100-100*mc.lo,'mcband b',from)+flat(100*mc.med,'mcline a',from)+flat(100-100*mc.med,'mcline b',from);}
+  const last=pts.length?pts[pts.length-1]:null;
+  const dots=last?`<circle class="dot" r="4" cx="${xl}" cy="${y(last.c[nn[0]]?last.c[nn[0]].p:lo).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4" cx="${xl}" cy="${y(last.c[nn[1]]?last.c[nn[1]].p:lo).toFixed(1)}" fill="var(--c2)"/>`:'';
+  const meta=isLive?`${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções`:`Antes da apuração: a pesquisa e o 1º turno como referência · a curva de hoje começa às 17h`;
+  const opt=(k,l)=>`<button type="button" data-opt="${k}" class="${marchOpts[k]?'on':''}">${l}</button>`;
+  return `<div class="hd"><p class="eyebrow">Marcha da apuração</p><span class="meta">${meta}</span></div>
     <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução dos percentuais ao longo da apuração" id="march-svg">
       ${yt.map(v=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="ax" x="${L-8}" y="${(y(v)+3.5).toFixed(1)}" text-anchor="end">${v}%</text>`).join('')}
       ${[0,50,100].map(v=>`<text class="ax" x="${W-R+8}" y="${(ys(v)+3.5).toFixed(1)}">${v}%</text>`).join('')}
       ${xt.map(t=>`<text class="ax" x="${x(t).toFixed(1)}" y="${H-10}" text-anchor="middle">${hhmmOf(t)}</text>`).join('')}
-      <path class="sec" d="${area}"/>
-      <path class="ln a" d="${line(nn[0])}"/><path class="ln b" d="${line(nn[1])}"/>
-      ${pts.length?`<circle class="dot" r="4" cx="${x(last.t).toFixed(1)}" cy="${y(last.c[nn[0]]?last.c[nn[0]].p:lo).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4" cx="${x(last.t).toFixed(1)}" cy="${y(last.c[nn[1]]?last.c[nn[1]].p:lo).toFixed(1)}" fill="var(--c2)"/>`:''}
+      ${area?`<path class="sec" d="${area}"/>`:''}
+      ${refs}${mcg}
+      <path class="ln a" d="${line(nn[0])}"/><path class="ln b" d="${line(nn[1])}"/>${dots}
       <line class="hair" id="march-hair" x1="0" x2="0" y1="${T}" y2="${H-B}"/>
     </svg>
-    <div class="legend"><span><i class="a"></i>${esc(nn[0])} ${esc(title((state.br.cands[0]||{}).nm))}</span><span><i class="b"></i>${esc(nn[1])} ${esc(title((state.br.cands[1]||{}).nm))}</span><span><i class="s"></i>seções totalizadas (eixo da direita)</span><span class="muted">percentuais sobre votos válidos · hora de Brasília</span></div>
+    <div class="legend"><span><i class="a"></i>${esc(nn[0])} ${esc(candName(nn[0]))}</span><span><i class="b"></i>${esc(nn[1])} ${esc(candName(nn[1]))}</span><span><i class="s"></i>seções totalizadas (eixo da direita)</span><span class="opts"><span class="muted">Mostrar:</span>${opt('poll',POLL.inst)}${opt('r1','1º turno')}${opt('mc','Monte Carlo')}</span></div>
+    ${marchOpts.mc&&mc?`<p class="mcnote">${mcText()}</p>`:''}
     <div class="tip" id="march-tip"></div>`;
 }
 function renderMarch(){
   const box=$('march');
-  if(live()&&series.length){box.hidden=false;box.innerHTML=marchChartHTML();bindMarchHover();return;}
-  const r1=state.r1.br;
-  if(r1&&finalistNums()){box.hidden=false;box.innerHTML=marchBarsHTML(r1);return;}
-  box.hidden=true;
+  if(!finalistNums()){box.hidden=true;return;}
+  box.hidden=false;box.innerHTML=marchChartHTML();
+  box.querySelectorAll('[data-opt]').forEach(b=>b.addEventListener('click',()=>{marchOpts[b.dataset.opt]=!marchOpts[b.dataset.opt];try{localStorage.setItem('apuracao-march-opts',JSON.stringify(marchOpts));}catch(_){}renderMarch();}));
+  if(series.length)bindMarchHover();
 }
 function bindMarchHover(){
-  const svg=$('march-svg'),tip=$('march-tip'),hair=$('march-hair'),box=$('march');if(!svg||!tip)return;
+  const svg=$('march-svg'),tip=$('march-tip'),hair=$('march-hair'),box=$('march');if(!svg||!tip||!series.length)return;
   const nn=finalistNums();const pts=series;const {W,L,R}=state.marchDims||{W:800,L:46,R:46};
-  const t0=Math.min(pts[0].t,17*3600),t1=Math.max(pts[pts.length-1].t,t0+1800);
+  const tStart=17*3600,tLast=pts[pts.length-1].t;const t0=Math.min(pts[0].t,tStart),t1=Math.max(tLast+1800,tStart+3*3600);
   const show=e=>{const rc=svg.getBoundingClientRect();const fx=(e.clientX-rc.left)/rc.width*W;const t=t0+(fx-L)/(W-L-R)*(t1-t0);
     let best=pts[0];pts.forEach(p=>{if(Math.abs(p.t-t)<Math.abs(best.t-t))best=p;});
     const px=L+(best.t-t0)/(t1-t0)*(W-L-R);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.style.opacity='.5';
-    const pal=palette();const row=(n,col)=>best.c[n]?`<div class="r"><i style="background:${col}"></i><span>${esc(title((state.br.cands.find(c=>c.n===n)||{}).nm||n))}</span><span class="p">${fmtPct(best.c[n].p)}</span></div>`:'';
+    const pal=palette();const row=(n,col)=>best.c[n]?`<div class="r"><i style="background:${col}"></i><span>${esc(candName(n))}</span><span class="p">${fmtPct(best.c[n].p)}</span></div>`:'';
     tip.innerHTML=`<b class="t">${esc(best.hg.slice(0,5))} · Brasília</b>${row(nn[0],'rgb('+pal.c1.join(',')+')')}${row(nn[1],'rgb('+pal.c2.join(',')+')')}<div class="s">${fmtPct(best.pst,1)} das seções totalizadas</div>`;
     const bw=box.clientWidth;const bx=e.clientX-box.getBoundingClientRect().left,by=e.clientY-box.getBoundingClientRect().top;
     tip.style.display='block';tip.style.left=Math.max(8,Math.min(bw-218,bx+14))+'px';tip.style.top=Math.max(8,by-10)+'px';};
@@ -902,7 +963,7 @@ function pollHTML(A,B){
     </div>
     <div class="bar" aria-hidden="true"><i class="fa" style="width:${pa}%"></i><i class="fb" style="width:${pb}%"></i><span class="mid"></span></div>
     <p class="note">Votos totais: ${esc(title(A.nm))} ${POLL.total[A.n]}%, ${esc(title(B.nm))} ${POLL.total[B.n]}%, brancos e nulos ${POLL.bn}%, indecisos ${POLL.und}%. ${fmtInt(POLL.n)} entrevistas em ${POLL.when}, margem de erro de ${POLL.err} pontos (95%), registro TSE ${POLL.reg}.
-    Assim que as primeiras seções forem totalizadas, este card passa a mostrar a projeção estatística feita a partir das urnas abertas e da distribuição do 1º turno por estado.</p>`;
+    Assim que as primeiras seções forem totalizadas, este card passa a mostrar a projeção estatística feita a partir das urnas abertas e da distribuição do 1º turno por estado.</p>${state.mc?`<p class="note" style="margin-top:8px">${mcText()}</p>`:''}`;
 }
 function renderProjection(){
   const box=$('proj');
@@ -919,7 +980,7 @@ function renderProjection(){
     </div>
     <div class="bar" aria-hidden="true"><i class="fa" style="width:${pj.pctA}%"></i><i class="fb" style="width:${pj.pctB}%"></i><span class="mid"></span></div>
     <p class="note">Com ${fmtPct(100*pj.c,1)} dos votos válidos esperados já contados em ${pj.withData} unidades · faltam cerca de ${fmtInt(pj.remaining)} votos válidos · margem projetada ${fmtPct(pj.margin,1).replace('%',' pp')}.
-    Modelo: a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}) e substituída pelo resultado real à medida que as seções do estado entram.${POLL.valid[A.n]!=null?` Última pesquisa (${POLL.inst}, véspera): ${esc(title(A.nm))} ${POLL.valid[A.n]}% × ${esc(title(B.nm))} ${POLL.valid[B.n]}% dos válidos.`:''}</p>`;
+    Modelo: a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}) e substituída pelo resultado real à medida que as seções do estado entram.${POLL.valid[A.n]!=null?` Última pesquisa (${POLL.inst}, véspera): ${esc(title(A.nm))} ${POLL.valid[A.n]}% × ${esc(title(B.nm))} ${POLL.valid[B.n]}% dos válidos.`:''}</p>${state.mc?`<p class="note" style="margin-top:8px">${mcText()}</p>`:''}`;
 }
 
 /* ---------- loading ---------- */
@@ -963,7 +1024,7 @@ async function loadMain(){
   const results=await Promise.allSettled(jobs);
   const failed=results.filter(r=>r.status==='rejected');
   SPOTS.forEach((sp,i)=>{state.spots[i].uf=state.ufs[sp.uf]||null;});
-  recordPoint(state.br);renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch();logChanges();
+  recordPoint(state.br);state.mc=monteCarlo();renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch();logChanges();
   if(state.br){
     state.lastOk=Date.now();state.errors=0;
     if(state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);
