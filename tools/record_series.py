@@ -36,12 +36,34 @@ def fetch(url):
         return json.loads(base64.urlsafe_b64decode(payload).decode("utf-8"))
 
 
+UFS = "ac al ap am ba ce df es go ma mt ms mg pa pb pr pe pi rj rn rs ro rr sc sp se to zz".split()
+LIVE_DIR = os.path.join(os.path.dirname(OUT), "live")
+
+
+def snapshot():
+    """Also keep the latest national and state files in data/live/, so the count can be inspected from the repo."""
+    os.makedirs(LIVE_DIR, exist_ok=True)
+    for abr in ["br"] + UFS:
+        url = f"https://resultados.tse.jus.br/oficial/ele2026/{ELE}/dados/{abr}/{abr}-c0001-e{int(ELE):06d}-u.json"
+        try:
+            j = fetch(url)
+        except Exception as e:  # noqa: BLE001
+            print("snapshot failed", abr, e)
+            continue
+        with open(os.path.join(LIVE_DIR, f"{abr}.json"), "w", encoding="utf-8") as f:
+            json.dump(j, f, ensure_ascii=False, separators=(",", ":"))
+
+
 def main():
     try:
         j = fetch(URL)
     except Exception as e:  # keep the workflow green; the next run retries
         print("fetch failed:", e)
         return 0
+    try:
+        snapshot()
+    except Exception as e:  # noqa: BLE001
+        print("snapshot error:", e)
     s = j.get("s") or {}
     hg = str(j.get("hg") or "")[:8]
     st = num(s.get("st"))

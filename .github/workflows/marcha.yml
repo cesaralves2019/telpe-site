@@ -22,5 +22,5 @@ jobs:
         run: |
           git config user.name "apuracao-bot"
           git config user.email "bot@telpe.ai"
-          git add data/series.json
+          git add data/series.json data/live
           if git diff --cached --quiet; then echo "nothing new"; else git commit -m "marcha: $(date -u +%H:%M) UTC" && git push; fi
