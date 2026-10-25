@@ -857,7 +857,7 @@ function mcText(){
 function candName(n){const src=state.br&&state.br.cands.length>=2?state.br.cands:(state.r1.br||{cands:[]}).cands;const c=src.find(x=>x.n===n);return c?title(c.nm):n;}
 
 /* ---------- the chart ---------- */
-const marchOpts={poll:true,r1:true,mc:true};   // all three references always drawn
+const marchOpts={poll:false,r1:false,mc:false};   // the chart draws tonight's count only
 
 /* ---------- when do each state's votes arrive? ----------
    If data/r1-march.json exists (built from the TSE's own replay of the first-round count), each state's
@@ -949,7 +949,7 @@ function marchChartHTML(){
   const yt=[];for(let v=lo;v<=hi;v+=5)yt.push(v);
   const major=narrow||Tend>420?60:30;const xt=[];for(let tm=0;tm<=Tend;tm+=major)xt.push(tm);const minor=[];for(let tm=0;tm<=Tend;tm+=10)if(tm%major)minor.push(tm);
   const last=pts.length?pts[pts.length-1]:null;
-  const meta=isLive?`${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções`:`Antes da apuração · o 1º turno${state.r1m?'':' (reconstituído por região)'} e a projeção Datafolha ao longo da noite · a curva de hoje começa às 17h`;
+  const meta=isLive?`${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções`:`A curva começa com o primeiro lote do TSE, a partir das 17h de Brasília${state.r1m?` · no 1º turno a apuração foi até ${hhmmOf((17*60+state.r1m.endMin)*60)}`:''}`;
   const opt=(k,l)=>`<button type="button" data-opt="${k}" class="${marchOpts[k]?'on':''}">${l}</button>`;
   const nowDots=last&&now.length?`<circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}" fill="var(--c2)"/>`:'';
   const first=now.length&&now[0].a!=null?now[0]:null;const firstMark=first?`<line class="first" x1="${x(first.tm).toFixed(1)}" x2="${x(first.tm).toFixed(1)}" y1="${T}" y2="${H-B}"/><text class="ax first" x="${(x(first.tm)+4).toFixed(1)}" y="${T+9}">1º lote ${hhmmOf((17*60+first.tm)*60)}</text>`:'';
@@ -970,7 +970,6 @@ function marchChartHTML(){
       <line class="hair" id="march-hair" x1="0" x2="0" y1="${T}" y2="${H-B}"/>
     </svg>
     <div class="legend"><span><i class="sw now a"></i><i class="sw now b"></i>hoje, 2º turno</span>${marchOpts.r1?`<span><i class="sw r1 a"></i><i class="sw r1 b"></i>1º turno${state.r1m?'':' · reconstituído'}</span>`:''}${marchOpts.poll?`<span><i class="sw pj a"></i><i class="sw pj b"></i>${POLL.inst} distribuída como o 1º turno</span>`:''}${marchOpts.mc&&mcp.length?`<span><i class="sw mc a"></i><i class="sw mc b"></i>Monte Carlo, mediana</span>`:''}</div>
-    ${marchOpts.mc&&state.mc?`<p class="mcnote">${mcText()}</p>`:''}
     <div class="tip" id="march-tip"></div>`;
 }
 function renderMarch(force){
