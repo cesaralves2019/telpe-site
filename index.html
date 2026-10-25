@@ -96,7 +96,7 @@ p{margin:0}
 .stats b{display:block;font-size:20px;letter-spacing:-.02em;font-weight:600;font-variant-numeric:tabular-nums}
 .stats span{font-size:12.5px;color:var(--fg-2);display:block}
 @media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.cand .pic{width:48px;height:48px;font-size:16px}.cand{gap:10px}.race .top{grid-template-columns:1fr auto 1fr;gap:8px}}
-@media (max-width:480px){.race .top{grid-template-columns:1fr}.cand.b{flex-direction:row;text-align:left}.race .vs{display:none}}
+
 
  /* Projection */
 .proj{margin-top:16px;padding:clamp(20px,3vw,30px)}
@@ -273,6 +273,26 @@ p{margin:0}
 .log li .d{display:block;font-size:12.5px;color:var(--fg-2);margin-top:2px;font-weight:400}
 .log .empty{padding:22px;color:var(--fg-2);font-size:14px}
 @media (max-width:900px){.log ol{max-height:380px}.log{min-height:0}}
+/* Phone-specific layout, last so it wins */
+@media (max-width:480px){
+  .race .top{grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .cand,.cand.b{flex-direction:column;align-items:flex-start;gap:8px}
+  .cand.b{align-items:flex-end;text-align:right}
+  .cand .nm{white-space:normal;font-size:19px;line-height:1.12}
+  .race .vs{display:none}
+  .pct{font-size:clamp(40px,12vw,52px)}
+  .flags{justify-content:center}
+  .flag.ph{display:none}
+  .stats{grid-template-columns:1fr 1fr;gap:12px}
+  .stats div:first-child{grid-column:1/-1}
+  .strip{flex-direction:column;align-items:flex-start;gap:4px;font-size:12.5px}
+  .strip .eyebrow{font-size:11px;letter-spacing:.1em}
+  .sm-hide{display:none}
+  .ref{font-size:12px}
+  .poll{align-items:start}
+  .hero h1{font-size:clamp(38px,11vw,56px)}
+}
+.flag.ph{visibility:hidden}
 footer{border-top:1px solid var(--line);padding-block:28px calc(44px + env(safe-area-inset-bottom,0px));color:var(--fg-2);font-size:13px}
 footer .wrap{display:flex;justify-content:space-between;gap:14px 28px;flex-wrap:wrap}
 footer nav{display:flex;gap:22px;flex-wrap:wrap}
@@ -305,7 +325,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 <main id="top">
   <section class="hero" id="presidente">
     <div class="wrap">
-      <p class="eyebrow">Eleições 2026 · 2º turno · 25 de outubro</p>
+      <p class="eyebrow">Eleições 2026 · 2º turno<span class="sm-hide"> · 25 de outubro</span></p>
       <h1 id="headline">Presidente da República<span class="soft" id="subline">Apuração oficial, ao vivo.</span></h1>
       <p class="lede" id="lede">Dados do Tribunal Superior Eleitoral, lidos direto da fonte e atualizados a cada minuto. Este site não é oficial; os números são.</p>
       <div class="race" id="race" style="margin-top:clamp(32px,5vw,56px)">
@@ -467,8 +487,8 @@ setInterval(tickCountdown,1000);tickCountdown();
 function picHTML(c){const ini=esc((c.nm||'?').trim().charAt(0));return `<div class="pic"><span>${ini}</span><img alt="" src="${photo(ELE_PRES,c.sq)}" onerror="this.onerror=null;this.src='${photo('6257',c.sq)}';this.onerror=function(){this.remove()}"></div>`;}
 function raceHTML(r,opts={}){
   const [a,b]=r.cands;const ld=leader(r);const ref=opts.ref;
-  const flag=(c,i)=>c.elected?`<span class="flag win">${esc(c.status||'Eleito')}</span>`:(ld===i?`<span class="flag">${opts.round1?'Mais votado no 1º turno':'Lidera'}</span>`:`<span class="flag" style="visibility:hidden">·</span>`);
-  const refLine=i=>ref&&ref.cands[i]?`<div class="ref">1º turno · <b>${fmtPct(ref.cands[i].pct,1)}</b> · ${fmtInt(ref.cands[i].votes)} votos</div>`:'';
+  const flag=(c,i)=>c.elected?`<span class="flag win">${esc(c.status||'Eleito')} · ${esc(title(c.nm))}</span>`:(ld===i?`<span class="flag">${opts.round1?esc(title(c.nm))+' · mais votado no 1º turno':esc(title(c.nm))+' lidera'}</span>`:`<span class="flag ph">·</span>`);
+  const refLine=i=>ref&&ref.cands[i]?`<div class="ref">1º turno · <b>${fmtPct(ref.cands[i].pct,1)}</b><span class="sm-hide"> · ${fmtInt(ref.cands[i].votes)} votos</span></div>`:'';
   const others=opts.round1?`<p class="others">Outros candidatos no 1º turno: ${fmtPct(Math.max(0,100-a.pct-b.pct),1)} dos votos válidos. Percentuais sobre o total de votos válidos daquele turno.</p>`:'';
   return `<div class="top">
       <div class="cand a">${picHTML(a)}<div class="who"><div class="n">${esc(a.n)} · ${esc(a.party)}</div><div class="nm">${esc(title(a.nm))}</div></div></div>
@@ -501,7 +521,7 @@ function renderRace(){
   }
   if(r1){
     $('wait').hidden=true;$('race-body').hidden=false;
-    $('race-body').innerHTML=`<div class="strip"><span class="eyebrow">1º turno · 4 de outubro · resultado final</span><span>Urnas do 2º turno fecham às 17h (Brasília) · faltam <b class="countdown">—</b></span></div>`+raceHTML(r1,{round1:true});
+    $('race-body').innerHTML=`<div class="strip"><span class="eyebrow">1º turno · 4 de outubro<span class="sm-hide"> · resultado final</span></span><span>Urnas fecham às 17h<span class="sm-hide"> de Brasília</span> · faltam <b class="countdown">—</b></span></div>`+raceHTML(r1,{round1:true});
     tickCountdown();
     $('subline').textContent='Hoje, o 2º turno. Por enquanto, o 1º.';
     $('lede').textContent='Enquanto as urnas não fecham, os números são os do 1º turno, lidos do TSE. A partir das 17h (Brasília) a apuração de hoje entra ao vivo, lado a lado com o 1º turno.';
@@ -779,9 +799,9 @@ function pollHTML(A,B){
   const tie=Math.abs(pa-pb)<=2*POLL.err;const lead=pa===pb?null:(pa>pb?A:B);
   return `<div class="hd"><p class="eyebrow">Projeção Telpe · antes da apuração, a última pesquisa</p><span class="tier">${tie?'Empate técnico na margem de erro':'Vantagem fora da margem'}</span></div>
     <div class="poll">
-      <div><div class="p a num" style="font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--c1)">${pa}<small style="font-size:.5em;font-weight:400;color:var(--fg-2)">%</small></div><div class="who">${esc(A.n)} · ${esc(title(A.nm))} · votos válidos</div></div>
+      <div><div class="p a num" style="font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--c1)">${pa}<small style="font-size:.5em;font-weight:400;color:var(--fg-2)">%</small></div><div class="who">${esc(A.n)} · ${esc(title(A.nm))}<span class="sm-hide"> · votos válidos</span></div></div>
       <div class="lead">${POLL.inst}<b>${POLL.when}</b></div>
-      <div><div class="p b num" style="font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--c2);text-align:right">${pb}<small style="font-size:.5em;font-weight:400;color:var(--fg-2)">%</small></div><div class="who r">${esc(B.n)} · ${esc(title(B.nm))} · votos válidos</div></div>
+      <div><div class="p b num" style="font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--c2);text-align:right">${pb}<small style="font-size:.5em;font-weight:400;color:var(--fg-2)">%</small></div><div class="who r">${esc(B.n)} · ${esc(title(B.nm))}<span class="sm-hide"> · votos válidos</span></div></div>
     </div>
     <div class="bar" aria-hidden="true"><i class="fa" style="width:${pa}%"></i><i class="fb" style="width:${pb}%"></i><span class="mid"></span></div>
     <p class="note">Votos totais: ${esc(title(A.nm))} ${POLL.total[A.n]}%, ${esc(title(B.nm))} ${POLL.total[B.n]}%, brancos e nulos ${POLL.bn}%, indecisos ${POLL.und}%. ${fmtInt(POLL.n)} entrevistas em ${POLL.when}, margem de erro de ${POLL.err} pontos (95%), registro TSE ${POLL.reg}.
@@ -850,7 +870,7 @@ async function loadMain(){
   if(state.br){
     state.lastOk=Date.now();state.errors=0;
     if(state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);
-    else setStatus('',`Aguardando as 17h · arquivos do TSE já publicados`);
+    else setStatus('',`Aguardando as 17h de Brasília`);
   }else if(failed.length){throw failed[0].reason;}
   else setStatus('',`Aguardando a publicação dos arquivos do TSE`);
 }
