@@ -75,8 +75,16 @@ def download(url, dest):
     subprocess.run(["curl", "-sSL", "--retry", "3", "--retry-delay", "5", "-A", UA["User-Agent"], "-o", dest, url], check=True)
 
 
+def csv_member(zip_path):
+    names = subprocess.run(["unzip", "-Z1", zip_path], capture_output=True, text=True, check=True).stdout.split()
+    csvs = [n for n in names if n.lower().endswith(".csv")]
+    if not csvs:
+        raise SystemExit(f"{zip_path}: no csv inside ({names[:5]})")
+    return max(csvs, key=len)
+
+
 def header_of(zip_path):
-    out = subprocess.run("unzip -p %s '*.csv' | head -c 8192" % zip_path, shell=True, capture_output=True, check=False).stdout
+    out = subprocess.run("unzip -p %s '%s' | head -c 8192" % (zip_path, csv_member(zip_path)), shell=True, capture_output=True, check=False).stdout
     line = out.split(b"\n", 1)[0].decode("latin-1")
     return [c.strip().strip('"') for c in line.split(";")]
 
@@ -92,7 +100,7 @@ def process(uf, zip_path, acc):
     i_mun = idx.get("CD_MUNICIPIO")
     stamp = re.compile(r"(\d\d)/(\d\d)/(\d{4}) (\d\d):(\d\d)(?::(\d\d))?")
     # grep keeps only the president's rows; the CSV is latin-1 and ';'-separated with quoted fields
-    cmd = "unzip -p %s '*.csv' | grep -a -F '\"Presidente\"'" % zip_path
+    cmd = "unzip -p %s '%s' | grep -a -F '\"Presidente\"'" % (zip_path, csv_member(zip_path))
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     per_min = acc["uf"].setdefault(uf, {})
     seen = acc["sections_seen"]
