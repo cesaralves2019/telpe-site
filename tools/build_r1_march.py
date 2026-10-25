@@ -98,7 +98,8 @@ def process(uf, zip_path, acc):
         raise SystemExit(f"{uf}: columns missing {missing}; header was {cols[:40]}")
     i_dt, i_nr, i_qt, i_tp, i_zn, i_sc, i_cg = (idx[c] for c in need)
     i_mun = idx.get("CD_MUNICIPIO")
-    stamp = re.compile(r"(\d\d)/(\d\d)/(\d{4}) (\d\d):(\d\d)(?::(\d\d))?")
+    stamp_br = re.compile(r"(\d\d)/(\d\d)/(\d{4}) (\d\d):(\d\d)(?::(\d\d))?")      # 04/10/2026 17:40:20
+    stamp_iso = re.compile(r"(\d{4})-(\d\d)-(\d\d) (\d\d):(\d\d)(?::(\d\d))?")     # 2026-10-04 17:40:20 (the 2026 files)
     # grep keeps only the president's rows; the CSV is latin-1 and ';'-separated with quoted fields
     cmd = "unzip -p %s '%s' | grep -a -i -F presidente" % (zip_path, csv_member(zip_path))
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -112,10 +113,14 @@ def process(uf, zip_path, acc):
             continue
         if f[i_cg].strip('"').strip().upper() != "PRESIDENTE":
             continue
-        m = stamp.search(f[i_dt])
-        if not m:
-            continue
-        d = dt.date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+        m = stamp_iso.search(f[i_dt])
+        if m:
+            d = dt.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        else:
+            m = stamp_br.search(f[i_dt])
+            if not m:
+                continue
+            d = dt.date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
         tm = (d - ELECTION_DAY).days * 1440 + int(m.group(4)) * 60 + int(m.group(5)) - 17 * 60
         if tm < 0:
             tm = 0
