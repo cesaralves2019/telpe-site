@@ -1,0 +1,20 @@
+# One-off helper: maps the TSE count-evolution panel's data files into data/panel-discovery.json
+# whenever tools/discover_panel.py changes (and on demand).
+name: Descobrir painel do TSE
+on:
+  push:
+    paths: ['tools/discover_panel.py', '.github/workflows/discover.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/discover_panel.py
+      - run: |
+          git config user.name "apuracao-bot"
+          git config user.email "bot@telpe.ai"
+          git add data/panel-discovery.json
+          git diff --cached --quiet || (git commit -m "panel discovery" && git push)
