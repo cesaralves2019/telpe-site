@@ -1,0 +1,35 @@
+# Election-night recorder that does not depend on GitHub's cron: one job that records a point every 5 minutes
+# for up to 5h50 (dispatch it again if the night runs longer). Commits data/series.json, data/live and data/r1.
+name: Marcha da apuração (loop)
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "How long to keep recording (minutes)"
+        required: false
+        default: "350"
+permissions:
+  contents: write
+concurrency:
+  group: marcha-loop
+  cancel-in-progress: true
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record every 5 minutes
+        run: |
+          git config user.name "apuracao-bot"
+          git config user.email "bot@telpe.ai"
+          END=$(( $(date +%s) + ${{ github.event.inputs.minutes || 350 }} * 60 ))
+          while [ $(date +%s) -lt $END ]; do
+            python3 tools/record_series.py || true
+            git add data/series.json data/live data/r1 2>/dev/null || true
+            if ! git diff --cached --quiet; then
+              git commit -q -m "marcha: $(date -u +%H:%M) UTC"
+              for i in 1 2 3; do git pull -q --rebase -X theirs && git push -q && break || sleep 10; done
+            fi
+            sleep 300
+          done
