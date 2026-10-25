@@ -199,7 +199,7 @@ p{margin:0}
 .tbl td.r,.tbl th.r{text-align:right}
 .tbl td.city{font-weight:500}
 .tbl tr.hi td{background:rgba(255,255,255,.06)}
-.tbl tr.hi td.city::after{content:"★";margin-left:8px;color:var(--accent)}
+.tbl .star{color:var(--accent);margin-left:6px;font-size:12px}
 .tbl .b{display:inline-block;width:120px;height:6px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;overflow:hidden;vertical-align:middle}
 .tbl .b i{position:absolute;top:0;bottom:0;left:0;background:var(--c1)}
 .tbl .b i.two{left:auto;right:0;background:var(--c2)}
@@ -208,6 +208,12 @@ p{margin:0}
 .filter{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .filter input{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--inv-fg);border-radius:999px;padding:10px 16px;font-size:15px;width:min(360px,100%)}
 .filter input::placeholder{color:var(--inv-fg-2)}
+.band.inv .seg{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)}
+.band.inv .seg button{color:var(--inv-fg-2)}
+.band.inv .seg button.on{background:var(--inv-fg);color:var(--inv-bg)}
+.tbl tr.go{cursor:pointer}
+.tbl tr.go:hover td{background:rgba(255,255,255,.04)}
+.tbl td .sub{display:block;font-size:11.5px;color:var(--inv-fg-2);font-weight:400;margin-top:2px}
 
 /* Governors */
 .govs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(28px,4vw,44px)}
@@ -359,9 +365,9 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
   <section class="band inv" id="exterior">
     <div class="wrap">
       <p class="eyebrow">Exterior</p>
-      <h2 class="h2">Cidade por cidade, do outro lado do mundo.</h2>
-      <p class="sub muted">Cada cidade com seção eleitoral no exterior, assim que o TSE publica. Dublin marcada com ★.</p>
-      <div class="filter"><input id="city-filter" placeholder="Filtrar cidade" aria-label="Filtrar cidade"></div>
+      <h2 class="h2">País por país, cidade por cidade.</h2>
+      <p class="sub muted">Por país, com cada cidade que tem seção eleitoral no exterior a um clique. Irlanda e Dublin marcadas com ★.</p>
+      <div class="filter"><div class="seg" id="ext-seg"><button type="button" data-mode="country" class="on">Por país</button><button type="button" data-mode="city">Por cidade</button></div><input id="city-filter" placeholder="Filtrar por país ou cidade" aria-label="Filtrar por país ou cidade"></div>
       <div id="cities"><p class="tbl-note" id="cities-note">Aguardando a totalização do exterior.</p></div>
     </div>
   </section>
@@ -539,18 +545,62 @@ function ufHTML(uf){
 function renderUFs(){
   $('ufs').innerHTML=REGIONS.map(([reg,list])=>`<div class="uf region">${reg}</div>`+list.map(uf=>ufHTML(uf)).join('')).join('');
 }
+/* Country of each overseas voting city (TSE spelling, accents ignored). Unknown cities fall into "Outros". */
+const strip=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+const COUNTRY_RAW={
+ 'Argentina':'BUENOS AIRES,CORDOBA,MENDOZA,ROSARIO,PUERTO IGUAZU,PASO DE LOS LIBRES',
+ 'Bolívia':'LA PAZ,COCHABAMBA,SANTA CRUZ DE LA SIERRA,SANTA CRUZ,COBIJA,GUAYARAMERIN,PUERTO SUAREZ,PUERTO QUIJARRO',
+ 'Chile':'SANTIAGO','Colômbia':'BOGOTA,LETICIA','Peru':'LIMA,IQUITOS,PUERTO MALDONADO','Equador':'QUITO,GUAYAQUIL',
+ 'Venezuela':'CARACAS,CIUDAD GUAYANA,PUERTO AYACUCHO,SANTA ELENA DE UAIREN','Guiana':'GEORGETOWN,LETHEM','Suriname':'PARAMARIBO',
+ 'Guiana Francesa':'CAIENA,SAINT GEORGES,SAO JORGE DO OIAPOQUE',
+ 'Paraguai':'ASSUNCAO,CIUDAD DEL ESTE,CONCEPCION,ENCARNACION,PEDRO JUAN CABALLERO,SALTO DEL GUAIRA,SALTOS DEL GUAIRA',
+ 'Uruguai':'MONTEVIDEU,RIVERA,ARTIGAS,CHUY,RIO BRANCO','México':'CIDADE DO MEXICO,MEXICO',
+ 'Cuba':'HAVANA','República Dominicana':'SANTO DOMINGO','Haiti':'PORTO PRINCIPE,PORT AU PRINCE','Jamaica':'KINGSTON','Trinidad e Tobago':'PORT OF SPAIN','Barbados':'BRIDGETOWN','Santa Lúcia':'CASTRIES','Bahamas':'NASSAU',
+ 'Costa Rica':'SAN JOSE','Guatemala':'CIDADE DA GUATEMALA,GUATEMALA','El Salvador':'SAN SALVADOR','Honduras':'TEGUCIGALPA','Nicarágua':'MANAGUA','Panamá':'CIDADE DO PANAMA,PANAMA','Belize':'BELMOPAN',
+ 'Estados Unidos':'WASHINGTON,NOVA IORQUE,NOVA YORK,NEW YORK,MIAMI,BOSTON,CHICAGO,HOUSTON,LOS ANGELES,SAN FRANCISCO,SAO FRANCISCO,ATLANTA,HARTFORD,ORLANDO,DALLAS,FILADELFIA,PHILADELPHIA',
+ 'Canadá':'OTTAWA,MONTREAL,TORONTO,VANCOUVER',
+ 'Portugal':'LISBOA,PORTO,FARO','Espanha':'MADRI,MADRID,BARCELONA','França':'PARIS,LYON,MARSELHA','Reino Unido':'LONDRES,MANCHESTER,EDIMBURGO','Irlanda':'DUBLIN',
+ 'Alemanha':'BERLIM,FRANKFURT,MUNIQUE,HAMBURGO,COLONIA,STUTTGART','Itália':'ROMA,MILAO,TURIM,NAPOLES','Países Baixos':'AMSTERDA,HAIA,ROTERDA','Bélgica':'BRUXELAS','Luxemburgo':'LUXEMBURGO',
+ 'Suíça':'BERNA,GENEBRA,ZURIQUE','Áustria':'VIENA','Dinamarca':'COPENHAGUE','Suécia':'ESTOCOLMO','Noruega':'OSLO','Finlândia':'HELSINQUE,HELSINKI','Islândia':'REYKJAVIK',
+ 'Polônia':'VARSOVIA','Tchéquia':'PRAGA','Eslováquia':'BRATISLAVA','Hungria':'BUDAPESTE','Romênia':'BUCARESTE','Bulgária':'SOFIA','Grécia':'ATENAS','Chipre':'NICOSIA','Malta':'VALETA,LA VALLETTA',
+ 'Eslovênia':'LIUBLIANA','Croácia':'ZAGREB','Sérvia':'BELGRADO','Bósnia e Herzegovina':'SARAJEVO','Macedônia do Norte':'SKOPJE','Albânia':'TIRANA','Montenegro':'PODGORICA',
+ 'Ucrânia':'KIEV,KYIV','Rússia':'MOSCOU','Belarus':'MINSK','Estônia':'TALIN,TALLINN','Letônia':'RIGA','Lituânia':'VILNIUS','Moldávia':'CHISINAU',
+ 'Turquia':'ANCARA,ISTAMBUL','Azerbaijão':'BAKU','Geórgia':'TBILISI','Armênia':'EREVAN,YEREVAN',
+ 'África do Sul':'PRETORIA,CIDADE DO CABO,JOANESBURGO','Angola':'LUANDA','Moçambique':'MAPUTO','Cabo Verde':'PRAIA','São Tomé e Príncipe':'SAO TOME','Guiné-Bissau':'BISSAU','Gana':'ACRA','Nigéria':'ABUJA,LAGOS',
+ 'Senegal':'DACAR','Quênia':'NAIROBI','Etiópia':'ADIS ABEBA','Egito':'CAIRO','Argélia':'ARGEL','Marrocos':'RABAT','Tunísia':'TUNIS','Líbia':'TRIPOLI','Sudão':'CARTUM,KHARTOUM','Tanzânia':'DAR ES SALAAM',
+ 'Zâmbia':'LUSAKA','Zimbábue':'HARARE','Namíbia':'WINDHOEK','Botsuana':'GABORONE','Malaui':'LILONGUE','República Democrática do Congo':'KINSHASA','Congo':'BRAZZAVILLE','Gabão':'LIBREVILLE','Camarões':'YAOUNDE',
+ 'Guiné Equatorial':'MALABO','Togo':'LOME','Benin':'COTONOU','Burkina Faso':'UAGADUGU','Mali':'BAMAKO','Guiné':'CONACRI','Costa do Marfim':'ABIDJAN','Mauritânia':'NOUAKCHOTT','Uganda':'KAMPALA','Ruanda':'KIGALI','Madagascar':'ANTANANARIVO','Maurício':'PORT LOUIS','Sudão do Sul':'JUBA',
+ 'Israel':'TEL AVIV','Palestina':'RAMALA,RAMALLAH','Jordânia':'AMA,AMMAN','Líbano':'BEIRUTE','Síria':'DAMASCO','Iraque':'BAGDA','Irã':'TEERA','Arábia Saudita':'RIAD','Catar':'DOHA','Emirados Árabes Unidos':'ABU DHABI,DUBAI','Kuwait':'KUWAIT,CIDADE DO KUWAIT','Omã':'MASCATE','Bahrein':'MANAMA',
+ 'Paquistão':'ISLAMABAD','Índia':'NOVA DELHI,MUMBAI','Bangladesh':'DACA','Nepal':'CATMANDU','Sri Lanka':'COLOMBO','China':'PEQUIM,XANGAI,CANTAO,GUANGZHOU,HONG KONG','Taiwan':'TAIPE','Coreia do Sul':'SEUL',
+ 'Japão':'TOQUIO,NAGOIA,HAMAMATSU','Mongólia':'ULAN BATOR','Cazaquistão':'ASTANA,NUR SULTAN','Uzbequistão':'TASHKENT','Tailândia':'BANGKOK,BANGUECOQUE','Vietnã':'HANOI,HO CHI MINH','Indonésia':'JACARTA','Malásia':'KUALA LUMPUR',
+ 'Singapura':'CINGAPURA,SINGAPURA','Filipinas':'MANILA','Timor-Leste':'DILI','Camboja':'PHNOM PENH','Mianmar':'YANGON,NAYPYIDAW','Austrália':'CAMBERRA,SYDNEY,SIDNEY,MELBOURNE','Nova Zelândia':'WELLINGTON,AUCKLAND'};
+const COUNTRY={};Object.entries(COUNTRY_RAW).forEach(([co,list])=>list.split(',').forEach(c=>{COUNTRY[strip(c)]=co;}));
+const countryOf=name=>COUNTRY[strip(name)]||'Outros';
+const STAR_COUNTRY='Irlanda';
+/* Rows for the table: cities as they are, or cities summed by country. Every row: name, sub, star, a, b, valid, pst, key */
+function cityRows(list){return list.map(c=>({key:'c:'+c.code,name:c.name,sub:countryOf(c.name),country:countryOf(c.name),star:!!c.star,a:c.r.cands[0].votes,b:c.r.cands[1].votes,valid:c.r.votes.valid,pst:c.r.sections.pct,n:1}));}
+function countryRows(list){const g={};list.forEach(c=>{const co=countryOf(c.name);const x=g[co]||(g[co]={key:'p:'+co,name:co,country:co,cities:[],star:co===STAR_COUNTRY,a:0,b:0,valid:0,st:0,ts:0});x.cities.push(c.name);x.a+=c.r.cands[0].votes;x.b+=c.r.cands[1].votes;x.valid+=c.r.votes.valid;x.st+=c.r.sections.done;x.ts+=c.r.sections.total;});
+  return Object.values(g).map(x=>({...x,n:x.cities.length,sub:x.cities.length===1?x.cities[0]:`${x.cities.length} cidades · ${x.cities.slice(0,3).join(', ')}${x.cities.length>3?'…':''}`,pst:x.ts?100*x.st/x.ts:0}));}
+const pctOf=(v,t)=>t?100*v/t:0;
 function renderCities(){
-  const box=$('cities');const q=($('city-filter').value||'').trim().toLowerCase();
+  const box=$('cities');const q=strip($('city-filter').value||'');const mode=state.extMode||'country';
   const isLive=live()&&state.cities.length>0;
-  const r1map={};state.r1.cities.forEach(c=>{r1map[c.code]=c;});
-  const all=isLive?state.cities:state.r1.cities.map(c=>({...c,r:fin(c.r)})).filter(c=>c.r);
-  const rows=all.filter(c=>!q||c.name.toLowerCase().includes(q));
+  const r1list=state.r1.cities.map(c=>({...c,r:fin(c.r)})).filter(c=>c.r);
+  const all=isLive?state.cities:r1list;
   if(!all.length){box.innerHTML=`<p class="tbl-note" id="cities-note">${state.cityList.length?'Lendo as cidades do exterior no TSE…':'Aguardando a lista de cidades do exterior.'}</p>`;return;}
   const [a,b]=all[0].r.cands;
-  box.innerHTML=`<table class="tbl"><thead><tr><th>Cidade</th><th class="r">${esc(a.n)} ${esc(title(a.nm))}</th><th class="r">${esc(b.n)} ${esc(title(b.nm))}</th><th class="hide"></th><th class="r hide">Válidos</th>${isLive?'<th class="r hide">1º turno</th>':''}<th class="r">${isLive?'Seções':'Turno'}</th></tr></thead><tbody>`+
-    rows.map(c=>{const r=c.r;const [x,y]=r.cands;const p=isLive&&r1map[c.code]?fin(r1map[c.code].r):null;return `<tr class="${c.star?'hi':''}"><td class="city">${esc(c.name)}</td><td class="r num">${fmtPct(x.pct,1)}</td><td class="r num">${fmtPct(y.pct,1)}</td><td class="hide"><span class="b"><i style="width:${x.pct}%"></i><i class="two" style="width:${y.pct}%"></i></span></td><td class="r num hide">${fmtInt(r.votes.valid)}</td>${isLive?`<td class="r num hide">${p?fmtPct(p.cands[0].pct,1)+' · '+fmtPct(p.cands[1].pct,1):'—'}</td>`:''}<td class="r num">${isLive?fmtPct(r.sections.pct,0):'1º'}</td></tr>`;}).join('')+
-    `</tbody></table><p class="tbl-note">${isLive?`${rows.length} de ${state.cities.length} cidades com seções totalizadas no 2º turno${state.cityList.length>state.cities.length?` · ${state.cityList.length-state.cities.length} ainda sem totalização`:''}`:`${rows.length} cidades · resultado final do 1º turno (4 de outubro)`} · percentuais sobre votos válidos</p>`;
+  let rows=mode==='country'?countryRows(all):cityRows(all);
+  // the first-round reference, by the same key
+  const ref={};if(isLive){(mode==='country'?countryRows(r1list):cityRows(r1list)).forEach(x=>{ref[x.key]=x;});}
+  if(q)rows=rows.filter(x=>strip(x.name).includes(q)||strip(x.sub).includes(q)||(x.cities||[]).some(c=>strip(c).includes(q)));
+  rows.sort((x,y)=>(y.star-x.star)||(y.valid-x.valid));
+  box.innerHTML=`<table class="tbl"><thead><tr><th>${mode==='country'?'País':'Cidade'}</th><th class="r">${esc(a.n)} ${esc(title(a.nm))}</th><th class="r">${esc(b.n)} ${esc(title(b.nm))}</th><th class="hide"></th><th class="r hide">Válidos</th>${isLive?'<th class="r hide">1º turno</th>':''}<th class="r">${isLive?'Seções':'Turno'}</th></tr></thead><tbody>`+
+    rows.map(x=>{const pa=pctOf(x.a,x.valid),pb=pctOf(x.b,x.valid);const p=ref[x.key];return `<tr class="${x.star?'hi':''} ${mode==='country'?'go':''}" data-country="${esc(x.country)}"><td class="city">${esc(x.name)}${x.star?'<span class="star">★</span>':''}<span class="sub">${esc(x.sub)}</span></td><td class="r num">${fmtPct(pa,1)}</td><td class="r num">${fmtPct(pb,1)}</td><td class="hide"><span class="b"><i style="width:${pa}%"></i><i class="two" style="width:${pb}%"></i></span></td><td class="r num hide">${fmtInt(x.valid)}</td>${isLive?`<td class="r num hide">${p?fmtPct(pctOf(p.a,p.valid),1)+' · '+fmtPct(pctOf(p.b,p.valid),1):'—'}</td>`:''}<td class="r num">${isLive?fmtPct(x.pst,0):'1º'}</td></tr>`;}).join('')+
+    `</tbody></table><p class="tbl-note">${rows.length} ${mode==='country'?'países':'cidades'} · ${isLive?`2º turno, ${state.cities.length} de ${state.cityList.length} cidades com seções totalizadas`:'resultado final do 1º turno (4 de outubro)'} · percentuais sobre votos válidos${mode==='country'?' · toque num país para ver as cidades':''}</p>`;
+  $('ext-seg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.mode===mode));
 }
+$('ext-seg').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(!b)return;state.extMode=b.dataset.mode;renderCities();});
+$('cities').addEventListener('click',e=>{const tr=e.target.closest('tr.go');if(!tr)return;state.extMode='city';$('city-filter').value=tr.dataset.country;renderCities();});
 function renderGovs(){
   const box=$('govs');
   if(!state.govs.length){box.innerHTML=`<div class="card empty">${state.configOk?'Nenhuma disputa de governador em segundo turno na configuração do TSE.':'Lendo a lista de disputas do TSE…'}</div>`;return;}
