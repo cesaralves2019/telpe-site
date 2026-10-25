@@ -947,6 +947,7 @@ async function loadR1March(){
 }
 async function loadPhi(){ // how much of the first round's within-state count order is repeating tonight (recorder estimate)
   try{const r=await fetch('data/live/phi.json?t='+Math.floor(Date.now()/6e4),{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&typeof j.phi==='number')state.phi=j;}}catch(_){}
+  if(!state.phi&&window.PHI0&&typeof window.PHI0.phi==='number')state.phi=window.PHI0;
 }
 async function loadServerSeries(){
   let arr=null;try{const r=await fetch('data/series.json?t='+Date.now(),{cache:'no-store'});if(r.ok)arr=await r.json();}catch(_){}
