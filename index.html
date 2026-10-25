@@ -608,11 +608,25 @@ function translateDOM(root){
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))i18nNode(n);
   if(root.querySelectorAll){if(root.nodeType===1)i18nAttrs(root);root.querySelectorAll('[placeholder],[aria-label],[title]').forEach(i18nAttrs);}
 }
-function initI18n(){
-  const box=$('lang');if(box){box.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',b.dataset.lang===LANG);b.addEventListener('click',()=>{if(b.dataset.lang===LANG)return;try{localStorage.setItem('apuracao-lang',b.dataset.lang);}catch(_){}const u=new URL(location.href);u.searchParams.delete('lang');location.href=u.toString();});});}
-  if(LANG==='pt')return;
+/* Switching language happens in place: every translated node keeps its Portuguese source, so the page can go back to PT
+   or to another language without reloading (a reload cannot be relied on inside embedded views). */
+function i18nRestore(root){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+  while((n=w.nextNode())){const src=i18nOrig.get(n);if(src!=null&&i18nLast.get(n)===n.nodeValue&&src!==n.nodeValue)n.nodeValue=src;i18nLast.delete(n);i18nOrig.delete(n);}
+  root.querySelectorAll('[placeholder],[aria-label],[title]').forEach(el=>{const m=i18nAttrOrig.get(el);if(!m)return;['placeholder','aria-label','title'].forEach(a=>{if(m[a]!=null&&el.getAttribute(a)===m['out_'+a]&&m[a]!==m['out_'+a])el.setAttribute(a,m[a]);});i18nAttrOrig.delete(el);});
+}
+function setLang(l){
+  if(!LANGS[l])return;const box=$('lang');
+  i18nRestore(document.body);                      // back to the Portuguese source first
+  LANG=l;LOCALE=LANGS[l];document.documentElement.lang=LOCALE;try{localStorage.setItem('apuracao-lang',l);}catch(_){}
+  if(box)box.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.lang===LANG));
+  try{renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch(true);renderLog();if(state.br&&state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);}catch(_){}   // numbers in the new locale
   translateDOM(document.body);
-  new MutationObserver(ms=>{ms.forEach(m=>{if(m.type==='characterData')i18nNode(m.target);else if(m.type==='attributes')i18nAttrs(m.target);else m.addedNodes.forEach(n=>translateDOM(n));});}).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['placeholder','aria-label','title']});
+}
+function initI18n(){
+  const box=$('lang');if(box){box.querySelectorAll('button').forEach(b=>{b.classList.toggle('on',b.dataset.lang===LANG);b.addEventListener('click',()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);});});}
+  translateDOM(document.body);
+  new MutationObserver(ms=>{if(LANG==='pt')return;ms.forEach(m=>{if(m.type==='characterData')i18nNode(m.target);else if(m.type==='attributes')i18nAttrs(m.target);else m.addedNodes.forEach(n=>translateDOM(n));});}).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['placeholder','aria-label','title']});
 }
 
 const CYCLE='ele2026';
