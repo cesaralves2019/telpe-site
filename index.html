@@ -99,7 +99,7 @@ p{margin:0}
 
 
  /* March of the count */
-.march{padding:clamp(18px,3vw,28px) clamp(18px,3vw,28px) clamp(14px,2vw,20px)}
+.march{position:relative;padding:clamp(18px,3vw,28px) clamp(18px,3vw,28px) clamp(14px,2vw,20px)}
 .march .hd{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;align-items:baseline;margin-bottom:12px}
 .march .hd .eyebrow{margin:0}
 .march .hd .meta{font-size:12.5px;color:var(--fg-2);font-variant-numeric:tabular-nums}
@@ -108,24 +108,29 @@ p{margin:0}
 .march .grid{stroke:var(--line);stroke-width:1}
 .march .ln{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 .march .ln.a{stroke:var(--c1)}.march .ln.b{stroke:var(--c2)}
-.march .sec{fill:var(--fg);fill-opacity:.05;stroke:var(--fg-2);stroke-width:1;stroke-dasharray:3 4}
 .march .hair{stroke:var(--fg);stroke-width:1;opacity:0;pointer-events:none}
 .march .dot{stroke:var(--card);stroke-width:2}
 .march .legend{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:12.5px;color:var(--fg-2);margin-top:10px}
-.march .legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
-.march .legend i.a{background:var(--c1)}.march .legend i.b{background:var(--c2)}.march .legend i.s{background:none;border-top:2px dashed var(--fg-2);height:0}
-.march .pline{stroke-width:1.5;stroke-dasharray:2 4}.march .pline.a{stroke:var(--c1)}.march .pline.b{stroke:var(--c2)}
-.march .pband{opacity:.07}.march .pband.a{fill:var(--c1)}.march .pband.b{fill:var(--c2)}
-.march .r1line{stroke-width:1.5;stroke-dasharray:6 4;opacity:.7}.march .r1line.a{stroke:var(--c1)}.march .r1line.b{stroke:var(--c2)}
-.march .mcband{opacity:.14}.march .mcband.a{fill:var(--c1)}.march .mcband.b{fill:var(--c2)}
-.march .mcline{stroke-width:1.5;stroke-dasharray:1 3;opacity:.9}.march .mcline.a{stroke:var(--c1)}.march .mcline.b{stroke:var(--c2)}
-.march .lab{font-size:10px;opacity:.85}.march .lab.a{fill:var(--c1)}.march .lab.b{fill:var(--c2)}
+.march .tick{stroke:var(--fg-2);stroke-width:1;opacity:.6}
+.march .grid.base{stroke:var(--fg-2);opacity:.5}
+.march .fifty{stroke:var(--fg-2);stroke-width:1;stroke-dasharray:2 4;opacity:.6}
+.march .first{stroke:var(--fg-2);stroke-width:1;stroke-dasharray:3 3;opacity:.5}.march .ax.first{font-size:10px;paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
+.march .ln.now{stroke-width:2.6}
+.march .ln.r1{stroke-width:1.6;opacity:.42}
+.march .ln.pj{stroke-width:1.6;stroke-dasharray:7 5;opacity:.85}
+.march .ln.mc{stroke-width:1.8;stroke-dasharray:2 4}
+.march .ax.end{font-size:11px;font-weight:600;paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}.march .ax.end.a{fill:var(--c1)}.march .ax.end.b{fill:var(--c2)}
+.march .legend .sw{display:inline-block;width:16px;height:0;border-top:2.5px solid;border-radius:0;vertical-align:middle;margin-right:3px}
+.march .legend .sw.a{border-color:var(--c1)}.march .legend .sw.b{border-color:var(--c2);margin-right:7px}
+.march .legend .sw.r1{opacity:.45}.march .legend .sw.pj{border-top-style:dashed}.march .legend .sw.mc{border-top-style:dotted;border-top-width:3px}
 .march .legend .opts{display:inline-flex;gap:6px;align-items:center;margin-left:auto}
 .march .legend .opts button{border:1px solid var(--line);background:none;border-radius:999px;padding:3px 10px;font-size:12px;color:var(--fg-2);cursor:pointer}
 .march .legend .opts button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .march .mcnote{font-size:12.5px;color:var(--fg-2);margin-top:10px;line-height:1.45}
-.march .tip{width:210px}
-.march .tip .r{grid-template-columns:10px 1fr auto}
+.march .tip .r3{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;font-size:12.5px;margin-top:3px;font-variant-numeric:tabular-nums}
+.march .tip .r3 .a{color:var(--c1);text-align:right;font-weight:600}.march .tip .r3 .b{color:var(--c2);text-align:right;font-weight:600}
+.march .tip .hd3{font-size:11px;color:var(--fg-2);margin-top:0}.march .tip .hd3 .a,.march .tip .hd3 .b{font-weight:500;white-space:nowrap}
+.march .tip{width:auto;min-width:230px;max-width:min(300px,86vw)}
 .bars{display:grid;gap:12px;margin-top:4px}
 .bars .row{display:grid;grid-template-columns:minmax(120px,.9fr) 1fr auto;gap:12px;align-items:center;font-size:14px}
 .bars .row .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -503,7 +508,7 @@ function parse(j){
 const leader=r=>r.cands.length<2?null:(r.cands[0].votes===r.cands[1].votes?null:(r.cands[0].votes>r.cands[1].votes?0:1));
 
 /* ---------- state ---------- */
-const state={br:null,ufs:{},cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,configOk:false,configTries:0,geo:null,geoMode:null,prev:null,prior:null,priorTries:0,proj:null,spots:SPOTS.map(()=>({city:null,uf:null})),r1:{br:null,ufs:{},spots:[],cities:[],citiesDone:false,govs:{},done:false,tries:0,logged:false},mapRound:'auto'};
+const state={br:null,ufs:{},cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,configOk:false,configTries:0,geo:null,geoMode:null,prev:null,prior:null,priorTries:0,proj:null,spots:SPOTS.map(()=>({city:null,uf:null})),r1:{br:null,ufs:{},spots:[],cities:[],citiesDone:false,govs:{},done:false,tries:0,logged:false},mapRound:'auto',r1m:null};
 const live=()=>!!(state.br&&state.br.started);
 function finalistNums(){if(state.br&&state.br.cands.length>=2)return [state.br.cands[0].n,state.br.cands[1].n];const b=state.r1.br;if(b&&b.cands.length>=2){const top=[...b.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n));return [top[0].n,top[1].n];}return null;}
 /* A first-round result restricted to the two finalists (percentages stay over all valid votes of that round). */
@@ -764,6 +769,10 @@ const hhmmOf=t=>`${String(Math.floor(t/3600)%24).padStart(2,'0')}:${String(Math.
 function saveSeries(){try{localStorage.setItem('apuracao-series-'+DAYKEY,JSON.stringify(series.slice(-3000)));}catch(_){}}
 function addPoint(hg,pst,c){const t=secs(hg);if(t==null||series.some(p=>p.t===t))return false;series.push({t,hg:String(hg).slice(0,8),pst:num(pst),c});series.sort((a,b)=>a.t-b.t);return true;}
 function recordPoint(r){if(!r||!r.started||!r.hg)return;const c={};r.cands.forEach(x=>{c[x.n]={p:x.pct,v:x.votes};});if(addPoint(r.hg,r.sections.pct,c))saveSeries();}
+async function loadR1March(){
+  if(state.r1m!==null)return;
+  try{const r=await fetch('data/r1-march.json?t='+Math.floor(Date.now()/3e5),{cache:'no-store'});if(!r.ok){state.r1m=false;return;}const j=await r.json();state.r1m=(j&&j.br&&j.br.length)?j:false;if(state.r1m)addLog('info',`Marcha real do 1º turno carregada: ${fmtInt(state.r1m.sections)} seções, ${fmtPct(100*(state.r1m.endShare||0.999),1)} delas até ${hhmmOf((17*60+state.r1m.endMin)*60)} (eixo do gráfico), a última só ${state.r1m.lastMin>=7*60?'no dia '+(4+Math.floor((17*60+state.r1m.lastMin)/1440))+'/10 às ':'às '}${hhmmOf((17*60+state.r1m.lastMin)*60)}`);}catch(_){state.r1m=false;}
+}
 async function loadServerSeries(){
   try{const r=await fetch('data/series.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const arr=await r.json();let added=0;
     (Array.isArray(arr)?arr:[]).forEach(p=>{if(p&&p.hg&&p.c&&addPoint(p.hg,p.pst,p.c))added++;});if(added)saveSeries();}catch(_){}
@@ -808,69 +817,126 @@ function candName(n){const src=state.br&&state.br.cands.length>=2?state.br.cands
 
 /* ---------- the chart ---------- */
 let marchOpts={poll:true,r1:true,mc:true};try{marchOpts={...marchOpts,...JSON.parse(localStorage.getItem('apuracao-march-opts')||'{}')};}catch(_){}
+
+/* ---------- when do each state's votes arrive? ----------
+   If data/r1-march.json exists (built from the TSE's own replay of the first-round count), each state's
+   real progression on 4 October is used. Otherwise a regional model shaped like recent counts: the South,
+   Centre-West and the exterior report first, the Southeast next, the Northeast and North last. */
+const REGION_OF={};REGIONS.forEach(([name,list])=>list.forEach(uf=>{REGION_OF[uf]=name;}));
+const ARRIVAL={'Exterior':[25,10],'Sul':[70,22],'Centro-Oeste':[72,22],'Sudeste':[82,25],'Nordeste':[92,27],'Norte':[98,30]};  // [minutes to 50%, spread]
+const END_MIN=()=>state.r1m&&state.r1m.endMin?clamp(state.r1m.endMin,180,24*60):6*60;   // 17:00 → when the first round was (99,9%) done, else 23:00
+const sig=z=>1/(1+Math.exp(-z));
+function arrival(uf,tm){ // share of a state's valid votes counted tm minutes after 17:00
+  const T=END_MIN();if(tm<=0)return 0;if(tm>=T)return 1;
+  const real=state.r1m&&state.r1m.uf&&state.r1m.uf[uf];
+  if(real&&real.length>1){let i=1;while(i<real.length&&real[i][0]<tm)i++;const [t0,f0]=real[i-1],[t1,f1]=real[Math.min(i,real.length-1)];return t1===t0?f1:clamp(f0+(f1-f0)*(tm-t0)/(t1-t0),0,1);}
+  const [m,k]=ARRIVAL[REGION_OF[uf]]||[80,25];const a=sig(-m/k),b=sig((T-m)/k);return clamp((sig((tm-m)/k)-a)/(b-a),0,1);
+}
+/* Per-state picture used by the curves: expected valid votes, first-round shares, counted votes, projected final share. */
+function ufModel(){
+  const P=state.prior,nn=finalistNums();if(!P||!nn)return null;
+  let num=0,den=0;const rows=[];
+  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];let ca=0,cb=0,w=0,st=false;
+    if(live()&&x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){st=true;w=clamp(x.sections.pct/100,0,1);ca=x.cands[0].votes;cb=x.cands[1].votes;num+=(ca/t-p.a/(p.a+p.b))*t;den+=t;}}
+    rows.push({uf,V:p.valid,a1:p.a/p.valid,b1:p.b/p.valid,pri:p.a/(p.a+p.b),ca,cb,w,st});});
+  const swing=den?num/den:0;
+  rows.forEach(r=>{const adj=clamp(r.pri+swing,.02,.98);const t=r.ca+r.cb;r.share=r.st&&t>0?r.w*(r.ca/t)+(1-r.w)*adj:adj;});
+  return {rows,swing,totalV:rows.reduce((s,r)=>s+r.V,0)};
+}
+/* Scenario curve: running share of candidate A when each state's votes arrive on the first-round timetable,
+   given a final share per state. 5-minute slots from 17:00 to the end. */
+function scenarioCurve(shareOf,fromMin=0,base=null){
+  const m=ufModel();if(!m)return [];const out=[];const T=END_MIN();
+  for(let tm=Math.max(5,Math.ceil(fromMin/5)*5);tm<=T;tm+=5){let A=base?base.A:0,V=base?base.V:0;
+    for(const r of m.rows){let f;if(base){const F0=arrival(r.uf,base.tm);f=1-F0<0.02?clamp((tm-base.tm)/30,0,1):clamp((arrival(r.uf,tm)-F0)/(1-F0),0,1);}else f=arrival(r.uf,tm);const v=base?Math.max(0,r.V-(r.ca+r.cb))*f:r.V*f;A+=v*shareOf(r);V+=v;}
+    if(V>0)out.push({tm,a:100*A/V,V});}
+  return out;
+}
+function pollCurve(){ // Datafolha final, distributed like the first round by state
+  const nn=finalistNums(),m=ufModel();if(!nn||!m||POLL.valid[nn[0]]==null)return [];
+  const target=POLL.valid[nn[0]]/100;let sw=0;for(let i=0;i<4;i++){let A=0;m.rows.forEach(r=>{A+=r.V*clamp(r.pri+sw,.02,.98);});sw+=target-A/m.totalV;}
+  return scenarioCurve(r=>clamp(r.pri+sw,.02,.98));
+}
+function r1Curve(){ // the first round itself: real replay if present, else the regional model on the real state results
+  if(state.r1m&&state.r1m.br&&state.r1m.br.length)return state.r1m.br.map(p=>({tm:p.tm,a:p.a,b:p.b,pst:p.pst}));
+  const m=ufModel();if(!m)return [];
+  return scenarioCurve(r=>r.a1).map((p,i)=>({...p,b:0})).map(p=>{let B=0,V=0;m.rows.forEach(r=>{const v=r.V*arrival(r.uf,p.tm);B+=v*r.b1;V+=v;});return {...p,b:V?100*B/V:0};});
+}
+function mcCurve(){ // from the last real batch to the end, converging on the Monte Carlo median
+  const m=ufModel(),mc=state.mc;if(!m||!mc||!live()||!series.length)return [];
+  const last=series[series.length-1];const tm0=last.t/60-17*60;
+  let A=0,V=0,rem=0;m.rows.forEach(r=>{A+=r.ca;V+=r.ca+r.cb;rem+=Math.max(0,r.V-(r.ca+r.cb));});
+  let remA=0;m.rows.forEach(r=>{remA+=Math.max(0,r.V-(r.ca+r.cb))*r.share;});
+  const delta=rem>0?(mc.med*(V+rem)-A-remA)/rem:0;   // per-state shares nudged so the path ends on the median
+  const pts=scenarioCurve(r=>clamp(r.share+delta,0,1),tm0,{A,V,tm:tm0});if(!pts.length)return [];
+  const nn=finalistNums();const a0=last.c[nn[0]]?last.c[nn[0]].p:100*A/V;   // the BR file's own figure, not the UF files' sum
+  const Vend=pts[pts.length-1].V,off0=a0-100*A/V;
+  return [{tm:tm0,a:a0}].concat(pts.map(p=>{const prog=Vend>V?clamp((p.V-V)/(Vend-V),0,1):1;return {tm:p.tm,a:p.a+off0*(1-prog)};}));
+}
+
+/* ---------- the chart ---------- */
 function marchChartHTML(){
   const nn=finalistNums();if(!nn)return '';
   const pts=series,isLive=live()&&pts.length>0;
-  const narrow=($('march').clientWidth||800)<520;const W=narrow?420:800,H=narrow?260:310,L=narrow?36:46,R=narrow?36:46,T=16,B=30;state.marchDims={W,L,R};
-  const tStart=17*3600,tLast=pts.length?pts[pts.length-1].t:tStart;
-  const t0=Math.min(pts.length?pts[0].t:tStart,tStart),t1=Math.max(tLast+1800,tStart+3*3600);
-  const x=t=>L+(t-t0)/(t1-t0)*(W-L-R);
-  const pollA=POLL.valid[nn[0]],pollB=POLL.valid[nn[1]];const r1v=fin(state.r1.br);const mc=state.mc;
-  const vals=[];pts.forEach(p=>nn.forEach(n=>{if(p.c[n])vals.push(p.c[n].p);}));
-  if(marchOpts.poll&&pollA!=null)vals.push(pollA-POLL.err,pollB+POLL.err,pollB-POLL.err,pollA+POLL.err);
-  if(marchOpts.r1&&r1v)vals.push(r1v.cands[0].pct,r1v.cands[1].pct);
-  if(marchOpts.mc&&mc)vals.push(100*mc.lo,100*mc.hi,100-100*mc.lo,100-100*mc.hi);
+  const narrow=($('march').clientWidth||800)<520;const W=narrow?420:800,H=narrow?270:320,L=narrow?34:44,R=narrow?40:50,T=14,B=30;
+  const Tend=END_MIN();const x=tm=>L+tm/Tend*(W-L-R);state.marchDims={W,L,R,Tend};
+  const now=pts.map(p=>({tm:p.t/60-17*60,a:p.c[nn[0]]?p.c[nn[0]].p:null,b:p.c[nn[1]]?p.c[nn[1]].p:null,pst:p.pst}));
+  const r1=marchOpts.r1?r1Curve():[],poll=marchOpts.poll?pollCurve():[],mcp=marchOpts.mc?mcCurve():[];
+  state.marchSeries={now,r1,poll,mc:mcp};
+  const vals=[];now.forEach(p=>{if(p.a!=null)vals.push(p.a,p.b);});r1.forEach(p=>vals.push(p.a,p.b));poll.forEach(p=>vals.push(p.a,100-p.a));mcp.forEach(p=>vals.push(p.a,100-p.a));
   if(!vals.length)vals.push(45,55);
-  let lo=Math.max(0,Math.floor((Math.min(...vals)-2)/5)*5),hi=Math.min(100,Math.ceil((Math.max(...vals)+2)/5)*5);if(hi-lo<10)hi=Math.min(100,lo+10);
-  const y=v=>T+(hi-v)/(hi-lo)*(H-T-B),ys=v=>T+(100-v)/100*(H-T-B);
-  const line=n=>pts.filter(p=>p.c[n]).map((p,i)=>(i?'L':'M')+x(p.t).toFixed(1)+' '+y(p.c[n].p).toFixed(1)).join('');
-  const area=pts.length?'M'+pts.map(p=>x(p.t).toFixed(1)+' '+ys(p.pst).toFixed(1)).join('L')+`L${x(tLast).toFixed(1)} ${ys(0).toFixed(1)}L${x(pts[0].t).toFixed(1)} ${ys(0).toFixed(1)}Z`:'';
+  let lo=Math.max(0,Math.floor((Math.min(...vals)-1.5)/5)*5),hi=Math.min(100,Math.ceil((Math.max(...vals)+1.5)/5)*5);if(hi-lo<10)hi=Math.min(100,lo+10);
+  const y=v=>T+(hi-v)/(hi-lo)*(H-T-B);
+  const path=(arr,key)=>arr.filter(p=>p[key]!=null).map((p,i)=>(i?'L':'M')+x(p.tm).toFixed(1)+' '+y(p[key]).toFixed(1)).join('');
   const yt=[];for(let v=lo;v<=hi;v+=5)yt.push(v);
-  const step=(t1-t0)>4*3600||(narrow&&(t1-t0)>5400)?3600:1800;const xt=[];for(let t=Math.ceil(t0/step)*step;t<=t1;t+=step)xt.push(t);
-  const xa=x(t0).toFixed(1),xb=x(t1).toFixed(1),xl=x(tLast).toFixed(1);
-  const flat=(v,cls,from)=>`<line class="${cls}" x1="${from||xa}" x2="${xb}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/>`;
-  const band=(v1,v2,cls,from)=>`<rect class="${cls}" x="${from||xa}" width="${(x(t1)-parseFloat(from||xa)).toFixed(1)}" y="${y(Math.max(v1,v2)).toFixed(1)}" height="${Math.max(0,y(Math.min(v1,v2))-y(Math.max(v1,v2))).toFixed(1)}"/>`;
-  let refs='';
-  if(marchOpts.poll&&pollA!=null)refs+=band(pollA-POLL.err,pollA+POLL.err,'pband a')+band(pollB-POLL.err,pollB+POLL.err,'pband b')+flat(pollA,'pline a')+flat(pollB,'pline b')+`<text class="ax lab a" x="${xb}" y="${(y(pollA)-4).toFixed(1)}" text-anchor="end">${POLL.inst} ${pollA}%</text><text class="ax lab b" x="${xb}" y="${(y(pollB)-4).toFixed(1)}" text-anchor="end">${POLL.inst} ${pollB}%</text>`;
-  if(marchOpts.r1&&r1v)refs+=flat(r1v.cands[0].pct,'r1line a')+flat(r1v.cands[1].pct,'r1line b')+`<text class="ax lab a" x="${xa}" y="${(y(r1v.cands[0].pct)-4).toFixed(1)}">1º turno ${fmtPct(r1v.cands[0].pct,1)}</text><text class="ax lab b" x="${xa}" y="${(y(r1v.cands[1].pct)-4).toFixed(1)}">1º turno ${fmtPct(r1v.cands[1].pct,1)}</text>`;
-  let mcg='';
-  if(marchOpts.mc&&mc){const from=isLive?xl:xa;mcg=band(100*mc.lo,100*mc.hi,'mcband a',from)+band(100-100*mc.hi,100-100*mc.lo,'mcband b',from)+flat(100*mc.med,'mcline a',from)+flat(100-100*mc.med,'mcline b',from);}
+  const major=narrow||Tend>420?60:30;const xt=[];for(let tm=0;tm<=Tend;tm+=major)xt.push(tm);const minor=[];for(let tm=0;tm<=Tend;tm+=10)if(tm%major)minor.push(tm);
   const last=pts.length?pts[pts.length-1]:null;
-  const dots=last?`<circle class="dot" r="4" cx="${xl}" cy="${y(last.c[nn[0]]?last.c[nn[0]].p:lo).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4" cx="${xl}" cy="${y(last.c[nn[1]]?last.c[nn[1]].p:lo).toFixed(1)}" fill="var(--c2)"/>`:'';
-  const meta=isLive?`${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções`:`Antes da apuração: a pesquisa e o 1º turno como referência · a curva de hoje começa às 17h`;
+  const meta=isLive?`${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções`:`Antes da apuração · o 1º turno${state.r1m?'':' (reconstituído por região)'} e a projeção Datafolha ao longo da noite · a curva de hoje começa às 17h`;
   const opt=(k,l)=>`<button type="button" data-opt="${k}" class="${marchOpts[k]?'on':''}">${l}</button>`;
+  const nowDots=last&&now.length?`<circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}" fill="var(--c2)"/>`:'';
+  const first=now.length&&now[0].a!=null?now[0]:null;const firstMark=first?`<line class="first" x1="${x(first.tm).toFixed(1)}" x2="${x(first.tm).toFixed(1)}" y1="${T}" y2="${H-B}"/><text class="ax first" x="${(x(first.tm)+4).toFixed(1)}" y="${T+9}">1º lote ${hhmmOf((17*60+first.tm)*60)}</text>`:'';
+  const endLab=(arr,key,cls)=>{if(!arr.length)return '';const p=arr[arr.length-1];const v=p[key];if(v==null)return '';return `<text class="ax end ${cls}" x="${(x(p.tm)+5).toFixed(1)}" y="${(y(v)+3.5).toFixed(1)}">${fmtPct(v,1)}</text>`;};
   return `<div class="hd"><p class="eyebrow">Marcha da apuração</p><span class="meta">${meta}</span></div>
-    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução dos percentuais ao longo da apuração" id="march-svg">
-      ${yt.map(v=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="ax" x="${L-8}" y="${(y(v)+3.5).toFixed(1)}" text-anchor="end">${v}%</text>`).join('')}
-      ${[0,50,100].map(v=>`<text class="ax" x="${W-R+8}" y="${(ys(v)+3.5).toFixed(1)}">${v}%</text>`).join('')}
-      ${xt.map(t=>`<text class="ax" x="${x(t).toFixed(1)}" y="${H-10}" text-anchor="middle">${hhmmOf(t)}</text>`).join('')}
-      ${area?`<path class="sec" d="${area}"/>`:''}
-      ${refs}${mcg}
-      <path class="ln a" d="${line(nn[0])}"/><path class="ln b" d="${line(nn[1])}"/>${dots}
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução dos percentuais ao longo da noite" id="march-svg">
+      ${yt.map(v=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="ax" x="${L-7}" y="${(y(v)+3.5).toFixed(1)}" text-anchor="end">${v}%</text>`).join('')}
+      ${minor.map(tm=>`<line class="tick" x1="${x(tm).toFixed(1)}" x2="${x(tm).toFixed(1)}" y1="${H-B}" y2="${H-B+4}"/>`).join('')}
+      ${xt.map(tm=>`<line class="tick" x1="${x(tm).toFixed(1)}" x2="${x(tm).toFixed(1)}" y1="${H-B}" y2="${H-B+7}"/><text class="ax" x="${x(tm).toFixed(1)}" y="${H-9}" text-anchor="middle">${hhmmOf((17*60+tm)*60)}</text>`).join('')}
+      <line class="grid base" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>
+      ${y(50)>T&&y(50)<H-B?`<line class="fifty" x1="${L}" x2="${W-R}" y1="${y(50).toFixed(1)}" y2="${y(50).toFixed(1)}"/>`:''}
+      ${firstMark}
+      <path class="ln r1 a" d="${path(r1,'a')}"/><path class="ln r1 b" d="${path(r1,'b')}"/>
+      <path class="ln pj a" d="${path(poll,'a')}"/><path class="ln pj b" d="${path(poll.map(p=>({tm:p.tm,b:100-p.a})),'b')}"/>
+      <path class="ln mc a" d="${path(mcp,'a')}"/><path class="ln mc b" d="${path(mcp.map(p=>({tm:p.tm,b:100-p.a})),'b')}"/>
+      <path class="ln now a" d="${path(now,'a')}"/><path class="ln now b" d="${path(now,'b')}"/>${nowDots}
+      ${endLab(now,'a','a')}${endLab(now,'b','b')}
       <line class="hair" id="march-hair" x1="0" x2="0" y1="${T}" y2="${H-B}"/>
     </svg>
-    <div class="legend"><span><i class="a"></i>${esc(nn[0])} ${esc(candName(nn[0]))}</span><span><i class="b"></i>${esc(nn[1])} ${esc(candName(nn[1]))}</span><span><i class="s"></i>seções totalizadas (eixo da direita)</span><span class="opts"><span class="muted">Mostrar:</span>${opt('poll',POLL.inst)}${opt('r1','1º turno')}${opt('mc','Monte Carlo')}</span></div>
-    ${marchOpts.mc&&mc?`<p class="mcnote">${mcText()}</p>`:''}
+    <div class="legend"><span><i class="sw now a"></i><i class="sw now b"></i>hoje, 2º turno</span>${marchOpts.r1?`<span><i class="sw r1 a"></i><i class="sw r1 b"></i>1º turno${state.r1m?'':' · reconstituído'}</span>`:''}${marchOpts.poll?`<span><i class="sw pj a"></i><i class="sw pj b"></i>${POLL.inst} distribuída como o 1º turno</span>`:''}${marchOpts.mc&&mcp.length?`<span><i class="sw mc a"></i><i class="sw mc b"></i>Monte Carlo, mediana</span>`:''}<span class="opts"><span class="muted">Mostrar:</span>${opt('poll',POLL.inst)}${opt('r1','1º turno')}${opt('mc','Monte Carlo')}</span></div>
+    ${marchOpts.mc&&state.mc?`<p class="mcnote">${mcText()}</p>`:''}
     <div class="tip" id="march-tip"></div>`;
 }
-function renderMarch(){
+function renderMarch(force){
   const box=$('march');
-  if(!finalistNums()){box.hidden=true;return;}
+  if(!finalistNums()||!state.prior){box.hidden=true;return;}
+  const last=series.length?series[series.length-1]:null;
+  const key=[series.length,last&&last.t,state.mcKey,JSON.stringify(marchOpts),(box.clientWidth||800)<520,state.r1m?1:0,live()?1:0,state.mc&&state.mc.med].join('|');
+  if(!force&&key===state.marchKey&&box.innerHTML)return;state.marchKey=key;
   box.hidden=false;box.innerHTML=marchChartHTML();
-  box.querySelectorAll('[data-opt]').forEach(b=>b.addEventListener('click',()=>{marchOpts[b.dataset.opt]=!marchOpts[b.dataset.opt];try{localStorage.setItem('apuracao-march-opts',JSON.stringify(marchOpts));}catch(_){}renderMarch();}));
-  if(series.length)bindMarchHover();
+  box.querySelectorAll('[data-opt]').forEach(b=>b.addEventListener('click',()=>{marchOpts[b.dataset.opt]=!marchOpts[b.dataset.opt];try{localStorage.setItem('apuracao-march-opts',JSON.stringify(marchOpts));}catch(_){}renderMarch(true);}));
+  bindMarchHover();
 }
 function bindMarchHover(){
-  const svg=$('march-svg'),tip=$('march-tip'),hair=$('march-hair'),box=$('march');if(!svg||!tip||!series.length)return;
-  const nn=finalistNums();const pts=series;const {W,L,R}=state.marchDims||{W:800,L:46,R:46};
-  const tStart=17*3600,tLast=pts[pts.length-1].t;const t0=Math.min(pts[0].t,tStart),t1=Math.max(tLast+1800,tStart+3*3600);
-  const show=e=>{const rc=svg.getBoundingClientRect();const fx=(e.clientX-rc.left)/rc.width*W;const t=t0+(fx-L)/(W-L-R)*(t1-t0);
-    let best=pts[0];pts.forEach(p=>{if(Math.abs(p.t-t)<Math.abs(best.t-t))best=p;});
-    const px=L+(best.t-t0)/(t1-t0)*(W-L-R);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.style.opacity='.5';
-    const pal=palette();const row=(n,col)=>best.c[n]?`<div class="r"><i style="background:${col}"></i><span>${esc(candName(n))}</span><span class="p">${fmtPct(best.c[n].p)}</span></div>`:'';
-    tip.innerHTML=`<b class="t">${esc(best.hg.slice(0,5))} · Brasília</b>${row(nn[0],'rgb('+pal.c1.join(',')+')')}${row(nn[1],'rgb('+pal.c2.join(',')+')')}<div class="s">${fmtPct(best.pst,1)} das seções totalizadas</div>`;
+  const svg=$('march-svg'),tip=$('march-tip'),hair=$('march-hair'),box=$('march');if(!svg||!tip)return;
+  const nn=finalistNums();const {W,L,R,Tend}=state.marchDims;const S=state.marchSeries;
+  const at=(arr,tm,key)=>{if(!arr.length)return null;let best=null;arr.forEach(p=>{if(p.tm<=tm+2.5&&(best==null||p.tm>best.tm))best=p;});return best&&best[key]!=null?best[key]:null;};
+  const show=e=>{const rc=svg.getBoundingClientRect();const fx=(e.clientX-rc.left)/rc.width*W;let tm=clamp((fx-L)/(W-L-R)*Tend,0,Tend);tm=Math.round(tm/5)*5;
+    const px=L+tm/Tend*(W-L-R);hair.setAttribute('x1',px);hair.setAttribute('x2',px);hair.style.opacity='.5';
+    const row=(label,a,b,extra)=>a==null&&b==null?'':`<div class="r3"><span>${label}</span><span class="a">${a==null?'—':fmtPct(a,1)}</span><span class="b">${b==null?'—':fmtPct(b,1)}</span></div>${extra||''}`;
+    const upto=S.now.length&&tm<=S.now[S.now.length-1].tm+5;const nowA=upto?at(S.now,tm,'a'):null,nowB=upto?at(S.now,tm,'b'):null,nowP=upto?at(S.now,tm,'pst'):null;
+    tip.innerHTML=`<b class="t">${hhmmOf((17*60+tm)*60)} · Brasília</b><div class="r3 hd3"><span></span><span class="a">${esc(candName(nn[0]))}</span><span class="b">${esc(candName(nn[1]))}</span></div>`+
+      row('Hoje',nowA,nowB,nowP!=null?`<div class="s">${fmtPct(nowP,1)} das seções totalizadas</div>`:'')+row(POLL.inst,at(S.poll,tm,'a'),S.poll.length?100-at(S.poll,tm,'a'):null)+row('Monte Carlo',at(S.mc,tm,'a'),S.mc.length&&at(S.mc,tm,'a')!=null?100-at(S.mc,tm,'a'):null)+row('1º turno',at(S.r1,tm,'a'),at(S.r1,tm,'b'));
     const bw=box.clientWidth;const bx=e.clientX-box.getBoundingClientRect().left,by=e.clientY-box.getBoundingClientRect().top;
-    tip.style.display='block';tip.style.left=Math.max(8,Math.min(bw-218,bx+14))+'px';tip.style.top=Math.max(8,by-10)+'px';};
+    tip.style.display='block';tip.style.left=Math.max(8,Math.min(bw-238,bx+14))+'px';tip.style.top=Math.max(8,by-10)+'px';};
   svg.addEventListener('mousemove',show);svg.addEventListener('touchstart',e=>{if(e.touches[0])show(e.touches[0]);},{passive:true});svg.addEventListener('touchmove',e=>{if(e.touches[0])show(e.touches[0]);},{passive:true});
   svg.addEventListener('mouseleave',()=>{tip.style.display='none';hair.style.opacity='0';});
 }
@@ -1024,7 +1090,7 @@ async function loadMain(){
   const results=await Promise.allSettled(jobs);
   const failed=results.filter(r=>r.status==='rejected');
   SPOTS.forEach((sp,i)=>{state.spots[i].uf=state.ufs[sp.uf]||null;});
-  recordPoint(state.br);state.mc=monteCarlo();renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch();logChanges();
+  recordPoint(state.br);const mcKey=(state.br&&state.br.started?state.br.hg+'|'+UFS.map(u=>state.ufs[u]?state.ufs[u].sections.pct:'').join(','):'poll')+'|'+(state.prior?1:0);if(state.mcKey!==mcKey){state.mc=monteCarlo();state.mcKey=mcKey;}renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch();logChanges();
   if(state.br){
     state.lastOk=Date.now();state.errors=0;
     if(state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);
@@ -1050,6 +1116,7 @@ async function cycle(){
     if(!state.configOk)await loadConfig();
     if(!state.munList.length)await loadMunicipalities();
     await loadFirstRound();
+    await loadR1March();
     await loadServerSeries();
     await loadMain();
   }
