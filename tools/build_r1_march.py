@@ -131,16 +131,20 @@ def process(uf, zip_path, acc):
         except ValueError:
             q = 0
         slot = br.setdefault(tm, {"13": 0, "22": 0, "valid": 0})
+        um = per_min.setdefault(tm, [0, 0, 0])  # [votes 13, votes 22, sections] of this state in this minute
         if tp == "1":  # nominal vote
             slot["valid"] += q
-            if nr in CANDS:
+            if nr == CANDS[0]:
                 slot[nr] += q
-                pm = per_min.setdefault(tm, 0)
-                per_min[tm] = pm + q
+                um[0] += q
+            elif nr == CANDS[1]:
+                slot[nr] += q
+                um[1] += q
         key = (uf, f[i_mun].strip('"') if i_mun is not None else "", f[i_zn].strip('"'), f[i_sc].strip('"'))
         if key not in seen:
             seen.add(key)
             slot["sec"] = slot.get("sec", 0) + 1
+            um[2] += 1
         n += 1
     proc.wait()
     print(uf, "rows", n, "sections so far", len(seen), flush=True)
@@ -175,20 +179,43 @@ def build(acc):
         end_min = last_min
     end_min = int(min(max(180, -(-end_min // 30) * 30), 24 * 60))  # round up to the half hour, at least 20:00
     series = [p for p in series if p["tm"] <= end_min]
-    uf_curves = {}
+    uf_curves, bench, fin = {}, {}, {}
     for uf, per_min in acc["uf"].items():
-        tot = sum(per_min.values())
-        if not tot:
+        tot = sum(v[0] + v[1] for v in per_min.values())
+        tot_sec = sum(v[2] for v in per_min.values())
+        if not tot or not tot_sec:
             continue
-        pts, c, keys, j = [], 0, sorted(per_min), 0
+        keys = sorted(per_min)
+        # arrival curve in time (share of the state's two-way votes counted every 5 minutes), for the chart
+        pts, c, j = [], 0, 0
         for tm in range(0, end_min + 1, 5):
             while j < len(keys) and keys[j] <= tm:
-                c += per_min[keys[j]]
+                c += per_min[keys[j]][0] + per_min[keys[j]][1]
                 j += 1
             pts.append([tm, round(c / tot, 4)])
         uf_curves[uf] = pts
+        # benchmark: the running two-way share of candidate 13 when k% of the state's sections were in (k = 0..100)
+        a = b = sec = 0
+        run = []  # (sections fraction, running share)
+        for tm in keys:
+            v = per_min[tm]
+            a += v[0]
+            b += v[1]
+            sec += v[2]
+            if a + b:
+                run.append((sec / tot_sec, a / (a + b)))
+        final = a / (a + b)
+        curve, i = [], 0
+        for k in range(101):
+            target = k / 100
+            while i < len(run) - 1 and run[i][0] < target:
+                i += 1
+            curve.append(round(run[i][1], 4))
+        bench[uf] = curve
+        fin[uf] = round(final, 4)
     return {"built": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "source": acc["source"], "cands": list(CANDS), "endShare": END_SHARE,
-            "endMin": end_min, "lastMin": last_min, "sections": total_sec, "br": series, "uf": uf_curves}
+            "endMin": end_min, "lastMin": last_min, "sections": total_sec, "br": series, "uf": uf_curves, "bench": bench, "fin": fin,
+            "benchNote": "bench[uf][k] = share of candidate 13 among the two finalists when k% of the state's sections had reached the totalization in the first round; fin[uf] = final share"}
 
 
 def main():
