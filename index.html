@@ -615,7 +615,7 @@ function renderMap(){
   document.querySelectorAll('#map [data-uf]').forEach(el=>{const uf=el.dataset.uf;const f=fillFor(mapSource(uf),pal);if(el.tagName==='path'||el.tagName==='g'){const t=el.tagName==='g'?el.querySelector('rect'):el;t.style.fill=f;}else el.style.background=f;});
   document.querySelectorAll('#map-labels text').forEach(t=>{const r=mapSource(t.textContent.toLowerCase());const on=r&&r.started&&r.sections.pct>=1;t.style.fill=on?'#fff':'';t.style.opacity=on?'.9':'';});
   const seg=$('map-seg'),lab=$('map-round-label');
-  if(seg){seg.hidden=!live();seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.round===round));}
+  if(seg){const on=live();seg.hidden=!on;seg.style.display=on?'':'none';seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.round===round));}
   if(lab)lab.textContent=round==='r1'?'1º turno · 4 de outubro · resultado final':'2º turno · hoje · ao vivo';
   const lg=$('map-legend');if(!lg)return;
   const src=round==='r1'?fin(state.r1.br):state.br;
@@ -817,6 +817,7 @@ async function loadCities(){
 }
 /* ---------- loop ---------- */
 async function cycle(){
+  if(cycling)return;cycling=true;
   try{
     if(!state.configOk)await loadConfig();
     if(!state.munList.length)await loadMunicipalities();
@@ -830,8 +831,13 @@ async function cycle(){
     if(state.errors===1||state.errors%10===0)addLog('err',`${msg} · nova tentativa em 30 s`);
     if(state.errors===1)toast('Não consegui ler os arquivos do TSE agora. Vou tentar de novo a cada 30 segundos.');
   }
-  setTimeout(cycle,state.errors?30000:EVERY);
+  cycling=false;
+  cycleTimer=setTimeout(cycle,state.errors?30000:EVERY);
 }
+let cycleTimer=null,cycling=false;
+function kick(){if(cycling)return;clearTimeout(cycleTimer);cycle();}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-(state.lastOk||0)>20000)kick();});   // back to the tab: fetch now, don't wait for the timer
+$('status').style.cursor='pointer';$('status').title='Atualizar agora';$('status').addEventListener('click',kick);
 async function citiesCycle(){try{await loadCitiesFirstRound();await loadCities();}catch(_){}setTimeout(citiesCycle,CITIES_EVERY);}
 
 $('city-filter').addEventListener('input',renderCities);
