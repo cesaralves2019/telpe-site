@@ -68,12 +68,22 @@ def snapshot():
             json.dump(j, f, ensure_ascii=False, separators=(",", ":"))
 
 
+def status(**kw):
+    os.makedirs(LIVE_DIR, exist_ok=True)
+    import datetime as _dt
+    kw["at"] = _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds")
+    with open(os.path.join(LIVE_DIR, "status.json"), "w", encoding="utf-8") as f:
+        json.dump(kw, f, ensure_ascii=False)
+
+
 def main():
     try:
         j = fetch(URL)
     except Exception as e:  # keep the workflow green; the next run retries
         print("fetch failed:", e)
+        status(error=str(e)[:300])
         return 0
+    status(hg=str(j.get("hg") or ""), pst=(j.get("s") or {}).get("pst"), dt=j.get("dt"), ht=j.get("ht"))
     try:
         snapshot()
     except Exception as e:  # noqa: BLE001
