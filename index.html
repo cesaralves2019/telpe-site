@@ -857,7 +857,7 @@ function mcText(){
 function candName(n){const src=state.br&&state.br.cands.length>=2?state.br.cands:(state.r1.br||{cands:[]}).cands;const c=src.find(x=>x.n===n);return c?title(c.nm):n;}
 
 /* ---------- the chart ---------- */
-let marchOpts={poll:true,r1:true,mc:true};try{marchOpts={...marchOpts,...JSON.parse(localStorage.getItem('apuracao-march-opts')||'{}')};}catch(_){}
+const marchOpts={poll:true,r1:true,mc:true};   // all three references always drawn
 
 /* ---------- when do each state's votes arrive? ----------
    If data/r1-march.json exists (built from the TSE's own replay of the first-round count), each state's
@@ -969,7 +969,7 @@ function marchChartHTML(){
       ${endLab(now,'a','a')}${endLab(now,'b','b')}
       <line class="hair" id="march-hair" x1="0" x2="0" y1="${T}" y2="${H-B}"/>
     </svg>
-    <div class="legend"><span><i class="sw now a"></i><i class="sw now b"></i>hoje, 2º turno</span>${marchOpts.r1?`<span><i class="sw r1 a"></i><i class="sw r1 b"></i>1º turno${state.r1m?'':' · reconstituído'}</span>`:''}${marchOpts.poll?`<span><i class="sw pj a"></i><i class="sw pj b"></i>${POLL.inst} distribuída como o 1º turno</span>`:''}${marchOpts.mc&&mcp.length?`<span><i class="sw mc a"></i><i class="sw mc b"></i>Monte Carlo, mediana</span>`:''}<span class="opts"><span class="muted">Mostrar:</span>${opt('poll',POLL.inst)}${opt('r1','1º turno')}${opt('mc','Monte Carlo')}</span></div>
+    <div class="legend"><span><i class="sw now a"></i><i class="sw now b"></i>hoje, 2º turno</span>${marchOpts.r1?`<span><i class="sw r1 a"></i><i class="sw r1 b"></i>1º turno${state.r1m?'':' · reconstituído'}</span>`:''}${marchOpts.poll?`<span><i class="sw pj a"></i><i class="sw pj b"></i>${POLL.inst} distribuída como o 1º turno</span>`:''}${marchOpts.mc&&mcp.length?`<span><i class="sw mc a"></i><i class="sw mc b"></i>Monte Carlo, mediana</span>`:''}</div>
     ${marchOpts.mc&&state.mc?`<p class="mcnote">${mcText()}</p>`:''}
     <div class="tip" id="march-tip"></div>`;
 }
