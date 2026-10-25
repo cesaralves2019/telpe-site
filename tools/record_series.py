@@ -25,7 +25,9 @@ def num(s):
 
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "telpe-marcha/1.0"})
+    import time as _t
+    url = url + ("&" if "?" in url else "?") + "t=" + str(int(_t.time()))   # past the CDN cache
+    req = urllib.request.Request(url, headers={"User-Agent": "telpe-marcha/1.0", "Cache-Control": "no-cache", "Pragma": "no-cache"})
     with urllib.request.urlopen(req, timeout=40) as r:
         raw = r.read().decode("utf-8")
     try:
