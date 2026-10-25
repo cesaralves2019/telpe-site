@@ -883,20 +883,24 @@ function arrival(uf,tm){ // share of a state's valid votes counted tm minutes af
 function benchAt(uf,w){const b=state.r1m&&state.r1m.bench&&state.r1m.bench[uf];if(!b)return null;return b[clamp(Math.round(w*100),0,100)];}
 function ufModel(){
   const P=state.prior,nn=finalistNums();if(!P||!nn)return null;
-  let num=0,den=0;const rows=[];const isLive=live();
-  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid,pri=p.a/(p.a+p.b);let ca=0,cb=0,w=0,st=false,run=null,adj=null,hasBench=false;
+  const rows=[];const isLive=live();
+  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid,pri=p.a/(p.a+p.b);let ca=0,cb=0,w=0,st=false,run=null,adj=null,hasBench=false,lam=0;
     if(isLive&&x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){st=true;w=clamp(x.sections.pct/100,0,1);ca=x.cands[0].votes;cb=x.cands[1].votes;run=ca/t;
       const b=benchAt(uf,w);const finB=state.r1m&&state.r1m.fin&&state.r1m.fin[uf]!=null?state.r1m.fin[uf]:pri;
       if(b!=null){hasBench=true;adj=clamp(run+(finB-b),.02,.98);}
-      if(w>=0.005){num+=((adj!=null?adj:run)-pri)*t;den+=t;}}}
-    rows.push({uf,V,a1:p.a/p.valid,b1:p.b/p.valid,pri,ca,cb,w,st,run,adj,hasBench});});
-  const swing=den?num/den:0;
-  rows.forEach(r=>{const base=clamp(r.pri+swing,.02,.98);
-    if(!r.st||r.run==null){r.share=base;r.lam=0;return;}
-    const lam=r.hasBench?clamp((r.w-0.005)/0.05,0,1):r.w;const est=r.hasBench?r.adj:r.run;
-    r.lam=lam;r.share=clamp(lam*est+(1-lam)*base,.02,.98);});
-  return {rows,swing,totalV:rows.reduce((s,r)=>s+r.V,0),bench:rows.some(r=>r.hasBench)||!!(state.r1m&&state.r1m.bench)};
+      lam=hasBench?clamp((w-0.005)/0.05,0,1):w;}}
+    rows.push({uf,V,a1:p.a/p.valid,b1:p.b/p.valid,pri,ca,cb,w,st,run,adj,hasBench,lam,est:adj!=null?adj:run});});
+  const totalV=rows.reduce((s,r)=>s+r.V,0);
+  // national swing: what the counted states say, weighted by their counted votes and by how much of each state is in,
+  // shrunk toward the swing the last poll implies (κ = 3% of the electorate) so a few early sections cannot move the country
+  const r1br=state.r1.br&&finalistNums()?two2(state.r1.br,nn):null;
+  const swing0=r1br!=null&&POLL.valid[nn[0]]!=null?POLL.valid[nn[0]]/100-r1br:0;const kappa=0.03*totalV;
+  let num=0,den=0;rows.forEach(r=>{if(r.est!=null&&r.lam>0){const wt=(r.ca+r.cb)*r.lam;num+=(r.est-r.pri)*wt;den+=wt;}});
+  const swing=(num+kappa*swing0)/(den+kappa);
+  rows.forEach(r=>{const base=clamp(r.pri+swing,.02,.98);r.share=r.est==null?base:clamp(r.lam*r.est+(1-r.lam)*base,.02,.98);});
+  return {rows,swing,swing0,dataWeight:den/(den+kappa),totalV,bench:!!(state.r1m&&state.r1m.bench)};
 }
+const two2=(r,nn)=>{const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);const t=(a?a.votes:0)+(b?b.votes:0);return t?(a?a.votes:0)/t:null;};
 /* Scenario curve: running share of candidate A when each state's votes arrive on the first-round timetable,
    given a final share per state. 5-minute slots from 17:00 to the end. */
 function scenarioCurve(shareOf,fromMin=0,base=null){
