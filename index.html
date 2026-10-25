@@ -426,7 +426,7 @@ const photo=(ele,sq)=>`${BASE}/${CYCLE}/${ele}/fotos/br/${sq}.jpeg`;
 /* The unified file → one plain object. Candidates in a fixed order (ballot number) so colours never swap. */
 function parse(j){
   const carg=(j.carg||[])[0]||{};const cands=[];
-  (carg.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(c=>cands.push({n:String(c.n||''),nm:c.nmu||c.nm||'',full:c.nm||c.nmu||'',party:p.sg||'',sq:c.sqcand||'',votes:num(c.vap),pct:num(c.pvap),elected:String(c.e||'').toLowerCase()==='s',status:c.st||''}))));
+  (carg.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(c=>cands.push({n:String(c.n||''),nm:c.nmu||c.nm||'',full:c.nm||c.nmu||'',party:p.sg||'',sq:c.sqcand||'',votes:num(c.vap),pct:num(c.pvap),elected:String(c.e||'').toLowerCase()==='s'&&!/2\s*[ºo°]?\s*turno/i.test(String(c.st||'')),status:/2\s*[ºo°]?\s*turno/i.test(String(c.st||''))?'':(c.st||'')}))));
   cands.sort((a,b)=>Number(a.n)-Number(b.n));
   const s=j.s||{},e=j.e||{},v=j.v||{};
   return {abr:String(j.cdabr||'').toLowerCase(),dg:j.dg||'',hg:j.hg||'',cargo:carg.nmn||'',
@@ -442,7 +442,7 @@ const state={br:null,ufs:{},cities:[],cityList:[],munList:[],govs:[],lastOk:null
 const live=()=>!!(state.br&&state.br.started);
 function finalistNums(){if(state.br&&state.br.cands.length>=2)return [state.br.cands[0].n,state.br.cands[1].n];const b=state.r1.br;if(b&&b.cands.length>=2){const top=[...b.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n));return [top[0].n,top[1].n];}return null;}
 /* A first-round result restricted to the two finalists (percentages stay over all valid votes of that round). */
-function fin(r){const nn=finalistNums();if(!r||!nn)return null;const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);if(!a||!b)return null;return {...r,cands:[a,b],started:r.votes.valid>0,round:1};}
+function fin(r){const nn=finalistNums();if(!r||!nn)return null;const a=r.cands.find(c=>c.n===nn[0]),b=r.cands.find(c=>c.n===nn[1]);if(!a||!b)return null;return {...r,cands:[{...a,elected:false,status:''},{...b,elected:false,status:''}],started:r.votes.valid>0,round:1};}
 
 /* ---------- status / toast ---------- */
 function setStatus(kind,text){const el=$('status');el.classList.remove('live','err');if(kind)el.classList.add(kind);$('status-text').textContent=text;}
@@ -557,7 +557,7 @@ function renderGovs(){
   box.innerHTML=state.govs.map(g=>{const name=UF_NAMES[g.uf]||g.uf.toUpperCase();
     // first round restricted to this state's two finalists (known from the second-round file, else the first-round top two)
     const g1=state.r1.govs[g.uf];let ref=null;
-    if(g1&&g1.cands.length>=2){const nn=g.r&&g.r.cands.length>=2?[g.r.cands[0].n,g.r.cands[1].n]:[...g1.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n)).map(c=>c.n);const a1=g1.cands.find(c=>c.n===nn[0]),b1=g1.cands.find(c=>c.n===nn[1]);if(a1&&b1)ref={...g1,cands:[a1,b1],started:true,round:1};}
+    if(g1&&g1.cands.length>=2){const nn=g.r&&g.r.cands.length>=2?[g.r.cands[0].n,g.r.cands[1].n]:[...g1.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n)).map(c=>c.n);const a1=g1.cands.find(c=>c.n===nn[0]),b1=g1.cands.find(c=>c.n===nn[1]);if(a1&&b1)ref={...g1,cands:[{...a1,elected:false,status:''},{...b1,elected:false,status:''}],started:true,round:1};}
     const {r,ref:rr}=pick(g.r,ref);
     if(!r||!r.started)return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">aguardando</span></div>${g.r&&g.r.cands.length>=2?`<p class="muted" style="margin-top:12px;font-size:14.5px">${esc(title(g.r.cands[0].nm))} (${esc(g.r.cands[0].party)}) × ${esc(title(g.r.cands[1].nm))} (${esc(g.r.cands[1].party)})</p>`:''}</div></div>`;
     const [a,b]=r.cands;const ld=leader(r);
