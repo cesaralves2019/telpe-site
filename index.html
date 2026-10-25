@@ -830,21 +830,18 @@ async function loadServerSeries(){
 function gauss(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
 function monteCarlo(N=3000){
   const nn=finalistNums();if(!nn)return null;
-  const P=state.prior,r=state.br;const isLive=live()&&!!P&&P._cands[0]===nn[0]&&P._cands[1]===nn[1];
+  const P=state.prior;const isLive=live()&&!!P&&P._cands[0]===nn[0]&&P._cands[1]===nn[1];
   const out=new Float64Array(N);let c=0;
   if(!isLive){
     const pa=POLL.valid[nn[0]];if(pa==null)return null;const mu=pa/100,sd=POLL.err/100;
     for(let i=0;i<N;i++)out[i]=clamp(mu+sd*gauss(),0,1);
   }else{
-    const ufs=[];let counted=0,sumV=0,num=0,den=0;
-    UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid,pri=p.a/(p.a+p.b);let ca=0,cb=0,w=0;
-      if(x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){w=clamp(x.sections.pct/100,0,1);ca=x.cands[0].votes;cb=x.cands[1].votes;num+=(ca/t-pri)*t;den+=t;counted+=t;}}
-      ufs.push({V,pri,ca,cb,w});sumV+=V;});
-    if(!sumV)return null;
-    const swing=den?num/den:0;c=counted/sumV;
-    const sdS=0.03*Math.sqrt(Math.max(0,1-c))+0.004,sdU=0.03;
-    for(let i=0;i<N;i++){const sw=swing+sdS*gauss();let A=0,B=0;
-      for(const u of ufs){const rem=Math.max(0,u.V-(u.ca+u.cb));const share=clamp(u.pri+sw+sdU*Math.sqrt(1-u.w)*gauss(),0.02,0.98);A+=u.ca+rem*share;B+=u.cb+rem*(1-share);}
+    const m=ufModel();if(!m||!m.totalV)return null;
+    let counted=0;m.rows.forEach(r=>{counted+=r.ca+r.cb;});c=counted/m.totalV;
+    // national swing uncertainty shrinks with the count; per-state residual shrinks with that state's own count
+    const sdS=0.025*Math.sqrt(Math.max(0,1-c))+0.003,sdU=0.035;
+    for(let i=0;i<N;i++){const sw=sdS*gauss();let A=0,B=0;
+      for(const r of m.rows){const rem=Math.max(0,r.V-(r.ca+r.cb));const share=clamp(r.share+sw+sdU*Math.sqrt(Math.max(0,1-r.w))*gauss(),0.02,0.98);A+=r.ca+rem*share;B+=r.cb+rem*(1-share);}
       out[i]=A/(A+B);}
   }
   out.sort();const q=p=>out[Math.min(N-1,Math.floor(p*N))];let wins=0;for(let i=0;i<N;i++)if(out[i]>0.5)wins++;
@@ -877,15 +874,28 @@ function arrival(uf,tm){ // share of a state's valid votes counted tm minutes af
   const [m,k]=ARRIVAL[REGION_OF[uf]]||[80,25];const a=sig(-m/k),b=sig((T-m)/k);return clamp((sig((tm-m)/k)-a)/(b-a),0,1);
 }
 /* Per-state picture used by the curves: expected valid votes, first-round shares, counted votes, projected final share. */
+/* Per-state engine shared by the projection card, the Monte Carlo and the chart.
+   For each state: expected valid votes (1º turno), the first-round two-way split, tonight's count so far, and the
+   projected final two-way share of candidate A. The projection corrects tonight's running share by how the SAME state
+   looked at the same point of its own first-round count (the sections that report first are not a random sample —
+   data/r1-march.json carries that benchmark), trusting it progressively from 0,5% to ~5% of sections; states without
+   data get the first-round split plus the national swing seen so far. Without the benchmark file, the old blend. */
+function benchAt(uf,w){const b=state.r1m&&state.r1m.bench&&state.r1m.bench[uf];if(!b)return null;return b[clamp(Math.round(w*100),0,100)];}
 function ufModel(){
   const P=state.prior,nn=finalistNums();if(!P||!nn)return null;
-  let num=0,den=0;const rows=[];
-  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];let ca=0,cb=0,w=0,st=false;
-    if(live()&&x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){st=true;w=clamp(x.sections.pct/100,0,1);ca=x.cands[0].votes;cb=x.cands[1].votes;num+=(ca/t-p.a/(p.a+p.b))*t;den+=t;}}
-    rows.push({uf,V:p.valid,a1:p.a/p.valid,b1:p.b/p.valid,pri:p.a/(p.a+p.b),ca,cb,w,st});});
+  let num=0,den=0;const rows=[];const isLive=live();
+  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid,pri=p.a/(p.a+p.b);let ca=0,cb=0,w=0,st=false,run=null,adj=null,hasBench=false;
+    if(isLive&&x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){st=true;w=clamp(x.sections.pct/100,0,1);ca=x.cands[0].votes;cb=x.cands[1].votes;run=ca/t;
+      const b=benchAt(uf,w);const finB=state.r1m&&state.r1m.fin&&state.r1m.fin[uf]!=null?state.r1m.fin[uf]:pri;
+      if(b!=null){hasBench=true;adj=clamp(run+(finB-b),.02,.98);}
+      if(w>=0.005){num+=((adj!=null?adj:run)-pri)*t;den+=t;}}}
+    rows.push({uf,V,a1:p.a/p.valid,b1:p.b/p.valid,pri,ca,cb,w,st,run,adj,hasBench});});
   const swing=den?num/den:0;
-  rows.forEach(r=>{const adj=clamp(r.pri+swing,.02,.98);const t=r.ca+r.cb;r.share=r.st&&t>0?r.w*(r.ca/t)+(1-r.w)*adj:adj;});
-  return {rows,swing,totalV:rows.reduce((s,r)=>s+r.V,0)};
+  rows.forEach(r=>{const base=clamp(r.pri+swing,.02,.98);
+    if(!r.st||r.run==null){r.share=base;r.lam=0;return;}
+    const lam=r.hasBench?clamp((r.w-0.005)/0.05,0,1):r.w;const est=r.hasBench?r.adj:r.run;
+    r.lam=lam;r.share=clamp(lam*est+(1-lam)*base,.02,.98);});
+  return {rows,swing,totalV:rows.reduce((s,r)=>s+r.V,0),bench:rows.some(r=>r.hasBench)||!!(state.r1m&&state.r1m.bench)};
 }
 /* Scenario curve: running share of candidate A when each state's votes arrive on the first-round timetable,
    given a final share per state. 5-minute slots from 17:00 to the end. */
@@ -1044,15 +1054,10 @@ const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 function projection(){
   const r=state.br,P=state.prior;if(!r||!r.started||!P||r.cands.length<2)return null;
   const [A,B]=r.cands;if(P._cands[0]!==A.n||P._cands[1]!==B.n)return null;   // finalists must match the first-round top two
-  let num=0,den=0;
-  UFS.forEach(uf=>{const x=state.ufs[uf],p=P[uf];if(!x||!x.started||!p)return;const w=x.cands[0].votes+x.cands[1].votes;if(w<=0)return;num+=(x.cands[0].votes/w-p.a/(p.a+p.b))*w;den+=w;});
-  const swing=den?num/den:0;
-  let sumA=0,sumB=0,sumV=0,counted=0,withData=0,ufs=[];
-  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid;const pri=clamp(p.a/(p.a+p.b)+swing,.02,.98);let share=pri,w=0;
-    if(x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){w=clamp(x.sections.pct/100,0,1);share=w*(x.cands[0].votes/t)+(1-w)*pri;counted+=x.votes.valid;withData++;}}
-    sumA+=V*share;sumB+=V*(1-share);sumV+=V;ufs.push({uf,share,w});});
-  if(!sumV)return null;
-  const pctA=100*sumA/(sumA+sumB),pctB=100-pctA,margin=Math.abs(pctA-pctB),c=counted/sumV;
+  const m=ufModel();if(!m||!m.totalV)return null;
+  let sumA=0,sumV=0,counted=0,withData=0;
+  m.rows.forEach(x=>{sumA+=x.V*x.share;sumV+=x.V;if(x.st){counted+=x.ca+x.cb;withData++;}});
+  const pctA=100*sumA/sumV,pctB=100-pctA,margin=Math.abs(pctA-pctB),c=counted/sumV;
   const leader=pctA>pctB?A:B,lead=Math.abs(A.votes-B.votes),remaining=Math.max(0,sumV-counted);
   let tier,label;
   if(c<.03){tier='early';label='Cedo demais';}
@@ -1060,7 +1065,7 @@ function projection(){
   else if(margin>=6||(c>=.5&&margin>=2.5)||(c>=.8&&margin>=1)){tier='strong';label='Tendência consolidada';}
   else if(margin>=1){tier='lean';label='Tendência';}
   else{tier='tie';label='Empate técnico';}
-  return {pctA,pctB,margin,leader,tier,label,c,remaining,swing,withData,sumV,counted};
+  return {pctA,pctB,margin,leader,tier,label,c,remaining,swing:m.swing,withData,sumV,counted,bench:m.bench};
 }
 function pollHTML(A,B){
   const pa=POLL.valid[A.n],pb=POLL.valid[B.n];if(pa==null||pb==null)return '';
@@ -1090,7 +1095,7 @@ function renderProjection(){
     </div>
     <div class="bar" aria-hidden="true"><i class="fa" style="width:${pj.pctA}%"></i><i class="fb" style="width:${pj.pctB}%"></i><span class="mid"></span></div>
     <p class="note">Com ${fmtPct(100*pj.c,1)} dos votos válidos esperados já contados em ${pj.withData} unidades · faltam cerca de ${fmtInt(pj.remaining)} votos válidos · margem projetada ${fmtPct(pj.margin,1).replace('%',' pp')}.
-    Modelo: a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}) e substituída pelo resultado real à medida que as seções do estado entram.${POLL.valid[A.n]!=null?` Última pesquisa (${POLL.inst}, véspera): ${esc(title(A.nm))} ${POLL.valid[A.n]}% × ${esc(title(B.nm))} ${POLL.valid[B.n]}% dos válidos.`:''}</p>${state.mc?`<p class="note" style="margin-top:8px">${mcText()}</p>`:''}`;
+    Modelo: ${pj.bench?'o apurado de cada estado é corrigido pela ordem em que as seções entraram no próprio 1º turno (as primeiras seções não são uma amostra neutra), e os estados ainda sem urnas recebem a divisão do 1º turno mais a oscilação observada até agora':'a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora e substituída pelo resultado real à medida que as seções do estado entram'} (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}).${POLL.valid[A.n]!=null?` Última pesquisa (${POLL.inst}, véspera): ${esc(title(A.nm))} ${POLL.valid[A.n]}% × ${esc(title(B.nm))} ${POLL.valid[B.n]}% dos válidos.`:''}</p>${state.mc?`<p class="note" style="margin-top:8px">${mcText()}</p>`:''}`;
 }
 
 /* ---------- loading ---------- */
@@ -1134,7 +1139,7 @@ async function loadMain(){
   const results=await Promise.allSettled(jobs);
   const failed=results.filter(r=>r.status==='rejected');
   SPOTS.forEach((sp,i)=>{state.spots[i].uf=state.ufs[sp.uf]||null;});
-  recordPoint(state.br);const mcKey=(state.br&&state.br.started?state.br.hg+'|'+UFS.map(u=>state.ufs[u]?state.ufs[u].sections.pct:'').join(','):'poll')+'|'+(state.prior?1:0);if(state.mcKey!==mcKey){state.mc=monteCarlo();state.mcKey=mcKey;}renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch();logChanges();
+  recordPoint(state.br);const mcKey=(state.br&&state.br.started?state.br.hg+'|'+UFS.map(u=>state.ufs[u]?state.ufs[u].sections.pct:'').join(','):'poll')+'|'+(state.prior?1:0)+'|'+(state.r1m&&state.r1m.bench?1:0);if(state.mcKey!==mcKey){state.mc=monteCarlo();state.mcKey=mcKey;}renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();renderMarch();logChanges();
   if(state.br){
     state.lastOk=Date.now();state.errors=0;
     if(state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);
@@ -1349,7 +1354,7 @@ function readNational(){
   if(POLL.valid[A.n]!=null){const d=A.pct-POLL.valid[A.n];const who=short(A.n);
     out.push(`Comparando com a última ${POLL.inst} (${POLL.valid[A.n]} × ${POLL.valid[B.n]} nos válidos), ${who} está ${em(ppAbs(d)+(d>=0?' acima':' abaixo'))} do que a pesquisa indicava${Math.abs(d)<=POLL.err?' — dentro da margem de erro de ±'+POLL.err+' pp':' — fora da margem de erro de ±'+POLL.err+' pp'}.${r.sections.pct<60?' Cuidado com a leitura cedo demais: o percentual nacional muda conforme as regiões entram (Sul e Centro-Oeste tendem a chegar antes, Nordeste e Norte depois).':''}`);}
   const pr=projection();
-  if(pr)out.push(`Corrigindo pelo que cada estado ainda tem para apurar, com a distribuição do 1º turno, a projeção aponta ${em(P1(pr.pctA)+' × '+P1(pr.pctB))} (${short(nn[0])} × ${short(nn[1])}) — ${pr.label.toLowerCase()}.`);
+  if(pr)out.push(`${pr.bench?'Corrigindo o apurado de cada estado pela ordem em que as seções entraram no 1º turno, e completando o que falta com a divisão de lá':'Corrigindo pelo que cada estado ainda tem para apurar, com a distribuição do 1º turno'}, a projeção aponta ${em(P1(pr.pctA)+' × '+P1(pr.pctB))} (${short(nn[0])} × ${short(nn[1])}) — ${pr.label.toLowerCase()}.`);
   const mc=state.mc;
   if(mc&&mc.basis==='urnas')out.push(`O Monte Carlo (${fmtInt(mc.N)} simulações) termina em ${em(P1(100*mc.med))} para ${short(nn[0])}, com 90% das simulações entre ${P1(100*mc.lo)} e ${P1(100*mc.hi)}; ${short(nn[0])} vence em ${em(P1(100*mc.winA,0))} delas, ${short(nn[1])} em ${P1(100*(1-mc.winA),0)}.`);
   return out;
@@ -1412,7 +1417,7 @@ function ansMC(P){
   const A=short(nn[0]),B=short(nn[1]);const out=[];const fav=mc.winA>=0.5?A:B,favP=mc.winA>=0.5?mc.winA:1-mc.winA;
   out.push(`${em(`${fav} vence em ${P1(100*favP,0)}`)} das ${fmtInt(mc.N)} simulações. A mediana é ${em(P1(100*mc.med))} para ${A} (${P1(100*(1-mc.med))} para ${B}), e 90% das simulações ficam entre ${P1(100*mc.lo)} e ${P1(100*mc.hi)} para ${A}.`);
   if(mc.basis==='pesquisa')out.push(`Antes dos primeiros lotes, as simulações só têm a ${POLL.inst} para partir: cada uma sorteia o resultado final em torno de ${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]} com desvio de ${POLL.err} pp (a margem de erro). Assim que houver seções apuradas, o modelo passa a usar as urnas.`);
-  else{const pr=projection();out.push(`Como funciona: cada simulação pega o que já foi apurado (${P1(100*mc.c)} dos votos esperados) e completa o que falta estado por estado com a divisão do 1º turno, sorteando uma oscilação nacional e um ruído por estado que encolhem conforme a apuração avança.${pr?` A projeção determinística (sem sorteio) está em ${P1(pr.pctA)} × ${P1(pr.pctB)}.`:''}`);
+  else{const pr=projection();out.push(`Como funciona: cada simulação parte da projeção de cada estado (apurado corrigido pela ordem das seções no 1º turno, ou a divisão do 1º turno mais a oscilação nacional onde ainda não há urnas; ${P1(100*mc.c)} dos votos esperados já contados) e sorteia uma oscilação nacional e um ruído por estado, que encolhem conforme a apuração avança.${pr?` A projeção determinística (sem sorteio) está em ${P1(pr.pctA)} × ${P1(pr.pctB)}.`:''}`);
     if(POLL.valid[nn[0]]!=null){const d=100*mc.med-POLL.valid[nn[0]];out.push(`Contra a ${POLL.inst} (${POLL.valid[nn[0]]} × ${POLL.valid[nn[1]]}), a mediana do Monte Carlo está ${em(ppAbs(d)+(d>=0?' acima':' abaixo'))} para ${A}${Math.abs(d)<=POLL.err?' — dentro da margem da pesquisa.':' — fora da margem da pesquisa.'}`);}
     if(mc.hi-mc.lo<0.01)out.push(`A faixa de 90% já é estreita (${ppAbs(100*(mc.hi-mc.lo))}): pouca coisa deve mudar.`);else if(mc.hi>0.5&&mc.lo<0.5)out.push(`A faixa de 90% ainda cruza os 50% — o resultado não está decidido pelas simulações.`);}
   const rows=[{cells:['Mediana',`<b>${fmtPct(100*mc.med,1)}</b>`,`<b>${fmtPct(100*(1-mc.med),1)}</b>`]},{cells:['Faixa de 90%',`${fmtPct(100*mc.lo,1)} – ${fmtPct(100*mc.hi,1)}`,`${fmtPct(100*(1-mc.hi),1)} – ${fmtPct(100*(1-mc.lo),1)}`]},{cells:['Vitórias nas simulações',`<b>${fmtPct(100*mc.winA,0)}</b>`,`<b>${fmtPct(100*(1-mc.winA),0)}</b>`]},{cells:['Base',mc.basis==='pesquisa'?`${POLL.inst} ±${POLL.err} pp`:`urnas (${fmtPct(100*mc.c,1)} dos votos esperados) + 1º turno por estado`,'']}];

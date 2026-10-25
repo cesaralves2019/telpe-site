@@ -52,6 +52,20 @@ def snapshot():
             continue
         with open(os.path.join(LIVE_DIR, f"{abr}.json"), "w", encoding="utf-8") as f:
             json.dump(j, f, ensure_ascii=False, separators=(",", ":"))
+    # the first-round files once (they do not change): the page's prior, kept here for offline checks of the model
+    r1_dir = os.path.join(os.path.dirname(OUT), "r1")
+    os.makedirs(r1_dir, exist_ok=True)
+    for abr in ["br"] + UFS:
+        dest = os.path.join(r1_dir, f"{abr}.json")
+        if os.path.exists(dest):
+            continue
+        try:
+            j = fetch(f"https://resultados.tse.jus.br/oficial/ele2026/6257/dados/{abr}/{abr}-c0001-e006257-u.json")
+        except Exception as e:  # noqa: BLE001
+            print("r1 snapshot failed", abr, e)
+            continue
+        with open(dest, "w", encoding="utf-8") as f:
+            json.dump(j, f, ensure_ascii=False, separators=(",", ":"))
 
 
 def main():
