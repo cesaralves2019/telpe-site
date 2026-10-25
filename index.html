@@ -108,7 +108,7 @@ p{margin:0}
 .march .hd .meta{font-size:12.5px;color:var(--fg-2);font-variant-numeric:tabular-nums}
 .march svg{width:100%;height:auto;display:block}
 .march .ax{font-family:var(--mono);font-size:10.5px;fill:var(--fg-2)}
-.march .grid{stroke:var(--line);stroke-width:1}
+.march .grid{stroke:var(--line);stroke-width:1;opacity:.7}
 .march .ln{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 .march .ln.a{stroke:var(--c1)}.march .ln.b{stroke:var(--c2)}
 .march .hair{stroke:var(--fg);stroke-width:1;opacity:0;pointer-events:none}
@@ -117,8 +117,11 @@ p{margin:0}
 .march .tick{stroke:var(--fg-2);stroke-width:1;opacity:.6}
 .march .grid.base{stroke:var(--fg-2);opacity:.5}
 .march .fifty{stroke:var(--fg-2);stroke-width:1;stroke-dasharray:2 4;opacity:.6}
-.march .first{stroke:var(--fg-2);stroke-width:1;stroke-dasharray:3 3;opacity:.5}.march .ax.first{font-size:10px;paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
-.march .ln.now{stroke-width:2.6}
+.march .first{stroke:var(--fg-2);stroke-width:1;stroke-dasharray:3 3;opacity:.3}.march .ax.first{font-size:10px;paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
+.march .ln.now{stroke-width:2.4;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18))}
+.march .lead{stroke:none;opacity:.13}.march .lead.a{fill:var(--c1)}.march .lead.b{fill:var(--c2)}
+.march .halo{stroke:none;opacity:.16}.march .halo.a{fill:var(--c1)}.march .halo.b{fill:var(--c2)}
+@keyframes pulse{0%,100%{opacity:.16;transform:scale(1)}50%{opacity:.05;transform:scale(1.6)}}.march .halo{transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-in-out infinite}
 .march .ln.r1{stroke-width:1.6;opacity:.42}
 .march .ln.pj{stroke-width:1.6;stroke-dasharray:7 5;opacity:.85}
 .march .ln.mc{stroke-width:1.8;stroke-dasharray:2 4}
@@ -1069,12 +1072,26 @@ function marchChartHTML(){
   let lo=Math.max(0,Math.floor((Math.min(...vals)-1.5)/5)*5),hi=Math.min(100,Math.ceil((Math.max(...vals)+1.5)/5)*5);if(hi-lo<10)hi=Math.min(100,lo+10);
   const y=v=>T+(hi-v)/(hi-lo)*(H-T-B);
   const path=(arr,key)=>arr.filter(p=>p[key]!=null).map((p,i)=>(i?'L':'M')+x(p.tm).toFixed(1)+' '+y(p[key]).toFixed(1)).join('');
+  // tonight's lines as monotone cubic curves (no overshoot), the gap between them shaded in the leader's colour
+  const nowPts=now.filter(p=>p.a!=null&&p.b!=null);
+  const tang=(ps,key)=>{const n=ps.length,m=new Array(n).fill(0);if(n<2)return m;const d=[];for(let i=0;i<n-1;i++){const h=ps[i+1].tm-ps[i].tm;d.push(h>0?(ps[i+1][key]-ps[i][key])/h:0);}
+    m[0]=d[0];m[n-1]=d[n-2];for(let i=1;i<n-1;i++)m[i]=d[i-1]*d[i]<=0?0:(d[i-1]+d[i])/2;
+    for(let i=0;i<n-1;i++){if(d[i]===0){m[i]=0;m[i+1]=0;continue;}const a=m[i]/d[i],b=m[i+1]/d[i],h=Math.hypot(a,b);if(h>3){m[i]=3*a/h*d[i];m[i+1]=3*b/h*d[i];}}return m;};
+  const smooth=(ps,key)=>{if(ps.length<2)return path(ps,key);const m=tang(ps,key);let d='M'+x(ps[0].tm).toFixed(1)+' '+y(ps[0][key]).toFixed(1);
+    for(let i=0;i<ps.length-1;i++){const h=ps[i+1].tm-ps[i].tm;const c1x=ps[i].tm+h/3,c1y=ps[i][key]+m[i]*h/3,c2x=ps[i+1].tm-h/3,c2y=ps[i+1][key]-m[i+1]*h/3;d+=` C${x(c1x).toFixed(1)} ${y(c1y).toFixed(1)} ${x(c2x).toFixed(1)} ${y(c2y).toFixed(1)} ${x(ps[i+1].tm).toFixed(1)} ${y(ps[i+1][key]).toFixed(1)}`;}return d;};
+  const evalAt=(ps,m,key,t)=>{let i=0;while(i<ps.length-2&&ps[i+1].tm<t)i++;const p0=ps[i],p1=ps[i+1];const h=p1.tm-p0.tm;if(h<=0)return p0[key];const u=(t-p0.tm)/h,u2=u*u,u3=u2*u;return (2*u3-3*u2+1)*p0[key]+(u3-2*u2+u)*h*m[i]+(-2*u3+3*u2)*p1[key]+(u3-u2)*h*m[i+1];};
+  let leadAreas='';
+  if(nowPts.length>=2){const ma=tang(nowPts,'a'),mb=tang(nowPts,'b');const t0=nowPts[0].tm,t1=nowPts[nowPts.length-1].tm;const step=Math.max(0.5,(t1-t0)/240);const S=[];
+    for(let t=t0;t<=t1+1e-9;t+=step){const tt=Math.min(t,t1);S.push({t:tt,a:evalAt(nowPts,ma,'a',tt),b:evalAt(nowPts,mb,'b',tt)});}
+    const runs=[];let cur=null;
+    for(let i=0;i<S.length;i++){const s0=S[i];const sgn=s0.a>=s0.b?1:-1;if(!cur||cur.sgn!==sgn){if(cur&&i>0){const pv=S[i-1];const da=pv.a-pv.b,db=s0.a-s0.b;const f=da===db?0:da/(da-db);const tc=pv.t+(s0.t-pv.t)*f,vc=pv.a+(s0.a-pv.a)*f;cur.pts.push({t:tc,a:vc,b:vc});cur=null;cur={sgn,pts:[{t:tc,a:vc,b:vc}]};runs.push(cur);}else{cur={sgn,pts:[]};runs.push(cur);}}cur.pts.push(s0);}
+    leadAreas=runs.map(r=>{if(r.pts.length<2)return '';const top=r.pts.map((q,i)=>(i?'L':'M')+x(q.t).toFixed(1)+' '+y(r.sgn>0?q.a:q.b).toFixed(1)).join('');const bot=r.pts.slice().reverse().map(q=>'L'+x(q.t).toFixed(1)+' '+y(r.sgn>0?q.b:q.a).toFixed(1)).join('');return `<path class="lead ${r.sgn>0?'a':'b'}" d="${top}${bot}Z"/>`;}).join('');}
   const yt=[];for(let v=lo;v<=hi;v+=5)yt.push(v);
   const major=narrow||Tend>420?60:30;const xt=[];for(let tm=0;tm<=Tend;tm+=major)xt.push(tm);const minor=[];for(let tm=0;tm<=Tend;tm+=10)if(tm%major)minor.push(tm);
   const last=pts.length?pts[pts.length-1]:null;
   const meta=isLive?`${pts.length} lote${pts.length>1?'s':''} · último às ${esc(last.hg.slice(0,5))} (Brasília) · ${fmtPct(last.pst,1)} das seções`:`A curva começa com o primeiro lote do TSE, a partir das 17h de Brasília${state.r1m?` · no 1º turno a apuração foi até ${hhmmOf((17*60+state.r1m.endMin)*60)}`:''}`;
   const opt=(k,l)=>`<button type="button" data-opt="${k}" class="${marchOpts[k]?'on':''}">${l}</button>`;
-  const nowDots=last&&now.length?`<circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}" fill="var(--c2)"/>`:'';
+  const nowDots=last&&now.length?`<circle class="halo a" r="9" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}"/><circle class="halo b" r="9" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].a).toFixed(1)}" fill="var(--c1)"/><circle class="dot" r="4.5" cx="${x(now[now.length-1].tm).toFixed(1)}" cy="${y(now[now.length-1].b).toFixed(1)}" fill="var(--c2)"/>`:'';
   const first=now.length&&now[0].a!=null?now[0]:null;const firstMark=first?`<line class="first" x1="${x(first.tm).toFixed(1)}" x2="${x(first.tm).toFixed(1)}" y1="${T}" y2="${H-B}"/><text class="ax first" x="${(x(first.tm)+4).toFixed(1)}" y="${T+9}">1º lote ${hhmmOf((17*60+first.tm)*60)}</text>`:'';
   const endLab=(arr,key,cls)=>{if(!arr.length)return '';const p=arr[arr.length-1];const v=p[key];if(v==null)return '';return `<text class="ax end ${cls}" x="${(x(p.tm)+5).toFixed(1)}" y="${(y(v)+3.5).toFixed(1)}">${fmtPct(v,1)}</text>`;};
   return `<div class="hd"><p class="eyebrow">Marcha da apuração</p><span class="meta">${meta}</span></div>
@@ -1088,7 +1105,8 @@ function marchChartHTML(){
       <path class="ln r1 a" d="${path(r1,'a')}"/><path class="ln r1 b" d="${path(r1,'b')}"/>
       <path class="ln pj a" d="${path(poll,'a')}"/><path class="ln pj b" d="${path(poll.map(p=>({tm:p.tm,b:100-p.a})),'b')}"/>
       <path class="ln mc a" d="${path(mcp,'a')}"/><path class="ln mc b" d="${path(mcp.map(p=>({tm:p.tm,b:100-p.a})),'b')}"/>
-      <path class="ln now a" d="${path(now,'a')}"/><path class="ln now b" d="${path(now,'b')}"/>${nowDots}
+      ${leadAreas}
+      <path class="ln now a" d="${smooth(nowPts,'a')}"/><path class="ln now b" d="${smooth(nowPts,'b')}"/>${nowDots}
       ${endLab(now,'a','a')}${endLab(now,'b','b')}
       <line class="hair" id="march-hair" x1="0" x2="0" y1="${T}" y2="${H-B}"/>
     </svg>
