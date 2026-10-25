@@ -1,0 +1,26 @@
+# Records one point of the runoff count every 5 minutes on election night (times in UTC:
+# 19:00 UTC = 16:00 Brasília). The page reads data/series.json and draws the curve.
+name: Marcha da apuração
+on:
+  schedule:
+    - cron: '*/5 19-23 25 10 *'
+    - cron: '*/5 0-3 26 10 *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: marcha
+  cancel-in-progress: false
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record the current totals
+        run: python3 tools/record_series.py
+      - name: Commit if there is a new point
+        run: |
+          git config user.name "apuracao-bot"
+          git config user.email "bot@telpe.ai"
+          git add data/series.json
+          if git diff --cached --quiet; then echo "nothing new"; else git commit -m "marcha: $(date -u +%H:%M) UTC" && git push; fi
