@@ -1,221 +1,532 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Telpe Tenders</title>
-<meta name="description" content="Public tenders from eTenders, TED and Contracts Finder, matched to what you sell and sent to your phone. Only the ones that fit.">
+<title>Apuração 2026 · Segundo turno</title>
+<meta name="description" content="Apuração do segundo turno das eleições de 2026 com dados oficiais do TSE: presidente, estados, governadores, exterior e Curitiba em destaque. Atualização automática.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/tenders.css">
 <style>
-/* Landing: one screen. The headline, one line, and beneath it a living drawing — notices streaming
-   from the three portals, through the fit line, into a phone. Thin drafting lines on paper grid,
-   like the massing model on the old company page; same palette, same restraint. */
-html,body{height:100%}
-.page{min-height:100%;display:flex;flex-direction:column}
-.nav{position:static}
-main{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(24px,5vh,64px);width:min(1120px,100% - 40px);margin-inline:auto}
-h1{
-  margin:0;font-weight:600;letter-spacing:-.045em;line-height:.96;text-wrap:balance;
-  font-size:clamp(44px,8.5vw,112px);
-  opacity:0;transform:translateY(14px);animation:in 1.3s cubic-bezier(.2,.7,.2,1) .2s forwards;
+/* Apuração 2026 — one product-page grammar: a headline, the race itself in large numerals,
+   then the plain facts band by band. Light and dark. Everything comes from the TSE's
+   official result files; before 17h (Brasília) the page waits, and says so. */
+:root{
+  --bg:#fbfbfd;--bg-2:#f5f5f7;--card:#fff;--fg:#1d1d1f;--fg-2:#6e6e73;--line:rgba(29,29,31,.10);
+  --accent:#3d5afe;--accent-ink:#fff;--ok:#2e9e5b;--warn:#d9822b;
+  --c1:#1d1d1f;--c2:#3d5afe;   /* the two candidates: ink and accent, by ballot number */
+  --inv-bg:#000;--inv-fg:#f5f5f7;--inv-fg-2:#86868b;
+  --font:"Geist",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--radius:28px;
 }
-h1 .soft{display:block;color:var(--fg-2);font-weight:300}
-.line{
-  margin:22px auto 0;max-width:40ch;color:var(--fg-2);font-size:clamp(17px,1.7vw,21px);line-height:1.45;text-wrap:balance;
-  opacity:0;animation:in 1.3s cubic-bezier(.2,.7,.2,1) .8s forwards;
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#000;--bg-2:#0c0c0e;--card:#161618;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.12);--accent:#5b78ff;--c1:#f5f5f7;--c2:#5b78ff;--inv-bg:#1d1d1f;color-scheme:dark}
 }
-.go{display:flex;gap:26px;justify-content:center;align-items:center;margin-top:22px;opacity:0;animation:in 1.3s cubic-bezier(.2,.7,.2,1) 1.1s forwards}
-.go a{font-size:16px;color:var(--accent)}
-.go a:hover{text-decoration:underline;text-underline-offset:4px}
-.go .pill{font-size:15px;padding:10px 20px}
-@keyframes in{to{opacity:1;transform:none}}
-.model{flex:1;width:100%;min-height:clamp(220px,30vh,440px);position:relative;margin-top:clamp(12px,2.5vh,32px)}
-.model canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-footer{padding-block:22px calc(26px + env(safe-area-inset-bottom,0px));font-size:12px;letter-spacing:.02em}
-footer .wrap{justify-content:center;gap:10px 22px}
-@media (prefers-reduced-motion:reduce){h1,.line,.go{animation:none;opacity:1;transform:none}}
+:root[data-theme="dark"]{--bg:#000;--bg-2:#0c0c0e;--card:#161618;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.12);--accent:#5b78ff;--c1:#f5f5f7;--c2:#5b78ff;--inv-bg:#1d1d1f;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.03em;line-height:1.05;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--fg-2)}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:17px;white-space:nowrap}
+.brand svg{width:20px;height:20px}
+.brand .sep{color:var(--fg-2);font-weight:400}
+.links{display:flex;gap:24px;font-size:14px;color:var(--fg-2)}
+.links a:hover{color:var(--fg)}
+@media (max-width:760px){.links{display:none}}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2);white-space:nowrap;font-variant-numeric:tabular-nums;min-width:0;flex:0 1 auto}
+.status #status-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.status .dot{flex:none}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--fg-2)}
+.status.live .dot{background:var(--ok);box-shadow:0 0 0 0 rgba(46,158,91,.5);animation:pulse 2s infinite}
+.status.err .dot{background:var(--warn)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,158,91,.45)}70%{box-shadow:0 0 0 8px rgba(46,158,91,0)}100%{box-shadow:0 0 0 0 rgba(46,158,91,0)}}
+@media (max-width:600px){.brand .sep,.brand .sub{display:none}}
+
+/* Hero */
+.hero{padding-block:clamp(48px,8vw,96px) clamp(32px,5vw,56px);text-align:center}
+.hero h1{font-size:clamp(40px,7vw,86px);margin-top:18px;letter-spacing:-.04em;line-height:.98}
+.hero h1 .soft{display:block;color:var(--fg-2);font-weight:300}
+.hero .lede{max-width:46ch;margin:22px auto 0;font-size:clamp(17px,1.9vw,20px);line-height:1.45;color:var(--fg-2)}
+
+/* Race module */
+.race{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 40px 100px -40px rgba(0,0,0,.35);padding:clamp(22px,3.5vw,40px);text-align:left}
+.race .top{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:end}
+.cand{display:flex;gap:14px;align-items:center;min-width:0}
+.cand.b{flex-direction:row-reverse;text-align:right}
+.cand .pic{position:relative;width:64px;height:64px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line);overflow:hidden;flex:none;display:grid;place-items:center;font-weight:600;color:var(--fg-2);font-size:20px}
+.cand .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.cand .who{min-width:0}
+.cand .n{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--fg-2)}
+.cand .nm{font-size:clamp(20px,2.6vw,30px);font-weight:600;letter-spacing:-.025em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cand .pt{font-size:13px;color:var(--fg-2)}
+.race .vs{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--fg-2);padding-bottom:8px}
+.race .pcts{display:flex;justify-content:space-between;align-items:baseline;margin-top:22px;gap:12px}
+.pct{font-size:clamp(44px,8vw,96px);font-weight:600;letter-spacing:-.05em;line-height:.95;font-variant-numeric:tabular-nums}
+.pct small{font-size:.45em;font-weight:400;color:var(--fg-2);letter-spacing:-.02em}
+.pct.a{color:var(--c1)}.pct.b{color:var(--c2)}
+.votes{font-size:14px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.pcts .side{display:flex;flex-direction:column;gap:6px}
+.pcts .side.b{align-items:flex-end;text-align:right}
+.bar{position:relative;height:14px;border-radius:999px;background:var(--bg-2);overflow:hidden;margin-top:18px;border:1px solid var(--line)}
+.bar i{position:absolute;top:0;bottom:0;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.bar .fa{left:0;background:var(--c1)}
+.bar .fb{right:0;background:var(--c2)}
+.bar .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--bg);opacity:.9}
+.flag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;border-radius:999px;padding:5px 12px;border:1px solid var(--line);color:var(--fg-2)}
+.flag.win{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.flags{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.stats div{min-width:0}
+.stats b{display:block;font-size:20px;letter-spacing:-.02em;font-weight:600;font-variant-numeric:tabular-nums}
+.stats span{font-size:12.5px;color:var(--fg-2);display:block}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.cand .pic{width:48px;height:48px;font-size:16px}.cand{gap:10px}.race .top{grid-template-columns:1fr auto 1fr;gap:8px}}
+@media (max-width:480px){.race .top{grid-template-columns:1fr}.cand.b{flex-direction:row;text-align:left}.race .vs{display:none}}
+
+/* Waiting state */
+.wait{text-align:center;padding:clamp(28px,4vw,44px) 0 8px}
+.wait .big{font-size:clamp(34px,5vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.wait p{color:var(--fg-2);margin-top:12px;max-width:52ch;margin-inline:auto}
+.wait .eyebrow{max-width:none;margin-top:0}
+.recap{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.recap .eyebrow{margin-bottom:12px;text-align:center}
+
+/* Bands */
+.band{padding-block:clamp(56px,8vw,112px)}
+.band.grey{background:var(--bg-2)}
+.band.inv{background:var(--inv-bg);color:var(--inv-fg)}
+.band.inv .eyebrow,.band.inv .muted{color:var(--inv-fg-2)}
+.h2{font-size:clamp(30px,4.4vw,54px);max-width:24ch}
+.band .eyebrow{margin-bottom:18px}
+.sub{color:var(--fg-2);margin-top:12px;max-width:60ch;font-size:16px}
+
+/* Spotlight (Curitiba) */
+.spot{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;margin-top:clamp(28px,4vw,44px)}
+@media (max-width:860px){.spot{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,3vw,32px);min-width:0}
+.card .ttl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.card h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
+.card .meta{font-size:13px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.mini{margin-top:18px}
+.mini .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.mini .row b{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.mini .row b.a{color:var(--c1)}.mini .row b.b{color:var(--c2)}
+.mini .row span{font-size:13px;color:var(--fg-2)}
+.mini .names{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-top:6px}
+.mini .names .r{text-align:right}
+.mini .bar{height:10px;margin-top:12px}
+.mini .foot{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--fg-2);margin-top:12px;font-variant-numeric:tabular-nums}
+.mini .foot2{font-size:12.5px;color:var(--fg-2);margin-top:6px;font-variant-numeric:tabular-nums}
+.card.empty{display:grid;place-items:center;color:var(--fg-2);font-size:15px;text-align:center;min-height:180px}
+
+/* UF grid */
+.ufs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:clamp(28px,4vw,44px)}
+@media (max-width:1000px){.ufs{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.ufs{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:340px){.ufs{grid-template-columns:1fr}}
+.uf{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-width:0}
+.uf .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.uf .k b{font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uf .k span{font-family:var(--mono);font-size:11px;color:var(--fg-2);white-space:nowrap}
+.uf .p{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;font-variant-numeric:tabular-nums}
+.uf .p b{font-size:22px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.uf .p b.a{color:var(--c1)}.uf .p b.b{color:var(--c2)}
+.uf .p.lead-a b.b,.uf .p.lead-b b.a{opacity:.55}
+.uf .bar{height:7px;margin-top:10px;border:0}
+.uf .s{font-size:11.5px;color:var(--fg-2);margin-top:8px;font-variant-numeric:tabular-nums}
+.uf.region{grid-column:1/-1;background:none;border:0;padding:14px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.uf.ext{border-color:var(--accent)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--fg-2);margin-top:18px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+/* Cities (exterior) table */
+.tbl{width:100%;border-collapse:collapse;margin-top:clamp(24px,3vw,36px);font-size:14.5px}
+.tbl th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--inv-fg-2);font-weight:500;padding:10px 10px;border-bottom:1px solid rgba(255,255,255,.14)}
+.tbl td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:middle;font-variant-numeric:tabular-nums}
+.tbl td.r,.tbl th.r{text-align:right}
+.tbl td.city{font-weight:500}
+.tbl tr.hi td{background:rgba(255,255,255,.06)}
+.tbl tr.hi td.city::after{content:"★";margin-left:8px;color:var(--accent)}
+.tbl .b{display:inline-block;width:120px;height:6px;border-radius:999px;background:rgba(255,255,255,.12);position:relative;overflow:hidden;vertical-align:middle}
+.tbl .b i{position:absolute;top:0;bottom:0;left:0;background:var(--inv-fg)}
+.tbl .b i.two{left:auto;right:0;background:var(--accent)}
+@media (max-width:700px){.tbl .hide{display:none}.tbl .b{width:72px}}
+.tbl-note{font-size:13px;color:var(--inv-fg-2);margin-top:14px}
+.filter{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter input{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--inv-fg);border-radius:999px;padding:10px 16px;font-size:15px;width:min(360px,100%)}
+.filter input::placeholder{color:var(--inv-fg-2)}
+
+/* Governors */
+.govs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(28px,4vw,44px)}
+@media (max-width:900px){.govs{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.govs{grid-template-columns:1fr}}
+.gov .card{height:100%}
+.gov .nm{font-weight:600;letter-spacing:-.01em}
+.gov .pt{color:var(--fg-2);font-size:13px}
+
+/* Search another city */
+.find{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:22px;max-width:560px}
+.find input{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:var(--card);font-size:15px;width:100%}
+.find button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:12px 18px;font-size:14.5px;cursor:pointer;font-weight:500}
+.found{margin-top:16px;max-width:560px}
+
+footer{border-top:1px solid var(--line);padding-block:28px calc(44px + env(safe-area-inset-bottom,0px));color:var(--fg-2);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px 28px;flex-wrap:wrap}
+footer nav{display:flex;gap:22px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--fg);color:var(--bg);font-size:13.5px;padding:10px 16px;border-radius:999px;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40;max-width:min(92vw,520px);text-align:center}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}.status.live .dot{animation:none}}
 </style>
 </head>
 <body>
-<div class="page">
-  <header class="nav">
-    <div class="wrap">
-      <a class="brand" href="index.html" aria-label="Telpe Tenders">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg>
-        Telpe <span class="sep">/</span> <span class="sub">Tenders</span>
-      </a>
-      <nav class="links" aria-label="Primary">
-        <a href="how.html">How it works</a>
-        <a href="try.html">Try it</a>
-        <a href="pricing.html">Pricing</a>
-      </nav>
-      <button class="pill" type="button" data-start>Start free</button>
-    </div>
-  </header>
 
-  <main>
-    <h1>They post it.<span class="soft">Telpe finds it.</span></h1>
-    <p class="line">Public tenders from eTenders, TED and Contracts Finder, matched to what you sell and sent to your phone. Only the ones that fit.</p>
-    <div class="go"><button class="pill" type="button" data-start>Start free</button><a href="how.html">How it works →</a></div>
-    <div class="model"><canvas id="flow" aria-hidden="true"></canvas></div>
-  </main>
-
-  <footer><div class="wrap"><span>© <span id="year">2026</span> Telpe AI · Ireland · Preview</span><nav aria-label="Footer"><a href="how.html">How it works</a><a href="try.html">Try it</a><a href="pricing.html">Pricing</a></nav></div></footer>
-</div>
-
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-  <div class="sheet">
-    <button class="x" id="modal-x" aria-label="Close">×</button>
-    <h3 id="modal-title">Start on your phone</h3>
-    <p>Pick the app you already use. The bot asks three questions and sends your first match. Free weekly digest, nothing to install.</p>
-    <div class="channels">
-      <a class="channel" href="#" data-channel="telegram"><span class="ic tg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H9l-5 4z"/></svg></span><div><b>Telegram</b><span>Instant, free, on desktop too</span></div></a>
-      <a class="channel" href="#" data-channel="whatsapp"><span class="ic wa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg></span><div><b>WhatsApp</b><span>Write JOIN and you're in</span></div></a>
-    </div>
-    <p class="fine" id="modal-fine">Preview: the bots aren't live yet. Nothing is sent or stored.</p>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Telpe · Apuração 2026">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg>
+      <span>Telpe <span class="sep">/</span> <span class="sub">Apuração 2026</span></span>
+    </a>
+    <nav class="links" aria-label="Seções">
+      <a href="#presidente">Presidente</a>
+      <a href="#curitiba">Curitiba</a>
+      <a href="#estados">Estados</a>
+      <a href="#exterior">Exterior</a>
+      <a href="#governadores">Governadores</a>
+    </nav>
+    <div class="status" id="status" aria-live="polite"><span class="dot"></span><span id="status-text">Conectando ao TSE…</span></div>
   </div>
-</div>
+</header>
 
-<script src="assets/tenders.js"></script>
+<main id="top">
+  <section class="hero" id="presidente">
+    <div class="wrap">
+      <p class="eyebrow">Eleições 2026 · 2º turno · 25 de outubro</p>
+      <h1 id="headline">Presidente da República<span class="soft" id="subline">Apuração oficial, ao vivo.</span></h1>
+      <p class="lede" id="lede">Dados do Tribunal Superior Eleitoral, lidos direto da fonte e atualizados a cada minuto. Este site não é oficial; os números são.</p>
+      <div class="race" id="race" style="margin-top:clamp(32px,5vw,56px)">
+        <div class="wait" id="wait">
+          <p class="eyebrow">Urnas fecham às 17h · horário de Brasília</p>
+          <div class="big num" id="countdown">—</div>
+          <p>A totalização começa às 17h e aparece aqui automaticamente. Os votos do exterior entram na mesma hora que os do Brasil — o TSE não divulga nenhuma parcial antes do fim da votação.</p>
+          <div class="recap" id="recap" hidden></div>
+        </div>
+        <div id="race-body" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band grey" id="curitiba">
+    <div class="wrap">
+      <p class="eyebrow">Destaque</p>
+      <h2 class="h2">Curitiba, seção por seção.</h2>
+      <p class="sub">A capital paranaense em primeiro plano, com o estado ao lado. Mesmos arquivos oficiais, mesmo ritmo de atualização.</p>
+      <div class="spot">
+        <div class="card" id="spot-city"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração em Curitiba.</div></div>
+        <div class="card" id="spot-uf"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração no Paraná.</div></div>
+      </div>
+      <p class="eyebrow" style="margin-top:36px">Outra cidade</p>
+      <form class="find" id="find"><input id="find-q" list="muns" placeholder="Digite uma cidade, ex. Londrina" autocomplete="off" aria-label="Cidade"><button type="submit">Ver</button></form>
+      <datalist id="muns"></datalist>
+      <div class="found" id="found"></div>
+    </div>
+  </section>
+
+  <section class="band" id="estados">
+    <div class="wrap">
+      <p class="eyebrow">Por estado</p>
+      <h2 class="h2">Vinte e sete unidades, e o exterior.</h2>
+      <div class="legend" id="legend"></div>
+      <div class="ufs" id="ufs"></div>
+    </div>
+  </section>
+
+  <section class="band inv" id="exterior">
+    <div class="wrap">
+      <p class="eyebrow">Exterior</p>
+      <h2 class="h2">Cidade por cidade, do outro lado do mundo.</h2>
+      <p class="sub muted">Cada cidade com seção eleitoral no exterior, assim que o TSE publica. Dublin marcada com ★.</p>
+      <div class="filter"><input id="city-filter" placeholder="Filtrar cidade" aria-label="Filtrar cidade"></div>
+      <div id="cities"><p class="tbl-note" id="cities-note">Aguardando a totalização do exterior.</p></div>
+    </div>
+  </section>
+
+  <section class="band" id="governadores">
+    <div class="wrap">
+      <p class="eyebrow">Governadores</p>
+      <h2 class="h2">Os estados que decidem hoje.</h2>
+      <div class="govs" id="govs"><div class="card empty">Lendo a lista de disputas do TSE…</div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Fonte: TSE · resultados.tse.jus.br · atualização automática · Este site não é oficial · © <span id="year">2026</span> Telpe AI</span>
+    <nav aria-label="Rodapé"><a href="#presidente">Presidente</a><a href="#estados">Estados</a><a href="#exterior">Exterior</a><a href="https://resultados.tse.jus.br" rel="noopener" target="_blank">Site do TSE ↗</a></nav>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
 <script>
 (function(){
-  var c=document.getElementById('flow'),host=c.parentElement,ctx=c.getContext('2d');
-  var dpr=Math.min(devicePixelRatio||1,2),W=0,H=0,vertical=false,s=1;
-  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ink,acc;
-  function readColors(){
-    var dark=matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.dataset.theme!=='light'||document.documentElement.dataset.theme==='dark';
-    ink=dark?'245,245,247':'29,29,31';
-    acc=dark?'91,120,255':'61,90,254';
-  }
-  readColors();
-  var mq=matchMedia('(prefers-color-scheme: dark)');
-  if(mq.addEventListener)mq.addEventListener('change',readColors);
+'use strict';
+document.getElementById('year').textContent=new Date().getFullYear();
 
-  var SOURCES=['eTenders','TED','Contracts Finder'];
-  var FIT_U=0.5, PHONE_U=0.8;             // where the fit line and the phone sit along the flow
-  function size(){
-    var b=host.getBoundingClientRect();W=b.width;H=b.height;
-    c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-    vertical=W<620||H>W*1.05;
-    s=Math.max(.7,Math.min(1.25,(vertical?W:H)/520));
-    ctx.font=11*s+'px "Geist Mono", ui-monospace, Menlo, monospace';
-    labelW=Math.max.apply(null,SOURCES.map(function(t){return ctx.measureText(t).width;}));
-  }
-  // flow coordinates: u along the flow (0 at the sources, 1 at the end), v across (-1..1)
-  var labelW=0;
-  function P(u,v){
-    if(!vertical){var x0=labelW+22*s,x1=W-24*s;return [x0+u*(x1-x0), H*0.5+v*H*0.30];}
-    var y0=40*s,y1=H-16*s;return [W*0.5+v*W*0.33, y0+u*(y1-y0)];
-  }
-  function rgba(col,a){return 'rgba('+col+','+a.toFixed(3)+')';}
-  function rrect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+/* ---------- configuration ---------- */
+const qs=new URLSearchParams(location.search);
+const BASE=(qs.get('src')||'https://resultados.tse.jus.br/oficial').replace(/\/$/,'');   // ?src= for a local mirror
+const CYCLE='ele2026';
+let ELE_PRES='6258', ELE_GOV='6260';           // 2026 second round; confirmed against ele-c.json at runtime
+const CLOSE_UTC=Date.UTC(2026,9,25,20,0,0);     // 17:00 Brasília (UTC−3)
+const EVERY=60000, CITIES_EVERY=180000;
+const SPOT_UF='pr', SPOT_CITY='CURITIBA', SPOT_CITY_FALLBACK='75353', STAR_CITY='DUBLIN';
+const UF_NAMES={ac:'Acre',al:'Alagoas',ap:'Amapá',am:'Amazonas',ba:'Bahia',ce:'Ceará',df:'Distrito Federal',es:'Espírito Santo',go:'Goiás',ma:'Maranhão',mt:'Mato Grosso',ms:'Mato Grosso do Sul',mg:'Minas Gerais',pa:'Pará',pb:'Paraíba',pr:'Paraná',pe:'Pernambuco',pi:'Piauí',rj:'Rio de Janeiro',rn:'Rio Grande do Norte',rs:'Rio Grande do Sul',ro:'Rondônia',rr:'Roraima',sc:'Santa Catarina',sp:'São Paulo',se:'Sergipe',to:'Tocantins',zz:'Exterior'};
+const REGIONS=[['Norte',['ac','ap','am','pa','ro','rr','to']],['Nordeste',['al','ba','ce','ma','pb','pe','pi','rn','se']],['Centro-Oeste',['df','go','mt','ms']],['Sudeste',['es','mg','rj','sp']],['Sul',['pr','rs','sc']],['Exterior',['zz']]];
+const UFS=REGIONS.flatMap(r=>r[1]);
 
-  function drawGrid(){
-    var g=24*s;ctx.lineWidth=1;ctx.strokeStyle=rgba(ink,.06);ctx.setLineDash([]);ctx.beginPath();
-    for(var x=(W%g)/2;x<=W;x+=g){ctx.moveTo(x,0);ctx.lineTo(x,H);}
-    for(var y=(H%g)/2;y<=H;y+=g){ctx.moveTo(0,y);ctx.lineTo(W,y);}
-    ctx.stroke();
-  }
-  function drawSources(){
-    ctx.font=(vertical?10:11)*s+'px "Geist Mono", ui-monospace, Menlo, monospace';ctx.fillStyle=rgba(ink,.55);
-    for(var i=0;i<3;i++){var v=(i-1)*0.68,p=P(0,v);
-      ctx.beginPath();ctx.arc(p[0],p[1],3*s,0,6.283);ctx.fillStyle=rgba(ink,.5);ctx.fill();
-      ctx.fillStyle=rgba(ink,.55);
-      if(!vertical){ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(SOURCES[i],p[0]-10*s,p[1]);}
-      else{ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(SOURCES[i],p[0],p[1]-10*s);}
-      // lane guide to the fit line
-      var q=P(FIT_U,v);ctx.setLineDash([2,6]);ctx.strokeStyle=rgba(ink,.16);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();ctx.setLineDash([]);
-    }
-  }
-  function drawFitLine(){
-    var a=P(FIT_U,-0.95),b=P(FIT_U,0.95);
-    ctx.setLineDash([5,5]);ctx.lineWidth=1;ctx.strokeStyle=rgba(acc,.55);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.setLineDash([]);
-    ctx.font=11*s+'px "Geist Mono", ui-monospace, Menlo, monospace';ctx.fillStyle=rgba(acc,.85);
-    if(!vertical){ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText('FIT',a[0],a[1]-8*s);}
-    else{ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('FIT',b[0]+8*s,b[1]);}
-  }
-  // The phone: outline at the end of the flow. Returns its rect for docking bubbles.
-  function phoneRect(){
-    if(!vertical){var p=P(PHONE_U,0),x1=P(1,0)[0];var w=x1-p[0],h=Math.min(H*0.86,w*2.05);w=h/2.05;return {x:x1-w,y:H*0.5-h/2,w:w,h:h};}
-    var q=P(PHONE_U,0),y1=P(1,0)[1];var hh=y1-q[1],ww=Math.min(W*0.5,hh*0.9);hh=Math.max(hh,ww*0.9);return {x:W*0.5-ww/2,y:y1-hh,w:ww,h:hh};
-  }
-  function drawPhone(r){
-    ctx.lineWidth=1.25;ctx.strokeStyle=rgba(ink,.5);rrect(r.x,r.y,r.w,r.h,Math.min(26*s,r.w*0.18));ctx.stroke();
-    ctx.strokeStyle=rgba(ink,.25);rrect(r.x+3*s,r.y+3*s,r.w-6*s,r.h-6*s,Math.min(22*s,r.w*0.16));ctx.stroke();
-    // notch / speaker
-    ctx.fillStyle=rgba(ink,.35);rrect(r.x+r.w*0.36,r.y+9*s,r.w*0.28,4*s,2*s);ctx.fill();
-  }
-  function drawTile(x,y,w,h,col,a,fill){
-    ctx.lineWidth=1;ctx.strokeStyle=rgba(col,.75*a);rrect(x,y,w,h,3*s);
-    if(fill){ctx.fillStyle=rgba(col,.10*a);ctx.fill();}
-    ctx.stroke();
-    // three text lines
-    ctx.strokeStyle=rgba(col,.45*a);ctx.beginPath();
-    var lx=x+5*s,ly=y+5*s,lw=w-10*s;
-    ctx.moveTo(lx,ly);ctx.lineTo(lx+lw*0.9,ly);
-    ctx.moveTo(lx,ly+4.5*s);ctx.lineTo(lx+lw*0.6,ly+4.5*s);
-    ctx.moveTo(lx,ly+9*s);ctx.lineTo(lx+lw*0.75,ly+9*s);
-    ctx.stroke();
-  }
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+const num=s=>{if(s==null||s==='')return 0;if(typeof s==='number')return s;const t=String(s).trim();return Number(t.includes(',')?t.replace(/\./g,'').replace(',','.'):t)||0;};
+const fmtInt=n=>Math.round(n).toLocaleString('pt-BR');
+const fmtPct=(n,d=2)=>n.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const title=s=>String(s||'').toLowerCase().replace(/(^|[\s\-'’(])(\p{L})/gu,(m,a,b)=>a+b.toUpperCase()).replace(/\b(Da|De|Do|Das|Dos|E)\b/g,m=>m.toLowerCase());
+function decodeJWS(t){const parts=t.trim().split('.');if(parts.length<2)throw new Error('formato');const b=parts[1].replace(/-/g,'+').replace(/_/g,'/');const bin=atob(b+'='.repeat((4-b.length%4)%4));return JSON.parse(new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0))));}
+async function getJSON(url){
+  let r=await fetch(url,{cache:'no-store'});
+  if(r.status===404&&/\.json$/.test(url)){r=await fetch(url.replace(/\.json$/,'.jws'),{cache:'no-store'});}
+  if(!r.ok){const e=new Error('HTTP '+r.status);e.status=r.status;throw e;}
+  const t=await r.text();
+  try{return JSON.parse(t);}catch(_){return decodeJWS(t);}
+}
+const uFile=(ele,abr,cargo,mun='')=>`${BASE}/${CYCLE}/${ele}/dados/${abr}/${abr}${mun}-c${String(cargo).padStart(4,'0')}-e${String(ele).padStart(6,'0')}-u.json`;
+const photo=(ele,sq)=>`${BASE}/${CYCLE}/${ele}/fotos/br/${sq}.jpeg`;
 
-  // --- the moving parts ---
-  var tiles=[],bubbles=[],spawnAt=0,rnd=Math.random,lastSrc=0;
-  var SPEED=0.11;                      // flow units per second
-  function spawn(now){
-    var src=(lastSrc+1+Math.floor(rnd()*2))%3;lastSrc=src;   // spread across the three lanes
-    tiles.push({src:src,u:vertical?0.04:-0.02,v:(src-1)*0.68,fit:rnd()<0.32,state:'flow',t0:now,a:1,drop:0});
-  }
-  function ease(t){t=Math.max(0,Math.min(1,t));return 1-Math.pow(1-t,3);}
-  function step(dt,now){
-    if(now>spawnAt){spawn(now);spawnAt=now+0.55+rnd()*0.5;}
-    var r=phoneRect();
-    for(var i=tiles.length-1;i>=0;i--){var t=tiles[i];
-      t.u+=SPEED*dt;
-      if(t.state==='flow'&&t.u>=FIT_U){t.state=t.fit?'fit':'fade';t.t1=now;}
-      if(t.state==='fade'){var k=(now-t.t1)/1.1;t.a=1-ease(k);t.drop+=dt*(vertical?0:18*s);t.u-=SPEED*dt*0.6;if(k>=1){tiles.splice(i,1);continue;}}
-      if(t.state==='fit'){var k2=ease((t.u-FIT_U)/(PHONE_U-FIT_U));t.vv=t.v*(1-k2);
-        if(t.u>=PHONE_U){tiles.splice(i,1);bubbles.push({t0:now});if(bubbles.length>4)bubbles.shift();continue;}}
-      if(t.u>1.05)tiles.splice(i,1);
+/* The unified file → one plain object. Candidates in a fixed order (ballot number) so colours never swap. */
+function parse(j){
+  const carg=(j.carg||[])[0]||{};const cands=[];
+  (carg.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(c=>cands.push({n:String(c.n||''),nm:c.nmu||c.nm||'',full:c.nm||c.nmu||'',party:p.sg||'',sq:c.sqcand||'',votes:num(c.vap),pct:num(c.pvap),elected:String(c.e||'').toLowerCase()==='s',status:c.st||''}))));
+  cands.sort((a,b)=>Number(a.n)-Number(b.n));
+  const s=j.s||{},e=j.e||{},v=j.v||{};
+  return {abr:String(j.cdabr||'').toLowerCase(),dg:j.dg||'',hg:j.hg||'',cargo:carg.nmn||'',
+    sections:{total:num(s.ts),done:num(s.st),pct:num(s.pst)},
+    voters:{total:num(e.te),done:num(e.est),turnout:num(e.c),turnoutPct:num(e.pc),abst:num(e.a),abstPct:num(e.pa)},
+    votes:{total:num(v.tv),valid:num(v.vv),validPct:num(v.pvvc||v.pvv),blank:num(v.vb),blankPct:num(v.pvb),nul:num(v.tvn||v.vn),nulPct:num(v.ptvn||v.pvn)},
+    cands,started:num(s.st)>0&&cands.some(c=>c.votes>0)};
+}
+const leader=r=>r.cands.length<2?null:(r.cands[0].votes===r.cands[1].votes?null:(r.cands[0].votes>r.cands[1].votes?0:1));
+
+/* ---------- state ---------- */
+const state={br:null,ufs:{},spotCity:null,spotUf:null,cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,cityCode:null,configOk:false,configTries:0};
+
+/* ---------- status / toast ---------- */
+function setStatus(kind,text){const el=$('status');el.classList.remove('live','err');if(kind)el.classList.add(kind);$('status-text').textContent=text;}
+let toastT;function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),4000);}
+
+/* ---------- countdown & waiting ---------- */
+function tickCountdown(){
+  const ms=CLOSE_UTC-Date.now();const el=$('countdown');if(!el)return;
+  if(ms<=0){el.textContent='Urnas fechadas';return;}
+  const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
+  el.textContent=(h?`${h}h `:'')+`${String(m).padStart(2,'0')}min ${String(s).padStart(2,'0')}s`;
+}
+setInterval(tickCountdown,1000);tickCountdown();
+
+/* ---------- rendering: the race module ---------- */
+function picHTML(c){const ini=esc((c.nm||'?').trim().charAt(0));return `<div class="pic"><span>${ini}</span><img alt="" src="${photo(ELE_PRES,c.sq)}" onerror="this.onerror=null;this.src='${photo('6257',c.sq)}';this.onerror=function(){this.remove()}"></div>`;}
+function raceHTML(r){
+  const [a,b]=r.cands;const ld=leader(r);
+  const flag=(c,i)=>c.elected?`<span class="flag win">${esc(c.status||'Eleito')}</span>`:(ld===i?`<span class="flag">Lidera</span>`:`<span class="flag" style="visibility:hidden">·</span>`);
+  return `<div class="top">
+      <div class="cand a">${picHTML(a)}<div class="who"><div class="n">${esc(a.n)} · ${esc(a.party)}</div><div class="nm">${esc(title(a.nm))}</div></div></div>
+      <div class="vs">VS</div>
+      <div class="cand b">${picHTML(b)}<div class="who"><div class="n">${esc(b.n)} · ${esc(b.party)}</div><div class="nm">${esc(title(b.nm))}</div></div></div>
+    </div>
+    <div class="pcts">
+      <div class="side a"><div class="pct a num">${fmtPct(a.pct).replace('%','')}<small>%</small></div><div class="votes">${fmtInt(a.votes)} votos</div></div>
+      <div class="side b"><div class="pct b num">${fmtPct(b.pct).replace('%','')}<small>%</small></div><div class="votes">${fmtInt(b.votes)} votos</div></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div>
+    <div class="flags">${flag(a,0)}${flag(b,1)}</div>
+    <div class="stats">
+      <div><b class="num">${fmtPct(r.sections.pct)}</b><span>das seções totalizadas · ${fmtInt(r.sections.done)} de ${fmtInt(r.sections.total)}</span></div>
+      <div><b class="num">${fmtInt(r.votes.valid)}</b><span>votos válidos · ${fmtPct(r.votes.validPct)} do total</span></div>
+      <div><b class="num">${fmtPct(r.votes.blankPct)}</b><span>brancos · ${fmtInt(r.votes.blank)}</span></div>
+      <div><b class="num">${fmtPct(r.votes.nulPct)}</b><span>nulos · ${fmtInt(r.votes.nul)}</span></div>
+      <div><b class="num">${fmtPct(r.voters.abstPct)}</b><span>abstenção · ${fmtInt(r.voters.abst)}</span></div>
+    </div>`;
+}
+function renderRace(){
+  const r=state.br;
+  if(!r||!r.started){$('wait').hidden=false;$('race-body').hidden=true;return;}
+  $('wait').hidden=true;$('race-body').hidden=false;$('race-body').innerHTML=raceHTML(r);
+  const [a,b]=r.cands;const w=r.cands.find(c=>c.elected);
+  $('subline').textContent=w?`${title(w.nm)}: ${(w.status||'eleito').toLowerCase()}.`:(r.sections.pct>=100?'Totalização concluída.':'Apuração oficial, ao vivo.');
+  $('lede').textContent=`${fmtPct(r.sections.pct)} das seções totalizadas · atualizado às ${r.hg.slice(0,5)} (Brasília). Dados do TSE; este site não é oficial.`;
+  $('legend').innerHTML=`<span><i style="background:var(--c1)"></i>${esc(a.n)} ${esc(title(a.nm))}</span><span><i style="background:var(--c2)"></i>${esc(b.n)} ${esc(title(b.nm))}</span><span>Percentuais sobre votos válidos</span>`;
+}
+function recapHTML(r){
+  const top=[...r.cands].sort((x,y)=>y.votes-x.votes).slice(0,2);
+  return `<p class="eyebrow">Primeiro turno · 4 de outubro</p><div class="mini"><div class="row"><b class="num">${fmtPct(top[0].pct)}</b><b class="num" style="color:var(--fg-2)">${fmtPct(top[1].pct)}</b></div><div class="names"><span>${esc(top[0].n)} · ${esc(title(top[0].nm))}</span><span class="r">${esc(top[1].n)} · ${esc(title(top[1].nm))}</span></div><div class="bar"><i class="fa" style="width:${top[0].pct}%"></i><i class="fb" style="width:${top[1].pct}%;background:var(--fg-2)"></i><span class="mid"></span></div><div class="foot"><span>${fmtInt(top[0].votes)} votos</span><span>${fmtInt(top[1].votes)} votos</span></div></div>`;
+}
+
+/* ---------- rendering: compact cards ---------- */
+function miniHTML(r,name,note){
+  if(!r||r.cands.length<2)return `<div class="ttl"><h3>${esc(name)}</h3></div><p class="muted" style="margin-top:14px;font-size:15px">${esc(note||'Sem dados ainda.')}</p>`;
+  const [a,b]=r.cands;const ld=leader(r);
+  return `<div class="ttl"><h3>${esc(name)}</h3><span class="meta">${r.started?fmtPct(r.sections.pct)+' das seções':'aguardando'}</span></div>
+    <div class="mini"><div class="row"><b class="a num" style="${ld===1?'opacity:.55':''}">${fmtPct(a.pct)}</b><b class="b num" style="${ld===0?'opacity:.55':''}">${fmtPct(b.pct)}</b></div>
+    <div class="names"><span>${esc(a.n)} · ${esc(title(a.nm))}${a.elected?' · '+esc((a.status||'eleito').toLowerCase()):''}</span><span class="r">${esc(b.n)} · ${esc(title(b.nm))}${b.elected?' · '+esc((b.status||'eleito').toLowerCase()):''}</span></div>
+    <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div>
+    <div class="foot"><span>${fmtInt(a.votes)} votos</span><span>${fmtInt(b.votes)} votos</span></div><div class="foot2">${fmtInt(r.votes.valid)} votos válidos · ${fmtPct(r.voters.abstPct)} de abstenção</div></div>`;
+}
+function renderSpot(){
+  $('spot-city').innerHTML=miniHTML(state.spotCity,'Curitiba',state.spotCity===null?'Aguardando a apuração em Curitiba.':undefined);
+  $('spot-uf').innerHTML=miniHTML(state.spotUf,'Paraná',state.spotUf===null?'Aguardando a apuração no Paraná.':undefined);
+}
+function ufHTML(uf,r){
+  const name=UF_NAMES[uf]||uf.toUpperCase();
+  if(!r||!r.started)return `<div class="uf ${uf==='zz'?'ext':''}"><div class="k"><b>${esc(name)}</b><span>${uf.toUpperCase()}</span></div><div class="s">aguardando</div></div>`;
+  const [a,b]=r.cands;const ld=leader(r);
+  return `<div class="uf ${uf==='zz'?'ext':''}"><div class="k"><b>${esc(name)}</b><span>${uf.toUpperCase()}</span></div>
+    <div class="p ${ld===0?'lead-a':ld===1?'lead-b':''}"><b class="a num">${fmtPct(a.pct,1)}</b><b class="b num">${fmtPct(b.pct,1)}</b></div>
+    <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i></div>
+    <div class="s">${fmtPct(r.sections.pct,1)} das seções · ${fmtInt(r.votes.valid)} válidos</div></div>`;
+}
+function renderUFs(){
+  $('ufs').innerHTML=REGIONS.map(([reg,list])=>`<div class="uf region">${reg}</div>`+list.map(uf=>ufHTML(uf,state.ufs[uf])).join('')).join('');
+}
+function renderCities(){
+  const box=$('cities');const q=($('city-filter').value||'').trim().toLowerCase();
+  const rows=state.cities.filter(c=>!q||c.name.toLowerCase().includes(q));
+  if(!state.cities.length){box.innerHTML=`<p class="tbl-note" id="cities-note">${state.cityList.length?'Aguardando a totalização do exterior.':'Aguardando a lista de cidades do exterior.'}</p>`;return;}
+  const [a,b]=(state.br||state.cities[0].r).cands;
+  box.innerHTML=`<table class="tbl"><thead><tr><th>Cidade</th><th class="r">${esc(a.n)} ${esc(title(a.nm))}</th><th class="r">${esc(b.n)} ${esc(title(b.nm))}</th><th class="hide"></th><th class="r hide">Válidos</th><th class="r">Seções</th></tr></thead><tbody>`+
+    rows.map(c=>{const r=c.r;const [x,y]=r.cands;return `<tr class="${c.star?'hi':''}"><td class="city">${esc(c.name)}</td><td class="r num">${fmtPct(x.pct,1)}</td><td class="r num">${fmtPct(y.pct,1)}</td><td class="hide"><span class="b"><i style="width:${x.pct}%"></i><i class="two" style="width:${y.pct}%"></i></span></td><td class="r num hide">${fmtInt(r.votes.valid)}</td><td class="r num">${fmtPct(r.sections.pct,0)}</td></tr>`;}).join('')+
+    `</tbody></table><p class="tbl-note">${rows.length} de ${state.cities.length} cidades com seções totalizadas · percentuais sobre votos válidos${state.cityList.length>state.cities.length?` · ${state.cityList.length-state.cities.length} ainda sem totalização`:''}</p>`;
+}
+function renderGovs(){
+  const box=$('govs');
+  if(!state.govs.length){box.innerHTML=`<div class="card empty">${state.configOk?'Nenhuma disputa de governador em segundo turno na configuração do TSE.':'Lendo a lista de disputas do TSE…'}</div>`;return;}
+  box.innerHTML=state.govs.map(g=>{const r=g.r;const name=UF_NAMES[g.uf]||g.uf.toUpperCase();
+    if(!r||!r.started)return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">aguardando</span></div>${r&&r.cands.length>=2?`<p class="muted" style="margin-top:12px;font-size:14.5px">${esc(title(r.cands[0].nm))} (${esc(r.cands[0].party)}) × ${esc(title(r.cands[1].nm))} (${esc(r.cands[1].party)})</p>`:''}</div></div>`;
+    const [a,b]=r.cands;const ld=leader(r);
+    return `<div class="gov"><div class="card"><div class="ttl"><h3>${esc(name)}</h3><span class="meta">${fmtPct(r.sections.pct,1)} das seções</span></div>
+      <div class="mini"><div class="row"><b class="a num" style="${ld===1?'opacity:.55':''}">${fmtPct(a.pct,1)}</b><b class="b num" style="${ld===0?'opacity:.55':''}">${fmtPct(b.pct,1)}</b></div>
+      <div class="names"><span><span class="nm">${esc(title(a.nm))}</span><br><span class="pt">${esc(a.n)} · ${esc(a.party)}${a.elected?' · '+esc((a.status||'eleito').toLowerCase()):''}</span></span><span class="r"><span class="nm">${esc(title(b.nm))}</span><br><span class="pt">${esc(b.n)} · ${esc(b.party)}${b.elected?' · '+esc((b.status||'eleito').toLowerCase()):''}</span></span></div>
+      <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div></div></div></div>`;}).join('');
+}
+
+/* ---------- loading ---------- */
+async function loadConfig(){
+  try{
+    const cfg=await getJSON(`${BASE}/comum/config/ele-c.json`);
+    const pl=(cfg.pl||[]).find(p=>/25\/10\/2026/.test(p.dt||''))||(cfg.pl||[]).slice(-1)[0];
+    const govs=[];
+    (pl?.e||[]).forEach(e=>(e.abr||[]).forEach(a=>{
+      const cd=String(a.cd||'').toUpperCase();const cps=(a.cp||[]).map(c=>String(c.cd));
+      if(cd==='BR'&&cps.includes('1'))ELE_PRES=String(e.cd);
+      if(cd!=='BR'&&cps.includes('3')){govs.push({uf:cd.toLowerCase(),ele:String(e.cd),r:null});ELE_GOV=String(e.cd);}
+    }));
+    state.govs=govs.sort((x,y)=>x.uf.localeCompare(y.uf));state.configOk=true;
+  }catch(e){
+    state.configTries++;
+    if(state.configTries===3){ // config unreadable three times: probe every UF for a governor runoff, once
+      const found=[];
+      await Promise.all(UFS.filter(u=>u!=='zz').map(async uf=>{try{const r=parse(await getJSON(uFile(ELE_GOV,uf,3)));if(r.cands.length>=2)found.push({uf,ele:ELE_GOV,r});}catch(_){}}));
+      state.govs=found.sort((x,y)=>x.uf.localeCompare(y.uf));state.configOk=true;
     }
   }
-  function draw(now){
-    ctx.clearRect(0,0,W,H);
-    drawGrid();drawSources();drawFitLine();
-    var r=phoneRect();drawPhone(r);
-    var tw=30*s,th=19*s;
-    for(var i=0;i<tiles.length;i++){var t=tiles[i];
-      var v=t.state==='fit'?t.vv:t.v;var p=P(t.u,v);
-      var x=p[0]-tw/2,y=p[1]-th/2;
-      if(!vertical)y+=t.drop;else x+=t.drop;
-      var born=ease((now-t.t0)/0.5);
-      drawTile(x,y,tw,th,t.state==='fit'?acc:ink,t.a*born,t.state==='fit');
-    }
-    // bubbles stacked from the bottom of the screen
-    var pad=10*s,bw=r.w-2*pad-6*s,bh=Math.min(34*s,(r.h-40*s)/4.6);
-    for(var j=0;j<bubbles.length;j++){var b=bubbles[j];
-      var slot=bubbles.length-1-j;                         // newest at the bottom
-      var by=r.y+r.h-pad-6*s-bh-slot*(bh+6*s);
-      var k=ease((now-b.t0)/0.5);
-      var age=Math.min(1,Math.max(0,(by-(r.y+22*s))/(bh)));  // fades as it scrolls off the top
-      drawTile(r.x+pad+3*s,by+(1-k)*8*s,bw,bh,acc,k*age,true);
-    }
+  renderGovs();
+}
+async function loadMunicipalities(){
+  try{
+    const cm=await getJSON(`${BASE}/${CYCLE}/${ELE_PRES}/config/mun-e${ELE_PRES.padStart(6,'0')}-cm.json`);
+    const all=[];(cm.abr||[]).forEach(a=>{const uf=String(a.cd||'').toLowerCase();(a.mu||[]).forEach(m=>all.push({uf,cd:String(m.cd),name:String(m.nm||'')}));});
+    state.munList=all;
+    state.cityList=all.filter(m=>m.uf==='zz').map(m=>({...m,star:m.name.toUpperCase()===STAR_CITY}));
+    const cwb=all.find(m=>m.uf===SPOT_UF&&m.name.toUpperCase()===SPOT_CITY);
+    state.cityCode=cwb?cwb.cd:SPOT_CITY_FALLBACK;
+    $('muns').innerHTML=all.map(m=>`<option value="${esc(title(m.name))} (${m.uf.toUpperCase()})"></option>`).join('');
+  }catch(e){state.cityCode=SPOT_CITY_FALLBACK;}
+}
+async function loadMain(){
+  const jobs=[];
+  jobs.push(getJSON(uFile(ELE_PRES,'br',1)).then(j=>{state.br=parse(j);}).catch(e=>{if(e.status!==404)throw e;}));
+  UFS.forEach(uf=>jobs.push(getJSON(uFile(ELE_PRES,uf,1)).then(j=>{state.ufs[uf]=parse(j);}).catch(()=>{})));
+  jobs.push(getJSON(uFile(ELE_PRES,SPOT_UF,1,state.cityCode||SPOT_CITY_FALLBACK)).then(j=>{state.spotCity=parse(j);}).catch(()=>{}));
+  state.govs.forEach(g=>jobs.push(getJSON(uFile(g.ele,g.uf,3)).then(j=>{g.r=parse(j);}).catch(()=>{})));
+  const results=await Promise.allSettled(jobs);
+  const failed=results.filter(r=>r.status==='rejected');
+  state.spotUf=state.ufs[SPOT_UF]||null;
+  renderRace();renderSpot();renderUFs();renderGovs();renderCities();
+  if(state.br){
+    state.lastOk=Date.now();state.errors=0;
+    if(state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);
+    else setStatus('',`Aguardando as 17h · arquivos do TSE já publicados`);
+  }else if(failed.length){throw failed[0].reason;}
+  else setStatus('',`Aguardando a publicação dos arquivos do TSE`);
+}
+async function loadCities(){
+  if(!state.cityList.length)return;
+  const out=[];const list=state.cityList;
+  for(let i=0;i<list.length;i+=12){ // small batches: be gentle with the TSE
+    await Promise.all(list.slice(i,i+12).map(async m=>{try{const r=parse(await getJSON(uFile(ELE_PRES,'zz',1,m.cd)));if(r.started&&r.cands.length>=2)out.push({name:title(m.name),star:m.star,r});}catch(_){}}));
   }
-  var last=null;
-  function frame(ts){
-    var now=ts/1000;if(last===null)last=now;var dt=Math.min(.05,now-last);last=now;
-    step(dt,now);draw(now);requestAnimationFrame(frame);
+  out.sort((x,y)=>(y.star-x.star)||(y.r.votes.valid-x.r.votes.valid));
+  state.cities=out;renderCities();
+}
+async function loadRecap(){
+  try{const r=parse(await getJSON(uFile('6257','br',1)));if(r.cands.length>=2&&r.votes.valid>0){$('recap').innerHTML=recapHTML(r);$('recap').hidden=false;}}catch(_){}
+}
+
+/* ---------- loop ---------- */
+async function cycle(){
+  try{
+    if(!state.configOk)await loadConfig();
+    if(!state.munList.length)await loadMunicipalities();
+    await loadMain();
   }
-  size();
-  if(window.ResizeObserver){new ResizeObserver(function(){size();}).observe(host);}else{addEventListener('resize',size);}
-  if(reduce){ // a still frame: a few tiles in flight, two bubbles landed
-    var n=0;for(var k=0;k<6;k++){tiles.push({src:k%3,u:0.08+k*0.07,v:((k%3)-1)*0.68,fit:k%2===0,state:'flow',t0:-9,a:1,drop:0});}
-    tiles.push({src:0,u:0.66,v:0,vv:0,fit:true,state:'fit',t0:-9,a:1,drop:0});
-    bubbles=[{t0:-9},{t0:-9}];draw(0);
-  } else requestAnimationFrame(frame);
+  catch(e){
+    state.errors++;
+    const msg=/Failed to fetch|NetworkError|TypeError/.test(String(e))?'Sem resposta do TSE (rede ou CORS)':'TSE respondeu '+(e.status||e.message);
+    setStatus('err',`${msg} · nova tentativa em 30 s`);
+    if(state.errors===1)toast('Não consegui ler os arquivos do TSE agora. Vou tentar de novo a cada 30 segundos.');
+  }
+  setTimeout(cycle,state.errors?30000:EVERY);
+}
+async function citiesCycle(){try{await loadCities();}catch(_){}setTimeout(citiesCycle,CITIES_EVERY);}
+
+$('city-filter').addEventListener('input',renderCities);
+$('find').addEventListener('submit',async e=>{
+  e.preventDefault();const q=($('find-q').value||'').trim();if(!q)return;
+  const m=/^(.*)\s\((\w\w)\)$/.exec(q);const name=(m?m[1]:q).toUpperCase();const uf=m?m[2].toLowerCase():null;
+  const hit=state.munList.find(x=>x.name.toUpperCase()===name&&(!uf||x.uf===uf))||state.munList.find(x=>x.name.toUpperCase().startsWith(name)&&(!uf||x.uf===uf));
+  if(!hit){$('found').innerHTML='<div class="card"><p class="muted">Cidade não encontrada na lista do TSE. Escolha uma sugestão da lista.</p></div>';return;}
+  $('found').innerHTML='<div class="card"><p class="muted">Lendo…</p></div>';
+  try{const r=parse(await getJSON(uFile(ELE_PRES,hit.uf,1,hit.cd)));$('found').innerHTML=`<div class="card">${miniHTML(r,`${title(hit.name)} (${hit.uf.toUpperCase()})`,r.started?undefined:'Aguardando a apuração nesta cidade.')}</div>`;}
+  catch(err){$('found').innerHTML=`<div class="card"><p class="muted">O TSE ainda não publicou o arquivo desta cidade.</p></div>`;}
+});
+
+(async function start(){
+  renderUFs();renderSpot();renderGovs();
+  loadRecap();
+  cycle();
+  setTimeout(citiesCycle,4000);
+})();
 })();
 </script>
 </body>
