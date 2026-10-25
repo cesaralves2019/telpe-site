@@ -47,6 +47,7 @@ p{margin:0}
 .brand .sep{color:var(--fg-2);font-weight:400}
 .links{display:flex;gap:24px;font-size:14px;color:var(--fg-2)}
 .links a:hover{color:var(--fg)}
+@media (max-width:1100px){.links a.opt{display:none}}
 @media (max-width:760px){.links{display:none}}
 .status{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2);white-space:nowrap;font-variant-numeric:tabular-nums;min-width:0;flex:0 1 auto}
 .status #status-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -96,6 +97,24 @@ p{margin:0}
 .stats span{font-size:12.5px;color:var(--fg-2);display:block}
 @media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.cand .pic{width:48px;height:48px;font-size:16px}.cand{gap:10px}.race .top{grid-template-columns:1fr auto 1fr;gap:8px}}
 @media (max-width:480px){.race .top{grid-template-columns:1fr}.cand.b{flex-direction:row;text-align:left}.race .vs{display:none}}
+
+ /* Projection */
+.proj{margin-top:16px;padding:clamp(20px,3vw,30px)}
+.proj .hd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.proj .hd .eyebrow{margin:0}
+.proj .tier{font-size:13px;font-weight:500;border-radius:999px;padding:5px 12px;border:1px solid var(--line);color:var(--fg-2)}
+.proj .tier.strong{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.proj .row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:end;margin-top:14px}
+.proj .row .p{font-size:clamp(30px,4.6vw,52px);font-weight:600;letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums}
+.proj .row .p.a{color:var(--c1)}.proj .row .p.b{color:var(--c2);text-align:right}
+.proj .row .p small{font-size:.5em;font-weight:400;color:var(--fg-2);letter-spacing:-.02em}
+.proj .row .who{font-size:13px;color:var(--fg-2);margin-top:4px}
+.proj .row .who.r{text-align:right}
+.proj .row .lead{text-align:center;font-size:14px;color:var(--fg-2);padding-bottom:6px}
+.proj .row .lead b{display:block;font-size:17px;color:var(--fg);letter-spacing:-.02em}
+.proj .bar{height:10px;margin-top:12px}
+.proj .note{font-size:12.5px;color:var(--fg-2);margin-top:12px;max-width:none}
+@media (max-width:600px){.proj .row{grid-template-columns:1fr 1fr}.proj .row .lead{grid-column:1/-1;order:3;padding:8px 0 0}}
 
 /* Waiting state */
 .wait{text-align:center;padding:clamp(28px,4vw,44px) 0 8px}
@@ -185,8 +204,8 @@ p{margin:0}
 .found{margin-top:16px;max-width:560px}
 
  /* Map + log */
-.live{display:grid;grid-template-columns:1.3fr .9fr;gap:16px;margin-top:clamp(28px,4vw,44px);align-items:stretch}
-@media (max-width:900px){.live{grid-template-columns:1fr}}
+.duo{display:grid;grid-template-columns:1.3fr .9fr;gap:16px;margin-top:clamp(28px,4vw,44px);align-items:stretch}
+@media (max-width:900px){.duo{grid-template-columns:1fr}}
 .map{position:relative}
 .map svg{width:100%;height:auto;display:block}
 .map path.uf{stroke:var(--card);stroke-width:1.1;stroke-linejoin:round;transition:fill .8s;cursor:pointer}
@@ -248,9 +267,10 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <a href="#presidente">Presidente</a>
       <a href="#mapa">Mapa</a>
       <a href="#curitiba">Curitiba</a>
-      <a href="#estados">Estados</a>
-      <a href="#exterior">Exterior</a>
-      <a href="#governadores">Governadores</a>
+      <a href="#caibi">Caibi</a>
+      <a href="#estados" class="opt">Estados</a>
+      <a href="#exterior" class="opt">Exterior</a>
+      <a href="#governadores" class="opt">Governadores</a>
     </nav>
     <div class="status" id="status" aria-live="polite"><span class="dot"></span><span id="status-text">Conectando ao TSE…</span></div>
   </div>
@@ -271,6 +291,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
         </div>
         <div id="race-body" hidden></div>
       </div>
+      <div class="race proj" id="proj" hidden></div>
     </div>
   </section>
 
@@ -279,7 +300,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
       <p class="eyebrow">O país</p>
       <h2 class="h2">Estado a estado, à medida que chega.</h2>
       <p class="sub">Cada unidade recebe a cor de quem lidera nela; quanto maior a vantagem, mais escura. Ao lado, o registro de cada lote de dados recebido do TSE, minuto a minuto.</p>
-      <div class="live">
+      <div class="duo">
         <div class="card map" id="map"><div class="empty-state muted" style="font-size:15px">Carregando o mapa…</div></div>
         <div class="card log" id="log"><div class="hd"><h3>Chegada dos dados</h3><span id="log-meta">hora local</span></div><ol id="log-list"><li class="empty">Nada recebido ainda.</li></ol></div>
       </div>
@@ -288,12 +309,16 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 
   <section class="band" id="curitiba">
     <div class="wrap">
-      <p class="eyebrow">Destaque</p>
-      <h2 class="h2">Curitiba, seção por seção.</h2>
-      <p class="sub">A capital paranaense em primeiro plano, com o estado ao lado. Mesmos arquivos oficiais, mesmo ritmo de atualização.</p>
+      <p class="eyebrow">Destaques</p>
+      <h2 class="h2">Curitiba e Caibi, seção por seção.</h2>
+      <p class="sub">A capital paranaense e o município catarinense em primeiro plano, cada um com o seu estado ao lado. Mesmos arquivos oficiais, mesmo ritmo de atualização.</p>
       <div class="spot">
-        <div class="card" id="spot-city"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração em Curitiba.</div></div>
-        <div class="card" id="spot-uf"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração no Paraná.</div></div>
+        <div class="card" id="spot-city-0"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração em Curitiba.</div></div>
+        <div class="card" id="spot-uf-0"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração no Paraná.</div></div>
+      </div>
+      <div class="spot" id="caibi" style="margin-top:16px">
+        <div class="card" id="spot-city-1"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração em Caibi.</div></div>
+        <div class="card" id="spot-uf-1"><div class="empty-state muted" style="font-size:15px">Aguardando a apuração em Santa Catarina.</div></div>
       </div>
       <p class="eyebrow" style="margin-top:36px">Outra cidade</p>
       <form class="find" id="find"><input id="find-q" list="muns" placeholder="Digite uma cidade, ex. Londrina" autocomplete="off" aria-label="Cidade"><button type="submit">Ver</button></form>
@@ -338,6 +363,7 @@ footer nav{display:flex;gap:22px;flex-wrap:wrap}
 </footer>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="assets/br-uf.js"></script>
 <script>
 (function(){
 'use strict';
@@ -350,7 +376,8 @@ const CYCLE='ele2026';
 let ELE_PRES='6258', ELE_GOV='6260';           // 2026 second round; confirmed against ele-c.json at runtime
 const CLOSE_UTC=Date.UTC(2026,9,25,20,0,0);     // 17:00 Brasília (UTC−3)
 const EVERY=Number(qs.get('every'))||60000, CITIES_EVERY=Number(qs.get('every'))*3||180000;
-const SPOT_UF='pr', SPOT_CITY='CURITIBA', SPOT_CITY_FALLBACK='75353', STAR_CITY='DUBLIN';
+const SPOTS=[{uf:'pr',city:'CURITIBA',label:'Curitiba',code:'75353'},{uf:'sc',city:'CAIBI',label:'Caibi',code:null}];   // code: TSE municipality code, found in the TSE list when null
+const STAR_CITY='DUBLIN';
 const UF_NAMES={ac:'Acre',al:'Alagoas',ap:'Amapá',am:'Amazonas',ba:'Bahia',ce:'Ceará',df:'Distrito Federal',es:'Espírito Santo',go:'Goiás',ma:'Maranhão',mt:'Mato Grosso',ms:'Mato Grosso do Sul',mg:'Minas Gerais',pa:'Pará',pb:'Paraíba',pr:'Paraná',pe:'Pernambuco',pi:'Piauí',rj:'Rio de Janeiro',rn:'Rio Grande do Norte',rs:'Rio Grande do Sul',ro:'Rondônia',rr:'Roraima',sc:'Santa Catarina',sp:'São Paulo',se:'Sergipe',to:'Tocantins',zz:'Exterior'};
 const REGIONS=[['Norte',['ac','ap','am','pa','ro','rr','to']],['Nordeste',['al','ba','ce','ma','pb','pe','pi','rn','se']],['Centro-Oeste',['df','go','mt','ms']],['Sudeste',['es','mg','rj','sp']],['Sul',['pr','rs','sc']],['Exterior',['zz']]];
 const UFS=REGIONS.flatMap(r=>r[1]);
@@ -388,7 +415,7 @@ function parse(j){
 const leader=r=>r.cands.length<2?null:(r.cands[0].votes===r.cands[1].votes?null:(r.cands[0].votes>r.cands[1].votes?0:1));
 
 /* ---------- state ---------- */
-const state={br:null,ufs:{},spotCity:null,spotUf:null,cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,cityCode:null,configOk:false,configTries:0,geo:null,geoMode:null,prev:null};
+const state={br:null,ufs:{},cities:[],cityList:[],munList:[],govs:[],lastOk:null,errors:0,configOk:false,configTries:0,geo:null,geoMode:null,prev:null,prior:null,priorTries:0,proj:null,spots:SPOTS.map(()=>({city:null,uf:null}))};
 
 /* ---------- status / toast ---------- */
 function setStatus(kind,text){const el=$('status');el.classList.remove('live','err');if(kind)el.classList.add(kind);$('status-text').textContent=text;}
@@ -452,8 +479,9 @@ function miniHTML(r,name,note){
     <div class="foot"><span>${fmtInt(a.votes)} votos</span><span>${fmtInt(b.votes)} votos</span></div><div class="foot2">${fmtInt(r.votes.valid)} votos válidos · ${fmtPct(r.voters.abstPct)} de abstenção</div></div>`;
 }
 function renderSpot(){
-  $('spot-city').innerHTML=miniHTML(state.spotCity,'Curitiba',state.spotCity===null?'Aguardando a apuração em Curitiba.':undefined);
-  $('spot-uf').innerHTML=miniHTML(state.spotUf,'Paraná',state.spotUf===null?'Aguardando a apuração no Paraná.':undefined);
+  SPOTS.forEach((sp,i)=>{const st=state.spots[i];
+    $('spot-city-'+i).innerHTML=miniHTML(st.city,sp.label,st.city===null?(sp.code?`Aguardando a apuração em ${sp.label}.`:`Procurando ${sp.label} na lista de municípios do TSE…`):undefined);
+    $('spot-uf-'+i).innerHTML=miniHTML(st.uf,UF_NAMES[sp.uf],st.uf===null?`Aguardando a apuração em ${UF_NAMES[sp.uf]}.`:undefined);});
 }
 function ufHTML(uf,r){
   const name=UF_NAMES[uf]||uf.toUpperCase();
@@ -488,34 +516,8 @@ function renderGovs(){
       <div class="bar"><i class="fa" style="width:${a.pct}%"></i><i class="fb" style="width:${b.pct}%"></i><span class="mid"></span></div></div></div></div>`;}).join('');
 }
 
-/* ---------- map ---------- */
-const IBGE=(qs.get('geo')||'https://servicodados.ibge.gov.br/api/v3/malhas').replace(/\/$/,'');
-const IBGE_UF={11:'ro',12:'ac',13:'am',14:'rr',15:'pa',16:'ap',17:'to',21:'ma',22:'pi',23:'ce',24:'rn',25:'pb',26:'pe',27:'al',28:'se',29:'ba',31:'mg',32:'es',33:'rj',35:'sp',41:'pr',42:'sc',43:'rs',50:'ms',51:'mt',52:'go',53:'df'};
-const CURITIBA=[-49.2733,-25.4284];
-function featuresByUF(fc){const out={};(fc.features||[]).forEach(f=>{const p=f.properties||{};const code=String(p.codarea||p.CD_UF||p.cd_uf||p.GEOCODIGO||'').slice(0,2);const uf=IBGE_UF[code]||String(p.sigla||p.SIGLA||p.abbrev_state||p.uf||'').toLowerCase();if(uf&&f.geometry)out[uf]=f.geometry;});return out;}
-async function loadGeometry(){
-  if(IBGE==='none')return null;
-  try{const fc=await (await fetch(`${IBGE}/paises/BR?formato=application/vnd.geo+json&qualidade=minima&intrarregiao=UF`)).json();const f=featuresByUF(fc);if(Object.keys(f).length>=26)return f;}catch(_){}
-  try{const f={};await Promise.all(Object.entries(IBGE_UF).map(async([code,uf])=>{try{const fc=await (await fetch(`${IBGE}/estados/${code}?formato=application/vnd.geo+json&qualidade=minima`)).json();const g=((fc.features||[])[0]||{}).geometry||(fc.type==='Polygon'||fc.type==='MultiPolygon'?fc:null);if(g)f[uf]=g;}catch(_){}}));if(Object.keys(f).length>=26)return f;}catch(_){}
-  return null;
-}
-const proj=(lon,lat)=>[lon*Math.PI/180,Math.log(Math.tan(Math.PI/4+lat*Math.PI/360))];
-function buildMap(feats){
-  let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;const rings={};
-  for(const [uf,g] of Object.entries(feats)){
-    const polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];rings[uf]=[];
-    polys.forEach(poly=>(poly||[]).forEach(ring=>{const r=ring.map(c=>{const [x,y]=proj(c[0],c[1]);if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;return [x,y];});rings[uf].push(r);}));
-  }
-  const W=800,pad=14,sc=(W-2*pad)/(x1-x0),H=Math.round((y1-y0)*sc+2*pad);
-  const tx=x=>pad+(x-x0)*sc,ty=y=>H-pad-(y-y0)*sc;
-  const paths={},centers={};
-  for(const [uf,rs] of Object.entries(rings)){
-    paths[uf]=rs.map(r=>r.map((p,i)=>(i?'L':'M')+tx(p[0]).toFixed(1)+' '+ty(p[1]).toFixed(1)).join('')+'Z').join('');
-    const big=rs.reduce((a,b)=>b.length>a.length?b:a,rs[0]||[]);
-    if(big.length){let a=Infinity,b=-Infinity,c=Infinity,d=-Infinity;big.forEach(p=>{a=Math.min(a,p[0]);b=Math.max(b,p[0]);c=Math.min(c,p[1]);d=Math.max(d,p[1]);});centers[uf]=[tx((a+b)/2),ty((c+d)/2)];}
-  }
-  return {W,H,paths,centers,pt:(lon,lat)=>{const [x,y]=proj(lon,lat);return [tx(x),ty(y)];}};
-}
+/* ---------- map (state outlines embedded in assets/br-uf.js, no external API) ---------- */
+const GEO=window.BR_UF||null;
 const hex=c=>{c=c.trim();if(c.startsWith('#')){const h=c.length===4?c.slice(1).split('').map(x=>x+x).join(''):c.slice(1);return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16));}const m=/rgba?\(([^)]+)\)/.exec(c);return m?m[1].split(',').slice(0,3).map(Number):[128,128,128];};
 const mix=(a,b,t)=>'rgb('+a.map((v,i)=>Math.round(v*t+b[i]*(1-t))).join(',')+')';
 function palette(){const cs=getComputedStyle(document.documentElement);return {c1:hex(cs.getPropertyValue('--c1')),c2:hex(cs.getPropertyValue('--c2')),bg:hex(cs.getPropertyValue('--card')),empty:cs.getPropertyValue('--map-empty').trim()};}
@@ -527,17 +529,18 @@ function fillFor(r,pal){
 function renderMapShell(){
   const box=$('map');
   if(state.geoMode==='svg'){
-    const m=state.geo;const order=Object.keys(m.paths);
-    const cwb=m.pt(CURITIBA[0],CURITIBA[1]);
-    box.innerHTML=`<svg viewBox="0 0 ${m.W} ${m.H}" role="img" aria-label="Mapa do Brasil por estado">
-      <g id="map-paths">${order.map(uf=>`<path class="uf" data-uf="${uf}" d="${m.paths[uf]}"/>`).join('')}</g>
-      <g id="map-labels">${order.filter(uf=>m.centers[uf]).map(uf=>`<text class="lbl" x="${m.centers[uf][0].toFixed(0)}" y="${(m.centers[uf][1]+4).toFixed(0)}">${uf.toUpperCase()}</text>`).join('')}</g>
-      <g class="mark"><circle cx="${cwb[0].toFixed(1)}" cy="${cwb[1].toFixed(1)}" r="5"/><text x="${(cwb[0]+10).toFixed(1)}" y="${(cwb[1]+4).toFixed(1)}">Curitiba</text></g>
-      <g class="inset" data-uf="zz" style="cursor:pointer"><rect id="map-zz" x="${m.W-92}" y="${m.H-72}" width="78" height="46" rx="10"/><text x="${m.W-53}" y="${m.H-44}">EXTERIOR</text></g>
-    </svg><div class="legend" id="map-legend"></div><p class="src">Malha: IBGE · resultados: TSE · toque em um estado para ver os números</p><div class="tip" id="tip"></div>`;
+    const [,,W,H]=GEO.viewBox.split(/\s+/).map(Number);const order=Object.keys(GEO.paths);
+    const pr=GEO.bbox.pr;const cwb=[pr[0]+(pr[2]-pr[0])*0.81,pr[1]+(pr[3]-pr[1])*0.70];   // Curitiba, east of Paraná
+    const labels=order.filter(uf=>GEO.bbox[uf]&&(GEO.bbox[uf][2]-GEO.bbox[uf][0])>34).map(uf=>{const b=GEO.bbox[uf];return `<text class="lbl" x="${((b[0]+b[2])/2).toFixed(0)}" y="${((b[1]+b[3])/2+4).toFixed(0)}">${uf.toUpperCase()}</text>`;}).join('');
+    box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do Brasil por estado">
+      <g id="map-paths">${order.map(uf=>`<path class="uf" data-uf="${uf}" d="${GEO.paths[uf]}"/>`).join('')}</g>
+      <g id="map-labels">${labels}</g>
+      <g class="mark"><circle cx="${cwb[0].toFixed(1)}" cy="${cwb[1].toFixed(1)}" r="4.5"/><text x="${(cwb[0]+9).toFixed(1)}" y="${(cwb[1]+4).toFixed(1)}">Curitiba</text></g>
+      <g class="inset" data-uf="zz" style="cursor:pointer"><rect id="map-zz" x="${W-100}" y="${H-66}" width="86" height="46" rx="10"/><text x="${W-57}" y="${H-38}">EXTERIOR</text></g>
+    </svg><div class="legend" id="map-legend"></div><p class="src">Contornos: @svg-maps/brazil (CC BY 4.0) · resultados: TSE · toque em um estado para ver os números</p><div class="tip" id="tip"></div>`;
   }else{
     const grid=[['','','rr','ap','','',],['am','','pa','ma','ce','rn'],['ac','ro','to','pi','pb',''],['','mt','df','ba','pe','al'],['','ms','go','mg','se',''],['','','sp','rj','es',''],['','','pr','','',''],['','','sc','','zz',''],['','','rs','','','']];
-    box.innerHTML=`<div class="tiles" id="tiles">${grid.flat().map(uf=>uf?`<div class="tile" data-uf="${uf}">${uf.toUpperCase()}</div>`:'<div></div>').join('')}</div><div class="legend" id="map-legend"></div><p class="src">Mapa esquemático (a malha do IBGE não respondeu) · resultados: TSE · toque em um estado</p><div class="tip" id="tip"></div>`;
+    box.innerHTML=`<div class="tiles" id="tiles">${grid.flat().map(uf=>uf?`<div class="tile" data-uf="${uf}">${uf.toUpperCase()}</div>`:'<div></div>').join('')}</div><div class="legend" id="map-legend"></div><p class="src">Mapa esquemático · resultados: TSE · toque em um estado</p><div class="tip" id="tip"></div>`;
   }
   const tip=$('tip');
   const show=(uf,x,y)=>{const r=state.ufs[uf];const name=UF_NAMES[uf]||uf.toUpperCase();
@@ -555,17 +558,13 @@ function renderMap(){
   if(!state.geoMode)return;
   const pal=palette();
   document.querySelectorAll('#map [data-uf]').forEach(el=>{const uf=el.dataset.uf;const f=fillFor(state.ufs[uf],pal);if(el.tagName==='path'||el.tagName==='g'){const t=el.tagName==='g'?el.querySelector('rect'):el;t.style.fill=f;}else el.style.background=f;});
-  document.querySelectorAll('#map-labels text').forEach(t=>{const r=state.ufs[t.textContent.toLowerCase()];t.style.fill=(r&&r.started&&r.sections.pct>=1)?'#fff':'';t.style.opacity=(r&&r.started&&r.sections.pct>=1)?'.9':'';});
+  document.querySelectorAll('#map-labels text').forEach(t=>{const r=state.ufs[t.textContent.toLowerCase()];const on=r&&r.started&&r.sections.pct>=1;t.style.fill=on?'#fff':'';t.style.opacity=on?'.9':'';});
   const lg=$('map-legend');if(!lg)return;
   const [a,b]=state.br&&state.br.cands.length>=2?state.br.cands:[{n:'13',nm:''},{n:'22',nm:''}];
   const g=c=>`linear-gradient(90deg,${mix(c,pal.bg,.28)},${mix(c,pal.bg,1)})`;
   lg.innerHTML=`<span><i class="g" style="background:${g(pal.c1)}"></i>${esc(a.n)} ${esc(title(a.nm))} · vantagem crescente</span><span><i class="g" style="background:${g(pal.c2)}"></i>${esc(b.n)} ${esc(title(b.nm))}</span><span><i class="e"></i>sem seções totalizadas</span>`;
 }
-async function initMap(){
-  const feats=await loadGeometry();
-  if(feats){state.geo=buildMap(feats);state.geoMode='svg';}else state.geoMode='tiles';
-  renderMapShell();renderMap();
-}
+function initMap(){state.geoMode=(GEO&&GEO.paths&&GEO.bbox)?'svg':'tiles';renderMapShell();renderMap();}
 const mql=matchMedia('(prefers-color-scheme: dark)');if(mql.addEventListener)mql.addEventListener('change',renderMap);
 
 /* ---------- log: one line per batch of data, minute by minute ---------- */
@@ -610,11 +609,68 @@ function logChanges(){
     const done=UFS.filter(uf=>{const x=state.ufs[uf];return x&&x.sections.pct>=100&&((prev.ufPst||{})[uf]||0)<100&&x.cands.length>=2;});
     if(done.length>3)addLog('info',`${done.length} unidades totalizadas: ${done.map(u=>u.toUpperCase()).join(' ')}`);
     else done.forEach(uf=>{const x=state.ufs[uf];addLog('info',`${UF_NAMES[uf]} totalizado: ${title(x.cands[0].nm)} ${fmtPct(x.cands[0].pct,1)} × ${title(x.cands[1].nm)} ${fmtPct(x.cands[1].pct,1)}`);});
+    const pj=state.proj;
+    if(pj&&pj.tier!=='early'){const key=pj.tier+':'+(pj.tier==='tie'?'':pj.leader.n);if(key!==prev.projKey)addLog('info',`Projeção: ${title(a.nm)} ${fmtPct(pj.pctA,1)} × ${title(b.nm)} ${fmtPct(pj.pctB,1)} · ${pj.label.toLowerCase()}${pj.tier==='tie'?'':' para '+title(pj.leader.nm)}`,`com ${fmtPct(100*pj.c,1)} dos votos válidos esperados`);prev.projKey=key;}
     const w=r.cands.find(c=>c.elected);
     if(w&&!prev.elected)addLog('big',`TSE: ${title(w.nm)} ${(w.status||'eleito').toLowerCase()}`,`${fmtPct(w.pct)} dos votos válidos com ${fmtPct(r.sections.pct)} das seções totalizadas`);
-    state.prev={connected:true,hg:r.hg,valid:r.votes.valid,pst:r.sections.pct,ufHg,ufPst,elected:!!w,cities:prev.cities||0};
+    state.prev={connected:true,hg:r.hg,valid:r.votes.valid,pst:r.sections.pct,ufHg,ufPst,elected:!!w,cities:prev.cities||0,projKey:prev.projKey||null};
   }else{addLog('quiet','Sem novos dados do TSE');state.prev={...prev,connected:true,ufHg,ufPst};}
   savePrev();
+}
+
+/* ---------- projection: first-round distribution per state + uniform national swing ---------- */
+/* Each UF's expected final valid votes and the two finalists' split come from the 2026 first round (election 6257).
+   With counted data, a UF's projected split = w·observed + (1−w)·(first-round split + national swing), w = share of
+   its sections counted. The swing is the vote-weighted gap between what the counted UFs show now and what they showed
+   in October, so states that have not reported yet move with the country. An estimate, never a result. */
+async function loadPrior(){
+  if(state.prior)return;
+  state.priorTries++;
+  try{
+    const br=parse(await getJSON(uFile('6257','br',1)));
+    const top=[...br.cands].sort((x,y)=>y.votes-x.votes).slice(0,2).sort((x,y)=>Number(x.n)-Number(y.n));
+    if(top.length<2)return;
+    const prior={_cands:[top[0].n,top[1].n],_valid:br.votes.valid};
+    await Promise.all(UFS.map(async uf=>{try{const r=parse(await getJSON(uFile('6257',uf,1)));const a=r.cands.find(c=>c.n===top[0].n),b=r.cands.find(c=>c.n===top[1].n);if(a&&b&&r.votes.valid>0)prior[uf]={a:a.votes,b:b.votes,valid:r.votes.valid};}catch(_){}}));
+    if(Object.keys(prior).length>=20)state.prior=prior;
+  }catch(_){}
+}
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+function projection(){
+  const r=state.br,P=state.prior;if(!r||!r.started||!P||r.cands.length<2)return null;
+  const [A,B]=r.cands;if(P._cands[0]!==A.n||P._cands[1]!==B.n)return null;   // finalists must match the first-round top two
+  let num=0,den=0;
+  UFS.forEach(uf=>{const x=state.ufs[uf],p=P[uf];if(!x||!x.started||!p)return;const w=x.cands[0].votes+x.cands[1].votes;if(w<=0)return;num+=(x.cands[0].votes/w-p.a/(p.a+p.b))*w;den+=w;});
+  const swing=den?num/den:0;
+  let sumA=0,sumB=0,sumV=0,counted=0,withData=0,ufs=[];
+  UFS.forEach(uf=>{const p=P[uf];if(!p)return;const x=state.ufs[uf];const V=p.valid;const pri=clamp(p.a/(p.a+p.b)+swing,.02,.98);let share=pri,w=0;
+    if(x&&x.started){const t=x.cands[0].votes+x.cands[1].votes;if(t>0){w=clamp(x.sections.pct/100,0,1);share=w*(x.cands[0].votes/t)+(1-w)*pri;counted+=x.votes.valid;withData++;}}
+    sumA+=V*share;sumB+=V*(1-share);sumV+=V;ufs.push({uf,share,w});});
+  if(!sumV)return null;
+  const pctA=100*sumA/(sumA+sumB),pctB=100-pctA,margin=Math.abs(pctA-pctB),c=counted/sumV;
+  const leader=pctA>pctB?A:B,lead=Math.abs(A.votes-B.votes),remaining=Math.max(0,sumV-counted);
+  let tier,label;
+  if(c<.03){tier='early';label='Cedo demais';}
+  else if(lead>remaining*1.03&&c>.5){tier='strong';label='Vantagem maior que os votos restantes';}
+  else if(margin>=6||(c>=.5&&margin>=2.5)||(c>=.8&&margin>=1)){tier='strong';label='Tendência consolidada';}
+  else if(margin>=1){tier='lean';label='Tendência';}
+  else{tier='tie';label='Empate técnico';}
+  return {pctA,pctB,margin,leader,tier,label,c,remaining,swing,withData,sumV,counted};
+}
+function renderProjection(){
+  const box=$('proj');const pj=projection();state.proj=pj;
+  if(!pj||state.br.cands.some(c=>c.elected)||state.br.sections.pct>=99.9){box.hidden=true;state.proj=null;return;}
+  const r=state.br,[A,B]=r.cands;box.hidden=false;
+  const leadTxt=pj.tier==='early'?'<b>Aguardando mais seções</b>':pj.tier==='tie'?'<b>Empate técnico</b>':`<b>${esc(title(pj.leader.nm))}</b>`;
+  box.innerHTML=`<div class="hd"><p class="eyebrow">Projeção Telpe · estimativa, não é resultado</p><span class="tier ${pj.tier==='strong'?'strong':''}">${esc(pj.label)}</span></div>
+    <div class="row">
+      <div><div class="p a num">${fmtPct(pj.pctA,1).replace('%','')}<small>%</small></div><div class="who">${esc(A.n)} · ${esc(title(A.nm))} · projetado</div></div>
+      <div class="lead">${pj.tier==='early'||pj.tier==='tie'?'':'tendência'}${leadTxt}</div>
+      <div><div class="p b num">${fmtPct(pj.pctB,1).replace('%','')}<small>%</small></div><div class="who r">${esc(B.n)} · ${esc(title(B.nm))} · projetado</div></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i class="fa" style="width:${pj.pctA}%"></i><i class="fb" style="width:${pj.pctB}%"></i><span class="mid"></span></div>
+    <p class="note">Com ${fmtPct(100*pj.c,1)} dos votos válidos esperados já contados em ${pj.withData} unidades · faltam cerca de ${fmtInt(pj.remaining)} votos válidos · margem projetada ${fmtPct(pj.margin,1).replace('%',' pp')}.
+    Modelo: a distribuição de votos de cada estado no 1º turno (4 de outubro), deslocada pela oscilação nacional observada até agora (${pj.swing>=0?'+':''}${fmtPct(100*pj.swing,1).replace('%',' pp')} para ${esc(title(A.nm))}) e substituída pelo resultado real à medida que as seções do estado entram.</p>`;
 }
 
 /* ---------- loading ---------- */
@@ -645,21 +701,20 @@ async function loadMunicipalities(){
     const all=[];(cm.abr||[]).forEach(a=>{const uf=String(a.cd||'').toLowerCase();(a.mu||[]).forEach(m=>all.push({uf,cd:String(m.cd),name:String(m.nm||'')}));});
     state.munList=all;
     state.cityList=all.filter(m=>m.uf==='zz').map(m=>({...m,star:m.name.toUpperCase()===STAR_CITY}));
-    const cwb=all.find(m=>m.uf===SPOT_UF&&m.name.toUpperCase()===SPOT_CITY);
-    state.cityCode=cwb?cwb.cd:SPOT_CITY_FALLBACK;
+    SPOTS.forEach(sp=>{const hit=all.find(m=>m.uf===sp.uf&&m.name.toUpperCase()===sp.city);if(hit)sp.code=hit.cd;});
     $('muns').innerHTML=all.map(m=>`<option value="${esc(title(m.name))} (${m.uf.toUpperCase()})"></option>`).join('');
-  }catch(e){state.cityCode=SPOT_CITY_FALLBACK;}
+  }catch(e){}
 }
 async function loadMain(){
   const jobs=[];
   jobs.push(getJSON(uFile(ELE_PRES,'br',1)).then(j=>{state.br=parse(j);}).catch(e=>{if(e.status!==404)throw e;}));
   UFS.forEach(uf=>jobs.push(getJSON(uFile(ELE_PRES,uf,1)).then(j=>{state.ufs[uf]=parse(j);}).catch(()=>{})));
-  jobs.push(getJSON(uFile(ELE_PRES,SPOT_UF,1,state.cityCode||SPOT_CITY_FALLBACK)).then(j=>{state.spotCity=parse(j);}).catch(()=>{}));
+  SPOTS.forEach((sp,i)=>{if(sp.code)jobs.push(getJSON(uFile(ELE_PRES,sp.uf,1,sp.code)).then(j=>{state.spots[i].city=parse(j);}).catch(()=>{}));});
   state.govs.forEach(g=>jobs.push(getJSON(uFile(g.ele,g.uf,3)).then(j=>{g.r=parse(j);}).catch(()=>{})));
   const results=await Promise.allSettled(jobs);
   const failed=results.filter(r=>r.status==='rejected');
-  state.spotUf=state.ufs[SPOT_UF]||null;
-  renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();logChanges();
+  SPOTS.forEach((sp,i)=>{state.spots[i].uf=state.ufs[sp.uf]||null;});
+  renderRace();renderSpot();renderUFs();renderGovs();renderCities();renderMap();renderProjection();logChanges();
   if(state.br){
     state.lastOk=Date.now();state.errors=0;
     if(state.br.started)setStatus('live',`Ao vivo · ${fmtPct(state.br.sections.pct,1)} das seções · ${state.br.hg.slice(0,5)}`);
@@ -687,6 +742,7 @@ async function cycle(){
   try{
     if(!state.configOk)await loadConfig();
     if(!state.munList.length)await loadMunicipalities();
+    if(!state.prior&&state.priorTries<30)await loadPrior();
     await loadMain();
   }
   catch(e){
