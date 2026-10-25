@@ -100,7 +100,7 @@ def process(uf, zip_path, acc):
     i_mun = idx.get("CD_MUNICIPIO")
     stamp = re.compile(r"(\d\d)/(\d\d)/(\d{4}) (\d\d):(\d\d)(?::(\d\d))?")
     # grep keeps only the president's rows; the CSV is latin-1 and ';'-separated with quoted fields
-    cmd = "unzip -p %s '%s' | grep -a -F '\"Presidente\"'" % (zip_path, csv_member(zip_path))
+    cmd = "unzip -p %s '%s' | grep -a -i -F presidente" % (zip_path, csv_member(zip_path))
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     per_min = acc["uf"].setdefault(uf, {})
     seen = acc["sections_seen"]
@@ -110,7 +110,7 @@ def process(uf, zip_path, acc):
         f = raw.rstrip("\r\n").split(";")
         if len(f) <= max(i_dt, i_nr, i_qt, i_tp, i_zn, i_sc, i_cg):
             continue
-        if f[i_cg].strip('"') != "Presidente":
+        if f[i_cg].strip('"').strip().upper() != "PRESIDENTE":
             continue
         m = stamp.search(f[i_dt])
         if not m:
@@ -139,6 +139,11 @@ def process(uf, zip_path, acc):
         n += 1
     proc.wait()
     print(uf, "rows", n, "sections so far", len(seen), flush=True)
+    if n == 0:  # show what the file really looks like, so the next run can be fixed from the log
+        sample = subprocess.run("unzip -p %s '%s' | head -n 4" % (zip_path, csv_member(zip_path)), shell=True, capture_output=True, check=False).stdout.decode("latin-1", "replace")
+        print(uf, "HEADER/SAMPLE:", sample[:3000].replace("\n", "\n  "), flush=True)
+        cargos = subprocess.run("unzip -p %s '%s' | head -n 200000 | cut -d';' -f%d | sort | uniq -c | sort -rn | head -12" % (zip_path, csv_member(zip_path), i_cg + 1), shell=True, capture_output=True, check=False).stdout.decode("latin-1", "replace")
+        print(uf, "CARGOS:", cargos, flush=True)
 
 
 def build(acc):
