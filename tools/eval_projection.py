@@ -10,6 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UFS = "ac al ap am ba ce df es go ma mt ms mg pa pb pr pe pi rj rn rs ro rr sc sp se to zz".split()
 A, B = "13", "22"
 POLL_A = 49.0  # Datafolha 23-24 Oct, valid votes for candidate 13
+PHI = float(os.environ.get("PHI", "0.5"))  # share of the first-round within-state correction applied
 
 
 def num(s):
@@ -71,7 +72,7 @@ def main():
             if b:
                 has_b = True
                 k = int(round(w * 100))
-                adj = clamp(run + (fin.get(uf, pri) - b[clamp(k, 0, 100)]), 0.02, 0.98)
+                adj = clamp(run + PHI * (fin.get(uf, pri) - b[clamp(k, 0, 100)]), 0.02, 0.98)
         rows.append({"uf": uf, "V": V, "pri": pri, "ca": ca, "cb": cb, "w": w, "run": run, "adj": adj, "hb": has_b})
     totalV = sum(r["V"] for r in rows)
     r1br = parse(json.load(open(os.path.join(ROOT, "data", "r1", "br.json"), encoding="utf-8")))
