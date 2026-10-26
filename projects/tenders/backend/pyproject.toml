@@ -1,0 +1,24 @@
+[project]
+name = "telpe-tenders"
+version = "0.1.0"
+description = "WhatsApp and Telegram alerts for public tenders in Ireland and the UK"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.29",
+  "pymongo>=4.6",
+  "httpx>=0.27",
+  "python-dotenv>=1.0",
+  "beautifulsoup4>=4.12",
+  "lxml>=5.0",
+  "anthropic>=0.40",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "mongomock>=4.1"]
+
+[tool.setuptools]
+packages = ["app", "app.channels", "app.sources"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

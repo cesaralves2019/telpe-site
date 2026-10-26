@@ -1,0 +1,24 @@
+# Local stack: MongoDB + the web app (webhooks) + the scheduler.
+#   docker compose up --build
+# Then expose port 8000 with ngrok/cloudflared for the webhooks.
+services:
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["mongo-data:/data/db"]
+  web:
+    build: .
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+    ports: ["8000:8000"]
+    depends_on: [mongo]
+  scheduler:
+    build: .
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+    command: ["python", "-m", "app.scheduler"]
+    depends_on: [mongo]
+volumes:
+  mongo-data:
