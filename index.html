@@ -3,186 +3,466 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Telpe AI</title>
-<meta name="description" content="Telpe is an AI company that shapes the built world.">
+<title>Ireland.gov Concept</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A Telpe AI design mock-up: what an Irish 'one front door' for public services could look like, in the style of America.gov. Not a government website.">
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: one screen. Headline on top, and beneath it a living massing model — thin isometric
-   lines on drafting-paper grid, blocks rising from the ground, holding, dissolving, rising again.
-   Hidden edges dashed, the way a draughtsman would draw them. Brand top-left, one-line footer. */
+/* Layout: one quiet column. A greeting in a high-contrast serif, one question box under it, a person at work
+   instead of a building, then the promises in the largest type on the page, then the interface previews.
+   Everything is framed by a permanent "mock-up" band so no one mistakes it for the State. */
 :root{
-  --bg:#fbfbfd;
-  --fg:#1d1d1f;
-  --fg-2:#86868b;
-  --line:rgba(29,29,31,.08);
-  --accent:#3d5afe;
-  --ink:29,29,31;
-  --accent-rgb:61,90,254;
-  --font:"Geist",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --bg:#f3f3f0;         /* warm paper grey */
+  --bg-2:#e9e9e4;
+  --card:#ffffff;
+  --fg:#15171a;         /* near-black ink */
+  --fg-2:#6b6f76;
+  --line:rgba(21,23,26,.10);
+  --act:#0f4d3a;        /* the one interactive colour: bottle green */
+  --act-ink:#ffffff;
+  --mock:#ffd60a;       /* the mock-up tag */
+  --mock-ink:#1a1a1a;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#000;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.10);--accent:#5b78ff;--ink:245,245,247;--accent-rgb:91,120,255;color-scheme:dark}
+  :root:not([data-theme="light"]){--bg:#121416;--bg-2:#1a1d20;--card:#1c1f23;--fg:#f1f1ed;--fg-2:#9a9ea6;--line:rgba(241,241,237,.12);--act:#3f9d78;--act-ink:#0b1510;color-scheme:dark}
 }
-:root[data-theme="dark"]{--bg:#000;--fg:#f5f5f7;--fg-2:#8e8e93;--line:rgba(245,245,247,.10);--accent:#5b78ff;--ink:245,245,247;--accent-rgb:91,120,255;color-scheme:dark}
+:root[data-theme="dark"]{--bg:#121416;--bg-2:#1a1d20;--card:#1c1f23;--fg:#f1f1ed;--fg-2:#9a9ea6;--line:rgba(241,241,237,.12);--act:#3f9d78;--act-ink:#0b1510;color-scheme:dark}
 
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{
-  background:var(--bg);color:var(--fg);font-family:var(--font);
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
-}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--act);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1100px,100%);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+p{margin:0}
+.serif{font-family:var(--serif)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);font-weight:600}
 
-.page{min-height:100%;display:flex;flex-direction:column;padding-inline:clamp(20px,4vw,48px)}
+/* the mock-up band — always visible, never styled like a notice the State would send */
+.mock{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--fg);color:var(--bg)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:41;background:var(--fg)}
+.mock .wrap{display:flex;align-items:center;gap:14px;min-height:44px;padding-block:8px;font-size:13.5px;line-height:1.35}
+.mock .tag{flex:none;background:var(--mock);color:var(--mock-ink);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.mock a{text-decoration:underline;text-underline-offset:3px;opacity:.85}.mock a:hover{opacity:1}
 
-header{display:flex;align-items:center;justify-content:space-between;height:64px;padding-top:env(safe-area-inset-top,0px);flex:none}
-.hlinks{display:flex;gap:26px}
-.play{font-size:14px;color:var(--fg-2);display:inline-flex;align-items:center;gap:6px}
-.play:hover{color:var(--fg)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:16px}
-.brand svg{width:20px;height:20px}
+header.top{padding-block:18px 8px}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap}
+.tools{margin-left:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;font-size:18px}
+.brand .flag{width:18px;height:12px;display:inline-grid;grid-template-columns:1fr 1fr 1fr;border-radius:2px;overflow:hidden;border:1px solid var(--line)}
+.brand .flag i{display:block}.brand .flag i:nth-child(1){background:#169b62}.brand .flag i:nth-child(2){background:#fff}.brand .flag i:nth-child(3){background:#ff883e}
+.brand .concept{font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin-left:4px}
+.tools{display:flex;align-items:center;gap:10px}
+.lang{border:0;background:none;padding:8px 10px;border-radius:999px;color:var(--fg-2);cursor:pointer;font-size:14px}
+.lang:hover{color:var(--fg)}
+.pill{border:0;background:var(--act);color:var(--act-ink);border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.pill:hover{filter:brightness(1.08)}
 
-main{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(36px,7vh,96px)}
-h1{
-  margin:0;font-weight:600;letter-spacing:-.045em;line-height:.96;text-wrap:balance;
-  font-size:clamp(46px,9.5vw,124px);
-  opacity:0;transform:translateY(14px);animation:in 1.3s cubic-bezier(.2,.7,.2,1) .2s forwards;
+/* hero */
+.hero{padding-block:clamp(40px,8vw,96px) clamp(28px,4vw,48px);text-align:center}
+.hero h1{font-size:clamp(56px,11vw,136px);line-height:.95;letter-spacing:-.03em}
+.hero h1 em{font-style:italic}
+.hero .sub{margin:22px auto 0;max-width:34ch;font-size:clamp(17px,1.6vw,21px);color:var(--fg-2);text-wrap:balance}
+.ask{margin:34px auto 0;max-width:760px;text-align:left}
+.ask form{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 20px 50px -30px rgba(0,0,0,.35)}
+.ask input{flex:1;min-width:0;border:0;background:none;padding:12px 4px;font-size:17px;outline:none}
+.ask input::placeholder{color:var(--fg-2)}
+.ask .ic{border:0;background:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--fg-2);cursor:pointer;flex:none}
+.ask .ic:hover{background:var(--bg-2);color:var(--fg)}
+.ask .ic svg{width:18px;height:18px}
+.ask .send{width:44px;height:44px;border-radius:50%;background:var(--act);color:var(--act-ink);border:0;display:grid;place-items:center;cursor:pointer;flex:none}
+.ask .send svg{width:18px;height:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 13px;font-size:13.5px;color:var(--fg-2);cursor:pointer}
+.chip:hover{color:var(--fg);border-color:var(--fg-2)}
+.privacy-note{margin:14px auto 0;max-width:62ch;font-size:12.5px;color:var(--fg-2);text-align:center}
+
+/* the scripted answer */
+.answer{margin:22px auto 0;max-width:760px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 24px;text-align:left;display:none}
+.answer.on{display:block}
+.answer .hd{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.answer .q{font-family:var(--serif);font-size:24px;line-height:1.2}
+.answer .demo{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mock-ink);background:var(--mock);border-radius:4px;padding:3px 7px;flex:none}
+.answer ol{margin:12px 0 0;padding-left:22px;display:grid;gap:8px}
+.answer .src{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center;font-size:12.5px;color:var(--fg-2)}
+.answer .src span{border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:var(--bg)}
+.answer .next{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.answer .next button{border:1px solid var(--act);color:var(--act);background:none;border-radius:999px;padding:7px 12px;font-size:13.5px;cursor:pointer}
+.typing{display:inline-flex;gap:4px;padding:6px 0}.typing i{width:6px;height:6px;border-radius:50%;background:var(--fg-2);animation:blink 1.2s infinite}.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+
+/* the person, not the building */
+.photo{padding-block:clamp(16px,3vw,32px) 0}
+.photo figure{margin:0;border-radius:28px;overflow:hidden;background:#e7ddd0;aspect-ratio:16/8;max-width:100%;position:relative}
+.photo svg{display:block;width:100%;height:100%}
+.photo figcaption{font-size:12.5px;color:var(--fg-2);margin-top:12px;text-align:center}
+
+/* the promises, in the largest type on the page */
+.promise{padding-block:clamp(56px,9vw,120px)}
+.promise p{font-family:var(--serif);font-size:clamp(34px,5.6vw,72px);line-height:1.08;letter-spacing:-.02em;max-width:19ch;text-wrap:balance}
+.promise .seals{display:inline-flex;gap:6px;vertical-align:middle;margin:0 10px 0 8px}
+.promise .seals i{display:inline-grid;place-items:center;width:clamp(30px,3.4vw,46px);height:clamp(30px,3.4vw,46px);border-radius:50%;background:var(--card);border:1px solid var(--line);font-family:var(--sans);font-style:normal;font-weight:600;font-size:clamp(8px,.8vw,11px);letter-spacing:.04em;color:var(--fg-2)}
+.promise .fp{display:inline-block;width:.7em;height:.7em;vertical-align:-.08em;margin-left:.15em}
+.promise .legend{font-family:var(--sans);margin-top:22px;font-size:14px;line-height:1.5;letter-spacing:0;color:var(--fg-2);max-width:60ch}
+
+/* interface previews */
+.previews{padding-block:clamp(24px,4vw,56px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.card h3{font-family:var(--serif);font-size:26px;line-height:1.15}
+.card .meta{font-size:12.5px;color:var(--fg-2)}
+.track{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px}
+.track div{font-size:12px;color:var(--fg-2);padding-top:10px;border-top:3px solid var(--line);position:relative}
+.track div.done{border-top-color:var(--act);color:var(--fg)}
+.track div.now{border-top-color:var(--act)}
+.track div.now::after{content:"now";display:block;margin-top:2px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--act);font-weight:700}
+.check{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.check li{display:flex;gap:10px;align-items:center;font-size:15px}
+.check i{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:inline-grid;place-items:center;flex:none;font-style:normal;font-size:12px}
+.check li.done i{background:var(--act);border-color:var(--act);color:var(--act-ink)}
+.check li.done{color:var(--fg-2);text-decoration:line-through;text-decoration-color:rgba(107,111,118,.5)}
+.check small{color:var(--fg-2);font-size:12.5px;margin-left:auto;white-space:nowrap}
+.bubble{background:var(--bg);border-radius:16px;padding:14px 16px;font-size:15px;line-height:1.5}
+.bubble .cite{display:inline-block;font-size:11px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:1px 7px;margin-left:4px;color:var(--fg-2);vertical-align:middle}
+.card .foot{margin-top:auto;font-size:12.5px;color:var(--fg-2)}
+
+/* before: the websites of today */
+.before{padding-block:clamp(40px,7vw,96px)}
+.before .lead{font-family:var(--serif);font-size:clamp(28px,4vw,48px);line-height:1.1;letter-spacing:-.02em;max-width:22ch;text-wrap:balance}
+.before .sub{margin-top:14px;max-width:62ch;color:var(--fg-2)}
+.strip{position:relative;margin-top:28px;overflow:hidden;border-radius:22px;background:var(--bg-2);padding:18px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.row{display:flex;gap:14px;width:max-content;animation:drift 70s linear infinite;padding-inline:14px}
+.strip.paused .row{animation-play-state:paused}
+@keyframes drift{to{transform:translateX(-50%)}}
+.old{width:220px;height:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;flex:none;display:flex;flex-direction:column;gap:7px;filter:saturate(.3);opacity:.9}
+.old b{font-size:12px;font-weight:600;color:var(--fg-2);letter-spacing:.02em}
+.old i{display:block;height:7px;border-radius:3px;background:var(--bg-2)}
+.old i.w{width:60%}.old i.m{width:85%}.old i.c{width:40%;background:var(--line)}
+.old .bar{height:18px;border-radius:4px;background:var(--line)}
+.pause{position:absolute;right:14px;bottom:14px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 12px;font-size:12.5px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.pause svg{width:12px;height:12px}
+
+/* how · privacy · roadmap */
+.band{padding-block:clamp(40px,7vw,96px);border-top:1px solid var(--line)}
+.band h2{font-family:var(--serif);font-size:clamp(30px,4.4vw,52px);line-height:1.08;letter-spacing:-.02em;max-width:22ch}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.step{min-width:0}
+.step .n{font-family:var(--serif);font-size:44px;line-height:1;color:var(--act)}
+.step h3{font-size:19px;font-weight:600;margin-top:10px}
+.step p{color:var(--fg-2);margin-top:8px;font-size:15.5px}
+.step .soon{display:inline-block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--fg-2);border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin-left:8px;vertical-align:middle}
+.priv{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:28px}
+.priv div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.priv b{display:block;font-size:16px;font-weight:600;margin-bottom:6px}
+.priv p{font-size:14.5px;color:var(--fg-2)}
+.road{margin-top:28px;display:grid;gap:0;border-top:1px solid var(--line)}
+.road div{display:grid;grid-template-columns:140px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.road div span:first-child{color:var(--fg-2);font-variant-numeric:tabular-nums}
+@media (max-width:560px){.road div{grid-template-columns:1fr;gap:4px}}
+
+/* menu sheet */
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;z-index:50;padding:max(16px,env(safe-area-inset-left,0px))}
+.sheet.on{display:grid;place-items:center}
+.sheet .panel{background:var(--card);color:var(--fg);border-radius:24px;padding:24px;width:min(520px,100%);max-height:85vh;overflow:auto}
+.sheet h2{font-family:var(--serif);font-size:30px}
+.sheet ul{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sheet li{border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;cursor:pointer}
+.sheet li:hover{border-color:var(--fg-2)}
+.sheet .close{margin-top:18px}
+.sheet .note{font-size:12.5px;color:var(--fg-2);margin-top:12px}
+
+footer{border-top:1px solid var(--line);padding-block:32px calc(28px + env(safe-area-inset-bottom,0px));font-size:13.5px;color:var(--fg-2)}
+footer .wrap{display:grid;gap:14px}
+footer p{max-width:70ch}
+footer nav{display:flex;flex-wrap:wrap;gap:16px}
+footer nav a{text-decoration:underline;text-underline-offset:3px}
+
+@media (max-width:640px){
+  .mock .wrap{font-size:12.5px}
+  .brand{font-size:16px}.brand .concept{font-size:10px;padding:2px 6px}.lang{padding:6px 8px;font-size:13px}.pill{padding:8px 13px;font-size:13px}
+  .ask form{padding-left:14px}.ask .ic.mic{display:none}
+  .hero h1{font-size:clamp(52px,16vw,88px)}
+  .photo figure{aspect-ratio:4/3}
+  .sheet ul{grid-template-columns:1fr}
 }
-h1 .soft{display:block;color:var(--fg-2);font-weight:300}
-.line{
-  margin:28px auto 0;max-width:34ch;color:var(--fg-2);font-size:clamp(17px,1.7vw,21px);line-height:1.45;text-wrap:balance;
-  opacity:0;animation:in 1.3s cubic-bezier(.2,.7,.2,1) .8s forwards;
-}
-@keyframes in{to{opacity:1;transform:none}}
-
-.model{flex:1;width:min(1100px,100%);min-height:clamp(240px,38vh,460px);position:relative;margin-top:clamp(16px,3vh,40px)}
-.model canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-
-footer{flex:none;display:flex;justify-content:center;padding-block:22px calc(26px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:12px;color:var(--fg-2);letter-spacing:.02em}
-
-@media (prefers-reduced-motion:reduce){h1,.line{animation:none;opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.row{animation:none}.typing i{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="page">
-  <header>
-    <a class="brand" href="#" aria-label="Telpe AI">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="2.4" fill="var(--accent)"/></svg>
-      Telpe
-    </a>
-    <nav class="hlinks" aria-label="Pages">
-      <a class="play" href="studio.html">Studio</a>
-      <a class="play" href="game.html">Play</a>
-    </nav>
-  </header>
 
-  <main>
-    <h1>Plan it.<span class="soft">Telpe builds it.</span></h1>
-    <p class="line">Telpe is an AI company that shapes the built world.</p>
-    <div class="model"><canvas id="iso" aria-hidden="true"></canvas></div>
-  </main>
+<div class="mock" role="note" aria-label="This is a mock-up">
+  <div class="wrap"><span class="tag">Mock-up</span><span>A design concept by Telpe AI: what an Irish "one front door" for public services could look like, in the style of America.gov. <strong>Not a government website.</strong> Nothing here is real or works. <a href="#about">What is this?</a></span></div>
+</div>
 
-  <footer>© <span id="year">2026</span> Telpe AI</footer>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Ireland.gov concept"><span class="flag" aria-hidden="true"><i></i><i></i><i></i></span>Ireland.gov<span class="concept">concept</span></a>
+    <div class="tools">
+      <button class="lang" id="lang" type="button" aria-pressed="false">Gaeilge</button>
+      <button class="pill" id="menu-btn" type="button" aria-haspopup="dialog" aria-controls="sheet">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="serif" id="hello">Hello, <em>Ireland.</em></h1>
+      <p class="sub" id="sub">Whatever you need from the State, start here.</p>
+      <div class="ask">
+        <form id="ask" autocomplete="off">
+          <input id="q" placeholder="Try ‘How do I renew my passport?’" aria-label="Ask anything about public services">
+          <button class="ic" type="button" title="Attach a document (concept)" aria-label="Attach a document"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5 12.5 20a5 5 0 0 1-7-7l8.8-8.8a3.2 3.2 0 0 1 4.5 4.5L10 17.5a1.5 1.5 0 0 1-2.1-2.1L16 7.3"/></svg></button>
+          <button class="ic mic" type="button" title="Speak (concept)" aria-label="Speak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+          <button class="send" type="submit" aria-label="Ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+        </form>
+        <div class="chips" id="chips">
+          <button class="chip" type="button">Renew my passport</button>
+          <button class="chip" type="button">I’ve moved house</button>
+          <button class="chip" type="button">Am I entitled to the Fuel Allowance?</button>
+          <button class="chip" type="button">Register a business</button>
+          <button class="chip" type="button">Book an NCT</button>
+          <button class="chip" type="button">Pay motor tax</button>
+        </div>
+        <p class="privacy-note" id="pnote">Share only what’s needed. The concept may use your approximate location to find the nearest office. Nothing you type here is sent anywhere: the answers are scripted examples.</p>
+        <div class="answer" id="answer" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="photo">
+    <div class="wrap">
+      <figure aria-label="A bicycle mechanic in a small shop, illustrated">
+        <svg viewBox="0 0 1600 800" role="img" aria-hidden="true">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe6da"/><stop offset="1" stop-color="#e3d6c6"/></linearGradient>
+            <linearGradient id="light" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7e8" stop-opacity=".9"/><stop offset="1" stop-color="#fff7e8" stop-opacity="0"/></linearGradient>
+          </defs>
+          <rect width="1600" height="800" fill="url(#sky)"/>
+          <!-- window and light -->
+          <rect x="1040" y="90" width="420" height="420" rx="14" fill="#f6efe4" stroke="#cdbfae" stroke-width="6"/>
+          <path d="M1250 90v420M1040 300h420" stroke="#cdbfae" stroke-width="6"/>
+          <path d="M1040 510 760 800h760V510z" fill="url(#light)"/>
+          <!-- shelves with tyres and tools -->
+          <rect x="120" y="150" width="560" height="14" rx="4" fill="#b9a68f"/>
+          <rect x="120" y="330" width="560" height="14" rx="4" fill="#b9a68f"/>
+          <g fill="none" stroke="#2b2b2e" stroke-width="18"><circle cx="200" cy="100" r="46"/><circle cx="310" cy="100" r="46"/><circle cx="420" cy="100" r="46"/></g>
+          <g fill="#c9c2b8"><rect x="500" y="70" width="30" height="80" rx="6"/><rect x="545" y="90" width="22" height="60" rx="5"/><rect x="580" y="60" width="26" height="90" rx="6"/></g>
+          <g fill="#169b62"><rect x="150" y="250" width="120" height="80" rx="8"/></g><g fill="#ff883e"><rect x="290" y="270" width="90" height="60" rx="8"/></g><g fill="#2b2b2e"><rect x="400" y="236" width="140" height="94" rx="8"/></g>
+          <!-- floor -->
+          <rect x="0" y="660" width="1600" height="140" fill="#d9ccbb"/>
+          <!-- workstand + bike -->
+          <path d="M560 660 600 420M640 660 600 420" stroke="#2b2b2e" stroke-width="12" stroke-linecap="round"/>
+          <path d="M600 420h200" stroke="#2b2b2e" stroke-width="12" stroke-linecap="round"/>
+          <g fill="none" stroke="#2b2b2e" stroke-width="14"><circle cx="760" cy="540" r="120"/><circle cx="1120" cy="540" r="120"/></g>
+          <g fill="none" stroke="#5a5a60" stroke-width="3"><circle cx="760" cy="540" r="120"/><circle cx="1120" cy="540" r="120"/><path d="M760 420v240M640 540h240M675 455l170 170M845 455 675 625M1120 420v240M1000 540h240M1035 455l170 170M1205 455l-170 170"/></g>
+          <path d="M760 540 860 400h160l100 140M860 400l60 140h120M820 400h110M880 540 940 400" fill="none" stroke="#0f4d3a" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M1000 400l30-50h40" fill="none" stroke="#2b2b2e" stroke-width="14" stroke-linecap="round"/>
+          <ellipse cx="920" cy="540" rx="34" ry="34" fill="#2b2b2e"/>
+          <!-- the mechanic -->
+          <g>
+            <path d="M335 660c0-120 30-200 125-200s125 80 125 200z" fill="#3b4f8a"/>
+            <path d="M372 660c0-100 24-160 88-160s88 60 88 160z" fill="#dcd5c7"/>
+            <rect x="440" y="410" width="40" height="60" rx="14" fill="#d9a98a"/>
+            <circle cx="460" cy="372" r="60" fill="#e2b597"/>
+            <path d="M400 360c6-66 116-74 120 0-28-10-66-10-120 0z" fill="#3a2a22"/>
+            <path d="M560 500c50 20 110 40 170 30l30-20" fill="none" stroke="#e2b597" stroke-width="38" stroke-linecap="round"/>
+            <path d="M360 500c-30 40-55 90-65 150" fill="none" stroke="#e2b597" stroke-width="38" stroke-linecap="round"/>
+            <rect x="735" y="490" width="60" height="18" rx="6" fill="#c9c2b8" transform="rotate(-20 735 490)"/>
+          </g>
+          <!-- a small plant on the sill -->
+          <g><rect x="1310" y="470" width="60" height="44" rx="6" fill="#b55a3c"/><path d="M1340 470c-30-30-50-50-30-90 20 30 30 50 30 90zm0 0c30-30 50-50 30-90-20 30-30 50-30 90z" fill="#2e7d5b"/></g>
+        </svg>
+        <figcaption>A mechanic in a bike shop in Cork. A real site would use a photograph of a person, not a building; the illustration stands in.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="promise">
+    <div class="wrap">
+      <p id="promise">Answers from official sources only<span class="seals" aria-hidden="true"><i>REV</i><i>DSP</i><i>HSE</i><i>DFA</i></span> free, no ads, and private by design<svg class="fp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 11a3 3 0 0 0-3 3c0 2.2.5 4.3 1.4 6.1M12 11a3 3 0 0 1 3 3c0 1.5-.2 3-.6 4.4M12 7a7 7 0 0 0-7 7c0 1.9.3 3.7.9 5.4M12 7a7 7 0 0 1 7 7c0 .8 0 1.6-.1 2.4M9 4.6A11 11 0 0 1 12 4c3 0 5.6 1.2 7.6 3.1M4.4 10A11 11 0 0 0 4 14c0 1.3.1 2.6.3 3.8"/></svg>.</p>
+      <p class="legend" id="legend">Revenue, Social Protection, the HSE, the Passport Service, the NDLS, Citizens Information, the Road Safety Authority, every local authority. One question box in front of all of them.</p>
+    </div>
+  </section>
+
+  <section class="previews">
+    <div class="wrap">
+      <p class="eyebrow">What it would feel like · concept screens</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Passport renewal</h3>
+          <p class="meta">Application PA-2026-184 · adult, 10-year</p>
+          <div class="track"><div class="done">Submitted</div><div class="done now">Processing</div><div>Printed</div><div>Posted</div></div>
+          <p class="foot">Submitted Tuesday. Usual turnaround for an online renewal shown as a range, not a promise. Example data.</p>
+        </div>
+        <div class="card">
+          <h3>Name change after marriage</h3>
+          <p class="meta">One form, four bodies updated</p>
+          <ul class="check">
+            <li class="done"><i>✓</i>Passport Service<small>done</small></li>
+            <li class="done"><i>✓</i>Revenue · myAccount<small>done</small></li>
+            <li><i></i>NDLS · driving licence<small>needs a photo</small></li>
+            <li><i></i>Public Services Card<small>appointment</small></li>
+          </ul>
+          <p class="foot">Each body still owns its record; the concept just asks once. Example data.</p>
+        </div>
+        <div class="card">
+          <h3>I’ve moved house</h3>
+          <p class="meta">Six updates from one address</p>
+          <ul class="check">
+            <li class="done"><i>✓</i>Register of Electors<small>done</small></li>
+            <li class="done"><i>✓</i>Motor tax<small>done</small></li>
+            <li class="done"><i>✓</i>Revenue<small>done</small></li>
+            <li><i></i>An Post redirection<small>paid service</small></li>
+            <li><i></i>TV licence<small>pending</small></li>
+            <li><i></i>GP and medical card<small>pending</small></li>
+          </ul>
+          <p class="foot">Example data.</p>
+        </div>
+        <div class="card">
+          <h3>An answer, with its sources</h3>
+          <p class="meta">How the concept replies</p>
+          <div class="bubble">You can apply for a learner permit online once you have a Public Services Card and a verified MyGovID.<span class="cite">NDLS</span> You’ll need to pass the theory test first.<span class="cite">RSA</span> The nearest NDLS centre to Dublin 7 is on Cumberland Street.<span class="cite">NDLS</span></div>
+          <p class="foot">Every sentence points back to the public body that owns it. Scripted example.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="before">
+    <div class="wrap">
+      <p class="eyebrow">Today</p>
+      <p class="lead">Hundreds of public websites, each with its own menu. The concept puts one question in front of all of them.</p>
+      <p class="sub">The State already publishes almost everything people need. The work is finding it. A front door that starts from the question, not from the department, is the whole idea; the sites behind it stay exactly where they are.</p>
+      <div class="strip" id="strip">
+        <div class="row" id="row"></div>
+        <button class="pause" id="pause" type="button" aria-pressed="false"><svg viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="1" width="3" height="10" rx="1"/><rect x="7" y="1" width="3" height="10" rx="1"/></svg>Pause</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <h2>Ask. Get an answer that cites its source. Then do it, here.</h2>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>Ask in your own words</h3><p>English or Irish, typed or spoken. No account, no menu to learn. If the question needs it, the concept asks one thing back: household size, county, whether you’re self-employed.</p></div>
+        <div class="step"><div class="n">2</div><h3>Read an answer you can trust</h3><p>Built only from what public bodies publish, with each sentence linked to its source page. When the State’s page changes, the answer changes.</p></div>
+        <div class="step"><div class="n">3</div><h3>Finish the task<span class="soon">concept · 2027</span></h3><p>Sign in with MyGovID only when a task needs it. Renew a passport, pay motor tax, update an address across bodies, and track it in one place.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="privacy">
+    <div class="wrap">
+      <h2>Private by design.</h2>
+      <div class="priv">
+        <div><b>Share only what’s needed</b><p>The concept asks for your county, not your Eircode, unless an office lookup needs it.</p></div>
+        <div><b>Nothing is kept</b><p>Prompts and answers are not stored; a short cache keyed by a hash of the question, never the text, expires within two hours.</p></div>
+        <div><b>No ads, no tracking</b><p>No advertising, no third-party trackers, no profile built from your questions.</p></div>
+        <div><b>Public sources only</b><p>Answers are drawn from what public bodies publish. The model does not invent eligibility rules or deadlines; when it does not know, it says so and points to a person.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="roadmap">
+    <div class="wrap">
+      <h2>If this were built.</h2>
+      <div class="road">
+        <div><span>Now</span><span>Answers with sources across the main public bodies. English and Irish. No account.</span></div>
+        <div><span>Within a year</span><span>Sign in with MyGovID. Passport renewal, motor tax, Register of Electors and address changes completed inside the front door, with status tracking.</span></div>
+        <div><span>Later</span><span>Benefits applications and appointments (HSE, NDLS, Intreo) started here and handed to the body that decides. Every public website serving more than 100,000 people a year plugged in.</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="about">
+  <div class="wrap">
+    <p><strong>What this is.</strong> A design mock-up by Telpe AI, Dublin, made in October 2026 after the launch of America.gov, to imagine the same idea for Ireland. It is not a government website and is not affiliated with the Government of Ireland, gov.ie or any public body. The names of public bodies appear only to make the concept legible. Nothing is collected; the answers are scripted examples and are not advice.</p>
+    <nav><a href="company.html">Telpe AI</a><a href="projects/apuracao-2026/">Apuração 2026</a><a href="projects/tenders/">Telpe Tenders</a><a href="https://www.gov.ie" rel="noopener" target="_blank">The real gov.ie ↗</a></nav>
+    <p>© <span id="year">2026</span> Telpe AI · concept, not a service</p>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-h" hidden>
+  <div class="panel">
+    <h2 id="sheet-h">Start from the question</h2>
+    <p class="note">The menu exists for people who prefer to browse. Each item would open a guided question, not a department page. In the mock-up they fill the question box.</p>
+    <ul id="menu-list">
+      <li>Passports and travel</li><li>Driving and vehicles</li><li>Benefits and pensions</li><li>Health</li><li>Housing and moving</li><li>Tax and Revenue</li><li>Work and business</li><li>Education and grants</li><li>Immigration</li><li>Births, marriages and deaths</li>
+    </ul>
+    <button class="pill close" id="sheet-close" type="button">Close</button>
+  </div>
 </div>
 
 <script>
 (function(){
-  document.getElementById('year').textContent=new Date().getFullYear();
+const $=id=>document.getElementById(id);
+$('year').textContent=new Date().getFullYear();
 
-  var c=document.getElementById('iso'),host=c.parentElement,ctx=c.getContext('2d');
-  var dpr=Math.min(devicePixelRatio||1,2),W=0,H=0,s=10,ox=0,oy=0;
-  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var N=10,HMAX=6,K=0.866;              // grid cells, max block height (cells), cos 30°
-  var ink,acc;
-  function readColors(){
-    var cs=getComputedStyle(document.documentElement);
-    ink=cs.getPropertyValue('--ink').trim()||'29,29,31';
-    acc=cs.getPropertyValue('--accent-rgb').trim()||'61,90,254';
-  }
-  readColors();
-  var mq=matchMedia('(prefers-color-scheme: dark)');
-  if(mq.addEventListener)mq.addEventListener('change',readColors);
+/* the old sites, drifting */
+const OLD=['gov.ie','revenue.ie','mywelfare.ie','hse.ie','ndls.ie','motortax.ie','passportonline.gov.ie','susi.ie','cao.ie','checktheregister.ie','citizensinformation.ie','garda.ie','rsa.ie','irishimmigration.ie','eflow.ie','welfare.ie','housingagency.ie','courts.ie','cro.ie','intreo.ie','localenterprise.ie','dublincity.ie'];
+const tile=n=>`<div class="old" aria-hidden="true"><b>${n}</b><span class="bar"></span><i class="m"></i><i class="w"></i><i class="m"></i><i class="c"></i></div>`;
+$('row').innerHTML=OLD.map(tile).join('')+OLD.map(tile).join('');
+$('pause').addEventListener('click',()=>{const s=$('strip');const on=s.classList.toggle('paused');$('pause').setAttribute('aria-pressed',on);$('pause').lastChild.textContent=on?'Play':'Pause';});
 
-  function size(){
-    var b=host.getBoundingClientRect();W=b.width;H=b.height;
-    c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-    s=Math.min((W*0.92)/(2*K*N),(H*0.92)/(N+HMAX));
-    ox=W/2;oy=(H-(N+HMAX)*s)/2+HMAX*s;
-  }
-  function P(x,y,z){return [ox+(x-y)*s*K, oy+(x+y)*s*0.5-z*s];}
+/* scripted answers — the mock-up only knows these */
+const A=[
+ {k:/passport|pas\b|phas/i,q:'How do I renew my passport?',steps:['If your last passport was issued when you were 18 or over, you can renew online with Passport Online; you need a digital photo and your old passport number.','Children’s passports and first-time applications need the paper form and witnessed identity.','Online renewals are the fastest route; the concept would show the live turnaround from the Passport Service and track yours after you apply.'],src:['Passport Service · DFA','Citizens Information'],next:['Track my application','I need it urgently','Child’s passport']},
+ {k:/moved|move house|address|eircode|bhog/i,q:'I’ve moved house. Who do I need to tell?',steps:['Public bodies that hold your address: Revenue (myAccount), the Department of Social Protection, the NDLS (your licence must show your current address), Motor Tax, the Register of Electors and your local authority.','The concept would update all of them from one form, and show you which ones confirmed.','An Post redirection and your GP are separate: it would remind you, not do it for you.'],src:['Revenue','Social Protection','NDLS','checktheregister.ie'],next:['Update everything (concept)','Only Revenue','Register to vote at the new address']},
+ {k:/fuel|allowance|liúntas/i,q:'Am I entitled to the Fuel Allowance?',steps:['Fuel Allowance is a means-tested payment for people on long-term social welfare payments, paid over the winter season.','Eligibility depends on your payment, who lives with you and a household means test; the concept would ask two questions and give you a yes, no or “probably, here’s why”.','Applications go to the Department of Social Protection; MyWelfare is the online route.'],src:['Social Protection · MyWelfare','Citizens Information'],next:['Check my eligibility','What counts as household means?','Apply']},
+ {k:/business|company|cro|sole trader|gnó/i,q:'How do I register a business?',steps:['A sole trader registers a business name with the Companies Registration Office if trading under a name other than their own, and registers for tax with Revenue.','A limited company is incorporated with the CRO, needs a registered office and at least one EEA-resident director, and then registers for Corporation Tax.','Local Enterprise Offices offer free mentoring and start-up grants; the concept would hand you to the one for your county.'],src:['CRO','Revenue','Local Enterprise Office'],next:['Sole trader or company?','Register for VAT','Find my Local Enterprise Office']},
+ {k:/nct|test|car test/i,q:'How do I book an NCT?',steps:['The NCT is booked online with the test service; you need your registration number and a card to pay.','Cars are tested at four years, then every two years until they are ten, then every year.','The concept would show the next available slots at the centres nearest to you and add the date to your calendar.'],src:['NCTS','Road Safety Authority'],next:['Nearest centres','What if my car fails?','Reminders']},
+ {k:/motor tax|tax my car|cáin/i,q:'How do I pay motor tax?',steps:['Motor tax is paid online with the PIN from your renewal notice or the last six digits of your vehicle registration certificate.','You can pay for three, six or twelve months; the disc arrives by post.','The concept would renew it in two taps once you have signed in with MyGovID, and remind you before it expires.'],src:['Motor Tax Online','Department of Transport'],next:['Pay now (concept)','Declare the car off the road','Change of ownership']},
+];
+const FALLBACK={q:null,steps:['In the mock-up only a handful of questions have scripted answers: passports, moving house, the Fuel Allowance, registering a business, the NCT and motor tax.','A real front door would answer this from the public body that owns it, with the source linked.'],src:['scripted example'],next:['Renew my passport','I’ve moved house','Book an NCT']};
+function ask(text){
+  const raw=String(text||'').trim();if(!raw)return;
+  const box=$('answer');box.classList.add('on');box.innerHTML=`<div class="hd"><div class="q">${esc(raw)}</div><span class="demo">Demo answer</span></div><div class="typing"><i></i><i></i><i></i></div>`;
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  const a=A.find(x=>x.k.test(raw))||FALLBACK;
+  setTimeout(()=>{box.innerHTML=`<div class="hd"><div class="q">${esc(a.q||raw)}</div><span class="demo">Demo answer</span></div>
+    <ol>${a.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>
+    <div class="src">Sources (illustrative):${a.src.map(s=>`<span>${esc(s)}</span>`).join('')}</div>
+    <div class="next">${a.next.map(n=>`<button type="button">${esc(n)}</button>`).join('')}</div>`;
+    box.querySelectorAll('.next button').forEach(b=>b.addEventListener('click',()=>{$('q').value=b.textContent;ask(b.textContent);}));
+  },700);
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+$('ask').addEventListener('submit',e=>{e.preventDefault();ask($('q').value);});
+$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;$('q').value=b.textContent;ask(b.textContent);});
 
-  // A random, non-overlapping arrangement of blocks on the grid: a massing study.
-  var blocks=[];
-  function layout(){
-    blocks=[];var tries=0,count=7+Math.floor(Math.random()*4);
-    while(blocks.length<count&&tries++<400){
-      var w=1+Math.floor(Math.random()*3),d=1+Math.floor(Math.random()*3);
-      var x=Math.floor(Math.random()*(N-w+1)),y=Math.floor(Math.random()*(N-d+1));
-      var ok=true;
-      for(var i=0;i<blocks.length;i++){var b=blocks[i];
-        if(x<b.x+b.w+1&&x+w+1>b.x&&y<b.y+b.d+1&&y+d+1>b.y){ok=false;break;}}
-      if(!ok)continue;
-      var h=1+Math.random()*(HMAX-1.2);if(Math.random()<.25)h=Math.min(HMAX,h+1.5);
-      blocks.push({x:x,y:y,w:w,d:d,h:h,delay:(x+y)*0.09+Math.random()*0.5});
-    }
-    var tallest=0;for(var j=0;j<blocks.length;j++)if(blocks[j].h>blocks[tallest].h)tallest=j;
-    if(blocks.length)blocks[tallest].key=true;
-  }
+/* menu */
+const sheet=$('sheet');
+const openSheet=()=>{sheet.hidden=false;sheet.classList.add('on');};
+const closeSheet=()=>{sheet.classList.remove('on');sheet.hidden=true;};
+$('menu-btn').addEventListener('click',openSheet);$('sheet-close').addEventListener('click',closeSheet);
+sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+$('menu-list').addEventListener('click',e=>{const li=e.target.closest('li');if(!li)return;closeSheet();$('q').value=li.textContent;$('q').focus();window.scrollTo({top:0,behavior:'smooth'});});
 
-  function ease(t){t=Math.max(0,Math.min(1,t));return 1-Math.pow(1-t,3);}
-  function seg(a,b){ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
-
-  function drawGrid(alpha){
-    ctx.lineWidth=1;ctx.strokeStyle='rgba('+ink+','+(0.07*alpha).toFixed(3)+')';ctx.setLineDash([]);
-    ctx.beginPath();
-    for(var i=0;i<=N;i++){seg(P(i,0,0),P(i,N,0));seg(P(0,i,0),P(N,i,0));}
-    ctx.stroke();
-  }
-
-  function drawBlock(b,p,alpha){
-    var h=b.h*p; if(h<=0.001)return;
-    var x0=b.x,y0=b.y,x1=b.x+b.w,y1=b.y+b.d;
-    var A0=P(x0,y0,0),B0=P(x1,y0,0),C0=P(x1,y1,0),D0=P(x0,y1,0);
-    var A1=P(x0,y0,h),B1=P(x1,y0,h),C1=P(x1,y1,h),D1=P(x0,y1,h);
-    // hidden edges, dashed and faint: the back vertical and the two base edges meeting it
-    ctx.setLineDash([3,4]);ctx.lineWidth=1;
-    ctx.strokeStyle='rgba('+ink+','+(0.13*alpha).toFixed(3)+')';
-    ctx.beginPath();seg(A0,B0);seg(A0,D0);seg(A0,A1);ctx.stroke();
-    // visible edges
-    ctx.setLineDash([]);
-    var col=b.key?acc:ink,a=b.key?0.75:0.42;
-    ctx.strokeStyle='rgba('+col+','+(a*alpha).toFixed(3)+')';
-    ctx.beginPath();
-    seg(B0,C0);seg(C0,D0);                 // front base
-    seg(B0,B1);seg(C0,C1);seg(D0,D1);      // front verticals
-    seg(A1,B1);seg(B1,C1);seg(C1,D1);seg(D1,A1); // top face
-    ctx.stroke();
-    // top corners
-    ctx.fillStyle='rgba('+col+','+(0.9*alpha).toFixed(3)+')';
-    [A1,B1,C1,D1].forEach(function(q){ctx.beginPath();ctx.arc(q[0],q[1],1.4,0,6.283);ctx.fill();});
-  }
-
-  // Cycle: rise (staggered) → hold → dissolve → new arrangement
-  var GROW=1.8,HOLD=6.5,FADE=1.6,start=null,phaseEnd=0;
-  function maxDelay(){var m=0;for(var i=0;i<blocks.length;i++)m=Math.max(m,blocks[i].delay);return m;}
-  function frame(ts){
-    if(start===null){start=ts;phaseEnd=maxDelay()+GROW+HOLD;}
-    var t=(ts-start)/1000;
-    var alpha=1;
-    if(t>phaseEnd){alpha=1-ease((t-phaseEnd)/FADE);if(t>phaseEnd+FADE){layout();start=ts;t=0;alpha=1;phaseEnd=maxDelay()+GROW+HOLD;}}
-    ctx.clearRect(0,0,W,H);
-    drawGrid(1);
-    for(var i=0;i<blocks.length;i++){var b=blocks[i];drawBlock(b,ease((t-b.delay)/GROW),alpha);}
-    requestAnimationFrame(frame);
-  }
-
-  size();layout();
-  if(window.ResizeObserver){new ResizeObserver(function(){size();}).observe(host);}else{addEventListener('resize',size);}
-  if(reduce){ctx.clearRect(0,0,W,H);drawGrid(1);for(var i=0;i<blocks.length;i++)drawBlock(blocks[i],1,1);}
-  else requestAnimationFrame(frame);
+/* Gaeilge: the hero and the promise switch; the rest of the mock-up stays in English */
+const GA={on:false};
+const T={
+  hello:['Hello, <em>Ireland.</em>','Dia dhuit, <em>a Éire.</em>'],
+  sub:['Whatever you need from the State, start here.','Cibé rud atá uait ón Stát, tosaigh anseo.'],
+  ph:['Try ‘How do I renew my passport?’','Bain triail as ‘Conas a athnuaim mo phas?’'],
+  chips:[['Renew my passport','I’ve moved house','Am I entitled to the Fuel Allowance?','Register a business','Book an NCT','Pay motor tax'],['Mo phas a athnuachan','Bhog mé teach','An bhfuil mé i dteideal an Liúntais Breosla?','Gnó a chlárú','NCT a chur in áirithe','Cáin mhótair a íoc']],
+  legend:['Revenue, Social Protection, the HSE, the Passport Service, the NDLS, Citizens Information, the Road Safety Authority, every local authority. One question box in front of all of them.','Na Coimisinéirí Ioncaim, an Roinn Coimirce Sóisialaí, FSS, an tSeirbhís Pasanna, NDLS, Eolas do Shaoránaigh, an tÚdarás um Shábháilteacht ar Bhóithre, gach údarás áitiúil. Bosca ceiste amháin os a gcomhair ar fad.'],
+  btn:['Gaeilge','English'],
+};
+$('lang').addEventListener('click',()=>{GA.on=!GA.on;const i=GA.on?1:0;
+  $('hello').innerHTML=T.hello[i];$('sub').textContent=T.sub[i];$('q').placeholder=T.ph[i];$('legend').textContent=T.legend[i];$('lang').textContent=T.btn[i];$('lang').setAttribute('aria-pressed',GA.on);
+  $('chips').querySelectorAll('.chip').forEach((b,k)=>{b.textContent=T.chips[i][k];});document.documentElement.lang=GA.on?'ga':'en';});
 })();
 </script>
 </body>
