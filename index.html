@@ -15,29 +15,25 @@
    instead of a building, then the promises in the largest type on the page, then the interface previews.
    Everything is framed by a permanent "mock-up" band so no one mistakes it for the State. */
 :root{
-  --bg:#f3f3f0;         /* warm paper grey */
-  --bg-2:#e9e9e4;
+  --bg:#f6faf7;         /* a breath of mint over white */
+  --bg-2:#e9f3ec;
   --card:#ffffff;
-  --fg:#15171a;         /* near-black ink */
-  --fg-2:#6b6f76;
-  --line:rgba(21,23,26,.10);
-  --act:#0f4d3a;        /* the one interactive colour: bottle green */
+  --fg:#10261c;         /* deep green ink instead of black */
+  --fg-2:#5f7d6d;       /* sage for secondary text */
+  --line:rgba(16,38,28,.10);
+  --act:#169b62;        /* the flag's green, for everything you can press */
+  --act-dk:#117a4d;
   --act-ink:#ffffff;
-  --mock:#ffd60a;       /* the mock-up tag */
-  --mock-ink:#1a1a1a;
+  --orange:#ff883e;     /* the flag's orange, only for the mock-up tag and the "now" mark */
+  --mock-bg:#e3f1e8;
   --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
   --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  color-scheme:light;
+  color-scheme:light;   /* deliberately one theme: light */
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#121416;--bg-2:#1a1d20;--card:#1c1f23;--fg:#f1f1ed;--fg-2:#9a9ea6;--line:rgba(241,241,237,.12);--act:#3f9d78;--act-ink:#0b1510;color-scheme:dark}
-}
-:root[data-theme="dark"]{--bg:#121416;--bg-2:#1a1d20;--card:#1c1f23;--fg:#f1f1ed;--fg-2:#9a9ea6;--line:rgba(241,241,237,.12);--act:#3f9d78;--act-ink:#0b1510;color-scheme:dark}
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 html,body{margin:0}
-body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);background-image:radial-gradient(70% 36% at 50% -4%,#d8ecdf 0%,rgba(216,236,223,0) 70%);background-repeat:no-repeat;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--act);outline-offset:3px;border-radius:6px}
@@ -48,11 +44,11 @@ p{margin:0}
 .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);font-weight:600}
 
 /* the mock-up band — always visible, never styled like a notice the State would send */
-.mock{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--fg);color:var(--bg)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:41;background:var(--fg)}
+.mock{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--mock-bg);color:var(--fg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:41;background:var(--mock-bg)}
 .mock .wrap{display:flex;align-items:center;gap:14px;min-height:44px;padding-block:8px;font-size:13.5px;line-height:1.35}
-.mock .tag{flex:none;background:var(--mock);color:var(--mock-ink);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
-.mock a{text-decoration:underline;text-underline-offset:3px;opacity:.85}.mock a:hover{opacity:1}
+.mock .tag{flex:none;background:var(--orange);color:#1a1208;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.mock a{text-decoration:underline;text-underline-offset:3px;color:var(--act-dk)}
 
 header.top{padding-block:18px 8px}
 header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap}
@@ -65,7 +61,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .lang{border:0;background:none;padding:8px 10px;border-radius:999px;color:var(--fg-2);cursor:pointer;font-size:14px}
 .lang:hover{color:var(--fg)}
 .pill{border:0;background:var(--act);color:var(--act-ink);border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-.pill:hover{filter:brightness(1.08)}
+.pill:hover{background:var(--act-dk)}
 
 /* hero */
 .hero{padding-block:clamp(40px,8vw,96px) clamp(28px,4vw,48px);text-align:center}
@@ -73,7 +69,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .hero h1 em{font-style:italic}
 .hero .sub{margin:22px auto 0;max-width:34ch;font-size:clamp(17px,1.6vw,21px);color:var(--fg-2);text-wrap:balance}
 .ask{margin:34px auto 0;max-width:760px;text-align:left}
-.ask form{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 20px 50px -30px rgba(0,0,0,.35)}
+.ask form{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 24px 60px -34px rgba(16,38,28,.35)}
 .ask input{flex:1;min-width:0;border:0;background:none;padding:12px 4px;font-size:17px;outline:none}
 .ask input::placeholder{color:var(--fg-2)}
 .ask .ic{border:0;background:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--fg-2);cursor:pointer;flex:none}
@@ -91,7 +87,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .answer.on{display:block}
 .answer .hd{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 .answer .q{font-family:var(--serif);font-size:24px;line-height:1.2}
-.answer .demo{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mock-ink);background:var(--mock);border-radius:4px;padding:3px 7px;flex:none}
+.answer .demo{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#1a1208;background:var(--orange);border-radius:4px;padding:3px 7px;flex:none}
 .answer ol{margin:12px 0 0;padding-left:22px;display:grid;gap:8px}
 .answer .src{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center;font-size:12.5px;color:var(--fg-2)}
 .answer .src span{border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:var(--bg)}
@@ -102,7 +98,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 
 /* the person, not the building */
 .photo{padding-block:clamp(16px,3vw,32px) 0}
-.photo figure{margin:0;border-radius:28px;overflow:hidden;background:#e7ddd0;aspect-ratio:16/8;max-width:100%;position:relative}
+.photo figure{margin:0;border-radius:28px;overflow:hidden;background:#dcebd9;aspect-ratio:16/8;max-width:100%;position:relative}
 .photo svg{display:block;width:100%;height:100%}
 .photo figcaption{font-size:12.5px;color:var(--fg-2);margin-top:12px;text-align:center}
 
@@ -110,13 +106,14 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .promise{padding-block:clamp(56px,9vw,120px)}
 .promise p{font-family:var(--serif);font-size:clamp(34px,5.6vw,72px);line-height:1.08;letter-spacing:-.02em;max-width:19ch;text-wrap:balance}
 .promise .seals{display:inline-flex;gap:6px;vertical-align:middle;margin:0 10px 0 8px}
-.promise .seals i{display:inline-grid;place-items:center;width:clamp(30px,3.4vw,46px);height:clamp(30px,3.4vw,46px);border-radius:50%;background:var(--card);border:1px solid var(--line);font-family:var(--sans);font-style:normal;font-weight:600;font-size:clamp(8px,.8vw,11px);letter-spacing:.04em;color:var(--fg-2)}
-.promise .fp{display:inline-block;width:.7em;height:.7em;vertical-align:-.08em;margin-left:.15em}
+.promise .seals i{display:inline-grid;place-items:center;width:clamp(30px,3.4vw,46px);height:clamp(30px,3.4vw,46px);border-radius:50%;background:var(--card);border:1px solid var(--line);font-family:var(--sans);font-style:normal;font-weight:600;font-size:clamp(8px,.8vw,11px);letter-spacing:.04em;color:var(--act-dk)}
+.promise .fp{display:inline-block;width:.7em;height:.7em;vertical-align:-.08em;margin-left:.15em;color:var(--act)}
 .promise .legend{font-family:var(--sans);margin-top:22px;font-size:14px;line-height:1.5;letter-spacing:0;color:var(--fg-2);max-width:60ch}
 
 /* interface previews */
 .previews{padding-block:clamp(24px,4vw,56px)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:22px}
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:22px}
+@media (min-width:720px){.grid{grid-template-columns:1fr 1fr}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;min-width:0;display:flex;flex-direction:column;gap:14px}
 .card h3{font-family:var(--serif);font-size:26px;line-height:1.15}
 .card .meta{font-size:12.5px;color:var(--fg-2)}
@@ -124,7 +121,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .track div{font-size:12px;color:var(--fg-2);padding-top:10px;border-top:3px solid var(--line);position:relative}
 .track div.done{border-top-color:var(--act);color:var(--fg)}
 .track div.now{border-top-color:var(--act)}
-.track div.now::after{content:"now";display:block;margin-top:2px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--act);font-weight:700}
+.track div.now::after{content:"now";display:block;margin-top:2px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-weight:700}
 .check{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .check li{display:flex;gap:10px;align-items:center;font-size:15px}
 .check i{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:inline-grid;place-items:center;flex:none;font-style:normal;font-size:12px}
@@ -143,7 +140,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .row{display:flex;gap:14px;width:max-content;animation:drift 70s linear infinite;padding-inline:14px}
 .strip.paused .row{animation-play-state:paused}
 @keyframes drift{to{transform:translateX(-50%)}}
-.old{width:220px;height:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;flex:none;display:flex;flex-direction:column;gap:7px;filter:saturate(.3);opacity:.9}
+.old{width:220px;height:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;flex:none;display:flex;flex-direction:column;gap:7px;opacity:.9}
 .old b{font-size:12px;font-weight:600;color:var(--fg-2);letter-spacing:.02em}
 .old i{display:block;height:7px;border-radius:3px;background:var(--bg-2)}
 .old i.w{width:60%}.old i.m{width:85%}.old i.c{width:40%;background:var(--line)}
@@ -157,6 +154,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
 .step{min-width:0}
 .step .n{font-family:var(--serif);font-size:44px;line-height:1;color:var(--act)}
+.band.alt{background:var(--bg-2);border-top:0}
 .step h3{font-size:19px;font-weight:600;margin-top:10px}
 .step p{color:var(--fg-2);margin-top:8px;font-size:15.5px}
 .step .soon{display:inline-block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--fg-2);border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin-left:8px;vertical-align:middle}
@@ -241,48 +239,9 @@ footer nav a{text-decoration:underline;text-underline-offset:3px}
 
   <section class="photo">
     <div class="wrap">
-      <figure aria-label="A bicycle mechanic in a small shop, illustrated">
-        <svg viewBox="0 0 1600 800" role="img" aria-hidden="true">
-          <defs>
-            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe6da"/><stop offset="1" stop-color="#e3d6c6"/></linearGradient>
-            <linearGradient id="light" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7e8" stop-opacity=".9"/><stop offset="1" stop-color="#fff7e8" stop-opacity="0"/></linearGradient>
-          </defs>
-          <rect width="1600" height="800" fill="url(#sky)"/>
-          <!-- window and light -->
-          <rect x="1040" y="90" width="420" height="420" rx="14" fill="#f6efe4" stroke="#cdbfae" stroke-width="6"/>
-          <path d="M1250 90v420M1040 300h420" stroke="#cdbfae" stroke-width="6"/>
-          <path d="M1040 510 760 800h760V510z" fill="url(#light)"/>
-          <!-- shelves with tyres and tools -->
-          <rect x="120" y="150" width="560" height="14" rx="4" fill="#b9a68f"/>
-          <rect x="120" y="330" width="560" height="14" rx="4" fill="#b9a68f"/>
-          <g fill="none" stroke="#2b2b2e" stroke-width="18"><circle cx="200" cy="100" r="46"/><circle cx="310" cy="100" r="46"/><circle cx="420" cy="100" r="46"/></g>
-          <g fill="#c9c2b8"><rect x="500" y="70" width="30" height="80" rx="6"/><rect x="545" y="90" width="22" height="60" rx="5"/><rect x="580" y="60" width="26" height="90" rx="6"/></g>
-          <g fill="#169b62"><rect x="150" y="250" width="120" height="80" rx="8"/></g><g fill="#ff883e"><rect x="290" y="270" width="90" height="60" rx="8"/></g><g fill="#2b2b2e"><rect x="400" y="236" width="140" height="94" rx="8"/></g>
-          <!-- floor -->
-          <rect x="0" y="660" width="1600" height="140" fill="#d9ccbb"/>
-          <!-- workstand + bike -->
-          <path d="M560 660 600 420M640 660 600 420" stroke="#2b2b2e" stroke-width="12" stroke-linecap="round"/>
-          <path d="M600 420h200" stroke="#2b2b2e" stroke-width="12" stroke-linecap="round"/>
-          <g fill="none" stroke="#2b2b2e" stroke-width="14"><circle cx="760" cy="540" r="120"/><circle cx="1120" cy="540" r="120"/></g>
-          <g fill="none" stroke="#5a5a60" stroke-width="3"><circle cx="760" cy="540" r="120"/><circle cx="1120" cy="540" r="120"/><path d="M760 420v240M640 540h240M675 455l170 170M845 455 675 625M1120 420v240M1000 540h240M1035 455l170 170M1205 455l-170 170"/></g>
-          <path d="M760 540 860 400h160l100 140M860 400l60 140h120M820 400h110M880 540 940 400" fill="none" stroke="#0f4d3a" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"/>
-          <path d="M1000 400l30-50h40" fill="none" stroke="#2b2b2e" stroke-width="14" stroke-linecap="round"/>
-          <ellipse cx="920" cy="540" rx="34" ry="34" fill="#2b2b2e"/>
-          <!-- the mechanic -->
-          <g>
-            <path d="M335 660c0-120 30-200 125-200s125 80 125 200z" fill="#3b4f8a"/>
-            <path d="M372 660c0-100 24-160 88-160s88 60 88 160z" fill="#dcd5c7"/>
-            <rect x="440" y="410" width="40" height="60" rx="14" fill="#d9a98a"/>
-            <circle cx="460" cy="372" r="60" fill="#e2b597"/>
-            <path d="M400 360c6-66 116-74 120 0-28-10-66-10-120 0z" fill="#3a2a22"/>
-            <path d="M560 500c50 20 110 40 170 30l30-20" fill="none" stroke="#e2b597" stroke-width="38" stroke-linecap="round"/>
-            <path d="M360 500c-30 40-55 90-65 150" fill="none" stroke="#e2b597" stroke-width="38" stroke-linecap="round"/>
-            <rect x="735" y="490" width="60" height="18" rx="6" fill="#c9c2b8" transform="rotate(-20 735 490)"/>
-          </g>
-          <!-- a small plant on the sill -->
-          <g><rect x="1310" y="470" width="60" height="44" rx="6" fill="#b55a3c"/><path d="M1340 470c-30-30-50-50-30-90 20 30 30 50 30 90zm0 0c30-30 50-50 30-90-20 30-30 50-30 90z" fill="#2e7d5b"/></g>
-        </svg>
-        <figcaption>A mechanic in a bike shop in Cork. A real site would use a photograph of a person, not a building; the illustration stands in.</figcaption>
+      <figure aria-label="Fields in many shades of green, seen from above, illustrated">
+        <svg viewBox="0 0 1600 800" role="img" aria-hidden="true"><defs><linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6faf7" stop-opacity=".75"/><stop offset=".35" stop-color="#f6faf7" stop-opacity=".2"/><stop offset="1" stop-color="#f6faf7" stop-opacity="0"/></linearGradient></defs><polygon points="-80,0 267,0 262,70 -85,70" fill="#3f9a5f"/><polygon points="265,0 568,0 590,70 287,70" fill="#7bbd84"/><polygon points="566,0 1034,0 1041,70 573,70" fill="#3f9a5f"/><polygon points="1032,0 1579,0 1562,70 1015,70" fill="#3f9a5f"/><polygon points="1577,0 1889,0 1886,70 1574,70" fill="#e2eccd"/><polygon points="-96,70 266,70 241,160 -121,160" fill="#e2eccd"/><polygon points="264,70 534,70 556,160 286,160" fill="#7bbd84"/><polygon points="532,70 886,70 896,160 542,160" fill="#3f9a5f"/><polygon points="884,70 1326,70 1299,160 857,160" fill="#4f8f5a"/><polygon points="1324,70 1586,70 1591,160 1329,160" fill="#a3cf9a"/><polygon points="1584,70 1972,70 1968,160 1580,160" fill="#a3cf9a"/><polygon points="-66,160 189,160 195,270 -60,270" fill="#b3d6a0"/><polygon points="187,160 469,160 445,270 163,270" fill="#8fbf7f"/><polygon points="467,160 832,160 808,270 443,270" fill="#5fae73"/><polygon points="830,160 1059,160 1068,270 839,270" fill="#8fbf7f"/><polygon points="1057,160 1476,160 1489,270 1070,270" fill="#e2eccd"/><polygon points="1474,160 1814,160 1813,270 1473,270" fill="#6fb37a"/><polygon points="-77,270 197,270 182,400 -92,400" fill="#c8e0b4"/><polygon points="195,270 449,270 424,400 170,400" fill="#b3d6a0"/><polygon points="447,270 802,270 803,400 448,400" fill="#d9e8c6"/><polygon points="800,270 1127,270 1115,400 788,400" fill="#5fae73"/><polygon points="1125,270 1335,270 1337,400 1127,400" fill="#e2eccd"/><polygon points="1333,270 1559,270 1577,400 1351,400" fill="#d9e8c6"/><polygon points="1557,270 1778,270 1807,400 1586,400" fill="#57a068"/><polygon points="-74,400 82,400 94,560 -62,560" fill="#5fae73"/><polygon points="80,400 320,400 311,560 71,560" fill="#3b8a57"/><polygon points="318,400 614,400 621,560 325,560" fill="#6fb37a"/><polygon points="612,400 776,400 799,560 635,560" fill="#5fae73"/><polygon points="774,400 1000,400 1000,560 774,560" fill="#5fae73"/><polygon points="998,400 1160,400 1176,560 1014,560" fill="#b3d6a0"/><polygon points="1158,400 1438,400 1426,560 1146,560" fill="#9ccf8e"/><polygon points="1436,400 1685,400 1656,560 1407,560" fill="#6fb37a"/><polygon points="-78,560 85,560 94,800 -69,800" fill="#7bbd84"/><polygon points="83,560 329,560 302,800 56,800" fill="#8fbf7f"/><polygon points="327,560 520,560 498,800 305,800" fill="#4f8f5a"/><polygon points="518,560 739,560 734,800 513,800" fill="#57a068"/><polygon points="737,560 877,560 857,800 717,800" fill="#6fb37a"/><polygon points="875,560 1097,560 1102,800 880,800" fill="#6ea86a"/><polygon points="1095,560 1250,560 1272,800 1117,800" fill="#e2eccd"/><polygon points="1248,560 1508,560 1495,800 1235,800" fill="#e2eccd"/><polygon points="1506,560 1717,560 1730,800 1519,800" fill="#9ccf8e"/><g fill="none" stroke="#1f5a3a" stroke-opacity=".35" stroke-width="3"><line x1="0" x2="1600" y1="70" y2="70"/><line x1="0" x2="1600" y1="160" y2="160"/><line x1="0" x2="1600" y1="270" y2="270"/><line x1="0" x2="1600" y1="400" y2="400"/><line x1="0" x2="1600" y1="560" y2="560"/></g><path d="M-20 790 C 420 640, 760 700, 1180 420 S 1500 260, 1640 180" fill="none" stroke="#f1f3e8" stroke-width="9" stroke-linecap="round" opacity=".9"/><path d="M-20 790 C 420 640, 760 700, 1180 420 S 1500 260, 1640 180" fill="none" stroke="#9fb3a3" stroke-width="2" stroke-dasharray="14 16" opacity=".8"/><g fill="#f7f7f2" stroke="#4e6b57" stroke-width="2"><rect x="520" y="618" width="44" height="26" rx="2"/><rect x="1230" y="402" width="30" height="18" rx="2"/><rect x="900" y="300" width="22" height="13" rx="2"/></g><g fill="#2a4a37"><rect x="518" y="608" width="48" height="12" rx="2"/><rect x="1228" y="395" width="34" height="9" rx="2"/><rect x="898" y="294" width="26" height="8" rx="2"/></g><rect width="1600" height="800" fill="url(#haze)"/></svg>
+        <figcaption>Forty shades of green: fields near Clonakilty, from above. The real site would use a photograph; the illustration stands in.</figcaption>
       </figure>
     </div>
   </section>
@@ -361,7 +320,7 @@ footer nav a{text-decoration:underline;text-underline-offset:3px}
     </div>
   </section>
 
-  <section class="band" id="privacy">
+  <section class="band alt" id="privacy">
     <div class="wrap">
       <h2>Private by design.</h2>
       <div class="priv">
