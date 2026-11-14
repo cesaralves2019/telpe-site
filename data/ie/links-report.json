@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-14T12:25:25+00:00",
+ "checked": "2026-11-14T17:35:14+00:00",
  "total": 243,
  "ok": 100,
  "problems": [
@@ -33,6 +33,16 @@
    ],
    "status": "error",
    "error": "<urlopen error timed out>"
+  },
+  {
+   "url": "https://urgentpassportappointment.dfa.ie/location",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
   },
   {
    "url": "https://www.citizensinformation.ie/en/birth-family-relationships/after-your-baby-is-born/registering-birth-your-baby/",
@@ -1479,16 +1489,6 @@
     "action"
    ],
    "status": 422
-  },
-  {
-   "url": "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx",
-   "guides": [
-    "visa"
-   ],
-   "kinds": [
-    "action"
-   ],
-   "status": 503
   }
  ],
  "all": [
@@ -1906,7 +1906,7 @@
    "kinds": [
     "action"
    ],
-   "status": 200
+   "status": "robots"
   },
   {
    "url": "https://vetting.garda.ie/Application/About",
@@ -3706,7 +3706,8 @@
    "kinds": [
     "action"
    ],
-   "status": 503
+   "status": 200,
+   "final": "https://www.visas.inis.gov.ie/avats/Default.htm"
   },
   {
    "url": "https://www.voter.ie/",

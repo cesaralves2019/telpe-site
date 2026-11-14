@@ -1,4 +1,4 @@
-links: success · 2026-11-14T12:25:25Z
+links: success · 2026-11-14T17:35:14Z
 200 https://112.ie/emergency-sms-service/
 200 https://assets.gov.ie/static/documents/09fe3ad4/20261111_-_Ordering_a_Certificate_from_the_General_Register_Office_-_OC1_-_English_-_August_2026_fillable.pdf
 200 https://assets.gov.ie/static/documents/application-form-child-benefit-cb1.pdf
@@ -37,7 +37,6 @@ error https://onlineapp1.board.ie/
 200 https://services.mywelfare.ie/en/topics/pensions-and-older-people/state-pension/
 200 https://theorytest.ie/
 200 https://theorytest.ie/general-information/id-requirements/
-200 https://urgentpassportappointment.dfa.ie/location
 200 https://vetting.garda.ie/Application/About
 200 https://vetting.garda.ie/Track
 200 https://www.agecard.ie/forms/home/
@@ -73,7 +72,7 @@ error https://www.ncs.gov.ie/
 200 https://www.susi.ie/
 200 https://www.tvlicence.ie/
 422 https://www.vehicleservices.gov.ie/cvo/
-503 https://www.visas.inis.gov.ie/avats/OnlineHome.aspx
+200 https://www.visas.inis.gov.ie/avats/OnlineHome.aspx
 200 https://www.voter.ie/
 200 https://www.workplacerelations.ie/en/
 200 https://www.workplacerelations.ie/en/Complaints_Disputes/Refer_a_Dispute_Make_a_Complaint/
