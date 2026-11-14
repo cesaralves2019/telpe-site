@@ -1,5 +1,4 @@
-links: success · directory: success · 2026-11-14T12:14:14Z
---- links
+links: success · 2026-11-14T12:25:25Z
 200 https://112.ie/emergency-sms-service/
 200 https://assets.gov.ie/static/documents/09fe3ad4/20261111_-_Ordering_a_Certificate_from_the_General_Register_Office_-_OC1_-_English_-_August_2026_fillable.pdf
 200 https://assets.gov.ie/static/documents/application-form-child-benefit-cb1.pdf
@@ -38,6 +37,7 @@ error https://onlineapp1.board.ie/
 200 https://services.mywelfare.ie/en/topics/pensions-and-older-people/state-pension/
 200 https://theorytest.ie/
 200 https://theorytest.ie/general-information/id-requirements/
+200 https://urgentpassportappointment.dfa.ie/location
 200 https://vetting.garda.ie/Application/About
 200 https://vetting.garda.ie/Track
 200 https://www.agecard.ie/forms/home/
@@ -49,11 +49,13 @@ error https://onlineapp1.board.ie/
 200 https://www.hap.ie/apply/
 200 https://www.irishimmigration.ie/burgh-quay-appointments/
 200 https://www.irishimmigration.ie/coming-to-join-family-in-ireland/joining-an-eea-or-swiss-national/eu-treaty-rights/
+200 https://www.irishimmigration.ie/coming-to-visit-ireland/visit-ireland-travel-path/
 200 https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/
 200 https://www.irishimmigration.ie/preclearance-and-entry-visas-fees/
 200 https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/information-on-registering-your-immigration-permission-for-the-first-time/
 200 https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/required-documents/
 200 https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/
+200 https://www.legalaidboard.ie/our-legal-aid-service/apply-now/
 200 https://www.licences.ie/ILAS/Home/Licences?bundleId=17
 200 https://www.localenterprise.ie/
 200 https://www.motortax.ie/OMT/
@@ -102,6 +104,4 @@ error https://www.ncs.gov.ie/
 200 https://www2.hse.ie/services/schemes-allowances/medical-cards/applying/how-much-you-can-earn/
 200 https://www2.hse.ie/services/schemes-allowances/medical-cards/other-types-of-medical-card/over-70s/
 200 https://www2.hse.ie/services/urgent-emergency-care/
-links 241 ok 97 other 144
---- directory
-could not read robots.txt: HTTP Error 403: Forbidden - stopping, nothing collected
+links 243 ok 100 other 143

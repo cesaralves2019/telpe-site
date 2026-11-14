@@ -1,7 +1,7 @@
 {
- "checked": "2026-11-14T12:14:14+00:00",
- "total": 241,
- "ok": 97,
+ "checked": "2026-11-14T12:25:25+00:00",
+ "total": 243,
+ "ok": 100,
  "problems": [
   {
    "url": "https://employmentpermits.enterprise.gov.ie/",
@@ -33,16 +33,6 @@
    ],
    "status": "error",
    "error": "<urlopen error timed out>"
-  },
-  {
-   "url": "https://urgentpassportappointment.dfa.ie/location",
-   "guides": [
-    "passport-urgent"
-   ],
-   "kinds": [
-    "action"
-   ],
-   "status": "robots"
   },
   {
    "url": "https://www.citizensinformation.ie/en/birth-family-relationships/after-your-baby-is-born/registering-birth-your-baby/",
@@ -1153,6 +1143,7 @@
     "citizenship-fbr"
    ],
    "kinds": [
+    "action",
     "source"
    ],
    "status": "robots"
@@ -1915,7 +1906,7 @@
    "kinds": [
     "action"
    ],
-   "status": "robots"
+   "status": 200
   },
   {
    "url": "https://vetting.garda.ie/Application/About",
@@ -3118,6 +3109,7 @@
     "citizenship-fbr"
    ],
    "kinds": [
+    "action",
     "source"
    ],
    "status": "robots"
@@ -3307,6 +3299,16 @@
    "status": 200
   },
   {
+   "url": "https://www.irishimmigration.ie/coming-to-visit-ireland/visit-ireland-travel-path/",
+   "guides": [
+    "visa"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
    "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
    "guides": [
     "citizenship"
@@ -3358,6 +3360,16 @@
    "status": 200
   },
   {
+   "url": "https://www.legalaidboard.ie/our-legal-aid-service/apply-now/",
+   "guides": [
+    "legal-aid"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
    "url": "https://www.licences.ie/ILAS/Home/Licences?bundleId=17",
    "guides": [
     "dog-licence"
@@ -3381,7 +3393,8 @@
   {
    "url": "https://www.motortax.ie/OMT/",
    "guides": [
-    "motor-tax"
+    "motor-tax",
+    "vehicle-ownership"
    ],
    "kinds": [
     "action"
