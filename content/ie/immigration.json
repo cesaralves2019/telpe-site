@@ -1,0 +1,241 @@
+[
+  {
+    "id": "irp-register",
+    "cat": "immigration",
+    "title": "Register with immigration and get your IRP card",
+    "kw": "irp irish residence permit gnib card register immigration burgh quay first registration residence card stamp visa registration non eea imigração registro garda card",
+    "short": "If you are from outside the EU, EEA, UK and Switzerland and will stay more than 90 days, you must register in person in Dublin and get an Irish Residence Permit (IRP) card.",
+    "facts": [["Cost", "€300 for most people"], ["Deadline", "Within 90 days of arriving"], ["Where", "Burgh Quay, Dublin 2, by appointment"]],
+    "who": [
+      "Citizens of countries outside the EU, EEA, UK and Switzerland, aged 16 or over, who have permission to stay more than 90 days: to work, study, join family and so on.",
+      "First-time registration for every county is now done by Immigration Service Delivery (ISD) at 13-14 Burgh Quay, Dublin 2."
+    ],
+    "need": [
+      "Your passport.",
+      "The documents for your type of permission, for example your employment permit, college letter and proof of fees, or marriage certificate. Check the [required documents list](https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/required-documents/).",
+      "A debit or credit card for the fee."
+    ],
+    "steps": [
+      "Create an account on the ISD customer portal. You can do this before you travel. Everyone aged 16 or over needs their own account and email address.",
+      "Book a first-time registration appointment as soon as you arrive. Booking is free and slots are normally available within 2 to 3 weeks.",
+      "Go to Burgh Quay at your time. An immigration officer checks your documents and takes your photo and fingerprints. The visit should take no more than 30 minutes.",
+      "Pay the fee by card. Your IRP card is posted to you and should arrive within 10 working days."
+    ],
+    "cases": [
+      {"q": "Who does not pay the €300?", "a": ["It is free for people with refugee status or subsidiary protection, people under 18, people resident because they are married to an Irish citizen, family members of EU citizens, and victims of domestic abuse."]},
+      {"q": "I am an EU, EEA, Swiss or UK citizen", "a": ["You do not register and you do not need an IRP. See [EU and UK citizens living in Ireland](#/s/eu-citizens)."]},
+      {"q": "My children are under 16", "a": ["Children under 16 do not get an IRP. They can re-enter Ireland with a parent or guardian who holds one."]},
+      {"q": "What do the stamps mean?", "a": ["Stamp 1: you work with an employment permit. Stamp 1G: graduates, and spouses of some permit holders. Stamp 2: student, may work 20 hours a week in term. Stamp 3: you may not work. Stamp 4: you may work without a permit. Stamp 5: no time limit."]},
+      {"q": "I moved house or changed my name", "a": ["You must tell ISD."]}
+    ],
+    "tips": [
+      "You must carry your IRP and show it to an immigration officer or a Garda if asked.",
+      "To come back into Ireland after travelling you need the physical card. A photo of it is not accepted."
+    ],
+    "act": [["Book a registration appointment", "https://www.irishimmigration.ie/burgh-quay-appointments/"], ["Open the ISD customer portal", "https://portal.irishimmigration.ie/en/"]],
+    "src": [
+      ["Immigration Service Delivery · Registering your immigration permission for the first time", "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/information-on-registering-your-immigration-permission-for-the-first-time/"],
+      ["Citizens Information · Registration of non-EEA nationals", "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/registration-of-non-eea-nationals-in-ireland/"]
+    ]
+  },
+  {
+    "id": "irp-renew",
+    "cat": "immigration",
+    "title": "Renew your IRP card",
+    "kw": "renew irp renewal irish residence permit expired irp online renewal stamp renewal renovar irp visto",
+    "short": "Renewals are done online, for every county. Apply up to 12 weeks before your card expires, because processing can take many weeks.",
+    "facts": [["Cost", "€300 for most permissions"], ["When", "Up to 12 weeks before expiry"], ["Where", "Online"]],
+    "need": [
+      "A copy of the photo page of your current passport.",
+      "A copy of the front and back of your current IRP card.",
+      "The documents that show you still meet your conditions, for example a new employment permit or your college enrolment. Have them **all** before you apply."
+    ],
+    "steps": [
+      "Sign in to the ISD online forms portal. You must be in Ireland when you apply: applications made from abroad are rejected.",
+      "Fill in the renewal form, upload your documents and pay.",
+      "Keep the reference number you receive by email.",
+      "Applications are handled in date order. After approval, the new card can take up to 15 working days to arrive by post."
+    ],
+    "cases": [
+      {"q": "My card will expire before the new one arrives", "a": ["If you applied before it expired, employees may keep working for up to 12 weeks after expiry by showing the employer proof of the application."]},
+      {"q": "I need to travel while I wait", "a": ["Plan ahead: re-entry visas and fast-tracking are only considered in genuine emergencies.", "If your nationality needs a visa and you leave without a valid card, you must apply for a D entry visa from abroad to return. If your nationality does not need a visa, carry proof of your renewal application to show at the border."]},
+      {"q": "I am a student (Stamp 2)", "a": ["Wait until your course has started before you apply."]},
+      {"q": "How long is it taking right now?", "a": ["ISD publishes the date it is currently working on, by stamp, and updates it every week on its [renewal page](https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/)."]}
+    ],
+    "act": [["Renew online", "https://inisonline.jahs.ie/user/login"]],
+    "src": [
+      ["Immigration Service Delivery · Renewing your registration permission", "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/"],
+      ["Citizens Information · Registration of non-EEA nationals", "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/registration-of-non-eea-nationals-in-ireland/"]
+    ]
+  },
+  {
+    "id": "visa",
+    "cat": "immigration",
+    "title": "Get a visa to come to Ireland",
+    "kw": "visa irish visa tourist visa visit visa study visa work visa avats short stay long stay c visa d visa visto turista",
+    "short": "Whether you need a visa depends on your passport. You apply online before you travel. A visa lets you travel to the border; an immigration officer decides whether you may enter.",
+    "facts": [["Cost", "€60 single entry, €100 multiple"], ["Where", "Online (AVATS)"]],
+    "who": [
+      "**No visa needed:** EU, EEA, Swiss and UK citizens, and citizens of the countries on the visa-exempt list.",
+      "**Visa needed:** everyone else, including children, who need their own visa."
+    ],
+    "steps": [
+      "Check the “Do I need a visa?” table on the Citizens Information [visa page](https://www.citizensinformation.ie/en/moving-country/visas-for-ireland/visa-requirements-for-entering-ireland/).",
+      "Choose the type. **Short stay C visa:** up to 3 months, for tourism, visits, business meetings or a short course. **Long stay D visa:** more than 3 months, to work, study or join family.",
+      "Apply online on AVATS, pay the fee and send the documents it lists.",
+      "If you come on a D visa and stay more than 3 months, [register with immigration](#/s/irp-register) after you arrive."
+    ],
+    "cases": [
+      {"q": "I have a UK visa", "a": ["Indian and Chinese citizens with a short-stay UK visa endorsed “BIVS” can visit Ireland on it. Citizens of some other countries with a short-term UK visa can use the Short Stay Visa Waiver Programme."]},
+      {"q": "I live in Ireland and want to travel", "a": ["With a valid IRP card you do not need a re-entry visa."]},
+      {"q": "My family member is an EU or Irish citizen", "a": ["Spouses and some family members of EEA citizens, including Irish citizens, do not pay the visa fee if they show proof of the relationship."]},
+      {"q": "Can I extend a short-stay visa?", "a": ["No. You cannot stay longer than 3 months on a C visa. To come back you leave and apply again."]}
+    ],
+    "tips": ["A first visa is usually single entry. Fees are not refunded if the visa is refused."],
+    "act": [["Apply on AVATS", "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx"]],
+    "src": [
+      ["Citizens Information · Visa requirements for entering Ireland", "https://www.citizensinformation.ie/en/moving-country/visas-for-ireland/visa-requirements-for-entering-ireland/"],
+      ["Immigration Service Delivery · Preclearance and entry visa fees", "https://www.irishimmigration.ie/preclearance-and-entry-visas-fees/"]
+    ]
+  },
+  {
+    "id": "work-permit",
+    "cat": "immigration",
+    "title": "Get an employment permit",
+    "kw": "employment permit work permit work visa critical skills general employment permit csep gep stamp 1 trabalhar na irlanda visto de trabalho",
+    "short": "Most people from outside the EEA, UK and Switzerland need an employment permit before they start a job. You or your employer apply online, usually before you arrive.",
+    "facts": [["Cost", "€1,000 for a 2-year permit"], ["Where", "Online"]],
+    "who": [
+      "You do **not** need a permit if you hold Stamp 4, or you are the spouse or partner of a Critical Skills permit holder (Stamp 1G).",
+      "**Critical Skills permit:** a job on the Critical Skills Occupations List paying at least €40,904 a year, with a degree; or most other jobs paying at least €68,911. The job offer must be for 2 years or more.",
+      "**General permit:** other jobs paying at least €36,605 a year, as long as the occupation is not on the ineligible list. (Figures in force since 1 March 2026.)"
+    ],
+    "need": [
+      "A written job offer or contract.",
+      "For a General permit, the employer normally has to advertise the job first for at least 28 days (the Labour Market Needs Test)."
+    ],
+    "steps": [
+      "Check the job against the [Critical Skills list](https://enterprise.gov.ie/en/What-We-Do/Workplace-and-Skills/Employment-Permits/Employment-Permit-Eligibility/Highly-Skilled-Eligible-Occupations-List/) and the [ineligible list](https://enterprise.gov.ie/en/What-We-Do/Workplace-and-Skills/Employment-Permits/Employment-Permit-Eligibility/Ineligible-Categories-of-Employment/).",
+      "You or the employer apply on **Employment Permits Online** and pay the fee. 90% is refunded if the application is refused or withdrawn.",
+      "If your nationality needs one, apply for a [visa](#/s/visa) once the permit is granted.",
+      "After you arrive, [register with immigration](#/s/irp-register) to get your IRP card."
+    ],
+    "cases": [
+      {"q": "Can I change employer?", "a": ["Yes, after 9 months in the first job, if the new job is in the same profession."]},
+      {"q": "When can I work without a permit?", "a": ["Critical Skills holders can apply for Stamp 4 after 21 months. General permit holders can apply after 57 months."]},
+      {"q": "Can my family come?", "a": ["Critical Skills: your spouse or partner can join you straight away and work without a permit. General permit: family can join after 1 year."]},
+      {"q": "What does a General permit cost?", "a": ["€500 for up to 6 months or €1,000 for up to 2 years. Renewals cost €750 for up to 6 months or €1,500 for up to 3 years."]},
+      {"q": "My employer has mostly non-EEA staff", "a": ["Permits are generally not issued where more than half of a company’s employees are from outside the EEA. There are exceptions for some new companies."]}
+    ],
+    "act": [["Apply on Employment Permits Online", "https://employmentpermits.enterprise.gov.ie/"]],
+    "src": [
+      ["Citizens Information · Types of employment permits", "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/overview-employment-permits/"],
+      ["Citizens Information · Critical Skills Employment Permit", "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/green-card-permits/"],
+      ["Citizens Information · General Employment Permit", "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/work-permits/"]
+    ]
+  },
+  {
+    "id": "citizenship",
+    "cat": "immigration",
+    "title": "Become an Irish citizen (naturalisation)",
+    "kw": "citizenship naturalisation naturalization become irish citizen apply citizenship irish nationality cidadania irlandesa naturalização",
+    "short": "After 5 years of legal residence (3 if you are married to an Irish citizen) you can apply online to become a citizen. Expect the decision to take a year or more.",
+    "facts": [["Cost", "€175 to apply, then €950"], ["How long", "12 to 19 months for most"], ["Where", "Online"]],
+    "who": [
+      "Adults who have lived in Ireland legally for **5 of the last 9 years**, including the full year just before applying.",
+      "Spouses and civil partners of Irish citizens: 3 years of marriage and 3 years of residence, including the full year before applying.",
+      "You must be of good character and intend to keep living in Ireland."
+    ],
+    "need": [
+      "Proof of identity and proof of residence worth 150 points each on ISD’s scorecard.",
+      "Certified true copies of documents such as your passport and birth certificate, made by a solicitor, notary, commissioner for oaths or peace commissioner.",
+      "Professional translations of documents that are not in English or Irish."
+    ],
+    "steps": [
+      "Count your residence. Time on Stamp 1, 1G, 3, 4 and 5 counts. Time as a student (Stamp 2), as an international protection applicant, or undocumented does **not** count.",
+      "Check your travel. In the year before you apply you may be outside Ireland for up to 70 days, or up to 100 in exceptional circumstances.",
+      "Apply on the ISD online portal and pay €175. You do not need a solicitor.",
+      "If approved, pay the certification fee and attend a citizenship ceremony, where you receive your certificate.",
+      "With the certificate you can apply for your [first passport](#/s/passport-first-adult)."
+    ],
+    "cases": [
+      {"q": "What is the fee at the end?", "a": ["€950 for most adults. €200 for a child, or for the widow, widower or surviving civil partner of an Irish citizen. No charge for refugees and stateless people."]},
+      {"q": "I have refugee status", "a": ["You need 5 years of residence. Applications received before 8 December 2025 are processed under the earlier 3-year rule."]},
+      {"q": "My child was born in Ireland", "a": ["A child born in Ireland who was not a citizen at birth can apply after 3 years of residence. A parent or guardian applies for them."]},
+      {"q": "Can I keep my other nationality?", "a": ["Ireland allows dual citizenship. Check the rules of your other country."]},
+      {"q": "How long does it really take?", "a": ["The two official sources disagree. Immigration Service Delivery says most applications are processed within 12 months; Citizens Information (page edited 22 September 2026) says within 19 months. Plan for the longer one."]},
+      {"q": "I was refused", "a": ["You are given the reason. There is no appeal, but you can apply again."]},
+      {"q": "Maybe I am already Irish", "a": ["If you were born on the island of Ireland, or have an Irish-born parent or grandparent, see [Irish citizenship through family](#/s/citizenship-fbr)."]}
+    ],
+    "act": [["Apply online", "https://inisonline.jahs.ie/user/login"]],
+    "src": [
+      ["Citizens Information · Becoming an Irish citizen through naturalisation", "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/becoming-an-irish-citizen-through-naturalisation/"],
+      ["Immigration Service Delivery · Become an Irish citizen by naturalisation", "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/"]
+    ]
+  },
+  {
+    "id": "citizenship-fbr",
+    "cat": "immigration",
+    "title": "Irish citizenship through family (Foreign Births Register)",
+    "kw": "foreign births register fbr irish grandparent citizenship by descent irish parent born abroad irish ancestry cidadania por descendência avô irlandês",
+    "short": "If a parent was born in Ireland, you are already a citizen. If a grandparent was, you become one by entering your birth in the Foreign Births Register, which currently takes about 12 months.",
+    "facts": [["Cost", "€278 adult, €153 child"], ["How long", "About 12 months"], ["Where", "Online form, then post"]],
+    "who": [
+      "**Born on the island of Ireland before 2005:** you are entitled to citizenship.",
+      "**Born on the island from 2005 on:** you are entitled if, for example, a parent was an Irish or British citizen, or had lived legally on the island for 3 of the 4 years before your birth.",
+      "**Born abroad, parent born in Ireland:** you are a citizen. Go straight to [your first passport](#/s/passport-first-adult).",
+      "**Born abroad, grandparent born in Ireland:** you can register on the Foreign Births Register.",
+      "**Born abroad, parent was a citizen through the register or naturalisation before you were born:** you can register too."
+    ],
+    "need": [
+      "Your original civil birth certificate showing your parents’ details.",
+      "A certified photocopy of your State-issued photo ID and two separate original proofs of address.",
+      "Four colour photos, two of them witnessed.",
+      "The birth, marriage and other certificates of your Irish parent or grandparent that link you to them.",
+      "Your marriage certificate or other proof if your name has changed."
+    ],
+    "steps": [
+      "Gather every document first. Incomplete applications are returned without being processed.",
+      "Fill in the online form and pay the fee.",
+      "Print the form, have it witnessed and post it with your documents to the address shown on it.",
+      "Applications are handled strictly in date order. Once you are on the register you are an Irish citizen and can apply for a passport."
+    ],
+    "cases": [
+      {"q": "My children were born before I registered", "a": ["They cannot register through you, because you were not an Irish citizen when they were born."]},
+      {"q": "I only have a great-grandparent born in Ireland", "a": ["That alone does not qualify, unless your parent registered before you were born."]}
+    ],
+    "act": [["Start the Foreign Births Register form", "https://fbr.dfa.ie/"]],
+    "src": [
+      ["Department of Foreign Affairs · Registering a foreign birth", "https://www.ireland.ie/en/dfa/citizenship/born-abroad/registering-a-foreign-birth/"],
+      ["Citizens Information · Entitlement to Irish citizenship", "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/your-right-to-irish-citizenship/"]
+    ]
+  },
+  {
+    "id": "eu-citizens",
+    "cat": "immigration",
+    "title": "EU and UK citizens living in Ireland",
+    "kw": "eu citizen european move to ireland free movement residence rights uk citizen british common travel area family member eu treaty rights 4eufam cidadão europeu",
+    "short": "EU, EEA and Swiss citizens can live in Ireland without a visa, without registering with immigration and without a residence card. Their non-EU family members apply for a residence card after arriving.",
+    "facts": [["Cost", "Free"], ["Registration", "Not required"]],
+    "who": [
+      "First 3 months: no conditions (6 months if you are looking for work).",
+      "After 3 months: you must be working or self-employed, or have enough money and sickness insurance, or be a student, or be a family member of someone who is.",
+      "After 5 years of continuous legal residence you have a right of permanent residence."
+    ],
+    "steps": [
+      "Arrive with your passport or national identity card.",
+      "Get a [PPS number](#/s/ppsn) so you can work and use public services.",
+      "Use your passport or national ID card to get a [Public Services Card](#/s/psc)."
+    ],
+    "cases": [
+      {"q": "My husband, wife or partner is not an EU citizen", "a": ["They apply after arriving, as soon as possible, on the ISD customer portal: Form EUTR1 for close family, EUTR1A for other family members. If granted they get up to 5 years’ residence and must register for an IRP card (Stamp 4EUFAM). This also applies to children under 16."]},
+      {"q": "I am a UK citizen", "a": ["UK citizens can live and work in Ireland under the Common Travel Area and do not register with immigration."]},
+      {"q": "I want proof of permanent residence", "a": ["After 5 years you can apply for a permanent residence certificate (Form EUTR2). It is optional."]}
+    ],
+    "act": [["Read about EU Treaty Rights", "https://www.irishimmigration.ie/coming-to-join-family-in-ireland/joining-an-eea-or-swiss-national/eu-treaty-rights/"]],
+    "src": [
+      ["Citizens Information · Residence rights of EU citizens and their families in Ireland", "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/residence-rights-eu-national/"],
+      ["Citizens Information · Registration of non-EEA nationals", "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/registration-of-non-eea-nationals-in-ireland/"]
+    ]
+  }
+]

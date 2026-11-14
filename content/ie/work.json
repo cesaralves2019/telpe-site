@@ -1,0 +1,74 @@
+[
+  {
+    "id": "employment-rights",
+    "cat": "work",
+    "title": "Your rights at work",
+    "kw": "employment rights worker rights minimum wage holidays annual leave sick pay contract payslip breaks hours direitos trabalhistas salário mínimo férias",
+    "short": "Everyone working legally in Ireland has the same rights, whatever their nationality. The adult minimum wage is €14.15 an hour, and you are entitled to a written contract, payslips, breaks and 4 weeks of paid holidays.",
+    "facts": [["Minimum wage", "€14.15 an hour"], ["Holidays", "4 weeks paid, plus 10 public holidays"], ["Help", "WRC, (059) 917 8990"]],
+    "steps": [
+      "**Contract:** the main terms in writing within 5 days of starting, and the rest within a month.",
+      "**Pay:** at least the minimum wage, with a payslip showing gross pay and every deduction.",
+      "**Hours:** no more than 48 hours a week on average. A 15-minute break after 4.5 hours of work and 30 minutes after 6 hours, and 11 hours of rest between working days.",
+      "**Time off:** 4 weeks of paid annual leave, 10 public holidays, and 5 days of paid sick leave a year (70% of pay, up to €110 a day).",
+      "**Family leave:** 26 weeks’ maternity leave, 2 weeks’ paternity leave, 9 weeks’ parent’s leave and 26 weeks’ unpaid parental leave. See [Maternity, Paternity and Parent’s Benefit](#/s/parent-benefits).",
+      "**Dismissal:** after 12 months in the job you can bring an unfair dismissal claim."
+    ],
+    "cases": [
+      {"q": "What is the minimum wage if I am under 20?", "a": ["Age 19: €12.74. Age 18: €11.32. Under 18: €9.91."]},
+      {"q": "What changes in 2027?", "a": ["The adult minimum wage is due to rise to €14.94 an hour on 1 January 2027."]},
+      {"q": "My employer gives me food or accommodation", "a": ["They can count it towards the minimum wage only at fixed rates: €1.27 an hour for food, and €33.42 a week or €4.77 a day for accommodation."]},
+      {"q": "I am being treated unfairly", "a": ["Discrimination is illegal on nine grounds, including gender, age, disability, race and religion. See [Complain about an employer](#/s/wrc-complaint)."]},
+      {"q": "I am on an employment permit", "a": ["You have exactly the same statutory rights as an Irish employee."]}
+    ],
+    "act": [["Workplace Relations Commission", "https://www.workplacerelations.ie/en/"]],
+    "src": [
+      ["Citizens Information · Employees’ rights and entitlements", "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/employment-rights-and-duties/employee-rights-and-entitlements/"],
+      ["Citizens Information · Minimum wage", "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/"]
+    ]
+  },
+  {
+    "id": "wrc-complaint",
+    "cat": "work",
+    "title": "Complain about an employer (WRC)",
+    "kw": "wrc workplace relations commission complaint employer unpaid wages unfair dismissal dispute labour court reclamar empregador processo trabalhista",
+    "short": "If your employer breaks your rights and will not fix it, you complain online to the Workplace Relations Commission. You normally have 6 months from the incident.",
+    "facts": [["Deadline", "6 months"], ["Where", "Online form"], ["Info line", "(059) 917 8990"]],
+    "steps": [
+      "Raise the problem with your employer first, in writing if you can.",
+      "If it is not resolved, fill in the WRC **online complaint form**.",
+      "The WRC sends the complaint to mediation or to an adjudicator, who holds a hearing and gives a decision.",
+      "You can appeal an adjudicator’s decision to the Labour Court."
+    ],
+    "cases": [
+      {"q": "I missed the 6 months", "a": ["The limit can be extended by up to another 6 months if there was a reasonable cause for the delay."]},
+      {"q": "I am paid less than the minimum wage", "a": ["On the form you choose either an inspector’s investigation or an adjudicator’s hearing. You cannot use both."]},
+      {"q": "I just want to ask a question first", "a": ["Phone WRC Information and Customer Service on (059) 917 8990, Monday to Friday, 9.30am to 1pm and 2pm to 5pm."]}
+    ],
+    "act": [["Make a complaint to the WRC", "https://www.workplacerelations.ie/en/Complaints_Disputes/Refer_a_Dispute_Make_a_Complaint/"]],
+    "src": [
+      ["Citizens Information · Overview of employment rights enforcement", "https://www.citizensinformation.ie/en/employment/enforcement-and-redress/enforcing-your-employment-rights/"],
+      ["Citizens Information · Minimum wage", "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/"]
+    ]
+  },
+  {
+    "id": "start-business",
+    "cat": "work",
+    "title": "Start a business",
+    "kw": "start a business register company sole trader business name cro limited company local enterprise office abrir empresa mei cnpj",
+    "short": "Pick a structure, register the name or the company with the Companies Registration Office, and register for tax with Revenue. Your Local Enterprise Office gives free advice and can offer grants.",
+    "facts": [["Register with", "CRO and Revenue"], ["Free advice", "31 Local Enterprise Offices"]],
+    "steps": [
+      "**Choose a structure.** As a sole trader you and the business are one: simple, but you are personally responsible for its debts. A limited company is a separate legal entity. A solicitor or accountant can advise.",
+      "**Register the name.** A sole trader who trades under a name that is not their own must register it with the Companies Registration Office (CRO). A company is incorporated with the CRO through its online system, CORE.",
+      "**Register for tax** with Revenue. Sole traders pay income tax by self-assessment: see [Tax if you are self-employed](#/s/self-employed-tax). Companies pay corporation tax.",
+      "**Get support.** Contact your [Local Enterprise Office](https://www.localenterprise.ie/) for training, mentoring and grants."
+    ],
+    "cases": [
+      {"q": "I am not an Irish or EU citizen", "a": ["Citizens of the EEA, Switzerland and the UK need no permission to set up a business. Others need an immigration permission that allows it, for example through the Start-up Entrepreneur Programme: ask Immigration Service Delivery."]},
+      {"q": "I am unemployed", "a": ["You may keep part of your payment while you start up, through the [Back to Work Enterprise Allowance](https://www.gov.ie/en/department-of-social-protection/services/back-to-work-enterprise-allowance/) or the Short-Term Enterprise Allowance."]}
+    ],
+    "act": [["Companies Registration Office", "https://www.cro.ie/"], ["Register for tax with Revenue", "https://www.revenue.ie/en/starting-a-business/registering-for-tax/index.aspx"]],
+    "src": [["Citizens Information · Starting a business", "https://www.citizensinformation.ie/en/employment/types-of-employment/self-employment/starting-a-business/"]]
+  }
+]

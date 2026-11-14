@@ -1,0 +1,72 @@
+[
+  {
+    "id": "school-enrol",
+    "cat": "education",
+    "title": "Enrol your child in primary school",
+    "kw": "enrol school primary school starting school school place junior infants admission matricular escola criança",
+    "short": "Children usually start primary school at 5 and must be in education from 6 to 16. You apply to the school itself, and applications for a September start usually open the October before.",
+    "facts": [["Cost", "State schools charge no fees"], ["Apply", "Usually from 1 October, a year ahead"], ["Where", "Directly to the school"]],
+    "steps": [
+      "Look up schools near you with the Department’s **Find a School** tool.",
+      "Read each school’s admissions notice. It is published at least a week before applications open and gives the dates, the number of places and when you will get a decision.",
+      "Apply to the school by its deadline. You can apply to more than one.",
+      "Accept the place by the date the school gives you."
+    ],
+    "cases": [
+      {"q": "What kinds of school are there?", "a": ["Denominational schools have a religious patron. Multi-denominational schools, such as Educate Together, have no religious instruction during the school day. Gaelscoileanna teach through Irish."]},
+      {"q": "The school has more applicants than places", "a": ["Its admissions policy sets out how places are given. A school cannot refuse a child on grounds such as disability, race or family status."]},
+      {"q": "Will I be asked to pay?", "a": ["State-funded schools do not charge enrolment fees. A school may ask for a voluntary contribution: it is optional."]},
+      {"q": "We arrive in the middle of the school year", "a": ["Contact the schools near you directly and ask whether they have a place."]},
+      {"q": "Help with costs", "a": ["See the [Back to School allowance](#/s/back-to-school) and [childcare subsidies](#/s/childcare)."]}
+    ],
+    "act": [["Find a school", "https://www.gov.ie/en/department-of-education/services/find-a-school/"]],
+    "src": [["Citizens Information · Choosing a primary school", "https://www.citizensinformation.ie/en/education/primary-and-post-primary-education/going-to-primary-school/choosing-a-primary-school/"]]
+  },
+  {
+    "id": "childcare",
+    "cat": "education",
+    "title": "Get money off childcare (National Childcare Scheme)",
+    "kw": "childcare subsidy creche national childcare scheme ncs chick preschool nursery minder creche subsídio",
+    "short": "Every family can get €2.14 an hour off registered childcare, whatever their income. Families with income under €68,000 can get more, up to €5.10 an hour. The money goes straight to the provider.",
+    "facts": [["Worth", "€2.14 to €5.10 an hour per child"], ["Hours", "Up to 45 a week"], ["Where", "ncs.gov.ie"]],
+    "who": ["Parents of children older than 24 weeks and younger than 15 who use a registered childcare provider."],
+    "need": ["A verified [MyGovID](#/s/mygovid) to apply online."],
+    "steps": [
+      "Apply at **ncs.gov.ie**. You can choose the universal subsidy or the income-assessed one, whichever is better for you.",
+      "When approved you get a code called a **CHICK**.",
+      "Give the CHICK, with your child’s name and date of birth, to your childcare provider.",
+      "The provider registers your child and takes the subsidy off your bill."
+    ],
+    "cases": [
+      {"q": "Which subsidy should I pick?", "a": ["Income-assessed if your family’s income after deductions is under €68,000: the lower the income, the higher the rate, and the full rate applies at €34,000 or less. Otherwise take the universal €2.14."]},
+      {"q": "I cannot apply online", "a": ["Phone the Parent Support Centre on (01) 906 8530 for a postal application. It takes longer."]}
+    ],
+    "act": [["Apply at ncs.gov.ie", "https://www.ncs.gov.ie/"]],
+    "src": [["Citizens Information · National Childcare Scheme", "https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/national-childcare-scheme/"]]
+  },
+  {
+    "id": "susi",
+    "cat": "education",
+    "title": "Apply for a student grant (SUSI)",
+    "kw": "susi student grant college university fees maintenance grant third level bolsa estudante faculdade",
+    "short": "SUSI is the main grant for full-time students. Depending on family income it pays towards living costs, fees, or both. You apply online and do not need your exam results or a course offer to start.",
+    "facts": [["Where", "susi.ie"], ["Deadline", "5 November 2026 for 2026/27"]],
+    "who": [
+      "You have lived in Ireland, the EU, EEA, UK or Switzerland for 3 of the last 5 years, and meet the nationality rules.",
+      "Your family income is under the limit: for example €47,010 for the full maintenance grant, or €64,315 for a 50% fee grant, for a family with fewer than 4 children.",
+      "You are on an approved course."
+    ],
+    "need": ["Your PPS number, an email address and a phone number."],
+    "steps": [
+      "Apply online at **susi.ie**.",
+      "If you are provisionally approved, SUSI sends you a personal list of documents.",
+      "Post photocopies, not originals, to SUSI, P.O. Box 869, Little Island, Cork."
+    ],
+    "cases": [
+      {"q": "I missed the closing date", "a": ["The closing date for 2026/27 was Thursday 5 November 2026. Contact SUSI on 0818 888 777 or support@susi.ie to ask about a late application."]},
+      {"q": "I am studying part-time", "a": ["There is a separate [part-time fee scheme](https://www.citizensinformation.ie/en/education/third-level-education/fees-and-supports-for-third-level-education/part-time-fee-scheme-for-undergraduate-courses/) for some undergraduate courses."]}
+    ],
+    "act": [["Go to SUSI", "https://www.susi.ie/"]],
+    "src": [["Citizens Information · Student Grant Scheme", "https://www.citizensinformation.ie/en/education/third-level-education/fees-and-supports-for-third-level-education/student-grant-scheme/"]]
+  }
+]

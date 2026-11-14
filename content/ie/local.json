@@ -1,0 +1,72 @@
+[
+  {
+    "id": "register-to-vote",
+    "cat": "local",
+    "title": "Register to vote",
+    "kw": "register to vote voting election register of electors voter.ie check the register referendum votar eleição título de eleitor",
+    "short": "You register, or update your address, online at voter.ie. Everyone aged 18 or over who lives in Ireland can vote in local elections, whatever their nationality.",
+    "facts": [["Deadline", "15 days before polling day"], ["Where", "voter.ie"]],
+    "who": [
+      "You are 18 or over and ordinarily resident in Ireland. At 16 or 17 you can add yourself to the pending list.",
+      "**Irish citizens:** every election and referendum.",
+      "**British citizens:** Dáil (general) and local elections.",
+      "**Other EU citizens:** European and local elections.",
+      "**Non-EU citizens:** local elections."
+    ],
+    "need": ["Your PPS number, to register online without a witness."],
+    "steps": [
+      "Go to **voter.ie** and register or update your details.",
+      "Without a PPS number, download the form and have it and your ID witnessed at a Garda station or at your local authority.",
+      "Your application must reach your local authority at least 15 days before polling day, not counting Sundays and public holidays."
+    ],
+    "cases": [
+      {"q": "I moved house", "a": ["Update your address on voter.ie. You can only be registered at one address."]},
+      {"q": "I became an Irish citizen", "a": ["Update the register with proof of citizenship so that you can vote in every election."]},
+      {"q": "I cannot get to a polling station", "a": ["Postal votes are available to some groups, including people who cannot attend because of illness or disability. Apply at least 22 days before polling day."]}
+    ],
+    "act": [["Register on voter.ie", "https://www.voter.ie/"]],
+    "src": [
+      ["Citizens Information · Registering to vote", "https://www.citizensinformation.ie/en/government-in-ireland/elections-and-referenda/voting/registering-to-vote/"],
+      ["Citizens Information · Right to vote", "https://www.citizensinformation.ie/en/government-in-ireland/elections-and-referenda/voting/right-to-vote/"]
+    ]
+  },
+  {
+    "id": "tv-licence",
+    "cat": "local",
+    "title": "Buy a TV licence",
+    "kw": "tv licence television licence an post tvlicence licença tv",
+    "short": "Any home with a television needs a licence: €160 a year. A smart TV used only for streaming still counts; a phone or laptop does not.",
+    "facts": [["Cost", "€160 a year"], ["Where", "Online or at a post office"]],
+    "steps": [
+      "Buy or renew at **tvlicence.ie**, at any post office, or by phoning (01) 705 8800.",
+      "To renew online you need the 17-digit reference number and 5-digit PIN from your reminder.",
+      "You can spread the cost by direct debit: monthly, quarterly, half-yearly or yearly."
+    ],
+    "cases": [
+      {"q": "I am over 70 or on a welfare payment", "a": ["You may get a free licence through the [Household Benefits Package](#/s/household-benefits)."]},
+      {"q": "I moved house", "a": ["Bring your licence and proof of your new address to a post office and it is reissued free, or update it online."]},
+      {"q": "What if I do not have one?", "a": ["The fine is up to €1,000, or €2,000 for a later offence. Inspectors can call to your home."]}
+    ],
+    "act": [["Buy on tvlicence.ie", "https://www.tvlicence.ie/"]],
+    "src": [["Citizens Information · TV licences", "https://www.citizensinformation.ie/en/consumer/phone-internet-tv-and-postal-services/tv-licences/"]]
+  },
+  {
+    "id": "dog-licence",
+    "cat": "local",
+    "title": "Get a dog licence",
+    "kw": "dog licence dog license pet microchip puppy licença cachorro cão",
+    "short": "Every dog over 4 months old needs a licence: €20 a year, or €140 for the dog’s lifetime. The dog must also be microchipped before it is 12 weeks old.",
+    "facts": [["Cost", "€20 a year or €140 lifetime"], ["Where", "licences.ie or a post office"]],
+    "steps": [
+      "Have a vet microchip the dog and register it in your name before it is 12 weeks old.",
+      "Buy the licence on **licences.ie** or at a post office once the dog is 4 months old."
+    ],
+    "cases": [
+      {"q": "I have several dogs", "a": ["A general licence covers all the dogs at one address: €400 a year, from your local authority."]},
+      {"q": "What are the fines?", "a": ["No licence: €150. No identification: €200. Dog not under control: €300. Not cleaning up after your dog: €250."]},
+      {"q": "My dog is a restricted breed", "a": ["Breeds such as Rottweilers and pit bull terriers must be on a short lead, muzzled in public and led by someone over 16. XL Bully dogs have been banned since 1 October 2024."]}
+    ],
+    "act": [["Buy on licences.ie", "https://www.licences.ie/ILAS/Home/Licences?bundleId=17"]],
+    "src": [["Citizens Information · Dog licences and ownership", "https://www.citizensinformation.ie/en/environment/pets-and-wildlife/control-of-dogs/"]]
+  }
+]

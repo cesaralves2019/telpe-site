@@ -1,0 +1,224 @@
+[
+  {
+    "id": "passport-renew",
+    "cat": "travel",
+    "title": "Renew an adult passport",
+    "kw": "passport renewal renew expired expiring passport online adult new passport passaporte renovar pas",
+    "short": "If you are 18 or over and have had an Irish passport before, renew it on Passport Online. The form takes about 10 minutes and works from anywhere in the world.",
+    "facts": [["Cost", "€75 online"], ["How long", "About 10 working days"], ["Where", "Online, any time"]],
+    "who": [
+      "Irish citizens aged 18 or over who already have, or had, an Irish passport.",
+      "If your last passport was issued more than 15 years ago, you apply as a first-time applicant instead: see [First adult passport](#/s/passport-first-adult)."
+    ],
+    "need": [
+      "A digital photo that meets the [photo guidelines](https://www.ireland.ie/en/dfa/passports/photo-guidelines/). Someone else must take it (no selfies, no zoom), or a pharmacy or photo shop can give you a photo code.",
+      "Your current or most recent passport.",
+      "A debit or credit card and an email address."
+    ],
+    "steps": [
+      "Get your digital photo ready.",
+      "Open **Passport Online**, choose the adult renewal, fill in your details, upload the photo and pay by card.",
+      "At the end, Passport Online tells you if you need to post anything. If your passport expires within 12 months you normally keep it; if it has longer left, you post it in.",
+      "Keep your 11-digit application number and follow progress on the [Passport Tracker](https://passporttracking.dfa.ie/passporttracking).",
+      "The new passport comes by post. Your old one is cancelled within 4 weeks of you receiving the new one."
+    ],
+    "cases": [
+      {"q": "My name has changed", "a": ["For a married name, send your civil marriage or civil partnership certificate. For other name changes you need documents showing you have used the new name for at least 2 years.", "A renewal with a name change counts as a complex renewal: about 15 working days instead of 10."]},
+      {"q": "My passport was lost, stolen or damaged", "a": ["You still renew online and report it there. See [Lost, stolen or damaged passport](#/s/passport-lost)."]},
+      {"q": "I am travelling soon", "a": ["Use Passport Online if you travel in the next 3 months: paper applications take at least 6 weeks. If you need it within days, see [Urgent passport](#/s/passport-urgent)."]},
+      {"q": "I live outside Ireland", "a": ["You renew the same way on Passport Online. There is an extra €15 postal fee and delivery takes longer."]},
+      {"q": "I cannot or do not want to apply online", "a": ["If you live in Ireland or Northern Ireland, phone the **Passport Assist Service** on 01 613 1795 for a pre-filled paper form, then send it by Post Passport from a post office. It costs €80 plus a €9.50 service fee and takes at least 6 weeks.", "The old green APS1 and APS2 paper forms have not been accepted since 1 December 2025."]},
+      {"q": "I also want a Passport Card", "a": ["Order both together on Passport Online for €100. See [Passport Card](#/s/passport-card)."]}
+    ],
+    "tips": [
+      "Times are averages, not a guarantee. They count from the day the Passport Service has everything it needs and do not include postage.",
+      "Before you book, check the entry rules of the country you are visiting with the airline or that country’s embassy."
+    ],
+    "act": [["Renew on Passport Online", "https://passportonline.dfa.ie/Apply/Passport"], ["Track an application", "https://passporttracking.dfa.ie/passporttracking"]],
+    "src": [
+      ["Department of Foreign Affairs · Renew or replace your adult passport", "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-adult-passport/"],
+      ["Department of Foreign Affairs · Passport fees", "https://www.ireland.ie/en/dfa/passports/passport-fees/"],
+      ["Department of Foreign Affairs · Current turnaround times", "https://www.ireland.ie/en/dfa/passports/turnaround-times/"],
+      ["Citizens Information · How to renew an Irish passport as an adult", "https://www.citizensinformation.ie/en/travel-and-recreation/passports/renewing-an-irish-passport/"]
+    ]
+  },
+  {
+    "id": "passport-first-adult",
+    "cat": "travel",
+    "title": "Get your first adult passport",
+    "kw": "first passport first time new passport never had passport apply irish passport adult naturalised citizen passport primeiro passaporte",
+    "short": "You apply online, then a Garda (or an approved witness if you live abroad) confirms your identity and you post original documents. Do not book travel until the passport arrives.",
+    "facts": [["Cost", "€75 online"], ["How long", "About 20 working days after your documents arrive"], ["Where", "Online, then by post"]],
+    "who": [
+      "Irish citizens aged 18 or over who have never had an Irish passport, or whose last one was issued more than 15 years ago.",
+      "You must already be an Irish citizen: by birth, through an Irish parent, through the [Foreign Births Register](#/s/citizenship-fbr) or by [naturalisation](#/s/citizenship)."
+    ],
+    "need": [
+      "A digital photo, a debit or credit card, an email address and a printer.",
+      "Your **full original civil birth certificate** showing your parents’ names.",
+      "One proof of name and one proof of address, dated in the last 12 months. They must be two different documents. Government letters (Social Protection, Revenue) are preferred; utility bills or bank statements also work.",
+      "Photo ID. If you live in Ireland: a photocopy of your [Public Services Card](#/s/psc), or original government photo ID.",
+      "Your marriage or civil partnership certificate if you apply in a married name."
+    ],
+    "steps": [
+      "Check the exact list for your situation on [Documentary requirements](https://www.ireland.ie/en/dfa/passports/documentary-requirements/adult/).",
+      "Apply and pay on **Passport Online**.",
+      "Print the **Identity Verification Form** it gives you. In Ireland a member of An Garda Síochána must sign it: bring it to a Garda station with your photo ID.",
+      "Post the form and your original documents to the address shown. Originals are returned to you.",
+      "Follow progress with your 11-digit application number on the [Passport Tracker](https://passporttracking.dfa.ie/passporttracking)."
+    ],
+    "cases": [
+      {"q": "I became Irish by naturalisation", "a": ["Send your original naturalisation certificate, your full birth certificate, proof of name and address, and two photo IDs: your original foreign passport or national ID, plus a photocopy of your Public Services Card or a certified driving licence."]},
+      {"q": "I am on the Foreign Births Register", "a": ["Send your original Foreign Birth Registration certificate (or a colour copy certified by a solicitor or notary), your full birth certificate, proof of name and address, and photo ID."]},
+      {"q": "I was born abroad to a parent born in Ireland", "a": ["Add your Irish-born parent’s full original civil birth certificate. If their name differs between documents, add their marriage certificate."]},
+      {"q": "I live outside Ireland", "a": ["The identity form is signed by an approved witness who lives in the same country as you, for example a police officer, doctor, lawyer, teacher, bank manager or notary. They must stamp it and give a work landline number. There is an extra €15 postal fee."]},
+      {"q": "I cannot apply online", "a": ["If you live in Ireland or Northern Ireland, phone the Passport Assist Service on +353 1 613 1795."]},
+      {"q": "I am not an Irish citizen", "a": ["You cannot get an Irish passport. For proof of identity in Ireland see [Which ID can I get?](#/s/id-options). To become a citizen see [Become an Irish citizen](#/s/citizenship)."]}
+    ],
+    "tips": [
+      "First-time applications cannot be fast-tracked. The Passport Service asks you not to book travel until you have the passport.",
+      "The clock only starts when your documents reach the Passport Service."
+    ],
+    "act": [["Apply on Passport Online", "https://passportonline.dfa.ie/Apply/Passport"], ["Check which documents you need", "https://www.ireland.ie/en/dfa/passports/documentary-requirements/adult/"]],
+    "src": [
+      ["Department of Foreign Affairs · First time passport application for adults", "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/first-adult-passport/"],
+      ["Department of Foreign Affairs · Documentary requirements, adult", "https://www.ireland.ie/en/dfa/passports/documentary-requirements/adult/"],
+      ["Department of Foreign Affairs · Witnessing your application", "https://www.ireland.ie/en/dfa/passports/how-to-get-your-application-witnessed/"],
+      ["Department of Foreign Affairs · Current turnaround times", "https://www.ireland.ie/en/dfa/passports/turnaround-times/"]
+    ]
+  },
+  {
+    "id": "passport-child",
+    "cat": "travel",
+    "title": "Get or renew a child’s passport",
+    "kw": "child passport baby passport kids children under 18 guardian consent first passport for a child renew child passport passaporte criança filho",
+    "short": "Every child under 18 needs their own passport. You apply online, all guardians sign a consent form in front of a witness, and you post the documents. It lasts 5 years.",
+    "facts": [["Cost", "€20 online, plus €5 post"], ["How long", "Renewal about 15 working days; first passport about 20"], ["Where", "Online, then by post"]],
+    "who": [
+      "Any Irish citizen under 18. A parent or guardian applies for them.",
+      "Children can no longer be added to a parent’s passport.",
+      "Renew when the child’s passport has 6 months or less left. If their last passport was issued more than 15 years ago, apply as a first-time applicant."
+    ],
+    "need": [
+      "A digital photo of the child, a card, an email address and a printer.",
+      "The consent of **all** the child’s guardians.",
+      "First passport: the child’s original birth certificate, plus documents that depend on your situation ([born in Ireland](https://www.ireland.ie/en/dfa/passports/documentary-requirements/child/), [born abroad](https://www.ireland.ie/en/dfa/passports/documentary-requirements/)).",
+      "Renewal: the child’s current passport."
+    ],
+    "steps": [
+      "Apply and pay on **Passport Online**. It lists the documents you must send.",
+      "Print the **Child Passport Identity and Consent Form**. The link is emailed to you and works for 5 days.",
+      "One guardian brings the child to a witness who knows the child. The witness confirms the child’s identity and watches that guardian sign. The other guardian signs in front of the same or another witness.",
+      "For a **first** passport in Ireland, the witness for the child’s identity must be a Garda. For a renewal in Ireland, a Garda is no longer required: other listed witnesses are accepted.",
+      "Post the form and documents. Processing starts when everything has arrived."
+    ],
+    "cases": [
+      {"q": "I am the child’s only guardian", "a": ["Send a [Sole Guardian Affidavit (AFF1)](https://www.ireland.ie/543/Annex-F1-Sole-Guardian-Affidavit-EN.pdf), completed in front of a solicitor or commissioner for oaths, with the child’s original birth certificate."]},
+      {"q": "The other guardian will not or cannot consent", "a": ["You need a court order dispensing with that guardian’s consent. Send the original order and the child’s original birth certificate."]},
+      {"q": "The other guardian has died", "a": ["Send the original death certificate with the first application after the death, the AFF1 affidavit and the child’s birth certificate. If a testamentary guardian was named in a will, they must consent too."]},
+      {"q": "We live outside Ireland", "a": ["Consent must be witnessed in the country where you live. The postal fee is a single €15."]},
+      {"q": "We need it urgently", "a": ["Only renewals can use the urgent service. See [Urgent passport](#/s/passport-urgent)."]}
+    ],
+    "tips": ["A Passport Card for a child is only sold as a bundle with the passport: €45 online."],
+    "act": [["Apply on Passport Online", "https://passportonline.dfa.ie/Apply/Passport"], ["Who can witness the form", "https://www.ireland.ie/en/dfa/passports/how-to-get-your-application-witnessed/"]],
+    "src": [
+      ["Department of Foreign Affairs · First passport for a child", "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/first-child-passport/"],
+      ["Department of Foreign Affairs · Renew or replace a child passport", "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-child-passport/"],
+      ["Department of Foreign Affairs · Passport fees", "https://www.ireland.ie/en/dfa/passports/passport-fees/"],
+      ["Department of Foreign Affairs · Current turnaround times", "https://www.ireland.ie/en/dfa/passports/turnaround-times/"]
+    ]
+  },
+  {
+    "id": "passport-lost",
+    "cat": "travel",
+    "title": "Replace a lost, stolen or damaged passport",
+    "kw": "lost passport stolen passport damaged passport missing report passport replace perdi passaporte roubado",
+    "short": "Report it and apply for the replacement in one go on Passport Online. A passport reported lost or stolen can never be used again, even if you find it.",
+    "facts": [["Cost", "€75 online"], ["How long", "About 15 working days"], ["Where", "Online"]],
+    "need": [
+      "A digital photo, a card, an email address and a printer.",
+      "If the passport is damaged: the damaged passport itself, which you must send back."
+    ],
+    "steps": [
+      "**In Ireland:** report the loss or theft to the Gardaí to protect yourself from identity fraud, and tell the Passport Service.",
+      "Apply for a new passport on **Passport Online** straight away and report the old one lost or stolen in the form. This is the fastest way to stop anyone else travelling on it.",
+      "Send any documents Passport Online asks for and follow progress on the [Passport Tracker](https://passporttracking.dfa.ie/passporttracking)."
+    ],
+    "cases": [
+      {"q": "It happened while I am abroad", "a": ["Report it to the local police and ask for a written statement. Then contact the nearest [Irish embassy or consulate](https://www.ireland.ie/en/dfa/embassies/): they can issue an emergency travel document to get you home.", "If there is no Irish embassy, the embassy of another EU country may issue an EU Emergency Travel Document."]},
+      {"q": "My passport is damaged", "a": ["Do not travel on it. Apply for a replacement and return the damaged passport with your application."]},
+      {"q": "I found it after reporting it", "a": ["Do not travel on it. Its details have been reported to Interpol and it is no longer valid."]},
+      {"q": "I have lost passports before", "a": ["If you have lost 2 or more passports, you may be given a passport that is valid for less than 10 years."]},
+      {"q": "I must travel because of an emergency", "a": ["For a death or medical emergency of a family member abroad, phone the Passport Service on 01 671 1633 or use WebChat. See [Urgent passport](#/s/passport-urgent)."]}
+    ],
+    "act": [["Report and replace on Passport Online", "https://passportonline.dfa.ie/Apply/Passport"], ["Find an Irish embassy", "https://www.ireland.ie/en/dfa/embassies/"]],
+    "src": [
+      ["Department of Foreign Affairs · Renew or replace your adult passport", "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-adult-passport/"],
+      ["Citizens Information · Replacing a lost or stolen Irish passport", "https://www.citizensinformation.ie/en/travel-and-recreation/passports/replacing-a-lost-or-stolen-irish-passport/"],
+      ["Department of Foreign Affairs · Current turnaround times", "https://www.ireland.ie/en/dfa/passports/turnaround-times/"]
+    ]
+  },
+  {
+    "id": "passport-urgent",
+    "cat": "travel",
+    "title": "Get a passport urgently",
+    "kw": "urgent passport emergency passport same day fast track rush appointment mount street cork london emergency travel document passaporte urgente",
+    "short": "The Urgent Appointment Service renews a passport in 1 or 4 days, by appointment only, in Dublin or Cork (5 days in London). It is for renewals only.",
+    "facts": [["Cost", "€170 to €245 for an adult"], ["How long", "Same day or 4 days"], ["Where", "Dublin, Cork or London, by appointment"]],
+    "who": [
+      "People **renewing** a passport. First-time applicants cannot use it, and neither can anyone whose last passport was issued more than 15 years ago.",
+      "Slots are limited and given first come, first served."
+    ],
+    "need": [
+      "Adults: four identical passport photos, no more than 6 months old, and your most recent Irish passport. If it was lost or stolen, bring photo ID and proof of your name.",
+      "Children: four photos, the child’s most recent passport, the child’s original long birth certificate and the signed, witnessed consent form. Same-day service: the child and all guardians attend with ID. Four-day service: at least one guardian attends."
+    ],
+    "steps": [
+      "Book a slot on the **urgent appointment booking page**. Same-day slots open up to 3 days ahead; 4-day and 5-day slots up to 3 weeks ahead.",
+      "Go to the office at your appointment time with your photos and passport.",
+      "Collect the passport: the same day in Dublin, or after 4 days in Dublin or Cork."
+    ],
+    "cases": [
+      {"q": "How much does each option cost?", "a": ["Same day (Dublin): €245 for an adult, €195 for a child.", "Four days (Dublin or Cork) or five days (London): €170 for an adult, €120 for a child.", "The price includes the passport itself (€95 adult, €45 child at the counter) plus the appointment fee."]},
+      {"q": "A family member abroad has died or is seriously ill", "a": ["The Passport Service has a same-day emergency service for a medical emergency or the death of a family member abroad. You pay only the passport fee and must show supporting documents. Phone 01 671 1633 or use [WebChat](https://www.ireland.ie/en/dfa/passports/contact-us/)."]},
+      {"q": "I need a first passport quickly", "a": ["First-time applications cannot be expedited. Apply online as early as you can: see [First adult passport](#/s/passport-first-adult)."]},
+      {"q": "My name has changed", "a": ["The same-day service cannot change a name. The 4-day and 5-day services can, but only after marriage, civil partnership, divorce, separation or a court order."]}
+    ],
+    "tips": ["You can cancel up to 24 hours before the appointment from the link in your confirmation email. You cannot move an appointment: cancel and book again."],
+    "act": [["Book an urgent appointment", "https://urgentpassportappointment.dfa.ie/location"]],
+    "src": [
+      ["Department of Foreign Affairs · Urgent appointment service", "https://www.ireland.ie/en/dfa/passports/urgent-appointment/"],
+      ["Department of Foreign Affairs · Passport fees", "https://www.ireland.ie/en/dfa/passports/passport-fees/"],
+      ["Citizens Information · How to renew an Irish passport as an adult", "https://www.citizensinformation.ie/en/travel-and-recreation/passports/renewing-an-irish-passport/"]
+    ]
+  },
+  {
+    "id": "passport-card",
+    "cat": "travel",
+    "title": "Get a Passport Card",
+    "kw": "passport card credit card size id card travel europe wallet card cartão passaporte",
+    "short": "A credit-card-sized passport for Irish citizens. It works for travel in the EU, Iceland, Liechtenstein, Norway, Switzerland and the United Kingdom, and is handy as photo ID.",
+    "facts": [["Cost", "€35"], ["How long", "About 10 working days"], ["Where", "Online only"]],
+    "who": [
+      "Irish citizens who hold a valid Irish passport book. Your details must match the passport book exactly.",
+      "Adults can order a card on its own if the passport book has at least 3 months left.",
+      "Under-18s can only get it as a bundle when applying for the passport."
+    ],
+    "need": ["A digital photo, a card to pay and an email address."],
+    "steps": [
+      "Open **Passport Online** and choose the Passport Card (or the passport and card bundle).",
+      "Upload your photo, pay and wait for the card by post."
+    ],
+    "cases": [
+      {"q": "How long is it valid?", "a": ["Up to 5 years. If your passport book has less than 5 years left, the card expires on the same date as the book."]},
+      {"q": "I need a passport too", "a": ["Order the bundle: €100 for an adult passport and card, €45 for a child."]},
+      {"q": "Can I fly to the United States with it?", "a": ["No. It is only valid for the EU, Iceland, Liechtenstein, Norway, Switzerland and the United Kingdom."]}
+    ],
+    "act": [["Apply on Passport Online", "https://passportonline.dfa.ie/Apply/Passport"]],
+    "src": [
+      ["Department of Foreign Affairs · Passport card", "https://www.ireland.ie/en/dfa/passports/passport-card/"],
+      ["Department of Foreign Affairs · Passport fees", "https://www.ireland.ie/en/dfa/passports/passport-fees/"],
+      ["Department of Foreign Affairs · Current turnaround times", "https://www.ireland.ie/en/dfa/passports/turnaround-times/"]
+    ]
+  }
+]

@@ -1,0 +1,441 @@
+[
+  {
+    "id": "jobseekers",
+    "cat": "welfare",
+    "title": "Claim a jobseeker’s payment after losing your job",
+    "kw": "unemployed lost my job jobseekers benefit allowance pay related benefit dole unemployment payment intreo sign on desempregado seguro desemprego",
+    "short": "Apply on MyWelfare as soon as you stop working. If you paid enough PRSI you get a payment linked to your previous pay, up to €450 a week at first. If not, there is a means-tested allowance.",
+    "facts": [["Rate", "Up to €450 a week at first"], ["Deadline", "Apply within 6 weeks"], ["Where", "MyWelfare or an Intreo centre"]],
+    "who": [
+      "You are fully unemployed, aged under 66, able to work, available for full-time work and looking for it.",
+      "**Jobseeker’s Pay-Related Benefit** if you lost your job on or after 31 March 2025 and have at least 104 paid PRSI contributions, with 26 of them in the last 52 weeks.",
+      "**Jobseeker’s Benefit** covers part-time, casual, seasonal and short-time workers, and jobs that ended before 31 March 2025.",
+      "**Jobseeker’s Allowance** if you do not have enough PRSI or your benefit has run out. It is means-tested and you must be habitually resident."
+    ],
+    "need": [
+      "A verified [MyGovID](#/s/mygovid) to apply online.",
+      "Photo ID: Public Services Card, passport or driving licence.",
+      "Proof of address: a utility bill or a letter from a government department.",
+      "For the allowance: evidence of your income and savings, including bank statements."
+    ],
+    "steps": [
+      "Apply on **MyWelfare** as soon as you become unemployed. If you cannot apply online, go to your local Intreo centre.",
+      "The Department works out which payment you qualify for from your PRSI record.",
+      "Your identity must have been verified in person at least once (this is what the [Public Services Card](#/s/psc) appointment does) before a claim is paid."
+    ],
+    "cases": [
+      {"q": "How much is the pay-related benefit?", "a": ["With 5 or more years of contributions: 60% of your previous weekly pay up to €450 for 13 weeks, then 55% up to €375 for 13 weeks, then 50% up to €300 for 13 weeks.", "With 2 to 5 years of contributions: 50% up to €300 for 26 weeks. The minimum is €125 a week."]},
+      {"q": "How much is the allowance?", "a": ["Up to €254 a week if you are 25 or over, and €163.70 if you are 18 to 24, less any means. There are increases for an adult dependant and for children.", "From January 2027 the maximum rises to €264."]},
+      {"q": "I still work a few days a week", "a": ["You can claim Jobseeker’s Benefit if you are unemployed for at least 4 days out of every 7. The full rate is €254 a week and it is paid for 6 or 9 months, depending on your contributions."]},
+      {"q": "I was self-employed", "a": ["There is a separate [Jobseeker’s Benefit for the Self-Employed](https://www.gov.ie/en/department-of-social-protection/services/jobseekers-benefit-for-the-self-employed/)."]},
+      {"q": "I am not Irish", "a": ["Benefit depends on PRSI you paid, not nationality. The allowance requires you to be habitually resident: see [Habitual residence](#/s/habitual-residence)."]},
+      {"q": "I was made redundant", "a": ["You may also be owed a lump sum from your employer: see [Redundancy pay](#/s/redundancy)."]}
+    ],
+    "act": [["Apply on MyWelfare", "https://services.mywelfare.ie/en/topics/out-of-work-payments/apply-for-jobseekers-payment/"], ["Find your Intreo centre", "https://www.gov.ie/en/department-of-social-protection/services/find-your-local-intreo-centre/"]],
+    "src": [
+      ["Department of Social Protection · Jobseeker’s Pay-Related Benefit", "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-pay-related-benefit/"],
+      ["Department of Social Protection · Jobseeker’s Benefit", "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-benefit/"],
+      ["Department of Social Protection · Jobseeker’s Allowance", "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-allowance/"],
+      ["Citizens Information · Social welfare rates 2027", "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "child-benefit",
+    "cat": "welfare",
+    "title": "Get Child Benefit",
+    "kw": "child benefit childrens allowance monthly payment kids baby newborn grant family payment auxílio criança filhos",
+    "short": "€140 a month for each child, paid to parents and guardians whatever their income. If your baby is born in Ireland, the claim starts by itself when you register the birth.",
+    "facts": [["Rate", "€140 a month per child"], ["Paid", "First Tuesday of each month"]],
+    "who": [
+      "Parents or guardians of a child under 16, or under 19 if the child is in full-time education or training, or has a disability.",
+      "The child must normally live with you and be supported by you.",
+      "You must be habitually resident in Ireland, whatever your nationality: see [Habitual residence](#/s/habitual-residence)."
+    ],
+    "steps": [
+      "**Baby born in Ireland:** [register the birth](#/s/birth-register). If you already get Child Benefit, the baby is added automatically. If not, a claim form is sent to you.",
+      "**Child born abroad, or birth not registered within 3 months:** fill in [form CB1](https://assets.gov.ie/static/documents/application-form-child-benefit-cb1.pdf).",
+      "The first payment usually comes the month after the birth."
+    ],
+    "cases": [
+      {"q": "Is there anything extra for a newborn?", "a": ["Yes. A Newborn Baby Grant of €280 is paid with the first month of Child Benefit."]},
+      {"q": "Twins or more", "a": ["€210 a month for each twin, and €280 a month for each child in other multiple births."]},
+      {"q": "My child is turning 16", "a": ["Payment continues to 19 only while they are in full-time education or training. You complete [form CB2](https://assets.gov.ie/static/documents/child-benefit-for-a-child-aged-16-17-or-18-cb2.pdf)."]},
+      {"q": "We just moved to Ireland", "a": ["Apply with form CB1 once you live here. You will be asked to show you are habitually resident."]}
+    ],
+    "tips": ["The rate stays at €140 a month in 2027."],
+    "act": [["Child Benefit on MyWelfare", "https://services.mywelfare.ie/en/topics/parents-children-family/child-benefit/"]],
+    "src": [
+      ["Department of Social Protection · Child Benefit", "https://www.gov.ie/en/department-of-social-protection/services/child-benefit/"],
+      ["Citizens Information · Social welfare rates 2027", "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "parent-benefits",
+    "cat": "welfare",
+    "title": "Maternity, Paternity and Parent’s Benefit",
+    "kw": "maternity benefit maternity leave paternity benefit paternity leave parents benefit parents leave pregnant baby leave pay licença maternidade paternidade",
+    "short": "Three payments of €299 a week while you are on leave with a new child: 26 weeks of Maternity Benefit, 2 weeks of Paternity Benefit, and 9 weeks of Parent’s Benefit for each parent.",
+    "facts": [["Rate", "€299 a week"], ["Where", "MyWelfare"]],
+    "who": [
+      "Employees and self-employed people who have paid enough PRSI. For employees that is usually 39 weeks paid in the 12 months before the leave starts."
+    ],
+    "need": ["A verified [MyGovID](#/s/mygovid) to apply online.", "Your leave dates, agreed with your employer."],
+    "steps": [
+      "**Maternity Benefit:** apply on MyWelfare at least 6 weeks before your leave starts (12 weeks if self-employed). It is paid for 26 weeks. You can then take 16 more weeks of unpaid leave.",
+      "**Paternity Benefit:** 2 weeks, taken together, starting within 26 weeks of the birth or adoption. Apply at least 4 weeks before the leave (12 if self-employed).",
+      "**Parent’s Benefit:** 9 weeks for each parent, taken within the child’s first 2 years or within 2 years of an adoption placement."
+    ],
+    "cases": [
+      {"q": "Does my employer keep paying me?", "a": ["That depends on your contract. The State benefit is €299 a week; some employers top it up, but they do not have to."]},
+      {"q": "Is it taxed?", "a": ["Income tax may be due on Maternity Benefit, but USC and PRSI are not deducted."]},
+      {"q": "We are a same-sex couple or adopting", "a": ["Paternity Benefit is open to same-sex couples, and Paternity and Parent’s Benefit both apply to adoptions."]},
+      {"q": "What about 2027?", "a": ["The three payments rise to €309 a week in 2027."]}
+    ],
+    "act": [["Maternity Benefit on MyWelfare", "https://services.mywelfare.ie/en/topics/parents-children-family/maternity-benefit/"], ["Parent’s Benefit on MyWelfare", "https://services.mywelfare.ie/en/topics/parents-children-family/parents-benefit/"]],
+    "src": [
+      ["Department of Social Protection · Maternity Benefit", "https://www.gov.ie/en/department-of-social-protection/services/maternity-benefit/"],
+      ["Department of Social Protection · Paternity Benefit", "https://www.gov.ie/en/department-of-social-protection/services/paternity-benefit/"],
+      ["Department of Social Protection · Parent’s Benefit", "https://www.gov.ie/en/department-of-social-protection/services/parents-benefit/"],
+      ["Citizens Information · Social welfare rates 2027", "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "illness-benefit",
+    "cat": "welfare",
+    "title": "Claim Illness Benefit when you are too sick to work",
+    "kw": "illness benefit sick pay sick leave statutory sick pay off work doctor cert certificate incapacity doente atestado",
+    "short": "Your employer pays up to 5 sick days a year. For longer illness, ask your GP for a certificate and claim Illness Benefit: up to €254 a week if you have paid enough PRSI.",
+    "facts": [["Rate", "Up to €254 a week"], ["Deadline", "Claim within 6 weeks"], ["Where", "MyWelfare"]],
+    "who": [
+      "People under 66 whose doctor certifies they are unfit for work.",
+      "You need at least 104 paid PRSI contributions since you started work, and enough recent ones (usually 39 weeks paid or credited in the relevant tax year)."
+    ],
+    "steps": [
+      "Tell your employer. With at least 13 weeks in the job, you are entitled to **statutory sick leave**: up to 5 days a year paid by the employer.",
+      "If you are sick for longer, ask your GP for a **Certificate of Incapacity for Work**. The GP can send it electronically.",
+      "Apply for Illness Benefit on MyWelfare within 6 weeks of becoming ill.",
+      "The first 3 days of illness are waiting days and are not paid."
+    ],
+    "cases": [
+      {"q": "How much will I get?", "a": ["It depends on your average weekly earnings: €254 if you earned €300 or more; €198.90 for €220 to €299.99; €163.70 for €150 to €219.99; €114 below €150. More if you have a dependent adult.", "From January 2027 the top rate rises to €264."]},
+      {"q": "My illness is long-term", "a": ["After 6 months you may be able to move to Partial Capacity Benefit, [Disability Allowance](#/s/disability-allowance) or Invalidity Pension."]},
+      {"q": "I cannot apply online", "a": ["Ask your GP for form IB1."]}
+    ],
+    "act": [["Illness Benefit on MyWelfare", "https://services.mywelfare.ie/en/topics/health-disability-illness/illness-benefit/"]],
+    "src": [
+      ["Department of Social Protection · Illness Benefit", "https://www.gov.ie/en/department-of-social-protection/services/illness-benefit/"],
+      ["Citizens Information · Social welfare rates 2027", "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "state-pension",
+    "cat": "welfare",
+    "title": "Apply for the State Pension",
+    "kw": "state pension contributory non-contributory old age pension retire retirement 66 pension age aposentadoria pensão",
+    "short": "The State Pension starts at 66. Apply about 6 months before. The full contributory pension is €299.30 a week; if you have not paid enough PRSI there is a means-tested pension of up to €288.",
+    "facts": [["Rate", "Up to €299.30 a week"], ["When", "Apply 6 months before you turn 66"], ["Where", "MyWelfare or by post"]],
+    "who": [
+      "**Contributory:** aged 66 or over with at least 520 full-rate PRSI contributions (about 10 years). The full rate needs 2,080 contributions (about 40 years).",
+      "**Non-contributory:** aged 66 or over, legally and habitually resident, and passing a means test."
+    ],
+    "need": ["A verified [MyGovID](#/s/mygovid) to apply online, or paper form SPC1 (contributory) or SPNC1 (non-contributory)."],
+    "steps": [
+      "Check your contribution record on MyWelfare.",
+      "Apply on **MyWelfare** about 6 months before the date you want the pension to start.",
+      "Or post the paper form to the State Pension Section, Department of Social Protection, College Road, Sligo, F91 T384."
+    ],
+    "cases": [
+      {"q": "I worked in other countries", "a": ["Social insurance paid in another EU or EEA country, or in a country that has a social security agreement with Ireland, can count. You may qualify with as few as 260 Irish full-rate contributions and receive a pro-rata pension."]},
+      {"q": "I want to keep working past 66", "a": ["If you were born on or after 1 January 1958 you can start the pension at any age from 66 to 70. Starting later can give a higher weekly rate."]},
+      {"q": "I am 80 or over", "a": ["A higher rate is paid automatically from 80."]},
+      {"q": "What about 2027?", "a": ["The maximum contributory pension rises to €309.30 a week and the non-contributory pension to €298."]},
+      {"q": "What else do I get at 66?", "a": ["See [Free Travel](#/s/free-travel), the [Household Benefits Package](#/s/household-benefits) and the [Fuel Allowance](#/s/fuel-allowance)."]}
+    ],
+    "act": [["State Pension on MyWelfare", "https://services.mywelfare.ie/en/topics/pensions-and-older-people/state-pension/"]],
+    "src": [
+      ["Department of Social Protection · State Pension (Contributory)", "https://www.gov.ie/en/department-of-social-protection/services/state-pension-contributory/"],
+      ["Department of Social Protection · State Pension (Non-contributory)", "https://www.gov.ie/en/department-of-social-protection/services/state-pension-non-contributory/"],
+      ["Citizens Information · Social welfare rates 2027", "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "working-family-payment",
+    "cat": "welfare",
+    "title": "Working Family Payment",
+    "kw": "working family payment wfp family income supplement fis low pay top up children employee",
+    "short": "A weekly, tax-free top-up for employees with children whose family income is below a limit. You get 60% of the gap between your income and the limit.",
+    "facts": [["Rate", "60% of the gap to your limit"], ["Where", "MyWelfare or by post"]],
+    "who": [
+      "You are an employee in Ireland working at least 38 hours a fortnight. A couple can add their hours together. Self-employment does not count.",
+      "Your job is likely to last at least 3 months.",
+      "At least one child lives with you who is under 18, or 18 to 22 and in full-time education.",
+      "Your average weekly family income is under the limit: €765 with one child, €866 with two, €967 with three, €1,058 with four."
+    ],
+    "steps": [
+      "Apply on MyWelfare, or post form WFP1 to the Working Family Payment section.",
+      "Once awarded, the amount stays the same for 52 weeks, then you are reassessed."
+    ],
+    "cases": [
+      {"q": "Example", "a": ["One child, family income €565 a week: the gap to €765 is €200, so the payment is €120 a week."]},
+      {"q": "What changes in 2027?", "a": ["Budget 2027 raises every income limit by €30 a week."]},
+      {"q": "Do I get anything else with it?", "a": ["People on Working Family Payment get the [Fuel Allowance](#/s/fuel-allowance) without applying separately, and may get the [Back to School allowance](#/s/back-to-school)."]}
+    ],
+    "act": [["Read more and apply", "https://www.gov.ie/en/department-of-social-protection/services/working-family-payment-wfp/"]],
+    "src": [
+      ["Department of Social Protection · Working Family Payment", "https://www.gov.ie/en/department-of-social-protection/services/working-family-payment-wfp/"],
+      ["Citizens Information · Key social welfare changes in Budget 2027", "https://www.citizensinformation.ie/en/whats-new/key-social-welfare-changes-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "disability-allowance",
+    "cat": "welfare",
+    "title": "Disability Allowance",
+    "kw": "disability allowance disabled payment long term illness da1 deficiência benefício",
+    "short": "A weekly, means-tested payment of up to €254 for people aged 16 to 66 whose disability substantially restricts the work they can do.",
+    "facts": [["Rate", "Up to €254 a week"], ["Where", "MyWelfare or by post"]],
+    "who": [
+      "Aged 16 to 66 with an injury, disease or physical or mental disability that has lasted, or is expected to last, at least a year.",
+      "You pass a means test (your partner’s income counts) and are habitually resident."
+    ],
+    "need": ["A completed **DAMed1 medical report**, whichever way you apply."],
+    "steps": [
+      "Ask your doctor to complete the DAMed1 medical report.",
+      "Apply on MyWelfare with a verified MyGovID, or post form DA1 to the Disability Allowance Section, Longford."
+    ],
+    "cases": [
+      {"q": "Can I work?", "a": ["Yes. The first €165 a week you earn is ignored and half of your earnings between €165 and €375 is ignored. From July 2027 the first figure rises to €175."]},
+      {"q": "Is it taxed?", "a": ["No. It is exempt from income tax, PRSI and USC."]},
+      {"q": "What else comes with it?", "a": ["Disability Allowance qualifies you for [Free Travel](#/s/free-travel) and the [Household Benefits Package](#/s/household-benefits)."]},
+      {"q": "What about 2027?", "a": ["The maximum rises to €264 a week, and Budget 2027 announced a one-off €500 cost of disability payment for people on long-term disability payments."]}
+    ],
+    "act": [["Read more and apply", "https://www.gov.ie/en/department-of-social-protection/services/disability-allowance/"]],
+    "src": [
+      ["Department of Social Protection · Disability Allowance", "https://www.gov.ie/en/department-of-social-protection/services/disability-allowance/"],
+      ["Department of Social Protection · Free Travel Scheme", "https://www.gov.ie/en/department-of-social-protection/services/free-travel-scheme/"],
+      ["Department of Social Protection · Household Benefits Package", "https://www.gov.ie/en/department-of-social-protection/services/household-benefits-package/"],
+      ["Citizens Information · Key social welfare changes in Budget 2027", "https://www.citizensinformation.ie/en/whats-new/key-social-welfare-changes-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "carers-allowance",
+    "cat": "welfare",
+    "title": "Carer’s Allowance",
+    "kw": "carers allowance carer caring for someone full time care domiciliary care allowance cuidador",
+    "short": "A means-tested weekly payment of up to €270 for people who give full-time care to someone who needs it because of age, disability or illness.",
+    "facts": [["Rate", "Up to €270 a week"], ["Where", "MyWelfare or by post"]],
+    "who": [
+      "You are 18 or over, habitually resident, and live with or can give full-time care to the person.",
+      "The person is over 16 and needs full-time care, or is under 16 and gets Domiciliary Care Allowance.",
+      "You may work, study or volunteer for up to 18.5 hours a week in total."
+    ],
+    "steps": [
+      "Apply on MyWelfare with a verified MyGovID, or post form CR1 with supporting documents to the Carer’s Allowance Section, Longford."
+    ],
+    "cases": [
+      {"q": "I am 66 or over", "a": ["The maximum rate is €308 a week."]},
+      {"q": "I am caring for a child with a severe disability", "a": ["The child’s parent or guardian can get **Domiciliary Care Allowance**: €380 a month for a child under 16 with a severe disability who lives at home. Apply on MyWelfare or with the Dom Care 1 form. See the official [Domiciliary Care Allowance page](https://www.gov.ie/en/department-of-social-protection/services/domiciliary-care-allowance/)."]},
+      {"q": "What changes in 2027?", "a": ["The maximum rises to €280 a week (€318 at 66 or over). From July 2027 the income ignored in the means test rises to €1,150 a week for a single person and €2,300 for a couple."]}
+    ],
+    "act": [["Read more and apply", "https://www.gov.ie/en/department-of-social-protection/services/carers-allowance/"]],
+    "src": [
+      ["Department of Social Protection · Carer’s Allowance", "https://www.gov.ie/en/department-of-social-protection/services/carers-allowance/"],
+      ["Department of Social Protection · Domiciliary Care Allowance", "https://www.gov.ie/en/department-of-social-protection/services/domiciliary-care-allowance/"],
+      ["Citizens Information · Key social welfare changes in Budget 2027", "https://www.citizensinformation.ie/en/whats-new/key-social-welfare-changes-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "one-parent-family",
+    "cat": "welfare",
+    "title": "One-Parent Family Payment",
+    "kw": "one parent family payment single parent lone parent single mother single father ofp mãe solteira",
+    "short": "A means-tested weekly payment of up to €254, plus an amount for each child, for parents under 66 raising children without a partner. It normally lasts until your youngest child is 7.",
+    "facts": [["Rate", "Up to €254 a week, plus child payments"], ["Where", "Intreo centre"]],
+    "who": [
+      "You are the main carer of a child who lives with you, and your youngest child is under 7.",
+      "You do not live with a spouse, civil partner or cohabitant. If separated, you have lived apart for at least 3 months.",
+      "You pass a means test."
+    ],
+    "steps": [
+      "Fill in form OFP1.",
+      "Bring or send it with your supporting documents to your local Intreo centre or Social Welfare branch office."
+    ],
+    "cases": [
+      {"q": "My youngest is 7 or older", "a": ["Ask Intreo about the [Jobseeker’s Transitional Payment](https://www.gov.ie/en/department-of-social-protection/services/jobseekers-transitional-payment/), or the [Working Family Payment](#/s/working-family-payment) if you are working."]},
+      {"q": "What about 2027?", "a": ["The maximum rises to €264 a week and the weekly child payment rises by €6."]}
+    ],
+    "act": [["Read more and get the form", "https://www.gov.ie/en/department-of-social-protection/services/one-parent-family-payment/"]],
+    "src": [
+      ["Department of Social Protection · One-Parent Family Payment", "https://www.gov.ie/en/department-of-social-protection/services/one-parent-family-payment/"],
+      ["Citizens Information · Social welfare rates 2027", "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "fuel-allowance",
+    "cat": "welfare",
+    "title": "Fuel Allowance",
+    "kw": "fuel allowance heating winter payment energy bills aquecimento inverno",
+    "short": "€38 a week through the winter to help heat your home, for people on long-term social welfare payments and for over-66s who pass a means test. One allowance per household.",
+    "facts": [["Rate", "€38 a week for 28 weeks"], ["Season", "28 September 2026 to 9 April 2027"], ["Where", "MyWelfare or by post"]],
+    "who": [
+      "**66 or over:** you live in Ireland legally, pass a means test, and live alone or only with other qualifying people.",
+      "**Under 66:** you get a qualifying payment such as Jobseeker’s Allowance, Carer’s Allowance, One-Parent Family Payment or Working Family Payment."
+    ],
+    "steps": [
+      "Apply on MyWelfare, or use paper form NFS2 if you are 66 or over, or NFS1 if you are under 66.",
+      "Apply before the season starts in late September: the payment cannot be backdated."
+    ],
+    "cases": [
+      {"q": "I get the Working Family Payment", "a": ["You do not need to apply. It is paid automatically."]},
+      {"q": "Can I get it in lump sums?", "a": ["Some people can take it in two instalments, at the start of the season and in January. Apply with form FA CPF1 at least a month before the season."]},
+      {"q": "What changes after Budget 2027?", "a": ["The weekly rate rises from €38 to €43, and the income threshold for a single pensioner rises from €534 to €640. The start date had not been published when this was checked."]}
+    ],
+    "act": [["Read more and apply", "https://www.gov.ie/en/department-of-social-protection/services/fuel-allowance/"]],
+    "src": [
+      ["Department of Social Protection · Fuel Allowance", "https://www.gov.ie/en/department-of-social-protection/services/fuel-allowance/"],
+      ["Citizens Information · Key social welfare changes in Budget 2027", "https://www.citizensinformation.ie/en/whats-new/key-social-welfare-changes-in-budget-2027/"]
+    ]
+  },
+  {
+    "id": "household-benefits",
+    "cat": "welfare",
+    "title": "Household Benefits Package",
+    "kw": "household benefits package free electricity allowance gas allowance free tv licence over 70",
+    "short": "€1.15 a day off your electricity or gas bill, plus a free TV licence. Everyone aged 70 or over who lives in Ireland qualifies, with no means test.",
+    "facts": [["Worth", "€1.15 a day, plus a free TV licence"], ["Where", "MyWelfare"]],
+    "who": [
+      "**70 or over:** no means test and no qualifying payment needed.",
+      "**66 to 69:** you get a qualifying payment such as the State Pension or Carer’s Allowance, or you pass a means test.",
+      "**Under 66:** you get a qualifying payment such as Disability Allowance, Invalidity Pension, Blind Pension or Carer’s Allowance.",
+      "You live in Ireland full-time and are the only person in the household getting the package."
+    ],
+    "steps": ["Apply on MyWelfare with a verified [MyGovID](#/s/mygovid)."],
+    "act": [["Apply on MyWelfare", "https://services.mywelfare.ie/en/topics/pensions-and-older-people/household-benefits/"]],
+    "src": [["Department of Social Protection · Household Benefits Package", "https://www.gov.ie/en/department-of-social-protection/services/household-benefits-package/"]]
+  },
+  {
+    "id": "free-travel",
+    "cat": "welfare",
+    "title": "Free Travel",
+    "kw": "free travel pass bus pass free bus train luas over 66 companion pass travel card passe livre",
+    "short": "Free travel on State bus, rail, Local Link and Luas services for everyone aged 66 or over living permanently in Ireland, and for some younger people on disability or carer payments.",
+    "facts": [["Cost", "Free"], ["Card", "Free Travel Public Services Card"]],
+    "who": [
+      "Anyone aged 66 or over who is legally living permanently in the State.",
+      "Under 66: people getting Disability Allowance, Blind Pension, Carer’s Allowance or Invalidity Pension, and some bereaved partners aged 60 or over."
+    ],
+    "steps": [
+      "If you get a social welfare pension and have an in-date [Public Services Card](#/s/psc), the Free Travel card is issued automatically at 66.",
+      "Otherwise fill in form FT1 from the official page and send it to the Free Travel Section, Sligo."
+    ],
+    "cases": [
+      {"q": "Can someone travel with me?", "a": ["Cards marked FT+S cover your spouse or partner; FT+C covers a companion over 16. From age 70 you get a companion card. Under 70, you can apply for one with a doctor’s report if you cannot travel alone."]},
+      {"q": "Does it work in Northern Ireland?", "a": ["Cross-border journeys between Ireland and Northern Ireland are free. Travel within Northern Ireland needs a separate Senior SmartPass."]},
+      {"q": "My card is out of date or I have a paper pass", "a": ["Since 1 March 2026 you need a valid, in-date Free Travel Public Services Card. Paper passes are no longer valid. See [Public Services Card](#/s/psc) to renew."]}
+    ],
+    "act": [["Read more and get the form", "https://www.gov.ie/en/department-of-social-protection/services/free-travel-scheme/"]],
+    "src": [["Department of Social Protection · Free Travel Scheme", "https://www.gov.ie/en/department-of-social-protection/services/free-travel-scheme/"]]
+  },
+  {
+    "id": "additional-needs-payment",
+    "cat": "welfare",
+    "title": "Get help with an urgent or one-off cost",
+    "kw": "additional needs payment exceptional needs community welfare officer emergency money urgent help bills funeral deposit ajuda emergência",
+    "short": "An Additional Needs Payment helps with an essential expense you cannot pay from your weekly income. You do not have to be on social welfare: people working on low pay can apply too.",
+    "facts": [["Who", "Anyone living in Ireland on a low income"], ["Where", "MyWelfare or an Intreo centre"]],
+    "who": ["You live in Ireland and have an essential cost you cannot meet from your income or savings."],
+    "steps": [
+      "Apply on MyWelfare.",
+      "If you cannot apply online, get a form at an Intreo centre or branch office, or phone 0818 607080."
+    ],
+    "cases": [
+      {"q": "What kind of costs?", "a": ["Higher heating or electricity bills, essential repairs, replacing an appliance or furniture, a rental deposit, setting up a first home, funeral costs, repeated travel to hospital, a cot or buggy, or help after an emergency such as a house fire."]}
+    ],
+    "act": [["Apply on MyWelfare", "https://services.mywelfare.ie/en/topics/community-welfare-services/additional-needs-payment/"]],
+    "src": [["Department of Social Protection · Additional Needs Payment", "https://www.gov.ie/en/department-of-social-protection/services/additional-needs-payment/"]]
+  },
+  {
+    "id": "treatment-benefit",
+    "cat": "welfare",
+    "title": "Free dental exam, eye test and help with hearing aids",
+    "kw": "treatment benefit dental optical dentist optician eye test glasses hearing aid prsi dentista óculos",
+    "short": "If you have paid PRSI you can get a free dental exam each year, a free eye test every 2 years and up to €500 towards each hearing aid. Your dentist or optician checks if you qualify.",
+    "facts": [["Cost", "Free exam and eye test"], ["Where", "Your dentist, optician or audiologist"]],
+    "who": [
+      "Workers, the self-employed and retired people with enough PRSI contributions.",
+      "Under 21: 39 contributions at any time. 21 to 28: 39 paid, plus recent ones. 29 and over: 260 paid, plus recent ones."
+    ],
+    "steps": [
+      "Book with a dentist, optician or audiologist who takes part in the scheme.",
+      "Give them your PPS number. They check your eligibility before the treatment."
+    ],
+    "cases": [
+      {"q": "What exactly is covered?", "a": ["A dental examination once a year at no cost. A scale and polish: the scheme pays €50 and you pay at most €15. An eye test every second year. A payment towards glasses every second year. Hearing aids: up to €500 each every 4 years, and repairs up to €100."]}
+    ],
+    "act": [["Read more", "https://www.gov.ie/en/department-of-social-protection/services/treatment-benefit-scheme/"]],
+    "src": [["Department of Social Protection · Treatment Benefit Scheme", "https://www.gov.ie/en/department-of-social-protection/services/treatment-benefit-scheme/"]]
+  },
+  {
+    "id": "back-to-school",
+    "cat": "welfare",
+    "title": "Back to School Clothing and Footwear Allowance",
+    "kw": "back to school allowance clothing footwear uniform school costs bscfa uniforme escola",
+    "short": "A once-a-year payment for school uniforms and shoes: €160 for each child aged 2 to 11 and €285 for each child aged 12 or over. Many families are paid automatically in June.",
+    "facts": [["Rate", "€160 or €285 per child"], ["Season", "June to 30 September"], ["Where", "MyWelfare"]],
+    "who": [
+      "You get a qualifying social welfare payment, or take part in an approved employment, education or training scheme.",
+      "Your household income is within the limit and your children live in Ireland."
+    ],
+    "steps": [
+      "In June, check your MyWelfare account or post for an award notice.",
+      "If you have not heard by the end of June, apply on MyWelfare, even if you were paid in other years."
+    ],
+    "cases": [
+      {"q": "Can I apply now?", "a": ["The 2026 scheme closed on 30 September 2026. The 2027 scheme opens in June 2027."]}
+    ],
+    "act": [["Back to School allowance on MyWelfare", "https://services.mywelfare.ie/en/topics/parents-children-family/back-to-school-clothing-footwear-allowance/"]],
+    "src": [["Department of Social Protection · Back to School Clothing and Footwear Allowance", "https://www.gov.ie/en/department-of-social-protection/services/back-to-school-clothing-and-footwear-allowance/"]]
+  },
+  {
+    "id": "redundancy",
+    "cat": "welfare",
+    "title": "Redundancy pay",
+    "kw": "redundancy redundant laid off lump sum statutory redundancy job loss company closed demissão indenização",
+    "short": "After 2 years in a job, if you are made redundant your employer owes you 2 weeks’ pay for every year of service, plus 1 extra week. A week’s pay is capped at €600. The lump sum is tax-free.",
+    "facts": [["Amount", "2 weeks’ pay per year, plus 1 week"], ["Cap", "€600 a week"], ["Paid by", "Your employer"]],
+    "who": ["Employees with at least 2 years (104 weeks) of service whose job no longer exists."],
+    "steps": [
+      "Your employer pays the lump sum when your job ends.",
+      "Work out the amount with the official [redundancy calculator](https://www.gov.ie/en/department-of-social-protection/services/redundancy-calculator/).",
+      "Apply for a [jobseeker’s payment](#/s/jobseekers) straight away."
+    ],
+    "cases": [
+      {"q": "My employer cannot pay", "a": ["You can apply to the Department of Social Protection, which pays from the Social Insurance Fund."]},
+      {"q": "My employer refuses or disputes it", "a": ["Bring a claim to the Workplace Relations Commission within 1 year. See [Workplace complaints](#/s/wrc-complaint)."]}
+    ],
+    "act": [["Redundancy Payments Scheme", "https://www.gov.ie/en/department-of-social-protection/services/redundancy-payment-scheme/"]],
+    "src": [["Citizens Information · How much redundancy pay will I get?", "https://www.citizensinformation.ie/en/employment/unemployment-and-redundancy/redundancy/redundancy-payments/"]]
+  },
+  {
+    "id": "habitual-residence",
+    "cat": "welfare",
+    "title": "Habitual residence: can I claim if I moved to Ireland?",
+    "kw": "habitual residence condition hrc foreigner immigrant entitled social welfare newly arrived returning emigrant estrangeiro direito benefício",
+    "short": "Most means-tested payments, and Child Benefit, require you to be “habitually resident”: you have a right to live here and Ireland is the centre of your life. Payments based on PRSI you have paid do not have this test.",
+    "facts": [["Applies to", "Means-tested payments and Child Benefit"]],
+    "who": [
+      "It applies to everyone, including Irish citizens returning from abroad.",
+      "Payments covered include Jobseeker’s Allowance, Child Benefit, Disability Allowance, Carer’s Allowance, One-Parent Family Payment and Supplementary Welfare Allowance."
+    ],
+    "steps": [
+      "First you need a **right to reside**. EU and EEA citizens who are working or self-employed here have one. Non-EEA citizens need a permission such as an employment permit, refugee status or another permission to reside.",
+      "Then a deciding officer looks at five things: how long and how continuously you have lived in Ireland; the length and reason for any absences; your employment; where your main centre of interest is; and your plans to stay."
+    ],
+    "cases": [
+      {"q": "I am an EU worker", "a": ["EU and EEA nationals who are employed or self-employed here do not need to pass the test for family benefits such as Child Benefit."]},
+      {"q": "I am an Irish citizen coming home", "a": ["You can be treated as habitually resident from your return if you are resuming long-term residence. Keep proof that the move is permanent."]},
+      {"q": "I am an international protection applicant", "a": ["People waiting for a decision on an asylum claim are not regarded as habitually resident."]}
+    ],
+    "act": [["Read the official explanation", "https://www.gov.ie/en/department-of-social-protection/publications/habitual-residence-condition/"]],
+    "src": [["Citizens Information · The habitual residence condition", "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-assistance-payments/habitual-residence-condition/"]]
+  }
+]

@@ -1,0 +1,204 @@
+[
+  {
+    "id": "driving-licence-first",
+    "cat": "driving",
+    "title": "Get your first driving licence",
+    "kw": "driving licence driver license learn to drive learner permit theory test edt lessons driving test full licence n plates carteira de motorista habilitação cnh tirar carteira",
+    "short": "Six steps: pass the theory test, get a learner permit, take 12 lessons, wait 6 months, pass the driving test, then apply for the full licence. Budget about €240 in State fees plus the cost of lessons.",
+    "facts": [["Cost", "€45 + €45 + €85 + €65, plus lessons"], ["How long", "At least 6 months"], ["Where", "Online and NDLS centres"]],
+    "who": [
+      "Anyone who is normally resident in Ireland (living here at least 185 days a year). You must be at least 17 for a car.",
+      "If you already hold a full licence from another country, first check [Exchange a foreign driving licence](#/s/licence-exchange): you may not need to do all of this."
+    ],
+    "need": [
+      "A [Public Services Card](#/s/psc) and verified [MyGovID](#/s/mygovid) to apply online. In person you need photo ID and proof of your PPS number.",
+      "An eyesight report from an optician or doctor, dated within the last month, for the learner permit.",
+      "Proof of address from the last 6 months if it differs from the one on your Public Services Card record. Non-EU and non-EEA citizens also show proof of normal residence."
+    ],
+    "steps": [
+      "**Theory test (€45).** Book on [theorytest.ie](https://theorytest.ie/). For a car it is 40 questions in 45 minutes and you need 35 right. Bring ID from the [accepted list](https://theorytest.ie/general-information/id-requirements/) or you lose the fee. The pass certificate lasts 2 years.",
+      "**Learner permit (€45).** Apply on the NDLS website or book an appointment at one of the 34 NDLS centres. You can now drive with L plates, but never alone and never on a motorway. The person beside you must have held a full licence for the same category for more than 2 years.",
+      "**12 lessons.** Take Essential Driver Training (EDT): 12 one-hour sessions with an RSA-approved driving instructor, who stamps your logbook. Instructors set their own prices.",
+      "**Wait 6 months.** You cannot sit the test until you have held your first learner permit for 6 months.",
+      "**Driving test (€85).** Apply on MyRoadSafety. When you get your invitation you have 10 days to pick a date. The car must have L plates, tax, a valid NCT if it needs one, and you must show an insurance certificate that covers it.",
+      "**Full licence (€65).** Within 2 years of passing, apply on the NDLS website or at an NDLS centre. Display N plates for your first 2 years."
+    ],
+    "cases": [
+      {"q": "I have a full licence from Brazil, the USA, India or another country Ireland has no exchange deal with", "a": ["Your licence cannot be swapped. You go through the steps above, but you can ask the RSA for **reduced training**: 6 lessons instead of 12, and no 6-month wait. The form is on the RSA’s [6-month rule page](https://www.rsa.ie/services/learner-drivers/learner-permit/the-6-months-rule).", "Until you become resident you may drive as a visitor for up to 12 months on your valid licence; depending on the country you may also need an International Driving Permit. A foreign learner permit cannot be used in Ireland."]},
+      {"q": "English is not my first language", "a": ["The theory test has voice-overs in 20 languages, including Polish, Spanish and Urdu. For other languages you can request a translator; allow up to 25 working days."]},
+      {"q": "I failed the driving test", "a": ["You get a list of your mistakes and an automatic invitation to another test about 10 weeks later."]},
+      {"q": "I need to cancel my driving test", "a": ["Give at least 10 days’ notice to keep your fee. After you cancel more than 2 tests you lose the fee and must apply again."]},
+      {"q": "I am 70 or over", "a": ["There is no fee for the learner permit or the licence."]}
+    ],
+    "tips": [
+      "Driving unaccompanied on a learner permit is illegal and carries penalty points.",
+      "Check the wait at your test centre with the RSA’s [waiting-time estimator](https://www.rsa.ie/services/learner-drivers/the-driving-test/test-waiting-times), updated every 2 to 3 weeks."
+    ],
+    "act": [["Book the theory test", "https://theorytest.ie/"], ["Apply at NDLS", "https://www.ndls.ie/"], ["Apply for the driving test", "https://myroadsafety.rsa.ie/home/login"]],
+    "src": [
+      ["Citizens Information · Steps to learning to drive", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/learning-to-drive/"],
+      ["Citizens Information · Driver theory test", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/driver-theory-test/"],
+      ["Citizens Information · Driving tests", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/driving-test/"],
+      ["NDLS · Learner permit and driving licence fees", "https://www.ndls.ie/learner-driver/fees.html/"],
+      ["NDLS · My first time driving licence", "https://www.ndls.ie/licensed-driver/my-first-time-driving-licence.html"],
+      ["RSA · The 6-months rule", "https://www.rsa.ie/services/learner-drivers/learner-permit/the-6-months-rule"]
+    ]
+  },
+  {
+    "id": "licence-exchange",
+    "cat": "driving",
+    "title": "Exchange a foreign driving licence",
+    "kw": "exchange foreign driving licence swap convert licence eu licence uk licence international driving permit brazil usa india moldova trocar carteira estrangeira",
+    "short": "EU, EEA and UK licences, and licences from a short list of other countries, can be swapped for an Irish one without a test. All other licences cannot: you learn to drive again, with fewer lessons.",
+    "facts": [["Cost", "€65"], ["Where", "Online or an NDLS centre"]],
+    "who": [
+      "**EU or EEA licence:** you can keep driving on it while it is valid. Exchange it if you wish, up to 10 years after it expires.",
+      "**UK licence:** fine for visitors. If you live here you must exchange it for an Irish one.",
+      "**Recognised states:** Australia, Georgia, Gibraltar, Guernsey, Isle of Man, Japan, Jersey, Moldova, New Zealand, South Africa, South Korea, Switzerland, Taiwan, and seven Canadian provinces (Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Ontario, Saskatchewan). Exchange within 1 year of the licence expiring.",
+      "**Everywhere else** (for example Brazil, the USA, India): no exchange. See [Get your first driving licence](#/s/driving-licence-first)."
+    ],
+    "need": [
+      "Your current or most recent foreign licence. You must hand it in or post it, or the application is rejected.",
+      "A [Public Services Card](#/s/psc) and verified [MyGovID](#/s/mygovid) to apply online; photo ID and proof of PPS number in person.",
+      "Proof of normal residence if you are not an EU or EEA citizen.",
+      "Recognised states: an eyesight report dated within the last month.",
+      "A letter of entitlement from the licensing authority (original only) if your licence is expired, lost, stolen or damaged."
+    ],
+    "steps": [
+      "Check your country and licence category on the NDLS exchange page: not every category can be exchanged.",
+      "Apply online on the NDLS website and post your licence afterwards, or book an appointment at an NDLS centre.",
+      "Pay €65. The NDLS may contact the country that issued your licence, which can slow things down."
+    ],
+    "cases": [
+      {"q": "I just arrived. Can I drive now?", "a": ["Visitors can drive for up to 12 months on a valid foreign licence; depending on the country you may also need an International Driving Permit. Once you are normally resident (living here at least 185 days in each calendar year) you must exchange your licence or get an Irish one. You cannot keep driving on a non-EU licence as a resident."]},
+      {"q": "I have a UK licence", "a": ["You need a DVLA check code so the NDLS can verify your licence. Some UK-only categories may not transfer."]},
+      {"q": "I have a Moldovan licence", "a": ["Moldova is the newest country on the list and has its own conditions. Read the Moldova section on the NDLS [foreign licences page](https://www.ndls.ie/holders-of-foreign-licences.html) before applying."]},
+      {"q": "I am 70 or over", "a": ["The exchange is free."]}
+    ],
+    "act": [["Exchange on NDLS", "https://www.ndls.ie/licensed-driver/exchange-my-foreign-driving-licence.html"], ["Book an NDLS appointment", "https://www.ndls.ie/booking-service.html"]],
+    "src": [
+      ["NDLS · How to exchange a foreign driving licence", "https://www.ndls.ie/licensed-driver/exchange-my-foreign-driving-licence.html"],
+      ["NDLS · Holders of foreign licences", "https://www.ndls.ie/holders-of-foreign-licences.html"],
+      ["Citizens Information · Foreign driving licences in Ireland", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/exchanging-foreign-driving-permit/"]
+    ]
+  },
+  {
+    "id": "licence-renew",
+    "cat": "driving",
+    "title": "Renew or replace a driving licence",
+    "kw": "renew driving licence expired licence replace lost licence stolen damaged change address licence renovar carteira",
+    "short": "Renew online from 3 months before your licence expires. A 10-year licence costs €65 and is free if you are 70 or over. A lost or stolen licence costs €35 to replace.",
+    "facts": [["Cost", "€65 renewal, €35 replacement"], ["Where", "Online or an NDLS centre"]],
+    "need": [
+      "Online: a [Public Services Card](#/s/psc) and verified [MyGovID](#/s/mygovid).",
+      "In person: your current licence, proof of your PPS number and an appointment. Your photo and signature are taken there.",
+      "A medical report dated within the last month, only if one is required for you."
+    ],
+    "steps": [
+      "Check the expiry date. You can renew when it expires within 3 months, or up to 10 years after it expired.",
+      "Renew on the NDLS website, or [book an appointment](https://www.ndls.ie/booking-service.html) at an NDLS centre. There is no walk-in service.",
+      "Pay by card. The new licence comes by post."
+    ],
+    "cases": [
+      {"q": "My licence was lost, stolen or damaged", "a": ["Apply for a replacement online or in person with a completed [Garda Declaration Form](https://www.ndls.ie/images/Documents/169620_RSA_NDLS_Garda_Declaration_Form_Web_HR.pdf). It costs €35, including for people over 70."]},
+      {"q": "I am 65 or older", "a": ["65 to 71: the licence runs to the day before your 75th birthday at the latest. 72 to 74: a 3-year licence. 75 or over: a 3-year or 1-year licence, with a doctor’s certificate that you are fit to drive.", "From 70 there is no renewal fee, and you get a reminder by post."]},
+      {"q": "It expired more than 10 years ago", "a": ["You start again: theory test, then a learner permit. See [Get your first driving licence](#/s/driving-licence-first)."]},
+      {"q": "I drive a truck or bus", "a": ["Licences for those categories last 5 years and need a medical report."]},
+      {"q": "I changed my address or name", "a": ["Updating your personal details on a licence is free."]}
+    ],
+    "act": [["Renew on NDLS", "https://www.ndls.ie/licensed-driver/renew-my-driving-licence.html"], ["Replace a lost licence", "https://www.ndls.ie/licensed-driver/replace-my-lost-stolen-driving-licence.html"]],
+    "src": [
+      ["Citizens Information · How to renew your driving licence", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/renewing-a-full-driving-licence/"],
+      ["Citizens Information · Replacing a lost, stolen or damaged driving licence", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/replacing-a-lost-or-stolen-irish-driving-licence/"],
+      ["NDLS · Learner permit and driving licence fees", "https://www.ndls.ie/learner-driver/fees.html/"]
+    ]
+  },
+  {
+    "id": "motor-tax",
+    "cat": "driving",
+    "title": "Pay motor tax",
+    "kw": "motor tax car tax road tax tax disc renew motor tax off the road imposto carro",
+    "short": "Pay online at motortax.ie for 3, 6 or 12 months. It is an offence to drive without it.",
+    "facts": [["Where", "Online at motortax.ie"], ["How long", "Disc within 4 working days"]],
+    "need": [
+      "Your vehicle registration number.",
+      "Your PIN. It is on your renewal notice, or you can retrieve it on the motor tax website. For a new or imported vehicle taxed for the first time it is the last 6 characters of the chassis number.",
+      "A debit or credit card and an email address. Have your insurance details to hand."
+    ],
+    "steps": [
+      "Go to **Motor Tax Online** and enter the registration number and PIN.",
+      "Choose 3, 6 or 12 months and pay.",
+      "The disc is posted to you, normally within 4 working days."
+    ],
+    "cases": [
+      {"q": "How much will it be?", "a": ["It depends on the vehicle. Battery electric cars pay €120 a year. For other cars check the official [motor tax rates](https://www.gov.ie/en/department-of-transport/publications/motor-tax-rates/)."]},
+      {"q": "I am not using the car for a while", "a": ["Declare it off the road in advance, for 3 to 12 months, in the month your disc expires. Any arrears must be paid first."]},
+      {"q": "I am late paying", "a": ["Arrears are charged for each month missed. If you bought the vehicle used, you do not owe arrears from before you bought it."]},
+      {"q": "I would rather pay in person", "a": ["Go to your [local motor tax office](https://www.gov.ie/en/department-of-transport/services/find-your-local-motor-tax-office/): you get the disc on the spot. By post it takes up to 10 working days."]},
+      {"q": "I sold or scrapped the car", "a": ["You can claim a refund on Form RF120 if at least 3 full months are left on the disc. See also [Change of vehicle ownership](#/s/vehicle-ownership)."]}
+    ],
+    "act": [["Pay on Motor Tax Online", "https://www.motortax.ie/OMT/"]],
+    "src": [
+      ["Citizens Information · Motor tax", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/motor-tax-and-insurance/motor-tax-rates/"],
+      ["Department of Transport · Motor tax: payments, renewals and refunds", "https://www.gov.ie/en/department-of-transport/publications/motortax-payments-renewals-and-refund-information/"]
+    ]
+  },
+  {
+    "id": "nct",
+    "cat": "driving",
+    "title": "Book an NCT",
+    "kw": "nct national car test car test roadworthiness book nct retest inspeção carro",
+    "short": "Cars need a National Car Test from their 4th birthday: every 2 years until they are 10, then every year. The test costs €60.",
+    "facts": [["Cost", "€60, re-test €40"], ["Where", "Book online or by phone"]],
+    "who": [
+      "Cars 4 years old or older. Every 2 years up to 10 years old; every year from 10 to 29; every 2 years from 30 to 39 if not used commercially.",
+      "Cars over 40 years old, or registered before 1980, are exempt unless used commercially."
+    ],
+    "need": [
+      "On the day: the vehicle registration certificate, and your driving licence or Public Services Card as ID."
+    ],
+    "steps": [
+      "Book on **ncts.ie** or phone 01 413 5992 (Monday to Friday, 8am to 6pm). You can test up to 90 days before the due date.",
+      "Bring the car and your documents to the test centre.",
+      "If it passes you get the NCT certificate and disc."
+    ],
+    "cases": [
+      {"q": "The car failed", "a": ["For a major fail, book the re-test within 21 days and complete it within 30 days of the first test. A re-test costs €40, or nothing if no test equipment is needed.", "If it is marked “failed dangerous”, it is illegal to drive it until it is repaired."]},
+      {"q": "There are no appointments", "a": ["Under the NCTS customer charter, if you ask for an appointment within 4 weeks and they cannot give you one, the test is free."]},
+      {"q": "I need to cancel", "a": ["Cancelling with less than 5 working days’ notice, or not turning up, adds €24 to your next test."]}
+    ],
+    "tips": ["Driving without a valid NCT is an offence that carries a fixed charge fine and penalty points."],
+    "act": [["Book on ncts.ie", "https://www.ncts.ie/bookings/"]],
+    "src": [
+      ["Citizens Information · National Car Test", "https://www.citizensinformation.ie/en/travel-and-recreation/vehicle-standards/national-car-test/"],
+      ["NCTS · Bookings", "https://www.ncts.ie/bookings/"]
+    ]
+  },
+  {
+    "id": "vehicle-ownership",
+    "cat": "driving",
+    "title": "Change of vehicle ownership",
+    "kw": "change of ownership sell car buy car vehicle registration certificate vrc logbook transfer car rf105 vender carro comprar",
+    "short": "When a car is sold privately, seller and buyer can now transfer it online in minutes. It is free, and a new registration certificate is posted to the buyer.",
+    "facts": [["Cost", "Free"], ["Where", "Online or by post"]],
+    "need": [
+      "Seller: the registration number and the Vehicle Registration Certificate (VRC) number.",
+      "Buyer: a verified [MyGovID](#/s/mygovid)."
+    ],
+    "steps": [
+      "**Seller** enters the registration and VRC number in the online Change of Vehicle Ownership service. A one-time PIN is emailed to the seller.",
+      "The seller gives the PIN to the **buyer**. It expires after 30 minutes.",
+      "The buyer enters the PIN, signs in with MyGovID and accepts the declaration of ownership.",
+      "A new VRC is posted to the buyer."
+    ],
+    "cases": [
+      {"q": "We prefer paper", "a": ["Both of you fill in and sign the change of ownership section on the back of the VRC. The seller posts it to the Department of Transport in Shannon. It takes about 2 to 5 days to process once received."]},
+      {"q": "I am selling to a garage or dealer", "a": ["Give the dealer the VRC and both complete [Form RF105](https://www.motortax.ie/OMT/pdf/RF105_en.pdf). An approved dealer notifies the change online."]},
+      {"q": "I lost the registration certificate", "a": ["Complete Form RF134, have it witnessed at a Garda station and send it to your local motor tax office with the €12 fee."]}
+    ],
+    "act": [["Transfer ownership online", "https://www.vehicleservices.gov.ie/cvo/"]],
+    "src": [
+      ["Citizens Information · Change of vehicle ownership", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/buying-or-selling-a-vehicle/change-of-ownership/"]
+    ]
+  }
+]

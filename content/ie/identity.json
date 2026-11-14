@@ -1,0 +1,373 @@
+[
+  {
+    "id": "id-options",
+    "cat": "identity",
+    "title": "Which ID can I get in Ireland?",
+    "kw": "id card identity card national id photo id proof of identity proof of age age card identidade rg documento identificação carteira de identidade",
+    "short": "Ireland has no national identity card. Which photo ID you can get depends on who you are: a passport or Passport Card if you are an Irish citizen, an IRP card if you are from outside the EU, and a Public Services Card or driving licence for anyone living here.",
+    "facts": [
+      [
+        "National ID card",
+        "Does not exist"
+      ],
+      [
+        "Most useful",
+        "Passport, driving licence, Public Services Card"
+      ]
+    ],
+    "steps": [
+      "**Irish citizen:** a [passport](#/s/passport-first-adult), and the credit-card-sized [Passport Card](#/s/passport-card) to carry in your wallet.",
+      "**Living here, any nationality:** a [Public Services Card](#/s/psc). It proves who you are to public services, and it unlocks [MyGovID](#/s/mygovid) for doing things online.",
+      "**You drive, or want to:** a learner permit or [driving licence](#/s/driving-licence-first) is accepted as photo ID almost everywhere.",
+      "**From outside the EU, EEA, UK and Switzerland:** your [IRP card](#/s/irp-register) shows your permission to live here. You must carry it.",
+      "**EU or EEA citizen:** your own national identity card or passport is valid ID in Ireland."
+    ],
+    "cases": [
+      {
+        "q": "I only need to prove I am over 18",
+        "a": [
+          "The National Age Card is a proof-of-age card for people aged 18 or over. You apply online at agecard.ie, then bring the form, your ID and a photo to a Garda station. The Gardaí are clear that it is not an identity card."
+        ]
+      },
+      {
+        "q": "I have no photo ID at all",
+        "a": [
+          "Start with the [Public Services Card](#/s/psc) and phone your local centre before you go: they will tell you which documents they can accept."
+        ]
+      },
+      {
+        "q": "Which ID do I need for a specific service?",
+        "a": [
+          "Each guide on this site lists the ID that service accepts."
+        ]
+      }
+    ],
+    "act": [
+      [
+        "National Age Card",
+        "https://www.agecard.ie/forms/home/"
+      ]
+    ],
+    "src": [
+      [
+        "An Garda Síochána · National Age Card",
+        "https://www.garda.ie/en/about-us/online-services/national-age-card/"
+      ],
+      [
+        "Department of Social Protection · How to get a Public Services Card",
+        "https://www.gov.ie/en/department-of-social-protection/services/how-to-get-a-public-services-card-psc/"
+      ],
+      [
+        "Department of Foreign Affairs · Passport card",
+        "https://www.ireland.ie/en/dfa/passports/passport-card/"
+      ]
+    ]
+  },
+  {
+    "id": "psc",
+    "cat": "identity",
+    "title": "Get a Public Services Card (PSC)",
+    "kw": "public services card psc safe registration identity card id card welfare card free travel card cartão identidade",
+    "short": "The PSC proves who you are when you use public services such as social welfare payments. You get it by confirming your identity once, in person or (with an Irish passport) through the MyGovID app.",
+    "facts": [
+      [
+        "How long",
+        "Card posted in 7 to 10 working days"
+      ],
+      [
+        "Where",
+        "PSC centre, or the MyGovID app"
+      ],
+      [
+        "Valid for",
+        "10 years"
+      ]
+    ],
+    "who": [
+      "People living in Ireland who have a [PPS number](#/s/ppsn). The card can only be posted to an Irish address.",
+      "You can apply fully online only if you hold a current Irish passport, are 16 or over, have a basic MyGovID account and have never done this identity check (called SAFE registration) before."
+    ],
+    "need": [
+      "**Proof of identity.** Irish citizen: current Irish passport, or current Irish or UK driving licence or Irish learner permit. EU or EEA citizen: current passport or national identity card. Non-EU citizen: current passport.",
+      "**Proof of address** showing your name and full address, dated in the last 6 months: a utility bill, an official letter, a bank statement, or a lease or tenancy agreement.",
+      "Your PPS number and your mobile phone (so the number can be verified for online services)."
+    ],
+    "steps": [
+      "**With an Irish passport:** download the [MyGovID app](https://www.gov.ie/en/department-of-social-protection/publications/mygovid-app/) and verify your identity there. Once approved, the card is posted to you and you also get a verified MyGovID account.",
+      "**Everyone else:** contact your local [PSC centre](https://www.gov.ie/en/department-of-social-protection/publications/public-services-card-psc-centres/) to book an appointment. Some centres take walk-ins at set times.",
+      "Go to the appointment with your documents. It takes about 15 minutes: staff check your documents, take your photo and record your signature.",
+      "The card arrives by post in 7 to 10 working days."
+    ],
+    "cases": [
+      {
+        "q": "I am staying with friends or family and have no bill in my name",
+        "a": [
+          "Bring an original household bill plus a note from the bill holder confirming you live there. The note can be written on the bill itself."
+        ]
+      },
+      {
+        "q": "I came from Ukraine or I am an international protection applicant",
+        "a": [
+          "Ukrainian citizens bring a current passport and their temporary protection letter. International protection applicants bring their IPO (blue) card and the 3-page IPO document."
+        ]
+      },
+      {
+        "q": "I have no passport or driving licence",
+        "a": [
+          "Contact your local PSC centre before you go. Baptismal certificates, work ID cards, Garda Age Cards and photocopies are not accepted as ID."
+        ]
+      },
+      {
+        "q": "My card is out of date",
+        "a": [
+          "Renew online at MyWelfare if it has expired or expires within 45 days, or go to a PSC centre. Since 1 March 2026 you need an in-date Free Travel PSC to use free travel."
+        ]
+      },
+      {
+        "q": "My card is lost, stolen or damaged",
+        "a": [
+          "Phone the PSC Helpdesk on 0818 837 000."
+        ]
+      },
+      {
+        "q": "Is this a national ID card?",
+        "a": [
+          "No. Ireland has no national identity card. See [Which ID can I get?](#/s/id-options)."
+        ]
+      }
+    ],
+    "act": [
+      [
+        "Find a PSC centre",
+        "https://www.gov.ie/en/department-of-social-protection/publications/public-services-card-psc-centres/"
+      ],
+      [
+        "Renew a PSC on MyWelfare",
+        "https://services.mywelfare.ie/en/topics/identity-services/public-services-card-renewal/"
+      ]
+    ],
+    "src": [
+      [
+        "Department of Social Protection · How to get a Public Services Card",
+        "https://www.gov.ie/en/department-of-social-protection/services/how-to-get-a-public-services-card-psc/"
+      ],
+      [
+        "Citizens Information · Public Services Card",
+        "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/public-services-card/"
+      ]
+    ]
+  },
+  {
+    "id": "ppsn",
+    "cat": "identity",
+    "title": "Get a PPS number",
+    "kw": "pps number ppsn personal public service number tax number social security number apply pps cpf número",
+    "short": "Your PPS number is your personal number for tax, social welfare and other public services. You apply on MyWelfare, then attend an appointment. You can only get one if you need it for a public service.",
+    "facts": [
+      [
+        "Where",
+        "Online, then an in-person appointment"
+      ],
+      [
+        "Result",
+        "Number sent by post"
+      ]
+    ],
+    "who": [
+      "Anyone aged 18 or over who needs a PPS number to use a public service, for themselves or their child.",
+      "Babies born in Ireland get one automatically when the birth is registered.",
+      "You do not need one just to look for work, but you do to **start** a job."
+    ],
+    "need": [
+      "A basic [MyGovID account](#/s/mygovid) (name, email and password).",
+      "**Proof of identity.** Irish citizen: current Irish passport, or Irish or UK driving licence. EU or EEA citizen: current passport or national identity card. Non-EU citizen: current passport.",
+      "**Proof of address** no more than 3 months old: utility bill, bank statement, lease or tenancy agreement, or an official letter.",
+      "**Proof of why you need it**, for example a job offer, a social welfare claim, a driving licence application, a school or college course, or registering your child’s birth."
+    ],
+    "steps": [
+      "Sign in to MyWelfare with your MyGovID and start the PPS number application.",
+      "Give your reason, your details (and your child’s, if applying for a child) and book the appointment it offers.",
+      "Go to the appointment with the documents listed in your application. Everyone living in Ireland must attend in person.",
+      "Your application is checked after the appointment. If it succeeds, the number is sent to you by post."
+    ],
+    "cases": [
+      {
+        "q": "I live abroad and need one for Revenue or an inheritance",
+        "a": [
+          "Apply online at MyWelfare or by post with the [REG1 form](https://assets.gov.ie/static/documents/application-form-pps-number-reg1.pdf), the [questionnaire](https://assets.gov.ie/static/documents/pps-number-questionnaire.pdf) and proof of identity, address and reason. If a solicitor or accountant will receive the number, add the [consent form](https://assets.gov.ie/static/documents/pps-number-third-party-consent-form.pdf)."
+        ]
+      },
+      {
+        "q": "My child was born outside Ireland",
+        "a": [
+          "A parent or guardian who already has a PPS number applies for the child. Bring proof of your relationship, such as the child’s birth or adoption certificate, and your own ID."
+        ]
+      },
+      {
+        "q": "I had a PPS number before but cannot find it",
+        "a": [
+          "Do not apply again. It is printed on your Public Services Card, medical card, payslips and letters from Revenue or Social Protection. Otherwise ask your local Intreo centre or Social Welfare branch office."
+        ]
+      },
+      {
+        "q": "I arrived from Ukraine under temporary protection",
+        "a": [
+          "Do not apply online. Phone a [PPS Number Allocation Centre](https://www.gov.ie/en/department-of-social-protection/publications/personal-public-service-pps-number-allocation-centres-by-county/)."
+        ]
+      }
+    ],
+    "tips": [
+      "A PPS number is always 7 digits followed by one or two letters."
+    ],
+    "act": [
+      [
+        "Apply on MyWelfare",
+        "https://www.mywelfare.ie/ApplyForOlrLevelZero/ApplyForApplication?scheme=PersonalPublicServiceNumber"
+      ]
+    ],
+    "src": [
+      [
+        "Department of Social Protection · Get a PPS Number",
+        "https://www.gov.ie/en/department-of-social-protection/services/get-a-personal-public-service-pps-number/"
+      ],
+      [
+        "MyWelfare · Personal Public Service (PPS) Number",
+        "https://services.mywelfare.ie/en/topics/identity-services/personal-public-service-pps-number/"
+      ]
+    ]
+  },
+  {
+    "id": "mygovid",
+    "cat": "identity",
+    "title": "Set up MyGovID",
+    "kw": "mygovid my gov id login account verified account sign in government login mywelfare revenue login digital identity",
+    "short": "MyGovID is one secure login for government services online: MyWelfare, Revenue, the driving licence service and more. A basic account takes minutes; a verified account unlocks everything.",
+    "facts": [
+      [
+        "Cost",
+        "Free app"
+      ],
+      [
+        "Where",
+        "Online"
+      ]
+    ],
+    "need": [
+      "Basic account: your name, an email address and a password. You must be over 16.",
+      "Verified account: your PPS number, your [Public Services Card](#/s/psc) and the mobile number linked to it. Or a current Irish passport and the MyGovID app."
+    ],
+    "steps": [
+      "Go to MyGovID.ie and choose **Create an account now**.",
+      "Enter your full name, email and a password, then type in the 6-digit code sent to your email.",
+      "To verify: sign in, choose **Verify your account**, enter your PPS number, then your PSC number and its expiry date.",
+      "Type in the 6-digit code sent by text to the mobile number linked to your PSC. Your account is now verified."
+    ],
+    "cases": [
+      {
+        "q": "I have an Irish passport but no PSC",
+        "a": [
+          "If you live in Ireland and are 16 or over, verify your identity in the [MyGovID app](https://www.gov.ie/en/department-of-social-protection/publications/mygovid-app/). You get a verified account and a Public Services Card by post."
+        ]
+      },
+      {
+        "q": "I have no Irish passport and no PSC",
+        "a": [
+          "Get a [Public Services Card](#/s/psc) first. Make sure they record your mobile number at the appointment."
+        ]
+      },
+      {
+        "q": "What can I do with only a basic account?",
+        "a": [
+          "Some services, such as applying for a [PPS number](#/s/ppsn), accept a basic account. Most others need a verified one."
+        ]
+      }
+    ],
+    "act": [
+      [
+        "Go to MyGovID",
+        "https://www.mygovid.ie/"
+      ]
+    ],
+    "src": [
+      [
+        "Department of Social Protection · How to sign up for MyGovID",
+        "https://www.gov.ie/en/department-of-social-protection/services/how-to-sign-up-for-mygovid/"
+      ],
+      [
+        "Department of Social Protection · How to get a Public Services Card",
+        "https://www.gov.ie/en/department-of-social-protection/services/how-to-get-a-public-services-card-psc/"
+      ]
+    ]
+  },
+  {
+    "id": "certificates",
+    "cat": "identity",
+    "title": "Order a birth, marriage or death certificate",
+    "kw": "birth certificate marriage certificate death certificate cert copy gro general register office certidão nascimento casamento apostille multilingual",
+    "short": "Order official Irish certificates online from the HSE for €20 each. They are posted to you on secure paper.",
+    "facts": [
+      [
+        "Cost",
+        "€20 per certificate"
+      ],
+      [
+        "Where",
+        "Online"
+      ]
+    ],
+    "need": [
+      "The details of the event: names, date and place.",
+      "A card to pay."
+    ],
+    "steps": [
+      "Choose the certificate on the HSE ordering page: [birth](https://www2.hse.ie/services/births-deaths-and-marriages/order/birth-certificate/), [marriage](https://www2.hse.ie/services/births-deaths-and-marriages/order/marriage-certificate/) or [death](https://www2.hse.ie/services/births-deaths-and-marriages/order/death-certificate/).",
+      "Fill in the details and pay.",
+      "The certificate is posted to you. It cannot be emailed."
+    ],
+    "cases": [
+      {
+        "q": "I need it for use in another country",
+        "a": [
+          "Ask for a **Multilingual Standard Form** with your certificate for use in another EU country: it is free. An authentication stamp costs an extra €10 per certificate."
+        ]
+      },
+      {
+        "q": "I only need the information, not an official certificate",
+        "a": [
+          "A plain copy of an entry costs €5 and can be emailed. It is not on secure paper, so it will not be accepted as an official certificate."
+        ]
+      },
+      {
+        "q": "I need an adoption, civil partnership or stillbirth certificate",
+        "a": [
+          "These are ordered from the same HSE page. You can also order from the General Register Office: fill in the [OC1 form](https://assets.gov.ie/static/documents/09fe3ad4/20261111_-_Ordering_a_Certificate_from_the_General_Register_Office_-_OC1_-_English_-_August_2026_fillable.pdf) and email it to GROonlinepayments@welfare.ie. They send a payment link when they find the record."
+        ]
+      },
+      {
+        "q": "The record cannot be found",
+        "a": [
+          "The General Register Office can issue a “No Trace” letter for €20."
+        ]
+      }
+    ],
+    "tips": [
+      "The General Register Office warns that demand is high, so order well before you need the certificate."
+    ],
+    "act": [
+      [
+        "Order from the HSE",
+        "https://www2.hse.ie/services/births-deaths-and-marriages/order/"
+      ]
+    ],
+    "src": [
+      [
+        "Department of Social Protection · Birth, death, marriage and other certificates",
+        "https://www.gov.ie/en/department-of-social-protection/services/birth-death-marriage-and-other-certificates/"
+      ],
+      [
+        "HSE · Order a certificate",
+        "https://www2.hse.ie/services/births-deaths-and-marriages/order/"
+      ]
+    ]
+  }
+]

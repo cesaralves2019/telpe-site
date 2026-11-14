@@ -1,0 +1,121 @@
+[
+  {
+    "id": "tax-start-job",
+    "cat": "tax",
+    "title": "Sort out your tax when you start a job",
+    "kw": "start job first job tax emergency tax myaccount revenue register job tax credits payslip paye rpn imposto primeiro emprego",
+    "short": "Give your employer your PPS number and register the job with Revenue in myAccount as soon as you accept it. If you do not, you are put on emergency tax and pay too much.",
+    "facts": [["Where", "Revenue myAccount"], ["Cost", "Nothing"]],
+    "need": ["A [PPS number](#/s/ppsn).", "A Revenue **myAccount** login. You can sign in with a verified [MyGovID](#/s/mygovid)."],
+    "steps": [
+      "Give your PPS number to your employer.",
+      "Register for [myAccount](https://www.ros.ie/myaccount-web/home.html).",
+      "In myAccount open **PAYE Services**, then **Update Job or Pension Details**, and add the new job. Do this as soon as you accept the offer.",
+      "Revenue sends your employer a **Revenue Payroll Notification**, which tells them how much income tax and USC to deduct.",
+      "In PAYE Services, check that your tax credits are right and claim any you are missing."
+    ],
+    "cases": [
+      {"q": "I am on emergency tax", "a": ["It happens when your employer has no Revenue Payroll Notification for you. If the employer has your PPS number, you are taxed at 20% for the first 4 weeks and at 40% from week 5. Without a PPS number you pay 40% on everything with no credits.", "Register the job in myAccount. Once Revenue notifies your employer, overpaid tax normally comes back through your payslip."]},
+      {"q": "I am changing job, not starting my first", "a": ["You only register your first job yourself. For later jobs your new employer notifies Revenue."]},
+      {"q": "What are PRSI and USC?", "a": ["PRSI is social insurance: most employees aged 16 to 66 pay it, and it is what entitles you to benefits and the State Pension. USC is an extra tax on income."]},
+      {"q": "I cannot register for myAccount", "a": ["Email RegisterForMyAccount@revenue.ie or phone (01) 738 3691."]}
+    ],
+    "act": [["Open myAccount", "https://www.ros.ie/myaccount-web/home.html"], ["Add a job (Jobs and Pensions)", "https://www.revenue.ie/en/online-services/services/paye-services/add-job-pension.aspx"]],
+    "src": [
+      ["Citizens Information · Tax and starting work", "https://www.citizensinformation.ie/en/employment/starting-work-and-changing-job/starting-work/tax-and-starting-work/"],
+      ["Citizens Information · Online services for PAYE taxpayers", "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/online-services-for-paye-taxpayers/"]
+    ]
+  },
+  {
+    "id": "tax-refund",
+    "cat": "tax",
+    "title": "Check your tax and claim a refund",
+    "kw": "tax refund tax back claim tax overpaid tax income tax return statement of liability p21 medical expenses restituição imposto de renda",
+    "short": "Employees can check in myAccount whether they overpaid tax in any of the last 4 years, add credits they missed and get the money back into their bank account.",
+    "facts": [["Look back", "4 years"], ["Where", "Revenue myAccount"]],
+    "steps": [
+      "Sign in to myAccount and open **PAYE Services**.",
+      "Choose **Review your tax for the previous 4 years**. The Preliminary End of Year Statement shows whether Revenue thinks you overpaid or underpaid. It appears from mid-January for the year just ended.",
+      "Complete the **income tax return** for that year and add credits and reliefs you have not claimed, such as medical expenses or the [Rent Tax Credit](#/s/rent-tax-credit).",
+      "You get a **Statement of Liability**, normally within 5 working days. A refund is paid to your bank account if you gave your bank details, otherwise by cheque."
+    ],
+    "cases": [
+      {"q": "It says I underpaid", "a": ["If you owe less than €6,000 you can pay in myAccount, or have it collected by reducing your tax credits over up to 4 years."]},
+      {"q": "I left Ireland during the year", "a": ["You can still complete the return for that year in myAccount and claim any overpaid tax."]},
+      {"q": "How do I see what I was paid and taxed?", "a": ["In PAYE Services, select the year and create an **Employment Detail Summary**. It replaces the old P60."]}
+    ],
+    "act": [["Open myAccount", "https://www.ros.ie/myaccount-web/home.html"]],
+    "src": [["Citizens Information · How to review your tax for PAYE taxpayers", "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/how-to-review-your-paye-tax/"]]
+  },
+  {
+    "id": "rent-tax-credit",
+    "cat": "tax",
+    "title": "Claim the Rent Tax Credit",
+    "kw": "rent tax credit renters credit tenant tax relief rent relief 1000 aluguel crédito imposto",
+    "short": "If you pay rent you can get up to €1,000 a year off your income tax, or €2,000 for a jointly assessed couple. You claim it in myAccount, and you can go back to earlier years.",
+    "facts": [["Worth", "Up to €1,000 a year"], ["Where", "Revenue myAccount"]],
+    "who": [
+      "You pay rent for your home in Ireland, or for a second home here that you use for work or an approved course.",
+      "Parents can claim for rent paid for a child under 23 who is on an approved course.",
+      "The tenancy must be registered with the Residential Tenancies Board, unless it is a licence such as renting a room in the owner’s home.",
+      "**Not eligible:** tenancies supported by HAP, Rent Supplement or RAS, cost rental homes, and tenancies where the landlord is a local authority, a housing body or your parent or child."
+    ],
+    "need": [
+      "Your landlord’s name and address, and their PPS or tax number.",
+      "The property’s Local Property Tax number. You may also be asked for the Registered Tenancy number."
+    ],
+    "steps": [
+      "**This year:** in myAccount go to PAYE Services, **Manage your tax for the current year**, then **Add new credits**. The credit then comes through your pay.",
+      "**Earlier years:** in PAYE Services, review the previous 4 years and complete the income tax return for each year."
+    ],
+    "cases": [
+      {"q": "How is it worked out?", "a": ["It is 20% of the rent you paid, up to the cap. The cap was €500 for 2022 and 2023, and is €1,000 from 2024."]},
+      {"q": "What about 2027?", "a": ["Budget 2027 raises the credit by €150, to €1,150."]}
+    ],
+    "act": [["Claim in myAccount", "https://www.ros.ie/myaccount-web/home.html"], ["Revenue: how to claim", "https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/land-and-property/rent-credit/how-to-claim.aspx"]],
+    "src": [["Citizens Information · Rent Tax Credit", "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/rent-tax-credit/"]]
+  },
+  {
+    "id": "lpt",
+    "cat": "tax",
+    "title": "Pay Local Property Tax",
+    "kw": "local property tax lpt house tax property tax home owner valuation band iptu imposto casa",
+    "short": "A yearly tax paid by whoever owns a home on 1 November. You value the property yourself; the charge for 2026 to 2030 is based on its value on 1 November 2025.",
+    "facts": [["From", "€95 a year in the lowest band"], ["Who", "The owner on 1 November"], ["Where", "Revenue LPT online"]],
+    "who": [
+      "Owners of residential property. Landlords pay for rented homes; tenants on ordinary leases do not."
+    ],
+    "steps": [
+      "Work out the band with Revenue’s [LPT calculator](https://lpt.revenue.ie/lpt-web/reckoner/lpt.html).",
+      "Sign in to LPT online through myAccount and choose how to pay.",
+      "For 2027: confirm the method by 2 December 2026 if you want to spread payments, or by 11 January 2027 for a single payment. Direct debits and similar methods carry on automatically."
+    ],
+    "cases": [
+      {"q": "How much is it?", "a": ["Up to €240,000: €95. From €240,001 to €315,000: €235. From €315,001 to €420,000: €333. Your council can raise or lower the basic rate by up to 15%, so the figure differs from county to county."]},
+      {"q": "I just bought or built a home", "a": ["A property that becomes liable for the first time needs a return by 2 December 2026, even if you claim an exemption or deferral."]},
+      {"q": "I am a tenant", "a": ["You do not pay it. But you need the property’s LPT number to claim the [Rent Tax Credit](#/s/rent-tax-credit): ask your landlord."]}
+    ],
+    "act": [["Calculate your LPT", "https://lpt.revenue.ie/lpt-web/reckoner/lpt.html"], ["Valuation bands and rates", "https://www.revenue.ie/en/property/local-property-tax/valuing-your-property/valuation-bands-rates.aspx"]],
+    "src": [["Citizens Information · Local Property Tax (LPT)", "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/local-property-tax/"]]
+  },
+  {
+    "id": "self-employed-tax",
+    "cat": "tax",
+    "title": "Tax if you are self-employed",
+    "kw": "self employed sole trader freelancer contractor form 11 ros pay and file self assessment autônomo imposto",
+    "short": "Register with Revenue as self-employed, then file one return a year and pay by 31 October. Filing through ROS gives you until 18 November 2026 this year.",
+    "facts": [["Deadline", "31 October, or 18 November 2026 on ROS"], ["Where", "Revenue Online Service (ROS)"]],
+    "steps": [
+      "[Register for tax](https://www.revenue.ie/en/starting-a-business/registering-for-tax/index.aspx) with Revenue as a self-employed person.",
+      "Keep records of everything you sell, buy, receive and pay out, with the supporting documents.",
+      "Each year by the deadline, file the return for the previous year **and** pay preliminary tax, which is an estimate of this year’s tax.",
+      "You pay Class S PRSI, and USC if your income is over €13,000 a year."
+    ],
+    "cases": [
+      {"q": "Do I need to register for VAT?", "a": ["Only if your yearly turnover is over, or likely to go over, the threshold. It is different for goods and for services: see Revenue’s [VAT thresholds](https://www.revenue.ie/en/vat/vat-registration/who-should-register-for-vat/vat-thresholds.aspx)."]},
+      {"q": "I also want to trade under a business name or set up a company", "a": ["See [Start a business](#/s/start-business)."]}
+    ],
+    "act": [["Revenue: guide to self-assessment", "https://www.revenue.ie/en/self-assessment-and-self-employment/guide-to-self-assessment/index.aspx"]],
+    "src": [["Citizens Information · Tax for self-employed people", "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/taxation-of-self-employed-people/"]]
+  }
+]

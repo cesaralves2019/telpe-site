@@ -1,0 +1,97 @@
+[
+  {
+    "id": "report-crime",
+    "cat": "justice",
+    "title": "Report a crime",
+    "kw": "report crime garda police theft stolen robbery burglary assault emergency 999 112 confidential line denunciar crime polícia boletim de ocorrência roubo",
+    "short": "In an emergency phone 999 or 112. Otherwise contact your local Garda station. Thefts of property worth less than €1,000 can be declared online.",
+    "facts": [["Emergency", "999 or 112"], ["Confidential line", "1800 666 111"], ["Where", "Any Garda station"]],
+    "steps": [
+      "**Emergency or crime happening now:** phone 999 or 112. People who are deaf, hard of hearing or speech-impaired can [text 112](https://112.ie/emergency-sms-service/).",
+      "**Not urgent:** go to or phone your [local Garda station](https://www.garda.ie/en/contact-us/station-directory/). If you cannot get there, ask for a Garda to come to your home.",
+      "You make a statement. The Garda reads it back to you before you sign.",
+      "You then get a letter from the Garda Victim Service Office with the name of the investigating Garda and your case number."
+    ],
+    "cases": [
+      {"q": "Something was stolen", "a": ["If the property was worth less than €1,000, you can use the Garda [online theft declaration](https://www.garda.ie/en/victim-services/declare-a-theft/)."]},
+      {"q": "I want to give information without my name", "a": ["Phone the Garda Confidential Line, free, on 1800 666 111. You do not have to give your name."]},
+      {"q": "My English is not good", "a": ["The Gardaí provide free translation. You can also ask to speak to a male or a female Garda."]},
+      {"q": "It was a hate crime", "a": ["There is a dedicated [online hate crime report](https://garda.ie/en/reportahatecrime/-)."]},
+      {"q": "I need support afterwards", "a": ["The [Crime Victims Helpline](https://crimevictimshelpline.ie/) offers listening and support."]}
+    ],
+    "act": [["Find a Garda station", "https://www.garda.ie/en/contact-us/station-directory/"], ["Declare a theft online", "https://www.garda.ie/en/victim-services/declare-a-theft/"]],
+    "src": [["Citizens Information · Reporting a crime", "https://www.citizensinformation.ie/en/justice/law-enforcement/reporting-a-crime/"]]
+  },
+  {
+    "id": "domestic-violence",
+    "cat": "justice",
+    "title": "Domestic violence: get protection",
+    "kw": "domestic violence abuse safety order barring order protection order womens aid mens aid violência doméstica medida protetiva",
+    "short": "If you are in immediate danger phone 999 or 112. Women’s Aid answers free, day and night, on 1800 341 900. The District Court can order an abuser to stop or to leave the home.",
+    "facts": [["Emergency", "999 or 112"], ["Women’s Aid", "1800 341 900, free, 24 hours"], ["Men’s Aid", "(01) 554 3811"]],
+    "steps": [
+      "**In danger now:** phone 999 or 112, or go to a Garda station.",
+      "**To talk it through:** Women’s Aid, freephone 1800 341 900, any time. Men’s Aid, (01) 554 3811, Monday to Friday, 9am to 5pm.",
+      "**To get a court order:** contact your local District Court office. In Dublin it is the Dublin District Family Law Office, Dolphin House, East Essex Street, Dublin 2.",
+      "Domestic violence cases get priority for [legal aid](#/s/legal-aid)."
+    ],
+    "cases": [
+      {"q": "Which order do I need?", "a": ["**Safety order:** forbids violence and threats, for up to 5 years; the person can still live in the home. **Barring order:** the person must leave the home, for up to 3 years. **Protection order** and **interim barring order:** short-term protection until the court hears the full application. **Emergency barring order:** the person must leave at once, for up to 8 working days."]},
+      {"q": "Who can apply?", "a": ["Spouses, civil partners, people who live or lived together as a couple, people in an intimate relationship, and parents of an adult child. Tusla can also apply on someone’s behalf."]},
+      {"q": "Can I take time off work?", "a": ["Employees are entitled to 5 days of paid domestic violence leave a year."]}
+    ],
+    "act": [["Read about the court orders", "https://www.citizensinformation.ie/en/birth-family-relationships/problems-in-marriages-and-other-relationships/barring-safety-and-protection-orders/"]],
+    "src": [
+      ["Citizens Information · Safety orders, protection orders and barring orders", "https://www.citizensinformation.ie/en/birth-family-relationships/problems-in-marriages-and-other-relationships/barring-safety-and-protection-orders/"],
+      ["Citizens Information · Civil legal aid and legal advice", "https://www.citizensinformation.ie/en/justice/legal-aid-and-advice/civil-legal-advice-and-legal-aid/"],
+      ["Citizens Information · Employees’ rights and entitlements", "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/employment-rights-and-duties/employee-rights-and-entitlements/"]
+    ]
+  },
+  {
+    "id": "legal-aid",
+    "cat": "justice",
+    "title": "Get legal aid",
+    "kw": "legal aid free lawyer solicitor legal aid board law centre family law advogado gratuito defensoria",
+    "short": "The Legal Aid Board gives legal advice and a solicitor for civil cases, such as family law, to people with a disposable income under €18,000. You pay a contribution from €30.",
+    "facts": [["Income limit", "Disposable income under €18,000"], ["Cost", "From €30 for advice, €130 for aid"], ["Where", "Online or a law centre"]],
+    "who": [
+      "Your disposable income is under €18,000 a year and your disposable capital under €100,000, not counting your home.",
+      "Your case is one the Board covers: family disputes, child-care cases, breach of contract and most disputes with an employer."
+    ],
+    "steps": [
+      "Apply online, or return the application form to your local law centre.",
+      "The Board checks your finances and whether the case has merit.",
+      "You pay your contribution and are given a solicitor."
+    ],
+    "cases": [
+      {"q": "How much will I pay?", "a": ["If your only income is social welfare: at most €30 for advice and €130 for legal aid. Otherwise the amount rises with your disposable income and capital."]},
+      {"q": "What is not covered?", "a": ["Defamation, disputes about land, small claims, conveyancing and criminal cases, with some exceptions."]},
+      {"q": "Is my case urgent?", "a": ["Domestic violence, child-care, child abduction and cases about to run out of time are given priority."]}
+    ],
+    "act": [["Apply online", "https://onlineapp1.board.ie/"]],
+    "src": [["Citizens Information · Civil legal aid and legal advice", "https://www.citizensinformation.ie/en/justice/legal-aid-and-advice/civil-legal-advice-and-legal-aid/"]]
+  },
+  {
+    "id": "garda-vetting",
+    "cat": "justice",
+    "title": "Get Garda vetting",
+    "kw": "garda vetting police check background check criminal record working with children volunteer police certificate antecedentes criminais",
+    "short": "Vetting is needed for work or volunteering with children or vulnerable adults. You cannot apply yourself: the school, club or employer starts it and you finish it online.",
+    "facts": [["Who applies", "The organisation, not you"], ["Where", "Online (e-Vetting)"]],
+    "who": ["Staff, volunteers, students and contractors who work with children or vulnerable adults, for example in schools, childcare, sports clubs and health services."],
+    "steps": [
+      "The organisation gives you a vetting invitation form. Fill it in and show them proof of identity.",
+      "You get an email with a link to the online form. Complete it and submit.",
+      "The organisation sends it to the National Vetting Bureau, which sends the result back to the organisation.",
+      "The organisation gives you a copy of the disclosure."
+    ],
+    "cases": [
+      {"q": "I am 16 or 17", "a": ["You can be vetted from 16. Under 18, a parent or guardian signs a consent form."]},
+      {"q": "I am self-employed", "a": ["You still have to apply through a relevant organisation."]},
+      {"q": "I need a police record for a visa or to move abroad", "a": ["That is a **police certificate**, not vetting. You apply to the Gardaí: see [Police certificates](https://www.garda.ie/en/about-us/online-services/data-protection-foi-police-certificates/police-certificates.html)."]},
+      {"q": "Where is my application?", "a": ["Use the Bureau’s [tracking page](https://vetting.garda.ie/Track)."]}
+    ],
+    "act": [["About e-Vetting", "https://vetting.garda.ie/Application/About"]],
+    "src": [["Citizens Information · Garda vetting", "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/data-protection-at-work/garda-vetting/"]]
+  }
+]

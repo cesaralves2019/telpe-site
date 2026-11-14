@@ -1,0 +1,107 @@
+[
+  {
+    "id": "renting-rights",
+    "cat": "housing",
+    "title": "Renting a home: your rights",
+    "kw": "renting tenant rights landlord rent increase eviction notice deposit rtb residential tenancies board lease aluguel inquilino direitos despejo",
+    "short": "Private tenants are protected by law and by the Residential Tenancies Board (RTB). Rent can rise only once a year and by at most 2%, and after 6 months you have a right to stay.",
+    "facts": [["Rent rise", "Once a year, 2% or inflation if lower"], ["Notice of a rise", "At least 90 days"], ["Disputes", "RTB"]],
+    "who": ["Anyone renting from a private landlord. Renting a room in the owner’s own home is a licence, not a tenancy, and has fewer protections."],
+    "steps": [
+      "Check that your tenancy is registered on the RTB’s [public register](https://rtb.ie/check-the-register/). You also need registration to claim the [Rent Tax Credit](#/s/rent-tax-credit).",
+      "Keep your lease, receipts for rent and deposit, and photos of the home’s condition on the day you moved in.",
+      "If there is a problem, raise it with the landlord in writing first.",
+      "If that fails, open a dispute with the RTB. Keep paying your rent while it is decided."
+    ],
+    "cases": [
+      {"q": "My landlord wants to raise the rent", "a": ["The rent can be reviewed once a year, with at least 90 days’ written notice, and the increase is capped at 2% or inflation, whichever is lower. The landlord must show how the rent was set. You can challenge it at the RTB."]},
+      {"q": "My landlord wants me to leave", "a": ["You must get a valid written Notice of Termination. In the first 6 months a landlord can end a tenancy for any reason; after that you have security of tenure.", "For tenancies that began on or after 1 March 2026: landlords with 4 or more tenancies, and all companies, can end one only if you break your obligations or the home no longer suits your household. Smaller landlords have a few extra grounds, such as selling because of hardship or moving in themselves or a close family member.", "Tenancies that began before 1 March 2026 stay under the older rules."]},
+      {"q": "Something is broken", "a": ["The landlord must keep the home safe and in good repair, with hot and cold water, heating and safe electricity and gas. If they do not act in a reasonable time and you pay for the repair, they must reimburse reasonable costs."]},
+      {"q": "Can the landlord come in when they like?", "a": ["No. They need your permission, except in an emergency."]},
+      {"q": "I need help paying rent", "a": ["See [Housing Assistance Payment](#/s/hap) and [Social housing](#/s/social-housing)."]}
+    ],
+    "act": [["Check the RTB register", "https://rtb.ie/check-the-register/"], ["Open a dispute", "https://rtb.ie/disputes/disputes-process/"]],
+    "src": [
+      ["Residential Tenancies Board · Tenant rights and responsibilities", "https://rtb.ie/renting/rights-responsibilities/tenant-rights-responsibilities/"],
+      ["Residential Tenancies Board · Rental law changes from 1 March 2026", "https://rtb.ie/renting/rental-law-changes-from-1-march-2/"]
+    ]
+  },
+  {
+    "id": "social-housing",
+    "cat": "housing",
+    "title": "Apply for social housing",
+    "kw": "social housing council house local authority housing list housing application casa do governo moradia social",
+    "short": "You apply to the housing department of the council where you live. If your income is under the limit and you have no other suitable home, you go on the housing list and can get help with rent while you wait.",
+    "facts": [["Income limit", "€30,000 to €40,000 for a single person"], ["Decision", "Within 12 weeks"], ["Where", "Your local authority"]],
+    "who": [
+      "You have a long-term legal right to remain in Ireland. People with temporary protection cannot apply.",
+      "You live in the council’s area or have a local connection to it.",
+      "Your household’s net income is under the limit for the area: €40,000 in Dublin, Cork city, Galway city, Meath, Kildare and Wicklow; €35,000 or €30,000 elsewhere. The limit is higher for each extra adult and child.",
+      "You have no suitable alternative accommodation."
+    ],
+    "need": ["Photo ID, proof of address and proof of income for everyone on the application."],
+    "steps": [
+      "Get the application form from your council’s website or housing department. Find yours in the [list of local authorities](https://www.gov.ie/en/publication/942f74-local-authorities/).",
+      "Return it with your documents. A Citizens Information Centre can help you fill it in.",
+      "The council has 12 weeks to decide, or longer if it needs more information.",
+      "If you are accepted you join the housing list, and you can apply for the [Housing Assistance Payment](#/s/hap) to rent privately."
+    ],
+    "cases": [
+      {"q": "Do I lose my place if I take HAP?", "a": ["You come off the main list, but if you ask for a transfer within 2 weeks of your HAP confirmation letter, the time you already waited still counts."]},
+      {"q": "I have nowhere to stay tonight", "a": ["Contact the homeless service of your local authority straight away."]}
+    ],
+    "act": [["Find your local authority", "https://www.gov.ie/en/publication/942f74-local-authorities/"]],
+    "src": [["Citizens Information · Applying for social housing", "https://www.citizensinformation.ie/en/housing/local-authority-and-social-housing/applying-for-local-authority-housing/"]]
+  },
+  {
+    "id": "hap",
+    "cat": "housing",
+    "title": "Housing Assistance Payment (HAP)",
+    "kw": "hap housing assistance payment help with rent rent support council pays landlord ajuda aluguel",
+    "short": "With HAP you find your own private rented home, the council pays the landlord, and you pay the council a weekly amount based on your income. You can work full-time and keep it.",
+    "facts": [["Who", "People on the council housing list"], ["Where", "Your local authority"]],
+    "who": ["You must first be approved for [social housing](#/s/social-housing) by your council."],
+    "steps": [
+      "Get approved for social housing support.",
+      "Find a private rented home whose landlord agrees to HAP. The rent should be within the HAP limit for your area; the council can go up to 35% above it, case by case, if you cannot find anything.",
+      "Apply for HAP once you have found the home, online through the HAP portal or with a paper form from the council.",
+      "The council pays the landlord each month and you pay your contribution to the council."
+    ],
+    "cases": [
+      {"q": "Who pays the deposit?", "a": ["You do. The council does not cover it, though an [Additional Needs Payment](#/s/additional-needs-payment) may help in some situations."]},
+      {"q": "Can I claim the Rent Tax Credit too?", "a": ["No. Tenancies supported by HAP do not qualify."]}
+    ],
+    "act": [["Apply for HAP", "https://www.hap.ie/apply/"]],
+    "src": [
+      ["Citizens Information · Housing Assistance Payment (HAP)", "https://www.citizensinformation.ie/en/housing/renting-a-home/help-with-renting/housing-assistance-payment/"],
+      ["Citizens Information · Rent Tax Credit", "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/rent-tax-credit/"]
+    ]
+  },
+  {
+    "id": "buy-first-home",
+    "cat": "housing",
+    "title": "Get help buying your first home",
+    "kw": "first time buyer help to buy first home scheme shared equity deposit new build mortgage comprar casa primeira casa",
+    "short": "Two schemes for first-time buyers of new homes: Help to Buy refunds up to €35,000 of tax you have paid, and the First Home Scheme puts in up to 30% of the price in return for a share of the home.",
+    "facts": [["Help to Buy", "Up to €35,000 tax refund"], ["First Home", "Up to 30% of the price"], ["For", "New homes only"]],
+    "who": [
+      "**Help to Buy:** first-time buyers buying or self-building a new home that costs €500,000 or less, with a mortgage of at least 70% of the value. You must live in it for at least 5 years and your tax affairs must be in order for the last 4 years.",
+      "**First Home Scheme:** first-time buyers, and “fresh start” applicants such as people who are separated or have been through insolvency. You need a 10% deposit and a mortgage from a participating lender, and the price must be under your county’s ceiling (from €375,000 to €500,000)."
+    ],
+    "steps": [
+      "**Help to Buy:** apply in Revenue myAccount (or ROS if you are self-employed). After you sign the contract, submit the claim with your mortgage and property details; the builder or your solicitor verifies it.",
+      "**First Home Scheme:** check your eligibility, get mortgage approval in principle, then apply online at firsthomescheme.ie."
+    ],
+    "cases": [
+      {"q": "How much is Help to Buy?", "a": ["The lowest of: €35,000; 10% of the value of the home; or the income tax and deposit interest tax you paid in the last 4 years. The maximum rose from €30,000 to €35,000 on 7 October 2026. The scheme runs to the end of 2029."]},
+      {"q": "Can I use both?", "a": ["Yes, but then the First Home Scheme share is limited to 20%."]},
+      {"q": "Does the First Home share cost anything?", "a": ["Nothing for the first 5 years. From year 6, if you have not bought the share back, a yearly service charge applies, starting at 1.75% of the amount the scheme paid. You can buy the share back at any time."]},
+      {"q": "I am buying a second-hand home", "a": ["Neither scheme applies. Ask your council about the [Local Authority Home Loan](https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/local-authority-mortgages/)."]}
+    ],
+    "act": [["First Home Scheme", "https://www.firsthomescheme.ie/"], ["Apply for Help to Buy in myAccount", "https://www.ros.ie/myaccount-web/home.html"]],
+    "src": [
+      ["Citizens Information · Help to Buy Scheme", "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/help-to-buy-scheme/"],
+      ["Citizens Information · First Home Scheme", "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/first-home-scheme/"]
+    ]
+  }
+]

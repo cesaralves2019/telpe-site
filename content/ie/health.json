@@ -1,0 +1,191 @@
+[
+  {
+    "id": "healthcare-entitlement",
+    "cat": "health",
+    "title": "Am I entitled to public healthcare?",
+    "kw": "healthcare entitlement ordinarily resident public health service hse new resident foreigner health insurance saúde direito sus",
+    "short": "Yes, if you are “ordinarily resident”: you have lived in Ireland for a year, or intend to live here for at least a year. It is based on living here, not on your nationality.",
+    "facts": [["Test", "Living here for at least 1 year, or intending to"], ["Run by", "HSE"]],
+    "who": [
+      "Anyone ordinarily resident in Ireland. The HSE may ask for proof dated in the last 12 months: a lease or proof of buying a home, bank statements, a utility bill, insurance in your name or an official letter.",
+      "Non-EEA citizens should check with Immigration Service Delivery whether their permission requires private health insurance."
+    ],
+    "steps": [
+      "Find a GP near you: see [Find a GP](#/s/find-gp).",
+      "Check whether your income qualifies you for a [medical card or GP visit card](#/s/medical-card).",
+      "If you pay a lot for medicines, get a [Drugs Payment Scheme card](#/s/drugs-payment-scheme)."
+    ],
+    "cases": [
+      {"q": "I have a medical card", "a": ["GP visits, public hospital services, maternity care and some dental, eye and hearing services are free. Prescribed medicines are free apart from a small charge per item."]},
+      {"q": "I do not have a medical card", "a": ["You pay to see a GP and for medicines. Public hospital care is free or low-cost: see [Urgent and emergency care](#/s/urgent-care) for the charges."]},
+      {"q": "I am only visiting", "a": ["Visitors from the UK can get medically necessary care during a visit, and EU, EEA and Swiss visitors use their European Health Insurance Card. For everyone else, see [Health services for visitors to Ireland](https://www.citizensinformation.ie/en/health/health-system/health-services-and-visitors-to-ireland/)."]},
+      {"q": "Should I buy private health insurance?", "a": ["It is optional for residents. Premiums get 20% tax relief, taken off by the insurer, on up to €1,000 per adult and €500 per child."]}
+    ],
+    "act": [["HSE schemes and allowances", "https://www2.hse.ie/services/schemes-allowances/"]],
+    "src": [
+      ["Citizens Information · Entitlement to health services", "https://www.citizensinformation.ie/en/health/health-system/entitlement-to-public-health-services/"],
+      ["Citizens Information · Health care for new residents", "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/introduction-to-the-irish-system/health-care-in-ireland/"]
+    ]
+  },
+  {
+    "id": "medical-card",
+    "cat": "health",
+    "title": "Apply for a medical card or GP visit card",
+    "kw": "medical card gp visit card free doctor free gp hse card income limit under 8 over 70 cartão médico",
+    "short": "A medical card gives free GP visits, hospital care and medicines at a small charge, if your income is under the limit. A GP visit card gives free GP visits only, and children under 8 and people over 70 get one regardless of income.",
+    "facts": [["Decided by", "HSE, on your income"], ["Where", "Online"]],
+    "who": [
+      "You must be ordinarily resident in Ireland.",
+      "**Medical card:** weekly income after tax under the limit, for example €184 for a single person living alone, or €266.50 for a couple or single parent with dependants (higher at 66 or over). Allowances are added for each child, and costs such as rent, childcare and travel to work are taken into account.",
+      "**GP visit card:** children under 8, people aged 70 or over, and people getting Carer’s Benefit or Carer’s Allowance qualify without a means test. Anyone aged 8 to 69 can apply on income."
+    ],
+    "need": [
+      "Your PPS number.",
+      "Documents showing your income and your main expenses, such as rent and childcare."
+    ],
+    "steps": [
+      "Start the online application. One form covers both cards: if you are over the limit for a medical card, you are assessed for a GP visit card.",
+      "It begins with a quick financial check, then asks for documents.",
+      "Follow your application on [mymedicalcard.ie](https://www.mymedicalcard.ie/)."
+    ],
+    "cases": [
+      {"q": "My child is under 8", "a": ["Register for the [under-8s GP visit card](https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/under-8s/). There is no income test."]},
+      {"q": "I am 70 or over", "a": ["Register for the [over-70s GP visit card](https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/over-70s/). There is a separate, higher income limit for the [over-70s medical card](https://www2.hse.ie/services/schemes-allowances/medical-cards/other-types-of-medical-card/over-70s/)."]},
+      {"q": "I am a carer", "a": ["If you get Carer’s Benefit or Carer’s Allowance, at full or half rate, [register here](https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/carers/)."]},
+      {"q": "I need help applying", "a": ["Phone HSE Live free on 1800 700 700, Monday to Friday 8am to 8pm and Saturday 9am to 5pm."]}
+    ],
+    "act": [["Apply online", "https://www2.hse.ie/services/schemes-allowances/medical-cards/applying/apply/"], ["Check an application", "https://www.mymedicalcard.ie/"]],
+    "src": [
+      ["HSE · How much you can earn and still qualify for a medical card", "https://www2.hse.ie/services/schemes-allowances/medical-cards/applying/how-much-you-can-earn/"],
+      ["HSE · GP visit cards", "https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/gp-visit-cards/"],
+      ["Citizens Information · Entitlement to health services", "https://www.citizensinformation.ie/en/health/health-system/entitlement-to-public-health-services/"]
+    ]
+  },
+  {
+    "id": "find-gp",
+    "cat": "health",
+    "title": "Find a GP (family doctor)",
+    "kw": "gp doctor family doctor register with a gp find a doctor clinic médico clínico geral consulta",
+    "short": "Your GP is your first stop for any health problem that is not an emergency. You choose your own, and you do not need a PPS number or any document to be seen.",
+    "facts": [["Cost", "About €45 to €65 a visit without a card"], ["Where", "Any practice taking new patients"]],
+    "steps": [
+      "Search the HSE’s **Find a GP** tool for practices near you.",
+      "Phone and ask if they are taking new patients. Some lists are full: if so, try the next practice. You can move to your preferred GP later.",
+      "Ask what a visit costs before you go. There are no set fees."
+    ],
+    "cases": [
+      {"q": "I cannot afford the fee", "a": ["Check whether you qualify for a [medical card or GP visit card](#/s/medical-card). Children under 8 and people aged 70 or over do not pay."]},
+      {"q": "My GP is closed and it cannot wait", "a": ["Use your local [GP out-of-hours service](https://www2.hse.ie/services/find-urgent-emergency-care/?kind=gp-out-of-hours) in the evening or at weekends."]},
+      {"q": "It is an emergency", "a": ["Phone 112 or 999. See [Urgent and emergency care](#/s/urgent-care)."]}
+    ],
+    "act": [["Find a GP", "https://www2.hse.ie/services/find-a-gp/"]],
+    "src": [["Citizens Information · GPs and private patients", "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/gps-and-private-patients/"]]
+  },
+  {
+    "id": "urgent-care",
+    "cat": "health",
+    "title": "Urgent and emergency care",
+    "kw": "emergency ambulance 112 999 emergency department a&e hospital injury unit urgent care accident emergência hospital pronto socorro",
+    "short": "In a life-threatening emergency phone 112 or 999. For a broken bone or minor burn, an injury unit is quicker and cheaper than an emergency department.",
+    "facts": [["Emergency", "112 or 999"], ["ED charge", "€100 without a GP letter"], ["Injury unit", "€75"]],
+    "steps": [
+      "**Life in danger:** phone 112 or 999, or go to the nearest emergency department.",
+      "**Injury that is not life-threatening** (a possible broken bone, a dislocation, a minor burn): go to an injury unit.",
+      "**Illness that cannot wait until your GP opens:** phone the GP out-of-hours service.",
+      "Use the HSE finder to see what is open near you."
+    ],
+    "cases": [
+      {"q": "What will it cost?", "a": ["Emergency department: €100 if you come without a referral letter from a GP; nothing with a letter. Injury unit: €75.", "Medical card holders do not pay. Neither do women receiving maternity services, or babies up to 6 weeks old."]},
+      {"q": "I am admitted to hospital", "a": ["Public in-patient and day-case charges were abolished on 17 April 2023. Private patients still pay."]},
+      {"q": "I was referred to a specialist", "a": ["Public out-patient appointments made on a GP’s referral are free."]},
+      {"q": "It is a mental health crisis", "a": ["See [Urgent mental health help](#/s/mental-health)."]}
+    ],
+    "act": [["Find urgent and emergency care", "https://www2.hse.ie/services/find-urgent-emergency-care/"]],
+    "src": [
+      ["HSE · Urgent and emergency care", "https://www2.hse.ie/services/urgent-emergency-care/"],
+      ["Citizens Information · Charges for hospital services", "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/"]
+    ]
+  },
+  {
+    "id": "mental-health",
+    "cat": "health",
+    "title": "Urgent mental health help",
+    "kw": "mental health crisis suicide helpline samaritans text 50808 childline depression anxiety counselling saúde mental ajuda",
+    "short": "If you or someone else is in immediate danger, phone 112 or 999. To talk to someone now, the Samaritans answer 24 hours a day on 116 123, free.",
+    "facts": [["Emergency", "112 or 999"], ["Samaritans", "116 123, free, 24 hours"], ["Text", "HELLO to 50808"]],
+    "steps": [
+      "**Immediate danger:** phone 112 or 999, or go to the nearest emergency department.",
+      "**Need to talk now:** Samaritans, freephone 116 123, any time. Or text HELLO to 50808 for a free, anonymous text conversation, any time.",
+      "**Children and teenagers:** Childline, freephone 1800 66 66 66, or chat at childline.ie.",
+      "**Ongoing support:** see your GP, who can refer you to mental health services. If you already attend a mental health team, contact them."
+    ],
+    "act": [["Get urgent help (HSE)", "https://www2.hse.ie/mental-health/services-support/get-urgent-help/"], ["Organisations that can help", "https://www2.hse.ie/mental-health/services-support/supports-services/"]],
+    "src": [["HSE · Get urgent help for a mental health crisis", "https://www2.hse.ie/mental-health/services-support/get-urgent-help/"]]
+  },
+  {
+    "id": "drugs-payment-scheme",
+    "cat": "health",
+    "title": "Cap your medicine costs (Drugs Payment Scheme)",
+    "kw": "drugs payment scheme dps prescription cost medicines pharmacy cap 80 euro remédio farmácia",
+    "short": "With a Drugs Payment Scheme card, you or your family never pay more than €80 in a calendar month for approved prescribed medicines. There is no means test.",
+    "facts": [["Cap", "€80 a month per family"], ["Where", "Online"]],
+    "who": [
+      "Anyone living in Ireland who intends to stay at least a year and has no medical card.",
+      "A family is an adult, their partner, children under 18, and children aged 18 to 23 in full-time education."
+    ],
+    "steps": [
+      "Apply online. It is the quickest way.",
+      "Show the card at the pharmacy. If you already paid more than €80 in a calendar month, you can claim a refund."
+    ],
+    "cases": [
+      {"q": "What does it cover?", "a": ["Approved prescribed drugs and medicines, and the rental of CPAP machines and oxygen. It also gives free hormone replacement therapy on prescription."]}
+    ],
+    "act": [["Apply for the card", "https://www2.hse.ie/services/schemes-allowances/drugs-payment-scheme/apply/"]],
+    "src": [["HSE · Drugs Payment Scheme card", "https://www2.hse.ie/services/schemes-allowances/drugs-payment-scheme/card/"]]
+  },
+  {
+    "id": "ehic",
+    "cat": "health",
+    "title": "Get a European Health Insurance Card (EHIC)",
+    "kw": "ehic european health insurance card travel europe holiday health card e111 cartão europeu de saúde",
+    "short": "The EHIC gets you public healthcare free or at reduced cost on holidays and short stays in the EU, EEA and Switzerland. You qualify by living in Ireland, whatever your nationality.",
+    "facts": [["Cost", "Free"], ["Valid for", "Up to 4 years"], ["Where", "Online at myehic.ie"]],
+    "who": ["Anyone who lives in Ireland and intends to stay for at least a year."],
+    "need": [
+      "A copy of photo ID.",
+      "Proof you have lived in Ireland for the last 12 months.",
+      "Proof of your PPS number, such as a recent payslip or your Public Services Card."
+    ],
+    "steps": [
+      "Apply on **myehic.ie**. Each family member needs their own card.",
+      "Or post the application form to EHIC Applications, PO Box 11745, Dublin 11. Send copies, not original documents."
+    ],
+    "cases": [
+      {"q": "I travel in the next 10 days", "a": ["Apply online for urgent processing. You get a Provisional Replacement Certificate, valid for 3 months."]},
+      {"q": "Is it travel insurance?", "a": ["No. It only covers medical costs in the public system. It does not cover private healthcare or flying you home, so consider travel insurance as well."]}
+    ],
+    "act": [["Apply on myehic.ie", "https://www.myehic.ie/"]],
+    "src": [["HSE · Apply for an EHIC in Ireland", "https://www2.hse.ie/services/schemes-allowances/ehic/apply/"], ["Citizens Information · The European Health Insurance Card", "https://www.citizensinformation.ie/en/travel-and-recreation/travel-abroad/european-health-insurance-card/"]]
+  },
+  {
+    "id": "fair-deal",
+    "cat": "health",
+    "title": "Pay for nursing home care (Fair Deal)",
+    "kw": "fair deal nursing home support scheme elderly care long term care older parent asilo idoso",
+    "short": "Under the Fair Deal scheme you pay a set contribution towards nursing home fees, based on what you can afford, and the HSE pays the rest.",
+    "facts": [["Run by", "HSE"], ["Starts", "From the date of approval, not backdated"]],
+    "steps": [
+      "Complete and send in the application form.",
+      "The HSE carries out a **care needs assessment** to confirm that long-term nursing home care is needed.",
+      "Then a **financial assessment** sets your contribution.",
+      "Choose an approved nursing home. Your contribution is the same whichever one you pick."
+    ],
+    "cases": [
+      {"q": "Example", "a": ["If the home costs €1,200 a month and your contribution is €400, the HSE pays the other €800."]},
+      {"q": "Most of my money is tied up in my home", "a": ["You can ask for the optional [nursing home loan](https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/nursing-home-loan/) as part of the application, so that part of the contribution is paid later."]}
+    ],
+    "tips": ["Apply early: funding cannot be backdated."],
+    "act": [["How to apply for Fair Deal", "https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/application-process/"]],
+    "src": [["HSE · About the Fair Deal scheme", "https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/about/"]]
+  }
+]

@@ -1,0 +1,99 @@
+[
+  {
+    "id": "birth-register",
+    "cat": "life",
+    "title": "Register a birth",
+    "kw": "register birth baby born newborn birth registration civil registration registrar nascimento bebê registrar",
+    "short": "Every birth in Ireland must be registered within 3 months. It is free, and many parents can now do it online.",
+    "facts": [["Cost", "Free"], ["Deadline", "3 months after the birth"], ["Where", "Online or any Civil Registration Office"]],
+    "need": [
+      "The birth notification ID you were given for the birth.",
+      "Each parent’s details: PPS number, address at the time of the birth, occupation, civil status and the mother’s maiden name.",
+      "The baby’s full name.",
+      "To register online, each parent needs a verified [MyGovID](#/s/mygovid)."
+    ],
+    "steps": [
+      "Go to **Civil Registration Services** online and sign in with MyGovID, or visit any Civil Registration Office: it does not have to be near where the baby was born.",
+      "Enter the birth notification ID and the parents’ and baby’s details.",
+      "After registration the baby is given a PPS number automatically.",
+      "Order a [birth certificate](#/s/certificates): you will need it for school enrolment, a passport and other purposes."
+    ],
+    "cases": [
+      {"q": "We are married", "a": ["If your marriage is on record in Ireland, one parent can complete the whole registration online. The other parent does not need a verified MyGovID."]},
+      {"q": "We are not married", "a": ["Registration online has two parts and the mother starts it; then the father completes his part. Since 10 December 2025 an unmarried mother must give the father’s contact details, unless there is a compelling reason not to name him."]},
+      {"q": "Our situation is more complicated", "a": ["Some births cannot be registered online and must be done at a Civil Registration Office: for example donor-assisted births, stillbirths, where a parent has died, or where the mother is widowed, divorced or separated."]},
+      {"q": "We want to change or add a first name later", "a": ["Adding or changing a forename costs €5. Re-registering to add a parent’s details is free."]}
+    ],
+    "act": [["Register online", "https://civilregistration.mywelfare.ie/"], ["Find a Civil Registration Office", "https://www2.hse.ie/services/births-deaths-and-marriages/find-a-civil-registration-service/"]],
+    "src": [
+      ["Department of Social Protection · Register a birth in Ireland", "https://www.gov.ie/en/department-of-social-protection/services/register-a-birth-in-ireland/"],
+      ["Citizens Information · Registering the birth of your baby", "https://www.citizensinformation.ie/en/birth-family-relationships/after-your-baby-is-born/registering-birth-your-baby/"]
+    ]
+  },
+  {
+    "id": "marriage",
+    "cat": "life",
+    "title": "Get married in Ireland",
+    "kw": "get married marriage wedding notification of intention to marry registrar civil ceremony casar casamento marriage registration form",
+    "short": "You must both meet a registrar at least 3 months before the wedding to give notice. It costs €200, and this applies to everyone, Irish or not.",
+    "facts": [["Cost", "€200 notification fee"], ["Deadline", "Give notice at least 3 months ahead"], ["Where", "A civil registration service"]],
+    "who": [
+      "Any couple, same sex or opposite sex, where both people are 18 or over and free to marry."
+    ],
+    "need": [
+      "Passport (original and a colour photocopy of the photo page), or an EU national identity card. It must be in date.",
+      "Birth certificate, original and photocopy.",
+      "Proof of address dated in the last 3 months, original and photocopy.",
+      "Your PPS numbers, if you have them.",
+      "The completed [booking form](https://assets.gov.ie/static/documents/marriage-notification-appointment-booking-form.pdf), with your ceremony date, venue, solemniser and two witnesses aged 18 or over.",
+      "Official translations of any document that is not in English or Irish."
+    ],
+    "steps": [
+      "Book a notification appointment: [online for a civil ceremony](https://www2.hse.ie/services/births-deaths-and-marriages/getting-married/book-appointment/) in most areas, or by phoning a civil registration service. Appointments fill quickly.",
+      "Both of you attend, show your documents, pay €200 and sign a declaration that there is no legal reason you cannot marry.",
+      "If everything is in order, the registrar gives you a **Marriage Registration Form**. You cannot marry without it.",
+      "Hold the ceremony with a solemniser who is on the [Register of Solemnisers](https://www.gov.ie/en/department-of-social-protection/publications/register-of-solemnisers/). For a civil ceremony the registrar does this.",
+      "After a religious or secular ceremony, bring the signed form to any civil registration service within one month. Registering it is free."
+    ],
+    "cases": [
+      {"q": "One of us is not Irish or not an EU citizen", "a": ["You will have an interview with the registrar. If one of you is not an EU citizen, bring evidence of your immigration status."]},
+      {"q": "One of us was married before", "a": ["Divorced: bring the original or a certified copy of the divorce decree. Foreign divorces are examined by the General Register Office, which takes extra time. Widowed: bring your civil marriage certificate and your late spouse’s death certificate."]},
+      {"q": "We live abroad", "a": ["Ask a civil registration service about giving notice by post. You still need 3 months’ notice and you must meet the registrar in person at least 5 days before the ceremony."]},
+      {"q": "We want the ceremony outside the registry office", "a": ["A civil ceremony at another approved venue costs an additional fee."]}
+    ],
+    "act": [["Book a notification appointment", "https://www2.hse.ie/services/births-deaths-and-marriages/getting-married/book-appointment/"]],
+    "src": [
+      ["Department of Social Protection · Get married in Ireland", "https://www.gov.ie/en/department-of-social-protection/services/get-married-in-ireland/"],
+      ["Citizens Information · Getting married", "https://www.citizensinformation.ie/en/birth-family-relationships/getting-married/getting-married/"]
+    ]
+  },
+  {
+    "id": "death-register",
+    "cat": "life",
+    "title": "Register a death and what to do next",
+    "kw": "register death died bereavement funeral death certificate someone died widow probate will falecimento óbito morte",
+    "short": "A death must be registered within 3 months. It is free and can be done with any registrar in the country. A short checklist of who else to tell is below.",
+    "facts": [["Cost", "Free"], ["Deadline", "3 months"], ["Where", "Any civil registration service"]],
+    "need": [
+      "The **Death Notification Form**. The doctor who attended the person completes Part 1, with the medical cause of death, and gives it to the family."
+    ],
+    "steps": [
+      "Get the Death Notification Form from the doctor or hospital.",
+      "A relative, civil partner or other qualified person (for example someone who was present at the death) brings it to any [civil registration service](https://www2.hse.ie/births-deaths-and-marriages/).",
+      "Order [death certificates](#/s/certificates): you will need them to deal with the person’s affairs.",
+      "Tell the Department of Social Protection if the person was getting a payment, and Revenue about possible tax refunds or credits.",
+      "Notify banks, credit unions, pension and insurance providers, and cancel direct debits.",
+      "Contact the executor named in the will. If there is no will, an administrator must be appointed to deal with the estate."
+    ],
+    "cases": [
+      {"q": "The coroner is involved", "a": ["After the coroner’s inquiry, the coroner sends a certificate to the civil registration service, which registers the death and tells the family when they can apply for a death certificate."]},
+      {"q": "The person died abroad", "a": ["The death is registered in the country where it happened. In some cases you can ask for a [record of a death abroad](https://www.gov.ie/en/department-of-social-protection/services/record-of-death-abroad/) in Ireland."]},
+      {"q": "What about their passport and vote?", "a": ["The passport can be returned to the Passport Service for cancellation. Ask the local authority to update the Register of Electors."]}
+    ],
+    "act": [["Find a civil registration service", "https://www2.hse.ie/births-deaths-and-marriages/"]],
+    "src": [
+      ["Department of Social Protection · Register a death in Ireland", "https://www.gov.ie/en/department-of-social-protection/services/register-a-death-in-ireland/"],
+      ["Citizens Information · Checklist of things to do following a bereavement", "https://www.citizensinformation.ie/en/death/practical-arrangements-after-a-death/checklist-of-things-to-do-following-a-bereavement/"]
+    ]
+  }
+]
