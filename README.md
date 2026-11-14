@@ -2,13 +2,15 @@
 
 Static site, deployed from `main`.
 
-## The root page: Ireland.gov concept
+## The root page: Ireland.gov (demo)
 
-`index.html` is an unofficial concept by Telpe AI: one question box in front of Ireland's public services, in the
-manner of America.gov. It is **not a government website** and says so in a band that never leaves the screen.
-Since 14 November 2026 it carries real content: 74 plain-language guides (passports, driving licence, PPS number,
-immigration, benefits, health, tax, housing, work, and so on). Each guide says who it is for, what you need, the
-steps, cost and time, the usual "in my case" situations, and lists the official pages it was read from.
+`index.html` is a demo by Telpe AI: one question box in front of Ireland's public services, in the manner of
+America.gov. A sticky band at the top of every screen says **it is a demo and not a government website**; the footer
+repeats it with the non-affiliation note and the CC BY 4.0 credit. Everything else reads as the service itself.
+It carries 74 plain-language guides (passports, driving licence, PPS number, immigration, benefits, health, tax,
+housing, work, and so on), each saying who it is for, what you need, the steps, cost and time, the usual "in my
+case" situations, and the official pages it was read from; plus four working "Quick help" tools (official
+application trackers, who to tell when you move or change name, a Working Family Payment estimate, phone lines).
 Every button opens the official service in a new tab; nothing is submitted on the page.
 
 | Path | What it is |

@@ -162,21 +162,22 @@
     "id": "working-family-payment",
     "cat": "welfare",
     "title": "Working Family Payment",
-    "kw": "working family payment wfp family income supplement fis low pay top up children employee",
+    "kw": "working family payment wfp family income supplement fis low pay top up children employee calculator estimate how much",
     "short": "A weekly, tax-free top-up for employees with children whose family income is below a limit. You get 60% of the gap between your income and the limit.",
-    "facts": [["Rate", "60% of the gap to your limit"], ["Where", "MyWelfare or by post"]],
+    "facts": [["Rate", "60% of the gap to your limit"], ["Limit", "€765 a week with one child"], ["Where", "MyWelfare or by post"]],
     "who": [
       "You are an employee in Ireland working at least 38 hours a fortnight. A couple can add their hours together. Self-employment does not count.",
       "Your job is likely to last at least 3 months.",
       "At least one child lives with you who is under 18, or 18 to 22 and in full-time education.",
-      "Your average weekly family income is under the limit: €765 with one child, €866 with two, €967 with three, €1,058 with four."
+      "Your average weekly family income is under the limit: €765 with one child, €866 with two, €967 with three, €1,058 with four, €1,184 with five, €1,300 with six, €1,436 with seven and €1,532 with eight or more.",
+      "Family income means earnings after tax, PRSI, USC and pension contributions. Other income your family has is taken into account too."
     ],
     "steps": [
       "Apply on MyWelfare, or post form WFP1 to the Working Family Payment section.",
       "Once awarded, the amount stays the same for 52 weeks, then you are reassessed."
     ],
     "cases": [
-      {"q": "Example", "a": ["One child, family income €565 a week: the gap to €765 is €200, so the payment is €120 a week."]},
+      {"q": "How much would I get?", "a": ["60% of the gap between your family income and your limit. With one child and a family income of €565 a week, the gap to €765 is €200, so the payment is €120 a week.", "Work it out for your family with the [estimator](#wfp)."]},
       {"q": "What changes in 2027?", "a": ["Budget 2027 raises every income limit by €30 a week."]},
       {"q": "Do I get anything else with it?", "a": ["People on Working Family Payment get the [Fuel Allowance](#/s/fuel-allowance) without applying separately, and may get the [Back to School allowance](#/s/back-to-school)."]}
     ],

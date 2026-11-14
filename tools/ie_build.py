@@ -16,7 +16,8 @@ CHECKED = os.environ.get("CHECKED", "2026-11-14")
 CATS = ["travel", "identity", "life", "driving", "immigration", "welfare", "health", "tax", "housing", "education", "work", "justice", "local"]
 BEGIN, END = "<!--GUIDES:BEGIN-->", "<!--GUIDES:END-->"
 INTERNAL = re.compile(r"\]\(#/s/([a-z0-9\-]+)\)")
-EXTERNAL = re.compile(r"\]\((?!#/)([^)\s]+)\)")
+EXTERNAL = re.compile(r"\]\((?!#)([^)\s]+)\)")
+ANCHOR = re.compile(r"\]\(#([a-z][a-z0-9\-]*)\)")
 
 
 def main():
@@ -43,6 +44,9 @@ def main():
         for u in urls:
             if not u.startswith("https://"):
                 errors.append((g["id"], "not https", u))
+        for anchor in ANCHOR.findall(blob):
+            if 'id="%s"' % anchor not in open(PAGE, encoding="utf-8").read():
+                errors.append((g["id"], "links to a missing section", anchor))
         if blob.count("**") % 2:
             errors.append((g["id"], "odd number of ** markers"))
     sets = json.load(open(os.path.join(SRC, "sets", "life-events.json"), encoding="utf-8"))
