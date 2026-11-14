@@ -1,0 +1,4005 @@
+{
+ "checked": "2026-11-14T12:14:14+00:00",
+ "total": 241,
+ "ok": 97,
+ "problems": [
+  {
+   "url": "https://employmentpermits.enterprise.gov.ie/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://fbr.dfa.ie/",
+   "guides": [
+    "citizenship-fbr"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 503
+  },
+  {
+   "url": "https://onlineapp1.board.ie/",
+   "guides": [
+    "legal-aid"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "error",
+   "error": "<urlopen error timed out>"
+  },
+  {
+   "url": "https://urgentpassportappointment.dfa.ie/location",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/birth-family-relationships/after-your-baby-is-born/registering-birth-your-baby/",
+   "guides": [
+    "birth-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/birth-family-relationships/getting-married/getting-married/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/birth-family-relationships/problems-in-marriages-and-other-relationships/barring-safety-and-protection-orders/",
+   "guides": [
+    "domestic-violence"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/consumer/phone-internet-tv-and-postal-services/tv-licences/",
+   "guides": [
+    "tv-licence"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/death/practical-arrangements-after-a-death/checklist-of-things-to-do-following-a-bereavement/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/national-childcare-scheme/",
+   "guides": [
+    "childcare"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/primary-and-post-primary-education/going-to-primary-school/choosing-a-primary-school/",
+   "guides": [
+    "school-enrol"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/third-level-education/fees-and-supports-for-third-level-education/part-time-fee-scheme-for-undergraduate-courses/",
+   "guides": [
+    "susi"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/third-level-education/fees-and-supports-for-third-level-education/student-grant-scheme/",
+   "guides": [
+    "susi"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/data-protection-at-work/garda-vetting/",
+   "guides": [
+    "garda-vetting"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/employment-rights-and-duties/employee-rights-and-entitlements/",
+   "guides": [
+    "domestic-violence",
+    "employment-rights"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/",
+   "guides": [
+    "employment-rights",
+    "wrc-complaint"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/enforcement-and-redress/enforcing-your-employment-rights/",
+   "guides": [
+    "wrc-complaint"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/starting-work-and-changing-job/starting-work/tax-and-starting-work/",
+   "guides": [
+    "tax-start-job"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/types-of-employment/self-employment/starting-a-business/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/unemployment-and-redundancy/redundancy/redundancy-payments/",
+   "guides": [
+    "redundancy"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/environment/pets-and-wildlife/control-of-dogs/",
+   "guides": [
+    "dog-licence"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/government-in-ireland/elections-and-referenda/voting/registering-to-vote/",
+   "guides": [
+    "register-to-vote"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/government-in-ireland/elections-and-referenda/voting/right-to-vote/",
+   "guides": [
+    "register-to-vote"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/gps-and-private-patients/",
+   "guides": [
+    "find-gp"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/",
+   "guides": [
+    "urgent-care"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-system/entitlement-to-public-health-services/",
+   "guides": [
+    "healthcare-entitlement",
+    "medical-card"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-system/health-services-and-visitors-to-ireland/",
+   "guides": [
+    "healthcare-entitlement"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/local-authority-and-social-housing/applying-for-local-authority-housing/",
+   "guides": [
+    "social-housing"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/first-home-scheme/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/help-to-buy-scheme/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/local-authority-mortgages/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/renting-a-home/help-with-renting/housing-assistance-payment/",
+   "guides": [
+    "hap"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/justice/law-enforcement/reporting-a-crime/",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/justice/legal-aid-and-advice/civil-legal-advice-and-legal-aid/",
+   "guides": [
+    "domestic-violence",
+    "legal-aid"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/",
+   "guides": [
+    "child-benefit",
+    "illness-benefit",
+    "jobseekers",
+    "one-parent-family",
+    "parent-benefits",
+    "state-pension"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/local-property-tax/",
+   "guides": [
+    "lpt"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/rent-tax-credit/",
+   "guides": [
+    "hap",
+    "rent-tax-credit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/how-to-review-your-paye-tax/",
+   "guides": [
+    "tax-refund"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/online-services-for-paye-taxpayers/",
+   "guides": [
+    "tax-start-job"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/taxation-of-self-employed-people/",
+   "guides": [
+    "self-employed-tax"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/becoming-an-irish-citizen-through-naturalisation/",
+   "guides": [
+    "citizenship"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/your-right-to-irish-citizenship/",
+   "guides": [
+    "citizenship-fbr"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/introduction-to-the-irish-system/health-care-in-ireland/",
+   "guides": [
+    "healthcare-entitlement"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/registration-of-non-eea-nationals-in-ireland/",
+   "guides": [
+    "eu-citizens",
+    "irp-register",
+    "irp-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/residence-rights-eu-national/",
+   "guides": [
+    "eu-citizens"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/visas-for-ireland/visa-requirements-for-entering-ireland/",
+   "guides": [
+    "visa"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/green-card-permits/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/overview-employment-permits/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/work-permits/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/public-services-card/",
+   "guides": [
+    "psc"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-assistance-payments/habitual-residence-condition/",
+   "guides": [
+    "habitual-residence"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/buying-or-selling-a-vehicle/change-of-ownership/",
+   "guides": [
+    "vehicle-ownership"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/exchanging-foreign-driving-permit/",
+   "guides": [
+    "licence-exchange"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/renewing-a-full-driving-licence/",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/replacing-a-lost-or-stolen-irish-driving-licence/",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/driver-theory-test/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/driving-test/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/learning-to-drive/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/motor-tax-and-insurance/motor-tax-rates/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/passports/renewing-an-irish-passport/",
+   "guides": [
+    "passport-renew",
+    "passport-urgent"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/passports/replacing-a-lost-or-stolen-irish-passport/",
+   "guides": [
+    "passport-lost"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/travel-abroad/european-health-insurance-card/",
+   "guides": [
+    "ehic"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/vehicle-standards/national-car-test/",
+   "guides": [
+    "nct"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/whats-new/key-social-welfare-changes-in-budget-2027/",
+   "guides": [
+    "carers-allowance",
+    "disability-allowance",
+    "fuel-allowance",
+    "working-family-payment"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.cro.ie/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-education/services/find-a-school/",
+   "guides": [
+    "school-enrol"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/habitual-residence-condition/",
+   "guides": [
+    "habitual-residence"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/mygovid-app/",
+   "guides": [
+    "mygovid",
+    "psc"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/personal-public-service-pps-number-allocation-centres-by-county/",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/public-services-card-psc-centres/",
+   "guides": [
+    "psc"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/register-of-solemnisers/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/additional-needs-payment/",
+   "guides": [
+    "additional-needs-payment"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/back-to-school-clothing-and-footwear-allowance/",
+   "guides": [
+    "back-to-school"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/back-to-work-enterprise-allowance/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/birth-death-marriage-and-other-certificates/",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/carers-allowance/",
+   "guides": [
+    "carers-allowance"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/child-benefit/",
+   "guides": [
+    "child-benefit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/disability-allowance/",
+   "guides": [
+    "disability-allowance"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/domiciliary-care-allowance/",
+   "guides": [
+    "carers-allowance"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/find-your-local-intreo-centre/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/free-travel-scheme/",
+   "guides": [
+    "disability-allowance",
+    "free-travel"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/fuel-allowance/",
+   "guides": [
+    "fuel-allowance"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/get-a-personal-public-service-pps-number/",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/get-married-in-ireland/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/household-benefits-package/",
+   "guides": [
+    "disability-allowance",
+    "household-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/how-to-get-a-public-services-card-psc/",
+   "guides": [
+    "id-options",
+    "mygovid",
+    "psc"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/how-to-sign-up-for-mygovid/",
+   "guides": [
+    "mygovid"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/illness-benefit/",
+   "guides": [
+    "illness-benefit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-allowance/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-benefit-for-the-self-employed/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-benefit/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-pay-related-benefit/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-transitional-payment/",
+   "guides": [
+    "one-parent-family"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/maternity-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/one-parent-family-payment/",
+   "guides": [
+    "one-parent-family"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/parents-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/paternity-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/record-of-death-abroad/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/redundancy-calculator/",
+   "guides": [
+    "redundancy"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/redundancy-payment-scheme/",
+   "guides": [
+    "redundancy"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/register-a-birth-in-ireland/",
+   "guides": [
+    "birth-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/register-a-death-in-ireland/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/state-pension-contributory/",
+   "guides": [
+    "state-pension"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/state-pension-non-contributory/",
+   "guides": [
+    "state-pension"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/treatment-benefit-scheme/",
+   "guides": [
+    "treatment-benefit"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/working-family-payment-wfp/",
+   "guides": [
+    "working-family-payment"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-transport/publications/motor-tax-rates/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-transport/publications/motortax-payments-renewals-and-refund-information/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-transport/services/find-your-local-motor-tax-office/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/publication/942f74-local-authorities/",
+   "guides": [
+    "social-housing"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/543/Annex-F1-Sole-Guardian-Affidavit-EN.pdf",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/citizenship/born-abroad/registering-a-foreign-birth/",
+   "guides": [
+    "citizenship-fbr"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/embassies/",
+   "guides": [
+    "passport-lost"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/contact-us/",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/documentary-requirements/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/documentary-requirements/adult/",
+   "guides": [
+    "passport-first-adult"
+   ],
+   "kinds": [
+    "action",
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/documentary-requirements/child/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/first-adult-passport/",
+   "guides": [
+    "passport-first-adult"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/first-child-passport/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-adult-passport/",
+   "guides": [
+    "passport-lost",
+    "passport-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-child-passport/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-get-your-application-witnessed/",
+   "guides": [
+    "passport-child",
+    "passport-first-adult"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/passport-card/",
+   "guides": [
+    "id-options",
+    "passport-card"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/passport-fees/",
+   "guides": [
+    "passport-card",
+    "passport-child",
+    "passport-renew",
+    "passport-urgent"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/photo-guidelines/",
+   "guides": [
+    "passport-renew"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/turnaround-times/",
+   "guides": [
+    "passport-card",
+    "passport-child",
+    "passport-first-adult",
+    "passport-lost",
+    "passport-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/urgent-appointment/",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.mygovid.ie/",
+   "guides": [
+    "mygovid"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.mywelfare.ie/ApplyForOlrLevelZero/ApplyForApplication?scheme=PersonalPublicServiceNumber",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ncs.gov.ie/",
+   "guides": [
+    "childcare"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "error",
+   "error": "<urlopen error timed out>"
+  },
+  {
+   "url": "https://www.ncts.ie/bookings/",
+   "guides": [
+    "nct"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/booking-service.html",
+   "guides": [
+    "licence-exchange",
+    "licence-renew"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/holders-of-foreign-licences.html",
+   "guides": [
+    "licence-exchange"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/images/Documents/169620_RSA_NDLS_Garda_Declaration_Form_Web_HR.pdf",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/learner-driver/fees.html/",
+   "guides": [
+    "driving-licence-first",
+    "licence-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/exchange-my-foreign-driving-licence.html",
+   "guides": [
+    "licence-exchange"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/my-first-time-driving-licence.html",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/renew-my-driving-licence.html",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/replace-my-lost-stolen-driving-licence.html",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.rsa.ie/services/learner-drivers/learner-permit/the-6-months-rule",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.rsa.ie/services/learner-drivers/the-driving-test/test-waiting-times",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.vehicleservices.gov.ie/cvo/",
+   "guides": [
+    "vehicle-ownership"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 422
+  },
+  {
+   "url": "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx",
+   "guides": [
+    "visa"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 503
+  }
+ ],
+ "all": [
+  {
+   "url": "https://112.ie/emergency-sms-service/",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/09fe3ad4/20261111_-_Ordering_a_Certificate_from_the_General_Register_Office_-_OC1_-_English_-_August_2026_fillable.pdf",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/application-form-child-benefit-cb1.pdf",
+   "guides": [
+    "child-benefit"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/application-form-pps-number-reg1.pdf",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/child-benefit-for-a-child-aged-16-17-or-18-cb2.pdf",
+   "guides": [
+    "child-benefit"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/marriage-notification-appointment-booking-form.pdf",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/pps-number-questionnaire.pdf",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://assets.gov.ie/static/documents/pps-number-third-party-consent-form.pdf",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://civilregistration.mywelfare.ie/",
+   "guides": [
+    "birth-register"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://crimevictimshelpline.ie/",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://employmentpermits.enterprise.gov.ie/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://enterprise.gov.ie/en/What-We-Do/Workplace-and-Skills/Employment-Permits/Employment-Permit-Eligibility/Highly-Skilled-Eligible-Occupations-List/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200,
+   "final": "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/economic-migration-policy/occupations-lists-and-reviews/csol.html"
+  },
+  {
+   "url": "https://enterprise.gov.ie/en/What-We-Do/Workplace-and-Skills/Employment-Permits/Employment-Permit-Eligibility/Ineligible-Categories-of-Employment/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200,
+   "final": "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/economic-migration-policy/occupations-lists-and-reviews/iol.html"
+  },
+  {
+   "url": "https://fbr.dfa.ie/",
+   "guides": [
+    "citizenship-fbr"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 503
+  },
+  {
+   "url": "https://garda.ie/en/reportahatecrime/-",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200,
+   "final": "https://www.garda.ie/en/reportahatecrime/-"
+  },
+  {
+   "url": "https://inisonline.jahs.ie/user/login",
+   "guides": [
+    "citizenship",
+    "irp-renew"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://lpt.revenue.ie/lpt-web/reckoner/lpt.html",
+   "guides": [
+    "lpt"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://myroadsafety.rsa.ie/home/login",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://onlineapp1.board.ie/",
+   "guides": [
+    "legal-aid"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "error",
+   "error": "<urlopen error timed out>"
+  },
+  {
+   "url": "https://passportonline.dfa.ie/Apply/Passport",
+   "guides": [
+    "passport-card",
+    "passport-child",
+    "passport-first-adult",
+    "passport-lost",
+    "passport-renew"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://passporttracking.dfa.ie/passporttracking",
+   "guides": [
+    "passport-first-adult",
+    "passport-lost",
+    "passport-renew"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://portal.irishimmigration.ie/en/",
+   "guides": [
+    "irp-register"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://rtb.ie/check-the-register/",
+   "guides": [
+    "renting-rights"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://rtb.ie/disputes/disputes-process/",
+   "guides": [
+    "renting-rights"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://rtb.ie/renting/rental-law-changes-from-1-march-2/",
+   "guides": [
+    "renting-rights"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://rtb.ie/renting/rights-responsibilities/tenant-rights-responsibilities/",
+   "guides": [
+    "renting-rights"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/community-welfare-services/additional-needs-payment/",
+   "guides": [
+    "additional-needs-payment"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/health-disability-illness/illness-benefit/",
+   "guides": [
+    "illness-benefit"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/identity-services/personal-public-service-pps-number/",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/identity-services/public-services-card-renewal/",
+   "guides": [
+    "psc"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/out-of-work-payments/apply-for-jobseekers-payment/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/parents-children-family/back-to-school-clothing-footwear-allowance/",
+   "guides": [
+    "back-to-school"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/parents-children-family/child-benefit/",
+   "guides": [
+    "child-benefit"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/parents-children-family/maternity-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/parents-children-family/parents-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/pensions-and-older-people/household-benefits/",
+   "guides": [
+    "household-benefits"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200,
+   "final": "https://services.mywelfare.ie/en/topics/pensions-and-older-people/household-benefits-package/"
+  },
+  {
+   "url": "https://services.mywelfare.ie/en/topics/pensions-and-older-people/state-pension/",
+   "guides": [
+    "state-pension"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://theorytest.ie/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://theorytest.ie/general-information/id-requirements/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://urgentpassportappointment.dfa.ie/location",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://vetting.garda.ie/Application/About",
+   "guides": [
+    "garda-vetting"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://vetting.garda.ie/Track",
+   "guides": [
+    "garda-vetting"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.agecard.ie/forms/home/",
+   "guides": [
+    "id-options"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/birth-family-relationships/after-your-baby-is-born/registering-birth-your-baby/",
+   "guides": [
+    "birth-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/birth-family-relationships/getting-married/getting-married/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/birth-family-relationships/problems-in-marriages-and-other-relationships/barring-safety-and-protection-orders/",
+   "guides": [
+    "domestic-violence"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/consumer/phone-internet-tv-and-postal-services/tv-licences/",
+   "guides": [
+    "tv-licence"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/death/practical-arrangements-after-a-death/checklist-of-things-to-do-following-a-bereavement/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/national-childcare-scheme/",
+   "guides": [
+    "childcare"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/primary-and-post-primary-education/going-to-primary-school/choosing-a-primary-school/",
+   "guides": [
+    "school-enrol"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/third-level-education/fees-and-supports-for-third-level-education/part-time-fee-scheme-for-undergraduate-courses/",
+   "guides": [
+    "susi"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/education/third-level-education/fees-and-supports-for-third-level-education/student-grant-scheme/",
+   "guides": [
+    "susi"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/data-protection-at-work/garda-vetting/",
+   "guides": [
+    "garda-vetting"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/employment-rights-and-duties/employee-rights-and-entitlements/",
+   "guides": [
+    "domestic-violence",
+    "employment-rights"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/",
+   "guides": [
+    "employment-rights",
+    "wrc-complaint"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/enforcement-and-redress/enforcing-your-employment-rights/",
+   "guides": [
+    "wrc-complaint"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/starting-work-and-changing-job/starting-work/tax-and-starting-work/",
+   "guides": [
+    "tax-start-job"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/types-of-employment/self-employment/starting-a-business/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/employment/unemployment-and-redundancy/redundancy/redundancy-payments/",
+   "guides": [
+    "redundancy"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/environment/pets-and-wildlife/control-of-dogs/",
+   "guides": [
+    "dog-licence"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/government-in-ireland/elections-and-referenda/voting/registering-to-vote/",
+   "guides": [
+    "register-to-vote"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/government-in-ireland/elections-and-referenda/voting/right-to-vote/",
+   "guides": [
+    "register-to-vote"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/gps-and-private-patients/",
+   "guides": [
+    "find-gp"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/",
+   "guides": [
+    "urgent-care"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-system/entitlement-to-public-health-services/",
+   "guides": [
+    "healthcare-entitlement",
+    "medical-card"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/health/health-system/health-services-and-visitors-to-ireland/",
+   "guides": [
+    "healthcare-entitlement"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/local-authority-and-social-housing/applying-for-local-authority-housing/",
+   "guides": [
+    "social-housing"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/first-home-scheme/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/help-to-buy-scheme/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/owning-a-home/help-with-buying-a-home/local-authority-mortgages/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/housing/renting-a-home/help-with-renting/housing-assistance-payment/",
+   "guides": [
+    "hap"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/justice/law-enforcement/reporting-a-crime/",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/justice/legal-aid-and-advice/civil-legal-advice-and-legal-aid/",
+   "guides": [
+    "domestic-violence",
+    "legal-aid"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/budgets/social-welfare-rates-announced-in-budget-2027/",
+   "guides": [
+    "child-benefit",
+    "illness-benefit",
+    "jobseekers",
+    "one-parent-family",
+    "parent-benefits",
+    "state-pension"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/local-property-tax/",
+   "guides": [
+    "lpt"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/housing-taxes-and-reliefs/rent-tax-credit/",
+   "guides": [
+    "hap",
+    "rent-tax-credit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/how-to-review-your-paye-tax/",
+   "guides": [
+    "tax-refund"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/online-services-for-paye-taxpayers/",
+   "guides": [
+    "tax-start-job"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/taxation-of-self-employed-people/",
+   "guides": [
+    "self-employed-tax"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/becoming-an-irish-citizen-through-naturalisation/",
+   "guides": [
+    "citizenship"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/your-right-to-irish-citizenship/",
+   "guides": [
+    "citizenship-fbr"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/introduction-to-the-irish-system/health-care-in-ireland/",
+   "guides": [
+    "healthcare-entitlement"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/registration-of-non-eea-nationals-in-ireland/",
+   "guides": [
+    "eu-citizens",
+    "irp-register",
+    "irp-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/moving-to-ireland/rights-of-residence-in-ireland/residence-rights-eu-national/",
+   "guides": [
+    "eu-citizens"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/visas-for-ireland/visa-requirements-for-entering-ireland/",
+   "guides": [
+    "visa"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/green-card-permits/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/overview-employment-permits/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/moving-country/working-in-ireland/employment-permits/work-permits/",
+   "guides": [
+    "work-permit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/public-services-card/",
+   "guides": [
+    "psc"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-assistance-payments/habitual-residence-condition/",
+   "guides": [
+    "habitual-residence"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/buying-or-selling-a-vehicle/change-of-ownership/",
+   "guides": [
+    "vehicle-ownership"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/exchanging-foreign-driving-permit/",
+   "guides": [
+    "licence-exchange"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/renewing-a-full-driving-licence/",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/replacing-a-lost-or-stolen-irish-driving-licence/",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/driver-theory-test/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/driving-test/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driving-tests/learning-to-drive/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/motor-tax-and-insurance/motor-tax-rates/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/passports/renewing-an-irish-passport/",
+   "guides": [
+    "passport-renew",
+    "passport-urgent"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/passports/replacing-a-lost-or-stolen-irish-passport/",
+   "guides": [
+    "passport-lost"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/travel-abroad/european-health-insurance-card/",
+   "guides": [
+    "ehic"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/travel-and-recreation/vehicle-standards/national-car-test/",
+   "guides": [
+    "nct"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.citizensinformation.ie/en/whats-new/key-social-welfare-changes-in-budget-2027/",
+   "guides": [
+    "carers-allowance",
+    "disability-allowance",
+    "fuel-allowance",
+    "working-family-payment"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.cro.ie/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.firsthomescheme.ie/",
+   "guides": [
+    "buy-first-home"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.garda.ie/en/about-us/online-services/data-protection-foi-police-certificates/police-certificates.html",
+   "guides": [
+    "garda-vetting"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.garda.ie/en/about-us/online-services/national-age-card/",
+   "guides": [
+    "id-options"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.garda.ie/en/contact-us/station-directory/",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.garda.ie/en/victim-services/declare-a-theft/",
+   "guides": [
+    "report-crime"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-education/services/find-a-school/",
+   "guides": [
+    "school-enrol"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/habitual-residence-condition/",
+   "guides": [
+    "habitual-residence"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/mygovid-app/",
+   "guides": [
+    "mygovid",
+    "psc"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/personal-public-service-pps-number-allocation-centres-by-county/",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/public-services-card-psc-centres/",
+   "guides": [
+    "psc"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/publications/register-of-solemnisers/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/additional-needs-payment/",
+   "guides": [
+    "additional-needs-payment"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/back-to-school-clothing-and-footwear-allowance/",
+   "guides": [
+    "back-to-school"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/back-to-work-enterprise-allowance/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/birth-death-marriage-and-other-certificates/",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/carers-allowance/",
+   "guides": [
+    "carers-allowance"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/child-benefit/",
+   "guides": [
+    "child-benefit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/disability-allowance/",
+   "guides": [
+    "disability-allowance"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/domiciliary-care-allowance/",
+   "guides": [
+    "carers-allowance"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/find-your-local-intreo-centre/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/free-travel-scheme/",
+   "guides": [
+    "disability-allowance",
+    "free-travel"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/fuel-allowance/",
+   "guides": [
+    "fuel-allowance"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/get-a-personal-public-service-pps-number/",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/get-married-in-ireland/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/household-benefits-package/",
+   "guides": [
+    "disability-allowance",
+    "household-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/how-to-get-a-public-services-card-psc/",
+   "guides": [
+    "id-options",
+    "mygovid",
+    "psc"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/how-to-sign-up-for-mygovid/",
+   "guides": [
+    "mygovid"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/illness-benefit/",
+   "guides": [
+    "illness-benefit"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-allowance/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-benefit-for-the-self-employed/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-benefit/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-pay-related-benefit/",
+   "guides": [
+    "jobseekers"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/jobseekers-transitional-payment/",
+   "guides": [
+    "one-parent-family"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/maternity-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/one-parent-family-payment/",
+   "guides": [
+    "one-parent-family"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/parents-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/paternity-benefit/",
+   "guides": [
+    "parent-benefits"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/record-of-death-abroad/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/redundancy-calculator/",
+   "guides": [
+    "redundancy"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/redundancy-payment-scheme/",
+   "guides": [
+    "redundancy"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/register-a-birth-in-ireland/",
+   "guides": [
+    "birth-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/register-a-death-in-ireland/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/state-pension-contributory/",
+   "guides": [
+    "state-pension"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/state-pension-non-contributory/",
+   "guides": [
+    "state-pension"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/treatment-benefit-scheme/",
+   "guides": [
+    "treatment-benefit"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-social-protection/services/working-family-payment-wfp/",
+   "guides": [
+    "working-family-payment"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-transport/publications/motor-tax-rates/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-transport/publications/motortax-payments-renewals-and-refund-information/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/department-of-transport/services/find-your-local-motor-tax-office/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.gov.ie/en/publication/942f74-local-authorities/",
+   "guides": [
+    "social-housing"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.hap.ie/apply/",
+   "guides": [
+    "hap"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.ireland.ie/543/Annex-F1-Sole-Guardian-Affidavit-EN.pdf",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/citizenship/born-abroad/registering-a-foreign-birth/",
+   "guides": [
+    "citizenship-fbr"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/embassies/",
+   "guides": [
+    "passport-lost"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/contact-us/",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/documentary-requirements/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/documentary-requirements/adult/",
+   "guides": [
+    "passport-first-adult"
+   ],
+   "kinds": [
+    "action",
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/documentary-requirements/child/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/first-adult-passport/",
+   "guides": [
+    "passport-first-adult"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/first-child-passport/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-adult-passport/",
+   "guides": [
+    "passport-lost",
+    "passport-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-apply-for-a-passport/renew-child-passport/",
+   "guides": [
+    "passport-child"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/how-to-get-your-application-witnessed/",
+   "guides": [
+    "passport-child",
+    "passport-first-adult"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/passport-card/",
+   "guides": [
+    "id-options",
+    "passport-card"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/passport-fees/",
+   "guides": [
+    "passport-card",
+    "passport-child",
+    "passport-renew",
+    "passport-urgent"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/photo-guidelines/",
+   "guides": [
+    "passport-renew"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/turnaround-times/",
+   "guides": [
+    "passport-card",
+    "passport-child",
+    "passport-first-adult",
+    "passport-lost",
+    "passport-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ireland.ie/en/dfa/passports/urgent-appointment/",
+   "guides": [
+    "passport-urgent"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.irishimmigration.ie/burgh-quay-appointments/",
+   "guides": [
+    "irp-register"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.irishimmigration.ie/coming-to-join-family-in-ireland/joining-an-eea-or-swiss-national/eu-treaty-rights/",
+   "guides": [
+    "eu-citizens"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by%20-naturalisation/",
+   "guides": [
+    "citizenship"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.irishimmigration.ie/preclearance-and-entry-visas-fees/",
+   "guides": [
+    "visa"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/information-on-registering-your-immigration-permission-for-the-first-time/",
+   "guides": [
+    "irp-register"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-register-your-immigration-permission-for-the-first-time/required-documents/",
+   "guides": [
+    "irp-register"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/how-to-renew-your-current-permission/renewing-your-registration-permission-if-you-live-in-the-republic-of-ireland/",
+   "guides": [
+    "irp-renew"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.licences.ie/ILAS/Home/Licences?bundleId=17",
+   "guides": [
+    "dog-licence"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200,
+   "final": "https://www.licences.ie/ILAS/Home/Error?aspxerrorpath=/ILAS/Home/Licences"
+  },
+  {
+   "url": "https://www.localenterprise.ie/",
+   "guides": [
+    "start-business"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.motortax.ie/OMT/",
+   "guides": [
+    "motor-tax"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.motortax.ie/OMT/pdf/RF105_en.pdf",
+   "guides": [
+    "vehicle-ownership"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.myehic.ie/",
+   "guides": [
+    "ehic"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200,
+   "final": "https://www.mymedicalcard.ie/"
+  },
+  {
+   "url": "https://www.mygovid.ie/",
+   "guides": [
+    "mygovid"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.mymedicalcard.ie/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.mywelfare.ie/ApplyForOlrLevelZero/ApplyForApplication?scheme=PersonalPublicServiceNumber",
+   "guides": [
+    "ppsn"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ncs.gov.ie/",
+   "guides": [
+    "childcare"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "error",
+   "error": "<urlopen error timed out>"
+  },
+  {
+   "url": "https://www.ncts.ie/bookings/",
+   "guides": [
+    "nct"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/booking-service.html",
+   "guides": [
+    "licence-exchange",
+    "licence-renew"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/holders-of-foreign-licences.html",
+   "guides": [
+    "licence-exchange"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/images/Documents/169620_RSA_NDLS_Garda_Declaration_Form_Web_HR.pdf",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/learner-driver/fees.html/",
+   "guides": [
+    "driving-licence-first",
+    "licence-renew"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/exchange-my-foreign-driving-licence.html",
+   "guides": [
+    "licence-exchange"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/my-first-time-driving-licence.html",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/renew-my-driving-licence.html",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.ndls.ie/licensed-driver/replace-my-lost-stolen-driving-licence.html",
+   "guides": [
+    "licence-renew"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.revenue.ie/en/online-services/services/paye-services/add-job-pension.aspx",
+   "guides": [
+    "tax-start-job"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/land-and-property/rent-credit/how-to-claim.aspx",
+   "guides": [
+    "rent-tax-credit"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.revenue.ie/en/property/local-property-tax/valuing-your-property/valuation-bands-rates.aspx",
+   "guides": [
+    "lpt"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.revenue.ie/en/self-assessment-and-self-employment/guide-to-self-assessment/index.aspx",
+   "guides": [
+    "self-employed-tax"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.revenue.ie/en/starting-a-business/registering-for-tax/index.aspx",
+   "guides": [
+    "self-employed-tax",
+    "start-business"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.revenue.ie/en/vat/vat-registration/who-should-register-for-vat/vat-thresholds.aspx",
+   "guides": [
+    "self-employed-tax"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.ros.ie/myaccount-web/home.html",
+   "guides": [
+    "buy-first-home",
+    "rent-tax-credit",
+    "tax-refund",
+    "tax-start-job"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.rsa.ie/services/learner-drivers/learner-permit/the-6-months-rule",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "inline",
+    "source"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.rsa.ie/services/learner-drivers/the-driving-test/test-waiting-times",
+   "guides": [
+    "driving-licence-first"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": "robots"
+  },
+  {
+   "url": "https://www.susi.ie/",
+   "guides": [
+    "susi"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.tvlicence.ie/",
+   "guides": [
+    "tv-licence"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200,
+   "final": "https://www.tvlicence.ie/home/tv-licence-home.html"
+  },
+  {
+   "url": "https://www.vehicleservices.gov.ie/cvo/",
+   "guides": [
+    "vehicle-ownership"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 422
+  },
+  {
+   "url": "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx",
+   "guides": [
+    "visa"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 503
+  },
+  {
+   "url": "https://www.voter.ie/",
+   "guides": [
+    "register-to-vote"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.workplacerelations.ie/en/",
+   "guides": [
+    "employment-rights"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www.workplacerelations.ie/en/Complaints_Disputes/Refer_a_Dispute_Make_a_Complaint/",
+   "guides": [
+    "wrc-complaint"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/births-deaths-and-marriages/",
+   "guides": [
+    "death-register"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200,
+   "final": "https://www2.hse.ie/services/births-deaths-and-marriages/"
+  },
+  {
+   "url": "https://www2.hse.ie/mental-health/services-support/get-urgent-help/",
+   "guides": [
+    "mental-health"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/mental-health/services-support/supports-services/",
+   "guides": [
+    "mental-health"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/births-deaths-and-marriages/find-a-civil-registration-service/",
+   "guides": [
+    "birth-register"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200,
+   "final": "https://www2.hse.ie/services/civil-registration-services/"
+  },
+  {
+   "url": "https://www2.hse.ie/services/births-deaths-and-marriages/getting-married/book-appointment/",
+   "guides": [
+    "marriage"
+   ],
+   "kinds": [
+    "action",
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/births-deaths-and-marriages/order/",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "action",
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/births-deaths-and-marriages/order/birth-certificate/",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/births-deaths-and-marriages/order/death-certificate/",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/births-deaths-and-marriages/order/marriage-certificate/",
+   "guides": [
+    "certificates"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/find-a-gp/",
+   "guides": [
+    "find-gp"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/find-urgent-emergency-care/",
+   "guides": [
+    "urgent-care"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/find-urgent-emergency-care/?kind=gp-out-of-hours",
+   "guides": [
+    "find-gp"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/",
+   "guides": [
+    "healthcare-entitlement"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/drugs-payment-scheme/apply/",
+   "guides": [
+    "drugs-payment-scheme"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/drugs-payment-scheme/card/",
+   "guides": [
+    "drugs-payment-scheme"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/ehic/apply/",
+   "guides": [
+    "ehic"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/about/",
+   "guides": [
+    "fair-deal"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/application-process/",
+   "guides": [
+    "fair-deal"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/nursing-home-loan/",
+   "guides": [
+    "fair-deal"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/carers/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/gp-visit-cards/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/over-70s/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/under-8s/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/medical-cards/applying/apply/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "action"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/medical-cards/applying/how-much-you-can-earn/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/schemes-allowances/medical-cards/other-types-of-medical-card/over-70s/",
+   "guides": [
+    "medical-card"
+   ],
+   "kinds": [
+    "inline"
+   ],
+   "status": 200
+  },
+  {
+   "url": "https://www2.hse.ie/services/urgent-emergency-care/",
+   "guides": [
+    "urgent-care"
+   ],
+   "kinds": [
+    "source"
+   ],
+   "status": 200
+  }
+ ]
+}
