@@ -59,7 +59,7 @@
       "Your case is one the Board covers: family disputes, child-care cases, breach of contract and most disputes with an employer."
     ],
     "steps": [
-      "Apply online, or return the application form to your local law centre.",
+      "Apply online (the online form is for people living in the Republic of Ireland), or return the application form to your local law centre.",
       "The Board checks your finances and whether the case has merit.",
       "You pay your contribution and are given a solicitor."
     ],
@@ -68,7 +68,7 @@
       {"q": "What is not covered?", "a": ["Defamation, disputes about land, small claims, conveyancing and criminal cases, with some exceptions."]},
       {"q": "Is my case urgent?", "a": ["Domestic violence, child-care, child abduction and cases about to run out of time are given priority."]}
     ],
-    "act": [["Apply online", "https://onlineapp1.board.ie/"]],
+    "act": [["How to apply (Legal Aid Board)", "https://www.legalaidboard.ie/our-legal-aid-service/apply-now/"], ["Online application", "https://onlineapp1.board.ie/"]],
     "src": [["Citizens Information · Civil legal aid and legal advice", "https://www.citizensinformation.ie/en/justice/legal-aid-and-advice/civil-legal-advice-and-legal-aid/"]]
   },
   {

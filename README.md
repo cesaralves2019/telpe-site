@@ -1,19 +1,36 @@
 # telpe.ai
 
-Static site, deployed from `main`. The root is the original Telpe AI page (one screen: headline and the
-isometric massing model), with `studio.html` and `game.html` beside it.
+Static site, deployed from `main`.
 
-## Projects kept in this repo
+## The root page: Ireland.gov concept
 
-Everything built on the site since then lives under `projects/`, untouched and still working at its own path:
+`index.html` is an unofficial concept by Telpe AI: one question box in front of Ireland's public services, in the
+manner of America.gov. It is **not a government website** and says so in a band that never leaves the screen.
+Since 14 November 2026 it carries real content: 74 plain-language guides (passports, driving licence, PPS number,
+immigration, benefits, health, tax, housing, work, and so on). Each guide says who it is for, what you need, the
+steps, cost and time, the usual "in my case" situations, and lists the official pages it was read from.
+Every button opens the official service in a new tab; nothing is submitted on the page.
+
+| Path | What it is |
+| --- | --- |
+| `content/ie/*.json` | The guides, one file per topic. Only facts read on an official page on the checked date; each guide lists those pages in `src`. `content/ie/NOTES.md` has the content model and working notes. |
+| `content/ie/sets/life-events.json` | "What is happening" sets (moved to Ireland, having a baby, lost my job, ...). |
+| `tools/ie_build.py` | Validates the guides (ids, internal links, https) and writes them into `index.html`. Run it after editing content: `python3 tools/ie_build.py`. |
+| `tools/ie_check_links.py` | One request per link used in the guides; skips sites whose robots.txt disallows or refuses automated readers. Runs on GitHub (`.github/workflows/ie-data.yml`) and commits `data/ie/links-report.json`. |
+
+Sources are Irish public bodies (gov.ie, Citizens Information, DFA, HSE, Revenue, NDLS/RSA, Immigration Service
+Delivery, RTB, An Garda Síochána); their content is re-usable under CC BY 4.0 with attribution, which the page
+gives. gov.ie refuses automated readers (HTTP 403), so its catalogue of about 1,400 service pages is not copied:
+the search links to gov.ie's own listing instead.
+
+## Earlier pages kept in this repo
 
 | Folder | What it is | Live at |
 | --- | --- | --- |
-| `projects/apuracao-2026/` | 2026 runoff results tracker on official TSE data: race card, state map, minute-by-minute log, Curitiba/Caibi spotlights, exterior by country, governors, march-of-the-count chart, benchmarked projection + Monte Carlo, Portuguese chatbot, PT/EN/ES switch. `standalone.html` is the single-file copy with the first-round march and the night's series embedded. `tools/mock/` is the fake TSE mirror used to test it (`python3 mock_tse.py live`, then `serve.py`, then open the page with `?src=http://127.0.0.1:8765/oficial`). | `/projects/apuracao-2026/` |
-| `projects/tenders/` | Telpe Tenders: the one-screen landing (`index.html`), `how.html`, `try.html`, `pricing.html`, and in `backend/` the Python service (FastAPI + MongoDB, Telegram and WhatsApp bots, matcher, tests). | `/projects/tenders/` |
+| `company.html`, `studio.html`, `game.html` | The original Telpe AI page (headline and the isometric massing model) and its two companions. | `/company.html` |
+| `projects/apuracao-2026/` | 2026 Brazilian runoff results tracker on official TSE data (race card, state map, march-of-the-count chart, projection + Monte Carlo, chatbot, PT/EN/ES). `standalone.html` is the single-file copy; `tools/mock/` is the fake TSE mirror used to test it. | `/projects/apuracao-2026/` |
+| `projects/tenders/` | Telpe Tenders: landing, `how.html`, `try.html`, `pricing.html`, and the Python service in `backend/`. | `/projects/tenders/` |
 
-Data and automation for the tracker stay at the root so the GitHub Actions keep working:
-
-- `data/r1-march.json` — the first round's count minute by minute, rebuilt from the TSE ballot-box bulletins by `tools/build_r1_march.py` (`.github/workflows/r1-march.yml`).
-- `data/series.json`, `data/live/`, `data/r1/` — election-night recordings by `tools/record_series.py` (`.github/workflows/marcha.yml`, `marcha-loop.yml`).
-- `tools/eval_projection.py` — runs the tracker's projection offline on those files.
+Data and automation for the tracker stay at the root so the GitHub Actions keep working: `data/r1-march.json`,
+`data/series.json`, `data/live/`, `data/r1/`, `tools/build_r1_march.py`, `tools/record_series.py`,
+`tools/eval_projection.py`.

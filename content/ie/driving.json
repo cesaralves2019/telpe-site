@@ -5,7 +5,7 @@
     "title": "Get your first driving licence",
     "kw": "driving licence driver license learn to drive learner permit theory test edt lessons driving test full licence n plates carteira de motorista habilitação cnh tirar carteira",
     "short": "Six steps: pass the theory test, get a learner permit, take 12 lessons, wait 6 months, pass the driving test, then apply for the full licence. Budget about €240 in State fees plus the cost of lessons.",
-    "facts": [["Cost", "€45 + €45 + €85 + €65, plus lessons"], ["How long", "At least 6 months"], ["Where", "Online and NDLS centres"]],
+    "facts": [["Cost", "About €240 in fees, plus lessons"], ["How long", "At least 6 months"], ["Where", "Online and NDLS centres"]],
     "who": [
       "Anyone who is normally resident in Ireland (living here at least 185 days a year). You must be at least 17 for a car.",
       "If you already hold a full licence from another country, first check [Exchange a foreign driving licence](#/s/licence-exchange): you may not need to do all of this."
@@ -196,7 +196,7 @@
       {"q": "I am selling to a garage or dealer", "a": ["Give the dealer the VRC and both complete [Form RF105](https://www.motortax.ie/OMT/pdf/RF105_en.pdf). An approved dealer notifies the change online."]},
       {"q": "I lost the registration certificate", "a": ["Complete Form RF134, have it witnessed at a Garda station and send it to your local motor tax office with the €12 fee."]}
     ],
-    "act": [["Transfer ownership online", "https://www.vehicleservices.gov.ie/cvo/"]],
+    "act": [["Transfer ownership online", "https://www.vehicleservices.gov.ie/cvo/"], ["Motor Tax Online", "https://www.motortax.ie/OMT/"]],
     "src": [
       ["Citizens Information · Change of vehicle ownership", "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/buying-or-selling-a-vehicle/change-of-ownership/"]
     ]

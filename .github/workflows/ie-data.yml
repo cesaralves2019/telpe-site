@@ -1,13 +1,11 @@
-# Ireland.gov concept: the two jobs that need the open internet (the build sandbox has none).
-#  - directory: the list of service pages gov.ie publishes (titles and links only), honouring its robots.txt;
-#  - links: one request per link used in the guides, to confirm each one answers.
-# Both commit their result (and a log) to data/ie/.
+# Ireland.gov concept: one request per link used in the guides, to confirm each one answers (the build sandbox
+# has no open internet). Sites whose robots.txt disallows or refuses automated readers are skipped and reported as
+# "robots". The result and a log are committed to data/ie/.
 name: Ireland.gov concept data
 on:
   workflow_dispatch:
   push:
     paths:
-      - tools/ie_crawl_govie.py
       - tools/ie_check_links.py
       - content/ie/*.json
       - .github/workflows/ie-data.yml
@@ -31,18 +29,12 @@ jobs:
           set -o pipefail
           mkdir -p data/ie
           python3 -u tools/ie_check_links.py 2>&1 | tee /tmp/links.log
-      - name: List the services gov.ie publishes
-        id: directory
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          python3 -u tools/ie_crawl_govie.py 2>&1 | tee /tmp/directory.log
       - name: Commit the results and the logs
         run: |
           git config user.name "telpe-concept-bot"
           git config user.email "telpe-concept-bot@users.noreply.github.com"
-          { echo "links: ${{ steps.links.outcome }} · directory: ${{ steps.directory.outcome }} · $(date -u +%FT%TZ)"; echo "--- links"; tail -c 30000 /tmp/links.log; echo "--- directory"; tail -c 20000 /tmp/directory.log; } > data/ie/run.log
+          { echo "links: ${{ steps.links.outcome }} · $(date -u +%FT%TZ)"; tail -c 40000 /tmp/links.log; } > data/ie/run.log
           git add data/ie
           git diff --cached --quiet && echo "nothing new" && exit 0
-          git commit -m "Ireland.gov concept data: links ${{ steps.links.outcome }}, directory ${{ steps.directory.outcome }}"
+          git commit -m "Ireland.gov concept: link check ${{ steps.links.outcome }}"
           for i in 1 2 3 4 5; do git pull --rebase -X theirs && git push && break || sleep 10; done

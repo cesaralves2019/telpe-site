@@ -1,0 +1,12 @@
+[
+  {"id": "moved", "title": "I just moved to Ireland", "blurb": "The first things to sort out, in a sensible order.", "guides": ["irp-register", "eu-citizens", "ppsn", "psc", "mygovid", "tax-start-job", "healthcare-entitlement", "find-gp", "renting-rights", "licence-exchange", "register-to-vote", "habitual-residence"]},
+  {"id": "baby", "title": "We are having a baby", "blurb": "Leave, payments and paperwork, before and after the birth.", "guides": ["parent-benefits", "birth-register", "child-benefit", "certificates", "passport-child", "medical-card", "childcare"]},
+  {"id": "job", "title": "I am starting a job", "blurb": "Get paid correctly from the first payslip and know your rights.", "guides": ["ppsn", "tax-start-job", "employment-rights", "work-permit", "tax-refund"]},
+  {"id": "lostjob", "title": "I lost my job", "blurb": "Income first, then what you are owed.", "guides": ["jobseekers", "redundancy", "wrc-complaint", "additional-needs-payment", "medical-card", "tax-refund"]},
+  {"id": "home", "title": "I am renting or buying a home", "blurb": "Your rights as a tenant, help with rent and help to buy.", "guides": ["renting-rights", "rent-tax-credit", "hap", "social-housing", "buy-first-home", "lpt", "tv-licence"]},
+  {"id": "drive", "title": "I want to drive", "blurb": "From the theory test to the NCT.", "guides": ["driving-licence-first", "licence-exchange", "licence-renew", "motor-tax", "nct", "vehicle-ownership"]},
+  {"id": "irish", "title": "I want to become Irish", "blurb": "Citizenship by residence or through family, then the passport.", "guides": ["citizenship", "citizenship-fbr", "passport-first-adult", "register-to-vote"]},
+  {"id": "older", "title": "I am getting older", "blurb": "Pension, free travel and help with bills and care.", "guides": ["state-pension", "free-travel", "household-benefits", "fuel-allowance", "medical-card", "fair-deal", "licence-renew"]},
+  {"id": "died", "title": "Someone has died", "blurb": "What has to be done, and when.", "guides": ["death-register", "certificates", "additional-needs-payment", "mental-health"]},
+  {"id": "sick", "title": "I am sick or caring for someone", "blurb": "Income while you cannot work, and help with health costs.", "guides": ["illness-benefit", "disability-allowance", "carers-allowance", "medical-card", "drugs-payment-scheme", "treatment-benefit", "urgent-care"]}
+]

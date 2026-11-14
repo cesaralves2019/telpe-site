@@ -92,7 +92,7 @@
       {"q": "Can I extend a short-stay visa?", "a": ["No. You cannot stay longer than 3 months on a C visa. To come back you leave and apply again."]}
     ],
     "tips": ["A first visa is usually single entry. Fees are not refunded if the visa is refused."],
-    "act": [["Apply on AVATS", "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx"]],
+    "act": [["Plan your visit (Immigration Service)", "https://www.irishimmigration.ie/coming-to-visit-ireland/visit-ireland-travel-path/"], ["Apply on AVATS", "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx"]],
     "src": [
       ["Citizens Information · Visa requirements for entering Ireland", "https://www.citizensinformation.ie/en/moving-country/visas-for-ireland/visa-requirements-for-entering-ireland/"],
       ["Immigration Service Delivery · Preclearance and entry visa fees", "https://www.irishimmigration.ie/preclearance-and-entry-visas-fees/"]
@@ -204,7 +204,7 @@
       {"q": "My children were born before I registered", "a": ["They cannot register through you, because you were not an Irish citizen when they were born."]},
       {"q": "I only have a great-grandparent born in Ireland", "a": ["That alone does not qualify, unless your parent registered before you were born."]}
     ],
-    "act": [["Start the Foreign Births Register form", "https://fbr.dfa.ie/"]],
+    "act": [["Start the Foreign Births Register form", "https://fbr.dfa.ie/"], ["Read the official checklist first", "https://www.ireland.ie/en/dfa/citizenship/born-abroad/registering-a-foreign-birth/"]],
     "src": [
       ["Department of Foreign Affairs · Registering a foreign birth", "https://www.ireland.ie/en/dfa/citizenship/born-abroad/registering-a-foreign-birth/"],
       ["Citizens Information · Entitlement to Irish citizenship", "https://www.citizensinformation.ie/en/moving-country/irish-citizenship/your-right-to-irish-citizenship/"]
